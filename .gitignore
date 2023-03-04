@@ -1,0 +1,8 @@
+.env
+.env Produccion
+Documentacion/*.erwin
+Documentacion/BD CEDEPAS SistemaWeb v32.erwin
+.idea/*
+phinx.php
+.phpunit.result.cache
+phpunit.dusk.xml

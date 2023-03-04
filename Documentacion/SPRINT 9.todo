@@ -1,0 +1,50 @@
+☐ Modales de confirmar suben la pantalla para arriba y es molesto, corregir
+☐ Código de los PDF debe mejorarse
+☐ En los PDFs el nombre de AnaCeciliaAnguloAlva está como HTML, debe ser obtenido de la base de datos (por si cambia el director en el futuro)
+☐ Añadir loader de carga al abrir cualquier formulario (para que cargue JS)
+☐ La Paginación debe obtenerse de la BD y ser configurable
+☐ Añadir a los tests el contabilizar requerimiento subiendo archivos
+  Solamente pueden subirla cuando el requerimiento ya está contabilizada (solo este estado), añadir
+  la opcion de subir archivos mientras el req este contabilizado y 
+  boton para que marquen cuando la factura ya está en el sistema    
+  Exactamente como si una administradora lo subiría
+
+  ☐ Añadir esto de arriba en testing
+  ☐ CAMBIAR TODO A UTF8MB4_generalci
+
+    
+  ☐ VALIDAR QUE UNA ADMINISTRADORA TENGA UNA SEDE ASIGNADA
+
+  
+CONTRATOS:
+  ☐ Tipografía CANDARA
+  ☐ En contratos LOC SERV, la vista de persona natura y juridica deben ser distintas
+
+
+
+NUEVO MODULO:
+  ☐ Solicitar creacion de usuario
+
+
+Dashboard para gerentes acerca sus proyectos, información:
+  
+  CONSIDERAR LAS MONEDAS, SOLO SOLES 
+  ☐ Cantidad de documentos emitidos hoy día, esta semana, este mes (Número)
+  ☐ Cantidad de documentos aprobados hoy día, esta semana, este mes (Número)
+  ☐ # de documentos emitidos diariamente (gráfico de lineas historico)
+  ☐ # de documentos aprobados diariamente (gráfico de lineas historico)
+  ☐ Cantidad de documentos pendientes de aprobación actual (Numero)
+  ☐ Montos emitidos hoy día, esta semana, este mes
+  ☐ montos emitidos diariamente (grafico de lineas historico)
+
+☐ Actualizar poblador BD con nueva estructura dep uestos
+
+NUEVO MODULO Observador de todos los documentos:
+  Observador
+  
+  Auditor
+  Contralor
+  Espectador
+  Contemplador
+  Vigilante
+  

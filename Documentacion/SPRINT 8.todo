@@ -1,0 +1,15 @@
+ANOTACIONES REUNIÓN 01/03/2022 sistema monitoreo proyectos:
+    
+URGENTE:
+    ✔ Cambiar manera en que se cesar empleados, no debería eliminarse su usuario, solo impedirse su acceso. Además deben listarse en el listado de empleados pero de rojo @done(23-07-22 00:32)
+
+Actividades:
+
+    ✔ Refactorizar sistema de puestos (que un emp pueda tener varios) @done(09-11-22 00:47)
+    ✔ Eliminar archivos a un requerimiento con el buscador maestro @done(04-04-22 21:40)
+  
+
+    ✔ Cambiar todas las variables del config al env @done(07-11-22 14:12)
+   
+
+    ✔ Añadir checkbox para marcar que se añada a alguien en los listados @done(08-11-22 00:25)

@@ -1,0 +1,105 @@
+URGENTE BUG FIX:
+    Al subir archivos que contienen comas, mi algoritmo de separacion de nombres se paltea (pq detecta la coma) y guarda mal los nombres de los archivos.
+    Lo estoy corrigiendo mandando como JSON y decodificandolo en backend.
+    ✔ REP @done(18-11-21 15:38)
+    ✔ SOF @done(18-11-21 15:55)
+    ✔ REN @done(18-11-21 15:55)
+    ✔ REQ @done(18-11-21 15:55)
+    ✔ PROYECTOS @done(18-11-21 15:58)
+
+ 
+
+Actividades:
+    ☐ Modales de confirmar suben la pantalla para arriba y es molesto, corregir
+    ☐ Código de los PDF debe mejorarse
+    ☐ En los PDFs el nombre de AnaCeciliaAnguloAlva está como HTML, debe ser obtenido de la base de datos (por si cambia el director en el futuro)
+    ☐ Añadir loader de carga al abrir cualquier formulario (para que cargue JS)
+    ☐ La Paginación debe obtenerse de la BD y ser configurable
+    ☐ Refactorizar sistema de puestos (que un emp pueda tener varios)
+    ☐ Subir archivos a un requerimiento con el buscador maestro
+    ✔ Quitar la variable de config activarVerHistorialDeDocumentos @done(22-11-21 19:13)
+    ✔ Añadir al editar documento, la opcion para ver el historial de este @done(22-11-21 19:13)
+    ✔ En crear REP salen 3 decimales (resultó que en todas las vistas create edit salía así XD) @done(05-12-21 23:49)
+    ✔ Eliminar operacion de historial @done(22-11-21 19:18)
+    ✔ Filtros en el listar operaciones @done(26-11-21 16:38)
+    ☐ Añadir a los tests el contabilizar requerimiento subiendo archivos
+    ✔ Añadir validacion de cod presupuestal repetido al crear proyecto @done(06-12-21 00:02)
+
+    ✔ REQ : Que los empleados tambien puedan subir factura @done(07-12-21 13:36)
+        Solamente pueden subirla cuando el requerimiento ya está contabilizada (solo este estado), añadir
+                 la opcion de subir archivos mientras el req este contabilizado y 
+                 boton para que marquen cuando la factura ya está en el sistema    
+        Exactamente como si una administradora lo subiría
+    ☐ Añadir esto de arriba en testing
+
+    ☐ CAMBIAR TODO A UTF8MB4_generalci
+
+    ☐ Añadir mensaje de alerta TELEGRAM cuando ingresa el admin sistema
+    
+
+
+NUEVOS MODULOS A PEDIDO DE CEDEPAS:
+    ✔ Inventarios (web y app nativ) @done(26-01-22 22:17)
+        ✔ 1 Responsable principal @done(24-01-22 18:27)
+        ✔ Varios que marcan si está o no está @done(24-01-22 18:27)
+        ✔ Solamente apareceran en las nuevas revisiones, los activos que estén como DISPONIBLE @done(24-01-22 18:27)
+        ✔ Separar los estados en solamente 2 (HABIDO y DE BAJA), en los que están de baja subdividir por causas (Pérdida, Deterioro o donación, Vent) @done(24-01-22 18:28)
+        ✔ Código aparente de activo tiene 11 caracteres (le pondré 100) @done(24-01-22 18:33)
+
+        ☐ VALIDAR QUE UNA ADMINISTRADORA TENGA UNA SEDE ASIGNADA
+
+Modulo Contratos PDF:
+    ✔ CRUD Básico @done(02-01-22 18:36)
+    ✔ Fechas escritas @done(02-01-22 21:43)
+    ✔ Justificar PDFs plazo @done(02-01-22 23:31)
+    ✔ Justificar PDFs locacion @done(03-01-22 22:31)
+    
+    ✔ Añadir campos faltantes (proyecto y financiera) @done(02-01-22 23:31)
+    ✔ empleade @done(02-01-22 22:51)
+    ☐ Tipografía CANDARA
+	✔ Añadir foto del logo de CEDEPAS @done(04-01-22 15:58)
+    ✔ Que no valide que la fecha de emision esté entre la fecha inicio y fecha fin @done(02-01-22 18:37)
+
+
+Para curso gerencia sistemas:
+    SOBRE SEGURIDAD DE DATOS
+    ✔ Órdenes de compra @done(11-11-21 15:43)
+    ✔ Programar Sistema de CDS automáticas de la BD: @done(26-01-22 22:17)
+    ☐ Sistema de CDS de los archivo
+    ✔ Sistema de gestión de errores en el sistema @done(19-11-21 17:48)
+    ✔ Sistema de gestión de logeos y geolocalizacion (alertas cuando entra un user con otra ip) @done(26-01-22 22:17)
+    
+Para curso Sistemas de información gerencial:
+    ✔ Generador de 100 000 registros en la tabla detalle reposición gastos (Usar faker) @done(14-11-21 18:40)
+    
+
+Adaptar nombres:
+    ✔ Detalle SOF: ninguno existe @done(02-02-22 14:42)
+    ✔ Archivo REN: ninguno existe @done(02-02-22 14:42)
+    ✔ RendicionGastos: Sí hubo cambios @done(02-02-22 14:43)
+    ✔ Archivo SOF: ninguno existe @done(02-02-22 14:43)
+    ✔ SOF: Sí hubo cambios @done(02-02-22 14:44)
+    ✔ UnidadMedida: si hubocambios, VER LO DE ESTADO INACTIVO PQ NO TENEMOS XD @done(02-02-22 14:44)
+    ✔ Detalle REQ: ninguno existe @done(02-02-22 14:44)
+    ✔ Archivo_req_empleado: ninguno existe @done(02-02-22 14:44)
+    ✔ REQ: si hubo cambios @done(02-02-22 14:44)
+    ✔ ERROR_HISTORIAL: si hubo cambios @done(02-02-22 14:44)
+    ✔ Ingreso historial : si hubo cambios, PERO SED LLAMA LOGEO XD @done(02-02-22 14:45)
+    ✔ Empleado: si hubo cambios, cambiar en el RSA el obtenernombre de empleado por getNombreCompleto() @done(02-02-22 14:45)
+    ✔ OperacionDocumento : no existe el registrarOperacion @done(02-02-22 14:46)
+    ✔ Usuario: no pude cambiarle el nombre pq estan en el mismo controller y las funciones  no pueden llamarse igual @done(02-02-22 14:46)
+    ✔ Proyecto: no pude cambiarles a todas @done(02-02-22 14:46)
+    ✔ ArchivoRepo : ninguna existe @done(02-02-22 14:47)
+    ✔ ProyectoContador : ninguna existe @done(02-02-22 14:47)
+    ✔ REPO : si hubo cambios @done(02-02-22 14:47)
+
+
+Presentación tesis:
+    ✔ ADEMAS DEBERAN PRESENTAR EMPAQUEDAR EL SISTEMA; @done(03-02-22 16:14)
+    ✔ INDICACIONES DE INSTALACIÖN Y CLAVES DE ACCESO; @done(03-02-22 15:25)
+    ✔ DEBERA ESTAR INCLUIDA LA BD; @done(03-02-22 16:08)
+    ✔ PRESENTACIÓN EN POWER POINT; @done(03-02-22 17:24)
+    ✔ DIAGRAMAS EN RSA, @done(03-02-22 17:24)
+    ✔ CALCULOS EN EXCEL, @done(03-02-22 17:24)
+    ✔ INFORME DE TESIS POR CARPETAS. @done(03-02-22 17:24)
+    ✔ SE DEBE INCLUIR EL ARTÍCULO @done(03-02-22 17:24)
