@@ -2,17 +2,14 @@
 <html>
 <head>
 	 <meta charset="utf-8"/>
-     <title>CEDEPAS Norte | Login</title>
-	 <link rel="shortcut icon" href="/img/LogoCedepas.png" type="image/png">
+     <title>CIITES | Login</title>
+	 <link rel="shortcut icon" href="" type="image/png">
   
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
      <meta content="width=device-width, initial-scale=1.0" name="viewport"/>      
      <link rel="stylesheet" href="/adminlte/plugins/fontawesome-free/css/all.min.css">
      <link rel="stylesheet" href="/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
      <link rel="stylesheet" href="/adminlte/dist/css/adminlte.min.css">
-     <link rel="stylesheet" href="/stylebonis.css">
-     <link rel="stylesheet" href="css/login.css">
-     <link rel="stylesheet" href="css/style.css">
      <link  rel="stylesheet" href="public/uicons-regular-rounded/css/uicons-regular-rounded.css">
      
 </head>
@@ -60,13 +57,13 @@
 					</div>
 				
 					<div class="group">
-						<input id="ingresar" name="ingresar" type="submit" class="button" value="Ingresar">
+            <button id="ingresar" name="ingresar" type="submit" class="button-submit">
+              INGRESAR
+            </button>
+						 
 					</div>
 					<div class="hr"></div>
-					{{-- <div class="foot-lnk">
-						<a href="#forgot">Forgot Password?</a>
-						<
-					</div> --}}
+				 
 					@if (session('datos'))
 						<div class ="alert alert-warning fade show" role ="alert" id="msjEmergenteDatos">
 							{{session('datos')}}
@@ -75,41 +72,17 @@
 
 					
 				</div>
-
-				{{-- Los registros son desde adentro, no necesitamos --}}
-				{{-- <div class="sign-up-htm">
-					<div class="group">
-						<label for="user" class="label">Username</label>
-						<input id="user" type="text" class="input">
-					</div>
-					<div class="group">
-						<label for="pass" class="label">Password</label>
-						<input id="pass" type="password" class="input" data-type="password">
-					</div>
-					<div class="group">
-						<label for="pass" class="label">Repeat Password</label>
-						<input id="pass" type="password" class="input" data-type="password">
-					</div>
-					<div class="group">
-						<label for="pass" class="label">Email Address</label>
-						<input id="pass" type="text" class="input">
-					</div>
-					<div class="group">
-						<input type="submit" class="button" value="Sign Up">
-					</div>
-					<div class="hr"></div>
-					<div class="foot-lnk">
-						<label for="tab-1">Already Member?</a>
-					</div>
-				</div>
-				--}}
+ 
 	
 			</div>
 
-			<div style="text-align: center">
-
-				<img src="/img/LogoCedepas.png"
-				width="200" height="140" >
+			<div class="text-center d-flex flex-column">
+				 <div class="ciites">
+          CIITES
+         </div>
+         <div class="ciites-desglosado">
+            Centro para la investigación innovación y desarrollo territorial sostenible
+         </div>
 
 			</div>
 		</div>
@@ -119,4 +92,5 @@
 
 </div>
 </div>
+@include('EstilosLogin')
 </html>

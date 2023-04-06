@@ -8,7 +8,7 @@
 
   {{-- Cambiar esto por una url d --}}
 
-  <link rel="shortcut icon" href="/img/LogoCedepas.png" type="image/png">
+  <link rel="shortcut icon" href="/img/.png" type="image/png">
   
   
   <!-- Tell the browser to be responsive to screen width -->
@@ -283,7 +283,7 @@
            alt="AdminLTE Logo"
            class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">CEDEPAS Norte</span>
+      <span class="brand-text font-weight-light">CIITES</span>
     </a>
 
 
