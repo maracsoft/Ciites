@@ -1,4 +1,4 @@
-# Sistema Web de gestión - CEDEPAS NORTE
+# Sistema Web de gestión - CIITES
 
 ## Instalación
 

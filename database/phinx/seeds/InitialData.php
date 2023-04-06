@@ -19,10 +19,9 @@ class InitialData extends AbstractSeed
 
       $file_string = $this->readFile("database/maractions/datosIniciales.sql");
       /* El separador es una coma y un enter */
-      $separator = "; 
-";
+      $separator = ";";
       $sql_array = explode($separator,$file_string);
-      
+      error_log(count($sql_array) ." rows to iterate");
       /* El ultimo elemento siempre está vacío por la coma ultima */
       for ($i=0; $i < count($sql_array) - 1; $i++) { 
         $sql = $sql_array[$i].";";
