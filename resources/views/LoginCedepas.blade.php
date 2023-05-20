@@ -77,12 +77,7 @@
 			</div>
 
 			<div class="text-center d-flex flex-column">
-				 <div class="ciites">
-          CIITES
-         </div>
-         <div class="ciites-desglosado">
-            Centro para la investigación innovación y desarrollo territorial sostenible
-         </div>
+				 <img src="/img/logo-ciites.png" alt="">
 
 			</div>
 		</div>

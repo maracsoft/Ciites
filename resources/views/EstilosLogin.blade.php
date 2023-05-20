@@ -12,8 +12,8 @@ body{
   background-repeat: no-repeat;
   background-size: cover;
   font: 600 16px/18px 'Open Sans',sans-serif;
-  background: radial-gradient(#000000 15%, transparent 16%) 0 0, radial-gradient(#1f4210 15%, transparent 16%) 8px 8px, radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px, radial-gradient(rgb(255 193 193 / 10%) 15%, transparent 20%) 8px 9px;
-  background-color: #282828;
+  
+  background-color: #12A4B4;
   background-size: 16px 16px;
 
 }
@@ -35,9 +35,23 @@ a{color:inherit;text-decoration:none}
 	width:100%;
 	height:100%;
 	position:absolute;
-	padding:90px 70px 50px 70px;
+	
 	background: rgb(255 255 255 / 90%);
 }
+
+@media(min-width:600px){
+  .login-html{
+    padding:90px 70px 50px 70px;
+  }
+}
+@media(max-width:600px){
+  .login-html{
+    padding:32px;
+  }
+}
+
+
+
 .login-html .sign-in-htm,
 .login-html .sign-up-htm{
 	top:0;
@@ -177,7 +191,7 @@ a{color:inherit;text-decoration:none}
   border: none;
   padding: 15px 20px;
   border-radius: 25px;
-  background: #92b91c;
+  background: #7DAE46;
   width: 100%;
   color: #fff;
   display: block;
