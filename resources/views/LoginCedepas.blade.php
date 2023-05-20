@@ -13,79 +13,106 @@
      <link  rel="stylesheet" href="public/uicons-regular-rounded/css/uicons-regular-rounded.css">
      
 </head>
-<div class="conteiner">
+<body>
 
-	
-	
-    <br>
-<div class="login-wrap">
-	
+  
+    <div class="row h-100">
+      <div class="col-12 col-sm-6 h-100 hexagonal_container d-flex">
+        <img class="hexagonal align-self-center" src="/img/LogoHexagonal.png" alt="">
+      </div>
+      <div class="col-12 col-sm-6 h-100 d-flex">
 
-	<form method="POST" action="{{route('user.logearse')}}">
-		@csrf  
-		<div class="login-html">
-			<input id="tab-1" type="radio" name="tab" class="sign-in" checked>
-				<label for="tab-1" class="tab" style="font-size: xx-large">Iniciar Sesión</label>
+        <div class="box align-self-center" style="font-size:16pt;">
 
-
-			<input id="tab-2" type="radio" name="tab" class="sign-up">
-				<label for="tab-2" class="tab"> </label>
+          <form method="POST" action="{{route('user.logearse')}}">
+            @csrf  
 
 
-			<div class="login-form">
-				<div class="sign-in-htm">
-					<div class="group">
-						<label for="user" class="label" style="font-size: medium">Usuario</label>
-						<input type="text" class="input @error('usuario') is-invalid @enderror" placeholder="Ingrese usuario" 
-							id="usuario" name="usuario" value="{{old('usuario')}}">
-						
-						@error('usuario')
-						<span class="invalid-feedback" role="alert" style="font-size: small">
-							<strong>{{$message}}</strong>
-						</span>
-						@enderror
-					</div>
-					<div class="group">
-						<label for="pass" class="label" style="font-size: medium">Contraseña</label>
-						<input placeholder="Ingrese contraseña"  id="password" name="password"
-							type="password" class="input @error('password') is-invalid @enderror" data-type="password">
-						@error('password')
-						<span class="invalid-feedback" role="alert" style="font-size: small">
-							<strong>{{$message}}</strong>
-						</span>
-						@enderror
-					</div>
-				
-					<div class="group">
-            <button id="ingresar" name="ingresar" type="submit" class="button-submit">
-              INGRESAR
-            </button>
-						 
-					</div>
-					<div class="hr"></div>
-				 
-					@if (session('datos'))
-						<div class ="alert alert-warning fade show" role ="alert" id="msjEmergenteDatos">
-							{{session('datos')}}
-						</div>
-					@endif
+                
+            <div class="row">
+              <div class="col-12">
+                <label for="user" class="label" style="">Usuario</label>
+                <input type="text" class="form-control form-control-lg input @error('usuario') is-invalid @enderror" placeholder="Ingrese usuario" 
+                  id="usuario" name="usuario" value="{{old('usuario')}}">
+                
+                @error('usuario')
+                <span class="invalid-feedback" role="alert" style="font-size: small">
+                  <strong>{{$message}}</strong>
+                </span>
+                @enderror
+              </div>
+              <div class="col-12">
+                <label for="pass" class="label" style="">Contraseña</label>
+                <input placeholder="Ingrese contraseña" id="password" name="password"
+                  type="password" class="form-control form-control-lg input @error('password') is-invalid @enderror" data-type="password">
+                @error('password')
+                <span class="invalid-feedback" role="alert" style="font-size: small">
+                  <strong>{{$message}}</strong>
+                </span>
+                @enderror
 
-					
-				</div>
+              </div>
+
+              <div class="col-12">
+                <button id="ingresar" name="ingresar" type="submit" class="button-submit">
+                  INGRESAR
+                </button>
+              </div>
+
+              <div class="col-12">
+
+                
+                @if (session('datos'))
+                  <div class ="alert alert-warning fade show" role ="alert" id="msjEmergenteDatos">
+                    {{session('datos')}}
+                  </div>
+                @endif
+              </div>
+
+            </div>
+
+          </form>      
+        </div>
+
+      </div>
+      
+       
+    </div>
  
-	
-			</div>
-
-			<div class="text-center d-flex flex-column">
-				 <img src="/img/logo-ciites.png" alt="">
-
-			</div>
-		</div>
-		
-	</form>
+</body>
 
 
-</div>
-</div>
-@include('EstilosLogin')
+<style>
+  body{
+    background-color: #1b3f78;
+    height: 100vh;
+  }
+
+  .box{
+    background: white;
+    border-radius: 5px;
+    padding: 30px;
+  }
+
+  .button-submit{
+    border: none;
+    padding: 15px 20px;
+    border-radius: 25px;
+    background: #7DAE46;
+    width: 100%;
+    color: #fff;
+    display: block;
+    font-size: 12pt;
+    font-weight: bold;
+    font-family: sans-serif;
+    margin-top: 24px;
+  }
+
+  .hexagonal{
+    width: 100%;
+  }
+  .hexagonal_container{
+    padding: 50px;
+  }
+</style>
 </html>
