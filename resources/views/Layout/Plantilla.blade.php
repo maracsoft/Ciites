@@ -8,7 +8,7 @@
 
   {{-- Cambiar esto por una url d --}}
 
-  <link rel="shortcut icon" href="/img/.png" type="image/png">
+  <link rel="shortcut icon" href="/img/isologo.ico" type="image/png">
   
   
   <!-- Tell the browser to be responsive to screen width -->
@@ -206,10 +206,17 @@
       color: white !important;
 
     }
-    .roles-span{
-
+    .image-logo-container{
+      background-color: white;
+      margin-right: -8px;
+      margin-left: -8px;
+      
     }
+
+    
   </style>
+
+
   @yield('estilos')
 
   @php
@@ -282,10 +289,13 @@
 
 
     <!-- Sidebar -->
+
+ 
+
     <div class="sidebar">
-      <div>
+      <div class="image-logo-container">
           <a href="{{route('user.home')}}">
-            <img src="/img/logo-ciites.png" class="brand-image w-100 px-3 pt-2">
+            <img src="/img/logo-ciites.png" class="brand-image w-100 px-3">
           </a>
           
       </div>
