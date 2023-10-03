@@ -148,8 +148,8 @@ class RequerimientoBS extends DocumentoAdministrativo
     }
 
     //el admin puede subir archivos si aun no se ingresa la factura o si no se ha subido ningun archivo del admin
-    //O SI ACTIVÉ EL PARAMETRO EN SISTEMA ESPECIAL PA ESO XD
-    //Son dos parámetros, un booleano y un numerico que es el id
+
+    //O SI ACTIVÉ EL PARAMETRO EN SISTEMA ESPECIAL PA ESO XD Son dos parámetros, un booleano y un numerico que es el id
     public function adminPuedeSubirArchivos(){
       
       if($this->empLogeadoEsAdministradorSubidorIlimitado())
@@ -395,6 +395,26 @@ class RequerimientoBS extends DocumentoAdministrativo
 
     }
 
+    
+    public function getFechaHoraUltimaEdicion(){
+      $tipo_documento = TipoDocumento::where('abreviacion','REQ')->first();
+      $tipo_operacion = TipoOperacion::where('codTipoDocumento',$tipo_documento->getId())->where('nombre','Editar')->first();
+      
+      $listaOperacionesEdicion = OperacionDocumento::where('codDocumento',$this->getId())
+          ->where('codTipoDocumento',$tipo_documento->getId())
+          ->where('codTipoOperacion',$tipo_operacion->getId())
+          ->orderBy('fechaHora','DESC')
+          ->get();
+
+      /* en algunos casos los documentos no tienen ni operaciones */    
+      if(count($listaOperacionesEdicion) == 0){
+        return $this->formatoFechaHoraEmision();
+      }
+      
+      $ultima_operacion_edicion = $listaOperacionesEdicion[0];
+      return Fecha::formatoFechaHoraParaVistas($ultima_operacion_edicion->fechaHora);
+
+    }
 
 
 

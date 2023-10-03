@@ -28,9 +28,25 @@ use App\LogeoHistorial;
 use App\MetaEjecutada;
 use App\Models\CITE\ReporteMensualCite;
 use App\Models\CITE\Servicio;
+use App\Models\CITE\TipoPersoneria;
 use App\Models\CITE\UnidadProductiva;
 use App\Models\CITE\UsuarioCite;
 use App\Models\Notificaciones\Notificacion;
+use App\Models\PPM\PPM_ArchivoEjecucion;
+use App\Models\PPM\PPM_AsistenciaDetalleprod;
+use App\Models\PPM\PPM_DetalleProducto;
+use App\Models\PPM\PPM_EjecucionActividad;
+use App\Models\PPM\PPM_FGE_Item;
+use App\Models\PPM\PPM_FGE_Marcacion;
+use App\Models\PPM\PPM_FGE_Option;
+use App\Models\PPM\PPM_FGE_Segmento;
+use App\Models\PPM\PPM_Organizacion;
+use App\Models\PPM\PPM_Participacion;
+use App\Models\PPM\PPM_Persona;
+use App\Models\PPM\PPM_Inscripcion;
+use App\Models\PPM\PPM_RelacionOrganizacionSemestre;
+use App\Models\PPM\PPM_RelacionPersonaSemestre;
+use App\Models\PPM\PPM_Sincronizador;
 use App\Numeracion;
 use App\OperacionDocumento;
 use App\OrdenCompra;
@@ -47,14 +63,14 @@ use App\SolicitudFondos;
 
 class JobsController extends Controller
 {
-  /* 
+  /*
     Este controller es para hacer operaciones específicas en la base de datos, pero que solo deban ser corridas una vez
     Cada Job está linkeado a una funcion en este controller y tiene un registro en la tabla job
-    
-  
+
+
   */
-  
-  
+
+
   public function ListarJobs(){
     $listaJobs = Job::orderBy('fechaHoraCreacion','DESC')->get();
 
@@ -63,7 +79,7 @@ class JobsController extends Controller
   /*  */
 
   public function GuardarEditar(Request $request){
-    
+
     try {
       db::beginTransaction();
 
@@ -74,7 +90,7 @@ class JobsController extends Controller
         $job->fechaHoraCreacion = Carbon::now();
 
         $msj = "creado";
-        
+
       }else{ //editar
         $job = Job::findOrFail($codJob);
         $msj = "editado";
@@ -84,7 +100,7 @@ class JobsController extends Controller
       $job->descripcion = $request->descripcion;
       $job->functionName = $request->functionName;
 
-      
+
       $job->save();
 
 
@@ -93,10 +109,10 @@ class JobsController extends Controller
       return redirect()->route('Jobs.Listar')->with('datos',"Job $msj exitosamente");
 
     } catch (\Throwable $th) {
-      
+
       db::rollBack();
       throw $th;
-      
+
       return redirect()->route('Jobs.Listar')->with('datos',"Ocurrió un error");
 
     }
@@ -114,7 +130,7 @@ class JobsController extends Controller
       return redirect()->route('Jobs.Listar')->with('datos',"Job eliminado exitosamente.");
     } catch (\Throwable $th) {
       throw $th;
-      
+
     }
 
 
@@ -128,7 +144,7 @@ class JobsController extends Controller
       if(!$job->estaEjecutado())
         return "ERROR, el job no ha sido ejecutado";
 
-      
+
       $job->fechaHoraEjecucion = null;
       $job->ejecutado = 0;
       $job->save();
@@ -164,26 +180,23 @@ class JobsController extends Controller
     } catch (\Throwable $th) {
       db::rollBack();
       $codErrorHistorial = ErrorHistorial::registrarError($th,app('request')->route()->getAction(),json_encode($codJob));
-      
+
       throw $th;
     }
 
   }
 
-  
+
   private function ejecutarJob(Job $job){
 
     /* En este switch linkeamos el nombre de la funcion obtenido de la bd con la funcion de este controller */
     switch ($job->functionName) {
-      case 'PoblarCodProyectoDeRendicion': $this->poblarCodProyectoDeRendicion(); break;
-      case 'migrarPuestosDeTablaEmpleadoATablaEmpleadoPuesto': $this->migrarPuestosDeTablaEmpleadoATablaEmpleadoPuesto(); break;
-      case 'migrarRolesDeCITEANuevoSistemaPuestos' : $this->migrarRolesDeCITEANuevoSistemaPuestos(); break;
-      case 'remplazarCodEmpleadoDePerfilesViejos' : $this->remplazarCodEmpleadoDePerfilesViejos(); break;
+
 
       default:
         throw new Exception("No se encontró una funcion asociada al job con el nombre ".$job->functionName);
         break;
-    }  
+    }
 
   }
 
@@ -213,7 +226,7 @@ class JobsController extends Controller
 
 
   private function PoblarCodProyectoDeRendicion(){
-        
+
     $listaRendiciones = RendicionGastos::All();
 
     foreach ($listaRendiciones as $rendicion) {
@@ -228,7 +241,7 @@ class JobsController extends Controller
     /* operacion para migrar los puestos al nuevo sistema */
   private function migrarPuestosDeTablaEmpleadoATablaEmpleadoPuesto(){
 
-      
+
       EmpleadoPuesto::where('codEmpleadoPuesto','>',0)->delete();//delete all bc this function will create all
 
       $codPuestoEmpleado = Puesto::getCodPuesto_Empleado();
@@ -248,14 +261,14 @@ class JobsController extends Controller
           $empPuesto->codEmpleado = $emp->getId();
           $empPuesto->save();
       }
-     
-    
+
+
   }
 
 
   public function migrarRolesDeCITEANuevoSistemaPuestos(){
 
-    $codsArticuladores = explode(",",ParametroSistema::getParametroSistema("listaArticuladores")->valor); 
+    $codsArticuladores = explode(",",ParametroSistema::getParametroSistema("listaArticuladores")->valor);
     $listaArticuladores = Empleado::whereIn('codEmpleado',$codsArticuladores)->get();
 
     $codsEquipo = explode(",",ParametroSistema::getParametroSistema("listaEquipos")->valor);
@@ -269,9 +282,9 @@ class JobsController extends Controller
         $empleado_puesto->codPuesto = $codPuestoArticulador;
         $empleado_puesto->codEmpleado = $articulador->codEmpleado;
         $empleado_puesto->save();
-        
+
     }
-    
+
     $codPuestoEquipo = Puesto::getCodPuesto_Equipo();
     Debug::mensajeSimple(json_encode($listaEquipos));
 
@@ -287,7 +300,7 @@ class JobsController extends Controller
   }
 
 
-  /* 
+  /*
     Gianluiigui cod 3, tiene 41 REPOS
     Aparco cod 6, tiene 42 REPOS
     Eliminaré a gianluigui
@@ -297,12 +310,12 @@ class JobsController extends Controller
     Aparco 83
 
   */
-  /* 
+  /*
   Remplaza todos los cod empleados de los perfiles que fueron creados debido al anterior sistema de puestos
   Toma como entrada el parametro sistema 'relacion_codEmpleados_remplazar' que está construido así
     "15-61,12-76,13-11"
     Donde por ejemplo para el primer par 15-61, el 15 es el codEmpleado a eliminar y el 61 el que será puesto encima
-  
+
   */
   public function remplazarCodEmpleadoDePerfilesViejos(){
     $cadena_relacion = ParametroSistema::getParametroSistema("relacion_codEmpleados_remplazar")->valor;
@@ -314,65 +327,66 @@ class JobsController extends Controller
 
       /* Lista de todos los lugares donde aparece el codEmpleado */
       /* Se exceptua el Empleado y EmpleadoPuesto */
-      
-      BusquedaRepo::where('codEmpleado',$codAEliminar)->update(['codEmpleado'=>$nuevoCod]);   
-      ReporteMensualCite::where('codEmpleado',$codAEliminar)->update(['codEmpleado'=>$nuevoCod]);   
-      Servicio::where('codEmpleadoCreador',$codAEliminar)->update(['codEmpleadoCreador'=>$nuevoCod]);   
-      UnidadProductiva::where('codEmpleadoCreador',$codAEliminar)->update(['codEmpleadoCreador'=>$nuevoCod]);   
-      
-      UnidadProductiva::where('codEmpleadoCreador',$codAEliminar)->update(['codEmpleadoCreador'=>$nuevoCod]); 
-      UsuarioCite::where('codEmpleadoCreador',$codAEliminar)->update(['codEmpleadoCreador'=>$nuevoCod]);   
 
-      ContratoLocacion::where('codEmpleadoCreador',$codAEliminar)->update(['codEmpleadoCreador'=>$nuevoCod]); 
-      ContratoPlazo::where('codEmpleadoCreador',$codAEliminar)->update(['codEmpleadoCreador'=>$nuevoCod]); 
-      OrdenCompra::where('codEmpleadoCreador',$codAEliminar)->update(['codEmpleadoCreador'=>$nuevoCod]);  
+      BusquedaRepo::where('codEmpleado',$codAEliminar)->update(['codEmpleado'=>$nuevoCod]);
+      ReporteMensualCite::where('codEmpleado',$codAEliminar)->update(['codEmpleado'=>$nuevoCod]);
+      Servicio::where('codEmpleadoCreador',$codAEliminar)->update(['codEmpleadoCreador'=>$nuevoCod]);
+      UnidadProductiva::where('codEmpleadoCreador',$codAEliminar)->update(['codEmpleadoCreador'=>$nuevoCod]);
 
-      
-      DJGastosMovilidad::where('codEmpleado',$codAEliminar)->update(['codEmpleado'=>$nuevoCod]); 
-      DJGastosVarios::where('codEmpleado',$codAEliminar)->update(['codEmpleado'=>$nuevoCod]); 
-      DJGastosViaticos::where('codEmpleado',$codAEliminar)->update(['codEmpleado'=>$nuevoCod]); 
-      //EmpleadoRevisador::where('codEmpleado',$codAEliminar)->update(['codEmpleado'=>$nuevoCod]); 
-      ErrorHistorial::where('codEmpleado',$codAEliminar)->update(['codEmpleado'=>$nuevoCod]); 
-      LogeoHistorial ::where('codEmpleado',$codAEliminar)->update(['codEmpleado'=>$nuevoCod]); 
-      MetaEjecutada::where('codEmpleado',$codAEliminar)->update(['codEmpleado'=>$nuevoCod]); 
-      Notificacion::where('codEmpleado',$codAEliminar)->update(['codEmpleado'=>$nuevoCod]); 
-      OperacionDocumento::where('codEmpleado',$codAEliminar)->update(['codEmpleado'=>$nuevoCod]); 
-      
-      Proyecto::where('codEmpleadoDirector',$codAEliminar)->update(['codEmpleadoDirector'=>$nuevoCod]);  
-      ProyectoContador::where('codEmpleadoContador',$codAEliminar)->update(['codEmpleadoContador'=>$nuevoCod]); 
-      
-      RendicionGastos::where('codEmpleadoSolicitante',$codAEliminar)->update(['codEmpleadoSolicitante'=>$nuevoCod]); 
-      RendicionGastos::where('codEmpleadoEvaluador',$codAEliminar)->update(['codEmpleadoEvaluador'=>$nuevoCod]); 
-      RendicionGastos::where('codEmpleadoContador',$codAEliminar)->update(['codEmpleadoContador'=>$nuevoCod]); 
+      UnidadProductiva::where('codEmpleadoCreador',$codAEliminar)->update(['codEmpleadoCreador'=>$nuevoCod]);
+      UsuarioCite::where('codEmpleadoCreador',$codAEliminar)->update(['codEmpleadoCreador'=>$nuevoCod]);
 
-      ReposicionGastos::where('codEmpleadoSolicitante',$codAEliminar)->update(['codEmpleadoSolicitante'=>$nuevoCod]);  
-      ReposicionGastos::where('codEmpleadoEvaluador',$codAEliminar)->update(['codEmpleadoEvaluador'=>$nuevoCod]); 
-      ReposicionGastos::where('codEmpleadoAdmin',$codAEliminar)->update(['codEmpleadoAdmin'=>$nuevoCod]); 
-      ReposicionGastos::where('codEmpleadoConta',$codAEliminar)->update(['codEmpleadoConta'=>$nuevoCod]); 
+      ContratoLocacion::where('codEmpleadoCreador',$codAEliminar)->update(['codEmpleadoCreador'=>$nuevoCod]);
+      ContratoPlazo::where('codEmpleadoCreador',$codAEliminar)->update(['codEmpleadoCreador'=>$nuevoCod]);
+      OrdenCompra::where('codEmpleadoCreador',$codAEliminar)->update(['codEmpleadoCreador'=>$nuevoCod]);
 
 
-      RequerimientoBS::where('codEmpleadoSolicitante',$codAEliminar)->update(['codEmpleadoSolicitante'=>$nuevoCod]);  
-      RequerimientoBS::where('codEmpleadoEvaluador',$codAEliminar)->update(['codEmpleadoEvaluador'=>$nuevoCod]); 
-      RequerimientoBS::where('codEmpleadoAdministrador',$codAEliminar)->update(['codEmpleadoAdministrador'=>$nuevoCod]); 
-      RequerimientoBS::where('codEmpleadoContador',$codAEliminar)->update(['codEmpleadoContador'=>$nuevoCod]); 
+      DJGastosMovilidad::where('codEmpleado',$codAEliminar)->update(['codEmpleado'=>$nuevoCod]);
+      DJGastosVarios::where('codEmpleado',$codAEliminar)->update(['codEmpleado'=>$nuevoCod]);
+      DJGastosViaticos::where('codEmpleado',$codAEliminar)->update(['codEmpleado'=>$nuevoCod]);
+      //EmpleadoRevisador::where('codEmpleado',$codAEliminar)->update(['codEmpleado'=>$nuevoCod]);
+      ErrorHistorial::where('codEmpleado',$codAEliminar)->update(['codEmpleado'=>$nuevoCod]);
+      LogeoHistorial ::where('codEmpleado',$codAEliminar)->update(['codEmpleado'=>$nuevoCod]);
+      MetaEjecutada::where('codEmpleado',$codAEliminar)->update(['codEmpleado'=>$nuevoCod]);
+      Notificacion::where('codEmpleado',$codAEliminar)->update(['codEmpleado'=>$nuevoCod]);
+      OperacionDocumento::where('codEmpleado',$codAEliminar)->update(['codEmpleado'=>$nuevoCod]);
 
-      SolicitudFondos::where('codEmpleadoSolicitante',$codAEliminar)->update(['codEmpleadoSolicitante'=>$nuevoCod]);  
-      SolicitudFondos::where('codEmpleadoEvaluador',$codAEliminar)->update(['codEmpleadoEvaluador'=>$nuevoCod]); 
-      SolicitudFondos::where('codEmpleadoAbonador',$codAEliminar)->update(['codEmpleadoAbonador'=>$nuevoCod]); 
-      SolicitudFondos::where('codEmpleadoContador',$codAEliminar)->update(['codEmpleadoContador'=>$nuevoCod]); 
+      Proyecto::where('codEmpleadoDirector',$codAEliminar)->update(['codEmpleadoDirector'=>$nuevoCod]);
+      ProyectoContador::where('codEmpleadoContador',$codAEliminar)->update(['codEmpleadoContador'=>$nuevoCod]);
+
+      RendicionGastos::where('codEmpleadoSolicitante',$codAEliminar)->update(['codEmpleadoSolicitante'=>$nuevoCod]);
+      RendicionGastos::where('codEmpleadoEvaluador',$codAEliminar)->update(['codEmpleadoEvaluador'=>$nuevoCod]);
+      RendicionGastos::where('codEmpleadoContador',$codAEliminar)->update(['codEmpleadoContador'=>$nuevoCod]);
+
+      ReposicionGastos::where('codEmpleadoSolicitante',$codAEliminar)->update(['codEmpleadoSolicitante'=>$nuevoCod]);
+      ReposicionGastos::where('codEmpleadoEvaluador',$codAEliminar)->update(['codEmpleadoEvaluador'=>$nuevoCod]);
+      ReposicionGastos::where('codEmpleadoAdmin',$codAEliminar)->update(['codEmpleadoAdmin'=>$nuevoCod]);
+      ReposicionGastos::where('codEmpleadoConta',$codAEliminar)->update(['codEmpleadoConta'=>$nuevoCod]);
 
 
-      //RevisionInventario::where('codEmpleadoResponsable',$codAEliminar)->update(['codEmpleadoResponsable'=>$nuevoCod]); 
+      RequerimientoBS::where('codEmpleadoSolicitante',$codAEliminar)->update(['codEmpleadoSolicitante'=>$nuevoCod]);
+      RequerimientoBS::where('codEmpleadoEvaluador',$codAEliminar)->update(['codEmpleadoEvaluador'=>$nuevoCod]);
+      RequerimientoBS::where('codEmpleadoAdministrador',$codAEliminar)->update(['codEmpleadoAdministrador'=>$nuevoCod]);
+      RequerimientoBS::where('codEmpleadoContador',$codAEliminar)->update(['codEmpleadoContador'=>$nuevoCod]);
+
+      SolicitudFondos::where('codEmpleadoSolicitante',$codAEliminar)->update(['codEmpleadoSolicitante'=>$nuevoCod]);
+      SolicitudFondos::where('codEmpleadoEvaluador',$codAEliminar)->update(['codEmpleadoEvaluador'=>$nuevoCod]);
+      SolicitudFondos::where('codEmpleadoAbonador',$codAEliminar)->update(['codEmpleadoAbonador'=>$nuevoCod]);
+      SolicitudFondos::where('codEmpleadoContador',$codAEliminar)->update(['codEmpleadoContador'=>$nuevoCod]);
+
+
+      //RevisionInventario::where('codEmpleadoResponsable',$codAEliminar)->update(['codEmpleadoResponsable'=>$nuevoCod]);
       //ActivoInventario::where('codEmpleadoResponsable',$codAEliminar)->update(['codEmpleadoResponsable'=>$nuevoCod]);
-      //DetalleRevision::where('codEmpleadoQueReviso',$codAEliminar)->update(['codEmpleadoQueReviso'=>$nuevoCod]); 
+      //DetalleRevision::where('codEmpleadoQueReviso',$codAEliminar)->update(['codEmpleadoQueReviso'=>$nuevoCod]);
 
-      Sede::where('codEmpleadoAdministrador',$codAEliminar)->update(['codEmpleadoAdministrador'=>$nuevoCod]); 
-      
-      
-    } 
+      Sede::where('codEmpleadoAdministrador',$codAEliminar)->update(['codEmpleadoAdministrador'=>$nuevoCod]);
+
+
+    }
 
 
 
   }
+
 
 }

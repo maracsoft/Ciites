@@ -37,7 +37,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            
+
         ],
 
         'api' => [
@@ -72,12 +72,13 @@ class Kernel extends HttpKernel
         'ValidarSesionUGE' =>\App\Http\Middleware\ValidarSesionUGE::class,
         'ValidarSesionAdministracionOContador' =>\App\Http\Middleware\ValidarSesionAdministracionOContador::class,
         'ValidarSesionCITE' =>\App\Http\Middleware\ValidarSesionCITE::class,
+
         'ValidarSesionObservador' =>\App\Http\Middleware\ValidarSesionObservador::class,
 
-       
+
         'ValidarSesionGerenteOUGE' =>\App\Http\Middleware\ValidarSesionGerenteOUGE::class,
-        
+
         'Mantenimiento' => \App\Http\Middleware\Mantenimiento::class
-         
+
     ];
 }

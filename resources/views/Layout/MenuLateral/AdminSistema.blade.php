@@ -1,7 +1,7 @@
 <!-- Sidebar Menu -->
     <!-- Add icons to the links using the .nav-icon class
            with font-awesome or any other icon font library -->
-      
+
       <li class="nav-item has-treeview">
         <a href="#" class="nav-link">
           <i class="far fa-building nav-icon"></i>
@@ -11,7 +11,7 @@
           </p>
         </a>
         <ul class="nav nav-treeview">
-         
+
 
               <li class="nav-item">
                 <a href="{{route('SolicitudFondos.Empleado.Listar')}}" class="nav-link">
@@ -19,15 +19,15 @@
                   <p>Empleado</p>
                 </a>
               </li>
-          
-         
+
+
               <li class="nav-item">
                 <a href="{{route('SolicitudFondos.Gerente.Listar')}}" class="nav-link">
                   <i class="far fa-address-card nav-icon"></i>
                   <p>Gerente/Director</p>
                 </a>
               </li>
-          
+
 
               <li class="nav-item">
                 <a href="{{route('SolicitudFondos.Administracion.Listar')}}" class="nav-link">
@@ -36,14 +36,14 @@
                 </a>
               </li>
 
-            
+
               <li class="nav-item">
                 <a href="{{route('SolicitudFondos.Contador.Listar')}}" class="nav-link">
                   <i class="far fa-address-card nav-icon"></i>
                   <p>Contador</p>
                 </a>
               </li>
-              
+
 
               <li class="nav-item">
                 <a href="{{route('SolicitudFondos.Observador.Listar')}}" class="nav-link">
@@ -51,10 +51,10 @@
                   <p>Supervisor</p>
                 </a>
               </li>
-              
-              
-              
-            
+
+
+
+
 
         </ul>
 
@@ -64,7 +64,7 @@
 
 
       <li class="nav-item has-treeview">
-       
+
         <a href="#" class="nav-link">
           <i class="far fa-building nav-icon"></i>
           <p>
@@ -74,7 +74,7 @@
         </a>
 
         <ul class="nav nav-treeview">
-         
+
             <li class="nav-item">
               <a href="{{route('RendicionGastos.Empleado.Listar')}}" class="nav-link">
                 <i class="far fa-address-card nav-icon"></i>
@@ -87,7 +87,7 @@
                 <p>Mis Gastos Ren</p>
               </a>
             </li>
-          
+
 
             <li class="nav-item">
               <a href="{{route('RendicionGastos.Gerente.Listar')}}" class="nav-link">
@@ -115,9 +115,9 @@
               </a>
             </li>
 
-            
-        
-            
+
+
+
 
         </ul>
 
@@ -125,14 +125,14 @@
 
 
 
-      
-
-
-      
 
 
 
-      
+
+
+
+
+
 
 
 
@@ -161,7 +161,7 @@
           </li>
 
 
-          
+
 
           <li class="nav-item">
             <a href="{{route('ReposicionGastos.Gerente.Listar')}}" class="nav-link">
@@ -169,9 +169,9 @@
               <p>Gerente/Director</p>
             </a>
           </li>
-          
 
-          
+
+
           <li class="nav-item">
             <a href="{{route('ReposicionGastos.Administracion.Listar')}}" class="nav-link">
               <i class="far fa-address-card nav-icon"></i>
@@ -198,7 +198,7 @@
       </li>
 
 
-      
+
 
       <li class="nav-item has-treeview">
         <a href="#" class="nav-link">
@@ -222,9 +222,9 @@
               <p>Gerente/Director</p>
             </a>
           </li>
-          
 
-          
+
+
           <li class="nav-item">
             <a href="{{route('RequerimientoBS.Administrador.Listar')}}" class="nav-link">
               <i class="far fa-address-card nav-icon"></i>
@@ -253,8 +253,8 @@
         </ul>
       </li>
 
-  
- 
+
+
 
 
       <li class="nav-item has-treeview">
@@ -266,7 +266,7 @@
           </p>
         </a>
         <ul class="nav nav-treeview">
-          
+
 
           <li class="nav-item">
             <a href="{{route('RevisionInventario.Listar')}}" class="nav-link">
@@ -274,20 +274,20 @@
               <p>Revisiones</p>
             </a>
           </li>
-          
 
-          
+
+
           <li class="nav-item">
             <a href="{{route('ActivoInventario.Listar')}}" class="nav-link">
               <i class="far fa-address-card nav-icon"></i>
               <p>Activos</p>
             </a>
           </li>
-         
+
 
         </ul>
       </li>
-      
+
 
       <li class="nav-item has-treeview">
         <a href="#" class="nav-link">
@@ -298,7 +298,7 @@
           </p>
         </a>
         <ul class="nav nav-treeview">
-          
+
 
           <li class="nav-item">
             <a href="{{route('ContratosLocacion.Listar')}}" class="nav-link">
@@ -306,20 +306,20 @@
               <p>Locacion Serv</p>
             </a>
           </li>
-          
 
-          
+
+
           <li class="nav-item">
             <a href="{{route('ContratosPlazo.Listar')}}" class="nav-link">
               <i class="far fa-address-card nav-icon"></i>
               <p>Plazo Fijo</p>
             </a>
           </li>
-         
+
 
         </ul>
       </li>
-      
+
 
 
       <li class="nav-item has-treeview">
@@ -344,77 +344,21 @@
               <p>Viaticos</p>
             </a>
           </li>
-          
 
-          
+
+
           <li class="nav-item">
             <a href="{{route('DJVarios.Empleado.Listar')}}" class="nav-link">
               <i class="far fa-address-card nav-icon"></i>
               <p>Varios</p>
             </a>
           </li>
-         
+
 
         </ul>
       </li>
 
 
-      
-      <li class="nav-item has-treeview">
-        <a href="#" class="nav-link">
-          <i class="far fa-building nav-icon"></i>
-          <p>
-            CITE
-            <i class="right fas fa-angle-left"></i>
-          </p>
-        </a>
-        <ul class="nav nav-treeview">
-            
-          <li class="nav-item">
-            <a href="{{route('CITE.UnidadesProductivas.Listar')}}" class="nav-link">
-              <i class="far fa-address-card nav-icon"></i>
-              <p>UnidadesProductivas</p>
-            </a>
-          </li>
-          
-          <li class="nav-item">
-            <a href="{{route('CITE.Servicios.Listar')}}" class="nav-link">
-              <i class="far fa-address-card nav-icon"></i>
-              <p>Servicios</p>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a href="{{route('CITE.Usuarios.Listar')}}" class="nav-link">
-              <i class="far fa-address-card nav-icon"></i>
-              <p>Usuarios</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{route('CITE.Dashboard.Ver')}}" class="nav-link">
-                <i class="far fa-address-card nav-icon"></i>
-                <p>Dashboard</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{route('CITE.ReporteMensual.VerMatriz')}}" class="nav-link">
-                <i class="far fa-address-card nav-icon"></i>
-                <p>Matriz Seguimiento</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{route('CITE.ReporteMensual.MisReportes')}}" class="nav-link">
-                <i class="far fa-address-card nav-icon"></i>
-                <p>Mis reportes</p>
-            </a>
-          </li>
-
- 
-          
-           
-
-        </ul>
-      </li>
 
 
       <li class="nav-item">
@@ -425,7 +369,7 @@
           </p>
         </a>
       </li>
-      
+
       <li class="nav-item has-treeview">
         <a href="#" class="nav-link">
 
@@ -441,7 +385,7 @@
               <p>AdminSistema</p>
             </a>
           </li>
-          
+
           <li class="nav-item">
             <a href="{{route('GestiónProyectos.UGE.Listar')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
@@ -476,21 +420,21 @@
         </a>
 
         <ul class="nav nav-treeview">
-           
+
           <li class="nav-item">
             <a href="{{route('HistorialErrores.Listar')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Historial de Errores</p>
             </a>
           </li>
-          
+
           <li class="nav-item">
             <a href="{{route('HistorialLogeos.Listar')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Historial de Logeos</p>
             </a>
           </li>
-           
+
 
           <li class="nav-item">
             <a href="{{route('Operaciones.Listar')}}" class="nav-link">
@@ -506,7 +450,7 @@
             </a>
           </li>
 
-          
+
           <li class="nav-item">
             <a href="{{route('Reportes.Listar')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
@@ -530,11 +474,11 @@
           </li>
 
 
-          
+
 
         </ul>
       </li>
-   
+
       <li class="nav-item has-treeview">
         <a href="#" class="nav-link">
 
@@ -550,20 +494,20 @@
               <p>Empleados</p>
             </a>
           </li>
-        
+
           <li class="nav-item">
             <a href="{{route('GestionPuestos.Listar')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Puestos</p>
             </a>
           </li>
-          
-          
+
+
         </ul>
       </li>
 
 
-      
+
       <li class="nav-item has-treeview">
         <a href="#" class="nav-link">
 
@@ -573,8 +517,8 @@
           </p>
         </a>
         <ul class="nav nav-treeview">
-          
-          <li class="nav-item"> 
+
+          <li class="nav-item">
             <a href="{{route('GestiónUnidadMedida.listar')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Unidades de Medida</p>
@@ -587,7 +531,7 @@
               <p>Tipo Operacion</p>
             </a>
           </li>
-          
+
           <li class="nav-item">
             <a href="{{route('PlanEstrategico.listar')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
@@ -595,23 +539,23 @@
             </a>
           </li>
 
-           
+
           <li class="nav-item">
             <a href="{{route('GestiónTipoPersonaJuridica.Listar')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Tipo Personal Juridico</p>
             </a>
           </li>
-          
-              
+
+
           <li class="nav-item">
             <a href="{{route('EntidadFinanciera.listar')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Financieras</p>
             </a>
           </li>
-          
-            
+
+
 
           <li class="nav-item">
             <a href="{{route('TipoFinanciamiento.listar')}}" class="nav-link">
@@ -622,7 +566,7 @@
 
 
 
-          
+
 
           <li class="nav-item">
             <a href="{{route('GestiónProyectos.AdminSistema.listarPersonasRegistradas')}}" class="nav-link">
@@ -638,7 +582,7 @@
             </a>
           </li>
 
-              
+
           <li class="nav-item">
             <a href="{{route('Sede.ListarSedes')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
@@ -653,7 +597,7 @@
               <p>Actividades de Personas</p>
             </a>
           </li>
-    
+
 
         </ul>
       </li>
@@ -661,12 +605,12 @@
 
 
 
-      
 
-      
 
-        
-       
+
+
+
+
 
 
 
@@ -675,4 +619,4 @@
 
 
       <!-----------------------------------------------UNIDAD 2----------------------------------------------------------------->
-     
+

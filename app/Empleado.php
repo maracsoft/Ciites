@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\CITE\ReporteMensualCite;
+use App\Models\CITE\Servicio;
 use App\Models\MaracModel;
 use App\Models\MaracModelInterface;
 use App\Models\Notificaciones\Notificacion;
@@ -35,6 +36,14 @@ class Empleado extends Model implements MaracModelInterface
     public function getFechaNacimiento() : string{
       return Fecha::formatoParaVistas($this->fechaNacimiento);
 
+    }
+
+    public static function prepararParaSelect($listaEmpleados){
+      foreach ($listaEmpleados as $empleado) {
+        $empleado['getNombreCompleto'] = $empleado->getNombreCompleto();
+      }
+
+      return $listaEmpleados;
     }
 
 
@@ -373,12 +382,12 @@ class Empleado extends Model implements MaracModelInterface
 
     public static function hayEmpleadoLogeado() : bool {
       if(is_null(Auth::id())){
-       
+
         return false;
       }
 
-       
-      
+
+
       return true;
 
 
@@ -581,105 +590,7 @@ class Empleado extends Model implements MaracModelInterface
      }
 
 
-     public static function getListaUgesYArticuladores(){
 
-        $codPuestoUGE = Puesto::getCodPuesto_UGE();
-        $codPuestoArticulador = Puesto::getCodPuesto_Articulador();
-        $array = [$codPuestoUGE,$codPuestoArticulador];
-        $lista = EmpleadoPuesto::whereIn('codPuesto',$array)->get();
-
-        $codEmps = [];
-        foreach ($lista as $empPuesto) {
-          $codEmps[] = $empPuesto->codEmpleado;
-        }
-        return Empleado::whereIn('codEmpleado',$codEmps)->get();
-
-
-
-     }
-
-
-     /* CITE */
-
-
-      public function esArticulador() : bool{
-        $codPuestoEsperado = Puesto::getCodPuesto_Articulador();
-        return $this->verificarPuesto($codPuestoEsperado);
-
-     }
-
-     public function esEquipo() : bool{
-        $codPuestoEsperado = Puesto::getCodPuesto_Equipo();
-        return $this->verificarPuesto($codPuestoEsperado);
-    }
-
-    public function imprimirMenuCITE() : bool {
-
-      return $this->esArticulador() || $this->esEquipo() || $this->esUGE();
-
-    }
-
-     public function puedeGenerarReportesCITE(){
-        if($this->esArticulador())
-            return true;
-        if($this->esUGE())
-            return true;
-        return false;
-
-     }
-
-     /*
-     verifica si al usuario le debe aparecer un mensaje de alerta de registrar su reporte CITE
-     Condiciones:
-        debe ser equipo
-     */
-     public function mostrarMensajeDeRegistrarTuReporte() : bool {
-        if(!$this->esEquipo()) //si no es equipo, no
-            return false;
-
-        $codMesActual = intval(date('n'));
-        $añoActual = intval(date('Y'));
-        $diaActual = intval(date('d'));
-
-        /* El mensaje solo aparece despues del 26 */
-        if($diaActual < 26){
-            return false;
-        }
-
-        Debug::mensajeSimple('wey'.$añoActual);
-
-        $listaReporte = ReporteMensualCite::where('codMes',$codMesActual)
-            ->where('año',$añoActual)
-            ->where('codEmpleado',$this->getId())
-            ->get();
-        if(count($listaReporte) == 0){
-            return false; //No hay ningun registro para ese mes
-        }
-
-        //si hay registro, verificamos su estado
-        $reporte = $listaReporte[0];
-        if(!$reporte->getDebeReportar())
-            return false;
-
-        //si debe reportar, verificamos si el reporte ya está en aprobado
-        if($reporte->estaAprobado())
-            return false;
-
-        return true;
-
-     }
-
-
-     public function getReportesMensualesCITE(array $listaAños){
-
-        return ReporteMensualCite::where('codEmpleado',$this->codEmpleado)
-            ->whereIn('año',$listaAños)
-            ->orderBy('año','ASC')
-            ->orderBy('codMes','ASC')
-            ->get();
-
-
-     }
 
 
 

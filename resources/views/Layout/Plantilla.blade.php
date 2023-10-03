@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="es" translate="no">
-<head> 
+<head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title> @yield('titulo') </title>
-  
+
 
   {{-- Cambiar esto por una url d --}}
 
   <link rel="shortcut icon" href="/img/isologo.ico" type="image/png">
-  
-  
+
+
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -19,12 +19,12 @@
  <link rel="stylesheet" href="/css/siderbarstyle.css">
  <link rel="stylesheet" href="/calendario/css/bootstrap-datepicker.standalone.css">
  <link rel="stylesheet" href="/select2/bootstrap-select.min.css">
- 
+
 
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
- 
- 
- 
+
+
+
 
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="/adminlte/dist/css/adminlte.min.css">
@@ -38,7 +38,7 @@
             background-color:rgb(190, 190, 190)
       }
 
-      
+
     .fontSize6{
       font-size: 6pt;
     }
@@ -54,7 +54,7 @@
     .fontSize10{
       font-size: 10pt;
     }
-    
+
     .fontSize11{
       font-size: 11pt;
     }
@@ -82,9 +82,9 @@
     .fontSize19{
       font-size: 19pt;
     }
-    
-    
-    
+
+
+
     .tabla-detalles{
       min-width: 800px;
     }
@@ -94,12 +94,12 @@
 
     .notificacionXRendir{
       background-color: rgb(87, 180, 44);
-      
+
     }
 
     .notificacionObservada{
       background-color: rgb(209, 101, 101);
-          
+
     }
     .form-control-undefined {
         display: block;
@@ -176,14 +176,14 @@
       color: #495057;
       background-color: #ced4da;
       border-radius: 7px;
-      
+
       padding-left: 10px;
       padding-right: 10px;
       padding-top: 7px;
       padding-bottom: 5px;
-       
+
     }
-    
+
     .table-container{
       overflow-x: auto;
       padding-bottom: 20px;
@@ -191,7 +191,7 @@
     .rows_count span{
       font-weight: 800;
     }
-    
+
     .label_puestos{
       color: #b9c0cb;
       margin: -2px;
@@ -210,10 +210,10 @@
       background-color: white;
       margin-right: -8px;
       margin-left: -8px;
-      
+
     }
 
-    
+
   </style>
 
 
@@ -248,18 +248,18 @@
           AdminPanel
         </a>
       @endif
-      
+
     </ul>
 
 
     <ul class="navbar-nav ml-auto mr-2" style="">
-      
+
       @include('Layout.Notificaciones.Solicitudes')
       @include('Layout.Notificaciones.Rendiciones')
       @include('Layout.Notificaciones.Reposiciones')
       @include('Layout.Notificaciones.Requerimientos')
-      @include('Layout.Notificaciones.CITE')
-      
+
+
     </ul>
 
 
@@ -284,20 +284,20 @@
   {{--  {{route('bienvenido')}} --}}
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    
+
 
 
 
     <!-- Sidebar -->
 
- 
+
 
     <div class="sidebar">
       <div class="image-logo-container">
           <a href="{{route('user.home')}}">
             <img src="/img/logo-ciites.png" class="brand-image w-100 px-3">
           </a>
-          
+
       </div>
       <!-- Sidebar user (optional) -->
 
@@ -322,7 +322,7 @@
               <label class="label_puestos" style="" title="{{$puesto->descripcion}}">
                 {{$puesto->nombreAparente}}
               </label>
-            @endforeach 
+            @endforeach
           </div>
 
         </div>
@@ -355,10 +355,7 @@
                 @if($empLogeadoPlantilla->esUGE())
                     @include('Layout.MenuLateral.UGE')
                 @endif
-                {{-- CITE --}}
-                @if($empLogeadoPlantilla->imprimirMenuCITE())
-                    @include('Layout.MenuLateral.MenusCITE')
-                @endif
+
                 @if($empLogeadoPlantilla->esObservador())
                     @include('Layout.MenuLateral.Observador')
                 @endif
@@ -410,7 +407,7 @@
 
 <!-- AdminLTE App -->
 <script src="/adminlte/dist/js/adminlte.min.js"></script>
- 
+
 <script src="/select2/bootstrap-select.min.js"></script>
 
 {{-- La lógica del loader show y hide depende de esta librería --}}
@@ -421,8 +418,8 @@
 <link rel="stylesheet" href="/adminlte/dist/css/sweetalert.css">
 
 <script src="/calendario/js/bootstrap-datepicker.js"></script>
- 
- 
+
+
 
 
 <script type="application/javascript">

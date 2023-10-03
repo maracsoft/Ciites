@@ -23,4 +23,14 @@ class ProyectoContador extends Model
 
         return Proyecto::findOrFail($this->codProyecto);
     }
+
+    public static function verificarExistencia($codProyecto,$codEmpleado): bool {
+      $search = ProyectoContador::where('codEmpleadoContador','=',$codEmpleado)->where('codProyecto',$codProyecto)->get();
+      if(count($search) == 0){
+        return false;
+      }
+
+      return true;
+
+    }
 }

@@ -172,7 +172,14 @@ class Proyecto extends Model
 
     }
 
+    public static function findByCodigoPresupuestal($codigo) : Proyecto{
+      $search = Proyecto::where('codigoPresupuestal','=',$codigo)->where('codEstadoProyecto','!=',3)->get();
+      if(count($search) == 0){
+        throw new Exception("No hay ningun proyecto con codigo presupuestal $codigo");
+      }
 
+      return $search[0];
+    }
 
 
     public function verificarEstado($estado){

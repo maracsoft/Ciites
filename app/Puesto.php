@@ -29,10 +29,10 @@ class Puesto extends Model
         return $lista[0]->codPuesto;
     }
 
-    
+
     private static function getPuestoPorNombre($nombrePuesto){
         return Puesto::where('nombre','=',$nombrePuesto)->get()[0];
-    } 
+    }
 
     public static function getCodPuesto_Empleado(){
         return static::getPuestoPorNombre('Empleado')->codPuesto;
@@ -49,18 +49,13 @@ class Puesto extends Model
     public static function getCodPuesto_UGE(){
         return static::getPuestoPorNombre('UGE')->codPuesto;
     }
-    
-    public static function getCodPuesto_Equipo(){
-        return static::getPuestoPorNombre('EquipoCITE')->codPuesto;
-    }
-    public static function getCodPuesto_Articulador(){
-      return static::getPuestoPorNombre('ArticuladorCITE')->codPuesto;
-    }
+
 
     public static function getCodPuesto_Observador(){
       return static::getPuestoPorNombre('Observador')->codPuesto;
     }
 
 
-    
+
+
 }

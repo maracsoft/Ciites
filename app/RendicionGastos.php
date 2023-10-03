@@ -50,6 +50,26 @@ class RendicionGastos extends DocumentoAdministrativo
         return $fecha;
     }
 
+    public function getFechaHoraUltimaEdicion(){
+        $tipo_documento = TipoDocumento::where('abreviacion','REN')->first();
+        $tipo_operacion = TipoOperacion::where('codTipoDocumento',$tipo_documento->getId())->where('nombre','Editar')->first();
+        
+        $listaOperacionesEdicion = OperacionDocumento::where('codDocumento',$this->getId())
+            ->where('codTipoDocumento',$tipo_documento->getId())
+            ->where('codTipoOperacion',$tipo_operacion->getId())
+            ->orderBy('fechaHora','DESC')
+            ->get();
+
+        /* en algunos casos los documentos no tienen ni operaciones */    
+        if(count($listaOperacionesEdicion) == 0){
+          return $this->formatoFechaHoraRendicion();
+        }
+        
+        $ultima_operacion_edicion = $listaOperacionesEdicion[0];
+        return Fecha::formatoFechaHoraParaVistas($ultima_operacion_edicion->fechaHora);
+
+    }
+
  
     public function formatoFechaHoraRevisionGerente(){
 

@@ -26,12 +26,7 @@ use App\MaracsoftBot;
 use App\Mes;
 use App\MesAño;
 use App\MetaEjecutada;
-use App\Models\CITE\AsistenciaServicio;
-use App\Models\CITE\EstadoReporteMensual;
-use App\Models\CITE\RelacionUsuarioUnidad;
-use App\Models\CITE\Servicio;
-use App\Models\CITE\UnidadProductiva;
-use App\Models\CITE\UsuarioCite;
+
 use App\Numeracion;
 use App\OperacionDocumento;
 use App\OrdenCompra;
@@ -103,9 +98,9 @@ Route::group(['middleware'=>"Mantenimiento"],function()
 
 
     Route::get('/probandoCosas',function(){
-      
 
-    
+
+
     });
 
     Route::get('/serviciosDistritosRepetidos',function(){
@@ -212,10 +207,10 @@ Route::group(['middleware'=>"Mantenimiento"],function()
     Route::get('/GestiónUsuarios/asignarProyectoAObservador/{cadena}','EmpleadoController@asignarProyectoAObservador');
     Route::get('/GestiónUsuarios/asignarObservadorATodosProyectos/{codEmpleadoContador}','EmpleadoController@asignarObservadorATodosProyectos');
     Route::get('/GestiónUsuarios/quitarObservadorATodosProyectos/{codEmpleadoContador}','EmpleadoController@quitarObservadorATodosProyectos');
-    
 
 
-    
+
+
 
 
 
@@ -246,11 +241,11 @@ Route::group(['middleware'=>"Mantenimiento"],function()
         Route::get('/SolicitudFondos/MASTERINDEX','SolicitudFondosController@listarSolicitudes')->name('solicitudFondos.ListarSolicitudes');
 
 
-         
-        
 
-        
-        
+
+
+
+
 
         Route::get('/SolicitudFondos/descargar/{id}','SolicitudFondosController@descargarPDF')->name('solicitudFondos.descargarPDF');
         Route::get('/SolicitudFondos/verPDF/{id}','SolicitudFondosController@verPDF')->name('solicitudFondos.verPDF');
@@ -307,7 +302,7 @@ Route::group(['middleware'=>"Mantenimiento"],function()
 
             Route::post('/SolicitudFondos/Gerente/Observar','SolicitudFondosController@observarGerente')->name('solicitudFondos.Gerente.observar');
             Route::get('/SolicitudFondos/Gerente/Rechazar/{id}','SolicitudFondosController@rechazarGerente')->name('SolicitudFondos.Gerente.Rechazar');
-            
+
 
 
         });
@@ -323,7 +318,7 @@ Route::group(['middleware'=>"Mantenimiento"],function()
 
             Route::post('/SolicitudFondos/Administrador/Observar','SolicitudFondosController@observarAdministrador')->name('solicitudFondos.Administrador.observar');
             Route::get('/SolicitudFondos/Administrador/Rechazar/{id}','SolicitudFondosController@rechazarAdministrador')->name('SolicitudFondos.Administrador.Rechazar');
-    
+
 
         });
 
@@ -392,12 +387,12 @@ Route::group(['middleware'=>"Mantenimiento"],function()
         Route::get('/RendicionGastos/verPDF/{id}','RendicionGastosController@verPDF')->name('rendicionGastos.verPDF');
 
 
-        
+
         Route::post('/rendiciones/Gerente/observar','RendicionGastosController@observarComoGerente')->name('RendicionGastos.Gerente.Observar');
         Route::post('/rendiciones/Administrador/observar','RendicionGastosController@observarComoAdministrador')->name('RendicionGastos.Administrador.Observar');
         Route::post('/rendiciones/Contador/observar','RendicionGastosController@observarComoContador')->name('RendicionGastos.Contador.Observar');
-        
-        
+
+
         /* EMPLEADO */
 
         Route::post('/RendicionGastos/Empleado/guardar', 'RendicionGastosController@store')->name('RendicionGastos.Empleado.Store');
@@ -464,12 +459,12 @@ Route::group(['middleware'=>"Mantenimiento"],function()
 
         });
 
-        
+
         Route::group(['middleware'=>"ValidarSesionObservador"],function()
         {
             Route::get('/RendicionGastos/Observador/listar','RendicionGastosController@listarRendicionesParaObservador')->name('RendicionGastos.Observador.Listar');
             Route::get('/RendicionGastos/Observador/Ver/{codRendicion}','RendicionGastosController@VerRendicionComoObservador')->name('RendicionGastos.Observador.Ver');
-          
+
 
 
 
@@ -500,11 +495,11 @@ Route::group(['middleware'=>"Mantenimiento"],function()
         /* FUNCIONES PROPIAS DEL ADMINISTRADOR DEL SISTEMA */
         Route::group(['middleware'=>"ValidarSesionAdminSistema"],function()
         {
-            
+
             Route::get('/AdminPanel/Ver','AdminPanelController@VerPanel')->name('AdminPanel.VerPanel');
             Route::get('/AdminPanel/VerPhpInfo','AdminPanelController@VerPhpInfo')->name('AdminPanel.VerPhpInfo');
-            
-            
+
+
             /* *********************** MODULO DE JOBS ************************ */
             /* *********************** MODULO DE JOBS ************************ */
             /* *********************** MODULO DE JOBS ************************ */
@@ -516,18 +511,18 @@ Route::group(['middleware'=>"Mantenimiento"],function()
             /* *********************** MODULO DE JOBS ************************ */
             /* *********************** MODULO DE JOBS ************************ */
             /* *********************** MODULO DE JOBS ************************ */
-            
+
             Route::get('/Jobs/Listar','JobsController@ListarJobs')->name('Jobs.Listar');
             Route::get('/Jobs/Crear','JobsController@Crear')->name('Jobs.Crear');
             Route::post('/Jobs/GuardarEditar','JobsController@GuardarEditar')->name('Jobs.GuardarEditar');
             Route::get('/Jobs/{codJob}/Editar','JobsController@Editar')->name('Jobs.Editar');
-             
+
             Route::get('/Jobs/{codJob}/RunJob','JobsController@RunJob')->name('Jobs.RunJob');
             Route::get('/Jobs/{codJob}/UnRunJob','JobsController@UnRunJob')->name('Jobs.UnRunJob');
 
-            
+
             Route::get('/Jobs/{codJob}/Eliminar','JobsController@Eliminar')->name('Jobs.Eliminar');
-            
+
             /* *********************** MODULO DE MIGRACIONES ************************ */
             /* *********************** MODULO DE MIGRACIONES ************************ */
             /* *********************** MODULO DE MIGRACIONES ************************ */
@@ -536,26 +531,17 @@ Route::group(['middleware'=>"Mantenimiento"],function()
             Route::get('/Migraciones/Listar','MigracionController@ListarMigraciones')->name('Migraciones.Listar');
             Route::get('/Migraciones/Inv_ListarMigraciones','MigracionController@Inv_ListarMigraciones')->name('Migraciones.Inv_Listar');
 
-            
+
             /* Modulo de modificaciones de la bd */
-            Route::get('/ingresarFechasDeSolucionErrores','OperacionesController@ingresarFechasDeSolucionErrores');
-            Route::get('/ingresarFechaHoraCreacionVistaREP','OperacionesController@ingresarFechaHoraCreacionVistaREP');
-            Route::get('/ingresarFechaHoraBusquedas','OperacionesController@generarBusquedas');
 
 
             Route::get('/DB/GenerarBackup','OperacionesController@GenerarBackup');
             Route::get('/DB/CorrerMigraciones','MigracionController@CorrerMigraciones');
-            
+
             Route::post('/testearPOST',     'OperacionesController@testearPOST')->name('TestearPost');
-            Route::post('/Git/ActualizarRepositorio',     'OperacionesController@ActualizarRepositorio')->name('Git.ActualizarRepositorio');
-            
-            Route::get('/Cite/verReporteRepetidos','CITE\UsuarioCiteController@verReporteRepetidos')->name('CITE.verReporteRepetidos');
-            
-            
 
 
-            Route::get('/archivos/migrarAutf8','OperacionesController@migrarAUTF8Archivos');
-            Route::get('/arreglarErrorContadorGerente','OperacionesController@arreglarErrorContadorGerente');
+
 
             Route::get('/TipoOperaciones/Listar','TipoOperacionController@listar')->name('TipoOperacion.Listar');
 
@@ -565,7 +551,7 @@ Route::group(['middleware'=>"Mantenimiento"],function()
 
             Route::get('/PoblarReposiciones','PobladorBDController@poblarReposiciones');
 
-            
+
             /* MODULO DE PARAMETROS DEL SISTEMA */
 
 
@@ -645,7 +631,7 @@ Route::group(['middleware'=>"Mantenimiento"],function()
             Route::post('/HistorialLogeos/getDataGrafico','LogeoHistorialController@getDataGrafico')->name('HistorialLogeos.getDataGrafico');
 
 
-            
+
 
 
             /* Invocable */
@@ -661,7 +647,7 @@ Route::group(['middleware'=>"Mantenimiento"],function()
 
             Route::get('/GestiónUsuarios/verProyectosContador/{codEmpleado}','EmpleadoController@verProyectosContador')->name('GestionUsuarios.verProyectosContador');
             Route::get('/GestiónUsuarios/verProyectosObservador/{codEmpleado}','EmpleadoController@verProyectosObservador')->name('GestionUsuarios.verProyectosObservador');
-            
+
 
             Route::get('/GestiónUsuarios/{id}/editarUsuario','EmpleadoController@editarUsuario')->name('GestionUsuarios.editUsuario');
             Route::get('/GestiónUsuarios/{id}/editarEmpleado','EmpleadoController@editarEmpleado')->name('GestionUsuarios.editEmpleado');
@@ -816,15 +802,15 @@ Route::group(['middleware'=>"Mantenimiento"],function()
         /* ---------------------------------------------------------------------------------------------------------------- */
         /* ---------------------------------------------------------------------------------------------------------------- */
         /* ---------------------------------------------------------------------------------------------------------------- */
-        
+
 
         Route::get('/GestiónProyectos/getDashboardInfo','ProyectoController@getDashboardInfo')->name('GestiónProyectos.Gerente.getDashboardInfo');
         Route::get('/GestionProyectos/Dashboard','ProyectoController@VerDashboard')->name('GestionProyectos.VerDashboard');
-            
+
 
         Route::group(['middleware'=>"ValidarSesionGerenteOUGE"],function()
         {
-            
+
 
             Route::get('/GestionProyectos/RedirigirAProyectoSegunActor/{codProy}','ProyectoController@RedirigirAProyectoSegunActor')
                 ->name('GestionProyectos.RedirigirAProyectoSegunActor');
@@ -1089,7 +1075,7 @@ Route::group(['middleware'=>"Mantenimiento"],function()
                 ->name('ReposicionGastos.Gerente.aprobar');
 
             Route::post('/ReposicionGastos/Gerente/Observar','ReposicionGastosController@observarComoGerente')->name('ReposicionGastos.Gerente.observar');
-        
+
         });
         Route::group(['middleware'=>"ValidarSesionAdministracion"],function()
         {
@@ -1122,7 +1108,7 @@ Route::group(['middleware'=>"Mantenimiento"],function()
         {
             Route::get('/ReposicionGastos/Observador/listar','ReposicionGastosController@listarReposicionesParaObservador')->name('ReposicionGastos.Observador.Listar');
             Route::get('/ReposicionGastos/Observador/Ver/{codRendicion}','ReposicionGastosController@VerReposicionComoObservador')->name('ReposicionGastos.Observador.Ver');
-          
+
 
 
 
@@ -1135,9 +1121,9 @@ Route::group(['middleware'=>"Mantenimiento"],function()
 
         Route::get('/ReposicionGastos/{id}/Administrador/Rechazar','ReposicionGastosController@rechazarComoAdministrador')->name('ReposicionGastos.Administrador.rechazar');
         Route::get('/ReposicionGastos/{id}/Gerente/Rechazar','ReposicionGastosController@rechazarComoGerente')->name('ReposicionGastos.Gerente.rechazar');
-        
-        
-        
+
+
+
 
         /**RUTA MAESTRA PARA DESCARGAR FORMULARIOS PDF */
         Route::get('/ReposicionGastos/{id}/PDF','ReposicionGastosController@descargarPDF')
@@ -1260,10 +1246,10 @@ Route::group(['middleware'=>"Mantenimiento"],function()
         Route::group(['middleware'=>"ValidarSesionObservador"],function()
         {
             Route::get('/RequerimientoBS/Observador/listar','RequerimientoBSController@listarParaObservador')->name('RequerimientoBS.Observador.Listar');
-            
-          
+
+
             Route::get('/RequerimientoBS/Observador/Ver/{codRequerimiento}','RequerimientoBSController@VerRequerimientoComoObservador')->name('RequerimientoBS.Observador.Ver');
-          
+
 
 
         });
@@ -1272,7 +1258,7 @@ Route::group(['middleware'=>"Mantenimiento"],function()
 
         Route::get('/RequerimientoBS/{id}/Administrador/Rechazar','RequerimientoBSController@rechazarComoAdministrador')->name('RequerimientoBS.Administrador.rechazar');
         Route::get('/RequerimientoBS/{id}/Gerente/Rechazar','RequerimientoBSController@rechazarComoGerente')->name('RequerimientoBS.Gerente.rechazar');
-        
+
 
         Route::post('/RequerimientoBS/Gerente/Observar','RequerimientoBSController@observarComoGerente')->name('RequerimientoBS.Gerente.observar');
         Route::post('/RequerimientoBS/Administracion/Observar','RequerimientoBSController@observarComoAdministrador')->name('RequerimientoBS.Administracion.observar');
@@ -1542,200 +1528,7 @@ Route::group(['middleware'=>"Mantenimiento"],function()
 
 
 
-        /* ************************************************************************************************ */
-        /* ************************************************************************************************ */
-        /* ************************************************************************************************ */
-        /* ************************************************************************************************ */
-        /* ************************************************************************************************ */
-        /* ************************************************************************************************ */
-        /* ***************************************** MODULO CITE ****************************************** */
-        /* ************************************************************************************************ */
-        /* ************************************************************************************************ */
-        /* ************************************************************************************************ */
-        /* ************************************************************************************************ */
-        /* ************************************************************************************************ */
-        /* ************************************************************************************************ */
-        /* ************************************************************************************************ */
 
-        Route::group(['middleware'=>"ValidarSesionCITE"],function()
-        {
-            Route::get('/Cite/Dashboard','CITE\ServicioController@verDashboard')->name('CITE.Dashboard.Ver');
-
-
-            Route::get('/Cite/UnidadesProductivas/Listar','CITE\UnidadProductivaController@Listar')->name('CITE.UnidadesProductivas.Listar');
-            Route::get('/Cite/UnidadesProductivas/Crear','CITE\UnidadProductivaController@Crear')->name('CITE.UnidadesProductivas.Crear');
-            Route::get('/Cite/UnidadesProductivas/{id}/Ver','CITE\UnidadProductivaController@Ver')->name('CITE.UnidadesProductivas.Ver');
-
-
-            Route::get('/Cite/ReporteMensual/MisReportes','CITE\ReporteMensualController@MisReportes')->name('CITE.ReporteMensual.MisReportes');
-            Route::get('/Cite/ReporteMensual/VerMatriz','CITE\ReporteMensualController@VerMatriz')->name('CITE.ReporteMensual.VerMatriz');
-            Route::get('/Cite/ReporteMensual/{codReporte}/inv_EvaluarReporte','CITE\ReporteMensualController@inv_EvaluarReporte')->name('CITE.ReporteMensual.inv_EvaluarReporte');
-
-            
-
-            Route::get('/Cite/ReporteMensual/Programar/{codReporte}','CITE\ReporteMensualController@Programar')->name('CITE.ReporteMensual.Programar');
-            Route::get('/Cite/ReporteMensual/Cancelar/{codReporte}','CITE\ReporteMensualController@Cancelar')->name('CITE.ReporteMensual.Cancelar');
-            
-            Route::get('/Cite/ReporteMensual/MarcarReporteComoListo/{codReporte}','CITE\ReporteMensualController@MarcarReporteComoListo')->name('CITE.ReporteMensual.MarcarReporteComoListo');
-
-            Route::get('/Cite/ReporteMensual/Aprobar/{codReporte}','CITE\ReporteMensualController@Aprobar')->name('CITE.ReporteMensual.Aprobar');
-            Route::get('/Cite/ReporteMensual/Observar','CITE\ReporteMensualController@Observar')->name('CITE.ReporteMensual.Observar');
-            
-
-            Route::get('/Cite/UnidadesProductivas/Editar/{id}','CITE\UnidadProductivaController@Editar')->name('CITE.UnidadesProductivas.Editar');
-
-            Route::get('/Cite/UnidadesProductivas/Eliminar/{id}','CITE\UnidadProductivaController@Eliminar')->name('CITE.UnidadesProductivas.Eliminar');
-
-
-            Route::post('/Cite/UnidadesProductivas/Actualizar/','CITE\UnidadProductivaController@Actualizar')->name('CITE.UnidadesProductivas.Actualizar');
-            Route::post('/Cite/UnidadesProductivas/Guardar/','CITE\UnidadProductivaController@Guardar')->name('CITE.UnidadesProductivas.Guardar');
-            Route::post('/Cite/UnidadesProductivas/ConfigurarPresidenteGerente/','CITE\UnidadProductivaController@ConfigurarPresidenteGerente')->name('CITE.UnidadesProductivas.ConfigurarPresidenteGerente');
-
-
-            Route::get('/Cite/UnidadesProductivas/Reporte','CITE\UnidadProductivaController@Reporte')->name('CITE.UnidadesProductivas.Reporte');
-
-
-            Route::post('/Cite/UnidadProductiva/AñadirGrupoDeSocios','CITE\UnidadProductivaController@AñadirGrupoDeSocios')->name('CITE.Servicios.AñadirGrupoDeSocios');
-
-            Route::get('/Cite/UnidadProductiva/EliminarRelacionUsuarioUnidad/{codRelacion}','CITE\UnidadProductivaController@EliminarRelacionUsuarioUnidad')->name('CITE.Servicios.EliminarRelacionUsuarioUnidad');
-
-            /* SERVICIOS */
-
-
-            Route::get('/Cite/Servicios/Listar','CITE\ServicioController@Listar')->name('CITE.Servicios.Listar');
-            Route::get('/Cite/Servicios/Crear','CITE\ServicioController@Crear')->name('CITE.Servicios.Crear');
-            Route::get('/Cite/Servicios/{id}/Ver','CITE\ServicioController@Ver')->name('CITE.Servicios.Ver');
-
-            Route::get('/Cite/buscarUsuarioCite/{dni}','CITE\ServicioController@buscarUsuarioCite')->name('CITE.buscarUsuarioCite');
-
-            Route::post('/Cite/Servicios/GuardarAsistencias/','CITE\ServicioController@GuardarAsistencias')->name('CITE.Servicios.GuardarAsistencias');
-
-
-            Route::get('/Cite/Servicios/Editar/{id}','CITE\ServicioController@Editar')->name('CITE.Servicios.Editar');
-
-            Route::get('/Cite/Servicios/Duplicar/{id}','CITE\ServicioController@Duplicar')->name('CITE.Servicios.Duplicar');
-
-            Route::get('/Cite/Servicios/Eliminar/{id}','CITE\ServicioController@Eliminar')->name('CITE.Servicios.Eliminar');
-            Route::get('/Cite/Servicios/EliminarRelacionUsuario/{codRelacion}','CITE\ServicioController@EliminarRelacionUsuario')->name('CITE.Servicios.EliminarRelacionUsuario');
-
-
-
-
-            Route::post('/Cite/Servicios/Actualizar/','CITE\ServicioController@Actualizar')->name('CITE.Servicios.Actualizar');
-            Route::post('/Cite/Servicios/Guardar/','CITE\ServicioController@Guardar')->name('CITE.Servicios.Guardar');
-            Route::post('/Cite/Servicios/agregarAsistenciaExterna','CITE\ServicioController@agregarAsistenciaExterna')->name('CITE.Servicios.agregarAsistenciaExterna');
-
-            Route::post('/Cite/Servicios/AñadirGrupoDeUsuarios','CITE\ServicioController@AñadirGrupoDeUsuarios')->name('CITE.Servicios.AñadirGrupoDeUsuarios');
-
-
-            Route::get('/Cite/Servicios/DescargarArchivo/{id}','ArchivoGeneralController@DescargarArchivo')->name('CITE.Servicios.DescargarArchivo');
-            Route::get('/Cite/Servicios/EliminarArchivo/{codArchivoServicio}','CITE\ServicioController@EliminarArchivo')->name('CITE.Servicios.EliminarArchivo');
-
-
-            Route::get('/Cite/Servicios/ExportarExcelConConvenio','CITE\ServicioController@ExportarExcelConConvenio')->name('CITE.Servicios.ExportarExcelConConvenio');
-            Route::get('/Cite/Servicios/ExportarExcelSinConvenio','CITE\ServicioController@ExportarExcelSinConvenio')->name('CITE.Servicios.ExportarExcelSinConvenio');
-            Route::get('/Cite/Servicios/ExportarExcel','CITE\ServicioController@ExportarExcel')->name('CITE.Servicios.ExportarExcel');
-
-            Route::get('/CITE/eliminarTotalmente/{codServ}','CITE\ServicioController@eliminarTotalmente')->name('CITE.Servicios.EliminarTotalmente');
-
-            /* USUARIOS */
-            Route::get('/Cite/Usuarios/Crear','CITE\UsuarioCiteController@Crear')->name('CITE.Usuarios.Crear');
-            Route::get('/Cite/Usuarios/{id}/Editar','CITE\UsuarioCiteController@Editar')->name('CITE.Usuarios.Editar');
-
-            Route::post('/Cite/Usuarios/Guardar','CITE\UsuarioCiteController@Guardar')->name('CITE.Usuarios.Guardar');
-            Route::post('/Cite/Usuarios/Actualizar','CITE\UsuarioCiteController@Actualizar')->name('CITE.Usuarios.Actualizar');
-
-
-            Route::get('/Cite/Usuarios/Listar','CITE\UsuarioCiteController@listar')->name('CITE.Usuarios.Listar');
-            Route::get('/Cite/Usuarios/{id}/Ver','CITE\UsuarioCiteController@ver')->name('CITE.Usuarios.Ver');
-            Route::get('/Cite/Usuarios/ExportarExcel','CITE\UsuarioCiteController@ExportarExcel')->name('CITE.Usuarios.ExportarExcel');
-
-            Route::post('/Cite/Usuarios/VincularServicio','CITE\UsuarioCiteController@VincularServicio')->name('CITE.Usuarios.VincularServicio');
-
-
-        });
-        /*
-        Route::get('/separarUsuarios','CITE\ServicioController@separarUsuarios');
-
-        Route::get('/convertirFechasAFormatoSQL','CITE\ServicioController@convertirFechasAFormatoSQL');
-        Route::get('/Cite/UnidadesProductivas/eliminarUnidadesProductivas999','CITE\UnidadProductivaController@eliminarUnidadesProductivas999');
-        Route::get('/Cite/UnidadesProductivas/poblarDirecciones','CITE\UnidadProductivaController@poblarDirecciones');
-
-        */
-
-        /* FUNCIONES PROPIAS DEL ADMINISTRADOR DEL SISTEMA */
-
-        Route::group(['middleware'=>"ValidarSesionAdminSistema"],function()
-        {
-          Route::get('/Cite/ReporteMensual/poblarReportesDelAno/{ano}','CITE\ReporteMensualController@poblarReportesDelAño')->name('CITE.ReporteMensual.poblarReportesDelAño');
-
-
-          Route::get('/Cite/UnidadesProductivas/poblarRazonSocial/{limite}','CITE\UnidadProductivaController@poblarRazonSocial');
-          Route::get('/Cite/UnidadesProductivas/pasarLasUnidadesDeNingunaANoTieneCadena','CITE\UnidadProductivaController@pasarLasUnidadesDeNingunaANoTieneCadena');
-
-
-            Route::get('/Cite/Usuarios/ponerNombresYApellidosEnMayusculas','CITE\UsuarioCiteController@ponerNombresYApellidosEnMayusculas');
-            Route::get('/Cite/UnidadProductiva/ponerRazonSocialYNombreEnMayusculas','CITE\UnidadProductivaController@ponerRazonSocialYNombreEnMayusculas');
-            Route::get('/Cite/Servicio/ponerDescripcionEnMayusculas','CITE\ServicioController@ponerDescripcionEnMayusculas');
-
-
-            Route::get('/Cite/mostrarUsuariosRepetidos','CITE\ServicioController@mostrarUsuariosRepetidos');
-            Route::get('/Cite/eliminarUsuariosRepetidos','CITE\ServicioController@eliminarUsuariosRepetidos');
-            Route::get('/Cite/eliminarRelacionUsuarioUnidadRepetidos','CITE\ServicioController@eliminarRelacionUsuarioUnidadRepetidos');
-            Route::get('/Cite/eliminarRelacionAsistenciasRepetidos','CITE\ServicioController@eliminarRelacionAsistenciasRepetidos');
-
-            
-            Route::get('/crearRelacionesUsuariosUnidad', function(){
-
-                db::beginTransaction();
-                $listaUsuarios = UsuarioCite::All();
-                foreach ($listaUsuarios as $usuario) {
-                    $bool = UnidadProductiva::existeUnidadProductivaRUC($usuario->rucUnidadProductiva);
-                    if(!$bool){
-                        throw new Exception();
-                    }
-                    $unidad = UnidadProductiva::where('ruc',$usuario->rucUnidadProductiva)->get()[0];
-
-                    $rela = new RelacionUsuarioUnidad();
-                    $rela->codUsuario = $usuario->getId();
-                    $rela->codUnidadProductiva = $unidad->getId();
-                    $rela->save();
-
-                    error_log($usuario->getId());
-                }
-
-                db::commit();
-
-                return "YATA";
-
-
-            });
-
-
-
-            Route::get('/remplazarLetrasPorNumerosEnUnidades', function(){
-
-                db::beginTransaction();
-                $listaUnidades = UnidadProductiva::All();
-                foreach ($listaUnidades as $unidad) {
-                    error_log(ord($unidad->codTipoPersoneria) - 64);
-                    $unidad->codTipoPersoneria = ord($unidad->codTipoPersoneria) - 64;
-                    $unidad->save();
-                }
-                db::commit();
-
-                return "YATA";
-
-
-            });
-
-
-            Route::get('/CITE/remplazarNombresCorruptos','CITE\UsuarioCiteController@remplazarNombresCorruptos');
-            Route::get('/CITE/quitarOdeDNIs','CITE\UsuarioCiteController@quitarOdeDNIs');
-
-
-
-        });
 
 
         /* Notificaciones */

@@ -18,6 +18,7 @@ use App\Debug;
 use App\EmpleadoPuesto;
 use App\ErrorHistorial;
 use App\Fecha;
+use App\Http\Controllers\CITE\ReporteMensualController;
 use App\ProyectoContador;
 use App\ProyectoObservador;
 use App\RespuestaAPI;
@@ -117,6 +118,7 @@ class EmpleadoController extends Controller
 
               }
             }
+
 
 
             db::commit();
@@ -298,6 +300,9 @@ class EmpleadoController extends Controller
         }else{
           $msj = "desactivo";
         }
+
+
+
         db::commit();
 
         return RespuestaAPI::respuestaOk("¡LISTO! Ya se $msj el Rol de " . $puesto->nombreAparente. " para ".$empleado->getNombreCompleto());
@@ -434,6 +439,143 @@ class EmpleadoController extends Controller
             $codErrorHistorial=ErrorHistorial::registrarError($th, app('request')->route()->getAction(),$cadena);
             return 0;
         }
+
+
+    }
+
+
+    public function AsignarContadorAProyectosPorComas(Request $request){
+      try{
+          db::beginTransaction();
+          $codEmpleado = $request->codEmpleado;
+          $empleado = new Empleado();
+          $array_cods_proyectos = explode(',',$request->array_cods_proyectos);
+          foreach ($array_cods_proyectos as $codigo_presupuestal) {
+            $proyecto = Proyecto::findByCodigoPresupuestal($codigo_presupuestal);
+            $ya_existe = ProyectoContador::verificarExistencia($proyecto->codProyecto,$codEmpleado);
+            if(!$ya_existe){
+              $nuevo = new ProyectoContador();
+              $nuevo->codProyecto = $proyecto->codProyecto;
+              $nuevo->codEmpleadoContador = $codEmpleado;
+              $nuevo->save();
+              $nombres[] = $proyecto->nombre;
+            }
+
+          }
+          $nombres = implode(",",$nombres);
+          $msj = "Se ha asociado al contador ".$empleado->getNombreCompleto(). " a los proyectos $nombres";
+
+          db::commit();
+          return redirect()->route('GestionUsuarios.verProyectosContador',$codEmpleado)->with('datos',$msj);
+      } catch (\Throwable $th) {
+          Debug::mensajeError(' EMPLEADO CONTROLLER asignar contador a todos los proyectos' ,$th);
+          DB::rollback();
+          $codErrorHistorial=ErrorHistorial::registrarError($th, app('request')->route()->getAction(),$request);
+
+          return redirect()->route('GestionUsuarios.verProyectosContador',$codEmpleado)->with('datos',"Ocurrio un error");
+      }
+
+
+    }
+
+
+
+    public function QuitarContadorAProyectosPorComas(Request $request){
+      try{
+          db::beginTransaction();
+          $codEmpleado = $request->codEmpleado;
+          $empleado = new Empleado();
+          $array_cods_proyectos = explode(',',$request->array_cods_proyectos);
+          foreach ($array_cods_proyectos as $codigo_presupuestal) {
+            $proyecto = Proyecto::findByCodigoPresupuestal($codigo_presupuestal);
+            $ya_existe = ProyectoContador::verificarExistencia($proyecto->codProyecto,$codEmpleado);
+            if($ya_existe){
+              ProyectoContador::where('codProyecto',$proyecto->codProyecto)->where('codEmpleadoContador',$codEmpleado)->delete();
+              $nombres[] = $proyecto->nombre;
+            }
+
+          }
+          $nombres = implode(",",$nombres);
+          $msj = "Se ha eliminado al contador ".$empleado->getNombreCompleto(). " de los proyectos $nombres";
+
+          db::commit();
+          return redirect()->route('GestionUsuarios.verProyectosContador',$codEmpleado)->with('datos',$msj);
+      } catch (\Throwable $th) {
+          Debug::mensajeError(' EMPLEADO CONTROLLER asignar contador a todos los proyectos' ,$th);
+          DB::rollback();
+          $codErrorHistorial=ErrorHistorial::registrarError($th, app('request')->route()->getAction(),$request);
+
+          return redirect()->route('GestionUsuarios.verProyectosContador',$codEmpleado)->with('datos',"Ocurrio un error");
+      }
+
+
+    }
+
+
+
+    public function AsignarObservadorAProyectosPorComas(Request $request){
+      try{
+          db::beginTransaction();
+          $codEmpleado = $request->codEmpleado;
+          $empleado = new Empleado();
+          $array_cods_proyectos = explode(',',$request->array_cods_proyectos);
+          foreach ($array_cods_proyectos as $codigo_presupuestal) {
+            $proyecto = Proyecto::findByCodigoPresupuestal($codigo_presupuestal);
+            $ya_existe = ProyectoObservador::verificarExistencia($proyecto->codProyecto,$codEmpleado);
+            if(!$ya_existe){
+              $nuevo = new ProyectoObservador();
+              $nuevo->codProyecto = $proyecto->codProyecto;
+              $nuevo->codEmpleadoObservador = $codEmpleado;
+              $nuevo->save();
+              $nombres[] = $proyecto->nombre;
+            }
+
+          }
+          $nombres = implode(",",$nombres);
+          $msj = "Se ha asociado al observador ".$empleado->getNombreCompleto(). " a los proyectos $nombres";
+
+          db::commit();
+          return redirect()->route('GestionUsuarios.verProyectosObservador',$codEmpleado)->with('datos',$msj);
+      } catch (\Throwable $th) {
+          Debug::mensajeError(' EMPLEADO CONTROLLER asignar observador a todos los proyectos' ,$th);
+          DB::rollback();
+          $codErrorHistorial=ErrorHistorial::registrarError($th, app('request')->route()->getAction(),$request);
+
+          return redirect()->route('GestionUsuarios.verProyectosObservador',$codEmpleado)->with('datos',"Ocurrio un error");
+      }
+
+
+    }
+
+
+
+    public function QuitarObservadorAProyectosPorComas(Request $request){
+      try{
+          db::beginTransaction();
+          $codEmpleado = $request->codEmpleado;
+          $empleado = new Empleado();
+          $array_cods_proyectos = explode(',',$request->array_cods_proyectos);
+          foreach ($array_cods_proyectos as $codigo_presupuestal) {
+            $proyecto = Proyecto::findByCodigoPresupuestal($codigo_presupuestal);
+            $ya_existe = ProyectoObservador::verificarExistencia($proyecto->codProyecto,$codEmpleado);
+            if($ya_existe){
+              ProyectoObservador::where('codProyecto',$proyecto->codProyecto)->where('codEmpleadoObservador',$codEmpleado)->delete();
+              $nombres[] = $proyecto->nombre;
+            }
+
+          }
+          $nombres = implode(",",$nombres);
+          $msj = "Se ha eliminado al observador ".$empleado->getNombreCompleto(). " de los proyectos $nombres";
+
+          db::commit();
+          return redirect()->route('GestionUsuarios.verProyectosObservador',$codEmpleado)->with('datos',$msj);
+      } catch (\Throwable $th) {
+          Debug::mensajeError(' EMPLEADO CONTROLLER asignar observador a todos los proyectos' ,$th);
+          DB::rollback();
+          $codErrorHistorial=ErrorHistorial::registrarError($th, app('request')->route()->getAction(),$request);
+
+          return redirect()->route('GestionUsuarios.verProyectosObservador',$codEmpleado)->with('datos',"Ocurrio un error");
+      }
 
 
     }

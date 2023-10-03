@@ -67,7 +67,7 @@
 - Requerimientos de bienes y servicios (REQ) 
 - Contratos (CON)
 - Declaraciones juradas (DEC)
-- Cite (CITE)
+ 
 - Ordenes de Compra (ORD)
 - Gestión de Proyectos (PROY)
 
@@ -86,9 +86,8 @@
 - Contador
 - Observador
 - UGE
-- EquipoCITE
-- ArticuladorCITE
-
+ 
+ 
 
 
 ## Links útiles de documentación
