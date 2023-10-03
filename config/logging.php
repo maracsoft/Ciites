@@ -61,7 +61,11 @@ return [
             'emoji' => ':boom:',
             'level' => 'critical',
         ],
-
+        'maraclog' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/marac_logs/maraclog.log'),
+          'level' => 'debug',
+        ],
         'papertrail' => [
             'driver' => 'monolog',
             'level' => 'debug',

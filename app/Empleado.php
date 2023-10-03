@@ -253,6 +253,13 @@ class Empleado extends Model implements MaracModelInterface
       return $this->verificarPuesto($codPuestoEsperado);
     }
 
+    public function esAdministrador(){
+      $codPuestoEsperado = Puesto::getCodPuesto_Administrador();
+      return $this->verificarPuesto($codPuestoEsperado);
+    }
+
+
+
     /* REFACTORIZAR ESTO PARA LA NUEVA CONFIGURACION DEL A BASE DE DATOOOOOOOOOOOOOOOOOOOOOOOOOS
     SOLO TIENES K CAMBIAR TODAS LAS FUNCIONES QUE USEN EL codPuesto POR LA NUEVA TABLA
 

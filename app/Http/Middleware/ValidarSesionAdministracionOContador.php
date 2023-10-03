@@ -17,10 +17,10 @@ class ValidarSesionAdministracionOContador
      */
     public function handle($request, Closure $next)
     {
+        $emp_logeado = Empleado::getEmpleadoLogeado();
 
-        /* EN ESTE MIDDLEWARE, SER ADMIN DE SISTEMA NO DESACTIVA LA VALIDACIÓN, */
-        //if(!Empleado::getEmpleadoLogeado()->esAdminSistema())
-            if(!Empleado::getEmpleadoLogeado()->esContador() && ! Empleado::getEmpleadoLogeado()->esJefeAdmin() ){
+        if(!$emp_logeado->esAdminSistema())
+            if(!$emp_logeado->esContador() && ! $emp_logeado->esJefeAdmin() ){
                 $codErrorHistorial = ErrorHistorial::registrarError("Acceso a ruta sin permiso", app('request')->route()->getAction(),"Middleware ValidarSesionAdministracionOContador");
                 $msj = Configuracion::getMensajeError($codErrorHistorial);
                 return redirect()->route('error')->with('datos',$msj);

@@ -29,7 +29,7 @@ class OrdenCompraController extends Controller
         $fechaInicio=substr($request->fechaInicio,6,4).'-'.substr($request->fechaInicio,3,2).'-'.substr($request->fechaInicio,0,2).' 00:00:00';
         $fechaFin=substr($request->fechaFin,6,4).'-'.substr($request->fechaFin,3,2).'-'.substr($request->fechaFin,0,2).' 23:59:59';
 
-        
+
         $ordenes = OrdenCompra::where('codEmpleadoCreador','>',"-1");
         if(strtotime($fechaFin) > strtotime($fechaInicio) && $request->fechaInicio!=$request->fechaFin){
             //$fechaFin='es mayor';
@@ -39,18 +39,18 @@ class OrdenCompraController extends Controller
         $codEmpleadoBuscar = $request->codEmpleadoBuscar;
         if($codEmpleadoBuscar!="-1" && $codEmpleadoBuscar!="" ) //si se le mandó algun filtro
             $ordenes=$ordenes->where('codEmpleadoCreador',$codEmpleadoBuscar);
-        else 
+        else
             $codEmpleadoBuscar = "-1"; //si no se mandó ningun atributo, que no seleccione ninguno
-        
+
 
         $buscarPorCodigo = $request->buscarPorCodigo;
         if($buscarPorCodigo)
             $ordenes = $ordenes->where('codigoCedepas','like',"%$buscarPorCodigo%");
-        
+
         $buscarPorRuc = $request->buscarPorRuc;
         if($buscarPorRuc)
             $ordenes = $ordenes->where('ruc','like',"%$buscarPorRuc%");
-        
+
 
         $ordenes =  $ordenes->orderBy('fechaHoraCreacion','DESC');
         $ordenes=$ordenes->paginate($this::PAGINATION);
@@ -62,6 +62,8 @@ class OrdenCompraController extends Controller
         $listaEmpleados = OrdenCompra::getEmpleadosQueGeneraronOrdenes();
         $listaRucs = OrdenCompra::getArrayRucs();
 
+
+
         return view('OrdenCompra.ListarOrdenCompra',compact('ordenes','fechaInicio','fechaFin',
             'listaEmpleados','codEmpleadoBuscar','buscarPorCodigo','listaRucs','buscarPorRuc'));
     }
@@ -70,7 +72,16 @@ class OrdenCompraController extends Controller
 
 
     public function crearOrdenCompra(){
+
+
         $empleado=Empleado::getEmpleadoLogeado();
+
+        if(!$empleado->esAdministrador() && !$empleado->esContador()){
+          return redirect()->route('OrdenCompra.Empleado.Listar')->with('datos_error',"Solo administradores y contadores pueden registrar órdenes de compra");
+        }
+
+
+
         $objNumeracion = Numeracion::getNumeracionOC();
         $unidades=UnidadMedida::all();
         $proyectos=Proyecto::getProyectosActivos();
@@ -97,57 +108,57 @@ class OrdenCompraController extends Controller
             $orden->codProyecto=$request->codProyecto;
             $orden->codMoneda=$request->codMoneda;
             $orden->codEmpleadoCreador=Empleado::getEmpleadoLogeado()->codEmpleado;
-            
+
             $empleado = Empleado::getEmpleadoLogeado();
 
             if($empleado->esJefeAdmin())
                 $orden->codSede = $empleado->getSedeQueAdministra()->codSede;
             else //si es contador
                 $orden->codSede =$empleado->getSedeContador()->codSede;
-            
+
             $orden->fechaHoraCreacion=new DateTime();
 
             $orden->codigoCedepas=OrdenCompra::calcularCodigoCedepasLibre(Numeracion::getNumeracionOC());
             Numeracion::aumentarNumeracionOC();
 
             $orden->save();
-            
+
             //creacion de detalles
             $vec[] = '';
-            //$codREQRecienInsertado = $requerimiento->codRequerimiento;  
+            //$codREQRecienInsertado = $requerimiento->codRequerimiento;
             if($request->cantElementos==0)
                 throw new Exception("No se ingresó ningún item.", 1);
-                
+
 
             $i = 0;
             $cantidadFilas = $request->cantElementos;
-            while ($i< $cantidadFilas ) 
+            while ($i< $cantidadFilas )
             {
                 $detalle=new DetalleOrdenCompra();
-                $detalle->codOrdenCompra=$orden->codOrdenCompra ;//ultimo insertad            
+                $detalle->codOrdenCompra=$orden->codOrdenCompra ;//ultimo insertad
                 $detalle->cantidad=$request->get('colCantidad'.$i);
-                $detalle->descripcion=$request->get('colDescripcion'.$i);            
+                $detalle->descripcion=$request->get('colDescripcion'.$i);
                 $detalle->valorDeVenta=$request->get('colValorVenta'.$i);
-                $detalle->precioVenta=$request->get('colPrecioVenta'.$i);            
+                $detalle->precioVenta=$request->get('colPrecioVenta'.$i);
                 $detalle->subtotal=$request->get('colSubTotal'.$i);
                 if($request->get('colExonerado'.$i)=='1'){
                     $detalle->exoneradoIGV=0;
                 }else $detalle->exoneradoIGV=1;
                 $detalle->codUnidadMedida=$request->get('colUnidadMedida'.$i);
-                $detalle->save();  
+                $detalle->save();
                 $i=$i+1;
             }
-            
+
 
 
             if( $request->nombresArchivos!='' ){
                 $nombresArchivos = explode(', ',$request->nombresArchivos);
                 $j=0;
                 foreach ($request->file('filenames') as $archivo)
-                {   
+                {
                     $nombreArchivoGuardado = $orden->getNombreGuardadoNuevoArchivo($j+1);
                     Debug::mensajeSimple('el nombre de guardado de la imagen es:'.$nombreArchivoGuardado);
-                    
+
                     $archivoOrden = new ArchivoOrdenCompra();
                     $archivoOrden->codOrdenCompra = $orden->codOrdenCompra;
                     $archivoOrden->nombreGuardado = $nombreArchivoGuardado;
@@ -155,7 +166,7 @@ class OrdenCompraController extends Controller
                     $archivoOrden->save();
 
                     $fileget = \File::get( $archivo );
-                    
+
                     Storage::disk('ordenes')
                     ->put($nombreArchivoGuardado,$fileget );
                     $j++;
@@ -176,7 +187,7 @@ class OrdenCompraController extends Controller
             return redirect()
                 ->route('OrdenCompra.Empleado.Listar')->with('datos',Configuracion::getMensajeError($codErrorHistorial));
         }
-            
+
 
 
         return redirect()->route('OrdenCompra.Empleado.Listar')->with('datos','Se ha Registrado la Orden de Compra N°'.$orden->codigoCedepas);
@@ -215,18 +226,18 @@ class OrdenCompraController extends Controller
     }
 
     public function Update( Request $request){
-        
+
         try {
 
             db::beginTransaction();
             $orden=OrdenCompra::findOrFail($request->codOrdenCompra);
 
-            
+
             if($orden->codEmpleadoCreador != Empleado::getEmpleadoLogeado()->codEmpleado)
                 return redirect()->route('OrdenCompra.Empleado.Listar')
                     ->with('datos','Error: La orden no puede ser actualizado por un empleado distinto al que la creó.');
 
-             
+
             $orden->señores=$request->señores;
             $orden->ruc=$request->ruc;
             $orden->direccion=$request->direccion;
@@ -235,7 +246,7 @@ class OrdenCompraController extends Controller
             $orden->total=$request->total;
             $orden->partidaPresupuestal=$request->partidaPresupuestal;
             $orden->observacion=$request->observacion;
-    
+
             $orden->codProyecto=$request->codProyecto;
             $orden->codMoneda=$request->codMoneda;
             $orden->save();
@@ -247,31 +258,31 @@ class OrdenCompraController extends Controller
 
             //creacion de detalles
             $vec[] = '';
-            
+
             if($request->cantElementos==0)
                 throw new Exception("No se ingresó ningún item.", 1);
-                 
+
 
             $i = 0;
             $cantidadFilas = $request->cantElementos;
-            while ($i< $cantidadFilas ) 
+            while ($i< $cantidadFilas )
             {
                 $detalle=new DetalleOrdenCompra();
-                $detalle->codOrdenCompra=$orden->codOrdenCompra ;//ultimo insertad            
+                $detalle->codOrdenCompra=$orden->codOrdenCompra ;//ultimo insertad
                 $detalle->cantidad=$request->get('colCantidad'.$i);
-                $detalle->descripcion=$request->get('colDescripcion'.$i);            
+                $detalle->descripcion=$request->get('colDescripcion'.$i);
                 $detalle->valorDeVenta=$request->get('colValorVenta'.$i);
-                $detalle->precioVenta=$request->get('colPrecioVenta'.$i);            
+                $detalle->precioVenta=$request->get('colPrecioVenta'.$i);
                 $detalle->subtotal=$request->get('colSubTotal'.$i);
                 if($request->get('colExonerado'.$i)=='1'){
                     $detalle->exoneradoIGV=0;
                 }else $detalle->exoneradoIGV=1;
                 $detalle->codUnidadMedida=$request->get('colUnidadMedida'.$i);
-                $detalle->save();  
+                $detalle->save();
                 $i=$i+1;
             }
-            
-            
+
+
 
 
             //SOLO BORRAMOS TODO E INSERTAMOS NUEVOS ARCHIVOS SI ES QUE SE INGRESÓ NUEVOS
@@ -279,7 +290,7 @@ class OrdenCompraController extends Controller
                 Debug::mensajeSimple("o yara/".$request->tipoIngresoArchivos);
                 if($request->tipoIngresoArchivos=="1")
                 {//AÑADIR
-                    
+
                 }else{//SOBRESRIBIR
                     $orden->borrarArchivos();  //A
                 }
@@ -290,8 +301,8 @@ class OrdenCompraController extends Controller
                 $j=0; //A
 
                 foreach ($request->file('filenames') as $archivo)
-                {   
-                    
+                {
+
                     $nombreArchivoGuardado = $orden->getNombreGuardadoNuevoArchivo($cantidadArchivosYaExistentes + $j+1);
                     Debug::mensajeSimple('el nombre de guardado de la imagen es:'.$nombreArchivoGuardado);
 
@@ -303,13 +314,13 @@ class OrdenCompraController extends Controller
 
 
                     $fileget = \File::get( $archivo );
-                    
+
                     Storage::disk('ordenes')
                     ->put($nombreArchivoGuardado,$fileget );
                     $j++;
                 }
 
-                
+
             }
 
 
@@ -336,8 +347,8 @@ class OrdenCompraController extends Controller
         $orden = OrdenCompra::findOrFail($codOrden);
         $pdf = $orden->getPDF();
         return $pdf->download('Orden de Compras '.$orden->codigoCedepas.'.Pdf');
-    }   
-    
+    }
+
     public function verPDF($codOrden){
         $orden = OrdenCompra::findOrFail($codOrden);
         $pdf = $orden->getPDF();
@@ -348,7 +359,7 @@ class OrdenCompraController extends Controller
     public function listarDetalles($codOrdenCompra){
         $vector = [];
         $listaDetalles = DetalleOrdenCompra::where('codOrdenCompra','=',$codOrdenCompra)->get();
-        for ($i=0; $i < count($listaDetalles) ; $i++) { 
+        for ($i=0; $i < count($listaDetalles) ; $i++) {
             $itemDet = $listaDetalles[$i];
             $itemDet['codOrdenCompra'] = UnidadMedida::findOrFail($itemDet->codUnidadMedida)->nombre;//va a tener el nombre de la unidad de medida
             //array_push($itemDet,['descripcionUnidadMedida'=>UnidadMedida::findOrFail($itemDet->codUnidadMedida)->nombre]);
@@ -357,20 +368,20 @@ class OrdenCompraController extends Controller
             }else{
                 $itemDet['exoneradoIGV']=1;
             }
-            array_push($vector,$itemDet);            
+            array_push($vector,$itemDet);
         }
         return $vector  ;
     }
 
-    
-    //se le pasa el codigo del archivo 
+
+    //se le pasa el codigo del archivo
     function descargarArchivo($codArchivoOrden){
         $archivo = ArchivoOrdenCompra::findOrFail($codArchivoOrden);
         return Storage::download("/ordenes/".$archivo->nombreGuardado,$archivo->nombreAparente);
 
     }
 
-    
+
     function eliminarArchivo($codArchivoOrden){
         try{
             $archivo = ArchivoOrdenCompra::findOrFail($codArchivoOrden);
@@ -378,20 +389,20 @@ class OrdenCompraController extends Controller
             return redirect()->route('OrdenCompra.Empleado.Listar')
                 ->with('datos','ERROR: El archivo que desea eliminar no existe o ya ha sido eliminado, vuelva a la página de editar Orden de compra.');
         }
-        
+
         try {
             db::beginTransaction();
-            
+
             $nombreArchivEliminado = $archivo->nombreAparente;
             $orden = OrdenCompra::findOrFail($archivo->codOrdenCompra);
 
             $archivo->eliminarArchivo();
             DB::commit();
-        
+
             return redirect()->route('OrdenCompra.Empleado.Editar',$orden->codOrdenCompra)
                 ->with('datos','Archivo "'.$nombreArchivEliminado.'" eliminado exitosamente.');
         } catch (\Throwable $th) {
-            Debug::mensajeError(' ORDEN COMPRA CONTROLLER Eliminar archivo' ,$th);    
+            Debug::mensajeError(' ORDEN COMPRA CONTROLLER Eliminar archivo' ,$th);
             DB::rollback();
             $codErrorHistorial=ErrorHistorial::registrarError($th,
                                                              app('request')->route()->getAction(),
@@ -399,9 +410,9 @@ class OrdenCompraController extends Controller
                                                             );
             return redirect()->route('OrdenCompra.Empleado.Editar',$orden->codOrdenCompra)
             ->with('datos',Configuracion::getMensajeError($codErrorHistorial));
-                
+
         }
-        
+
 
 
     }
