@@ -73,7 +73,7 @@
                     <td class="conLineas" style="width: 100px; font-weight: bold;">Proyecto:</td>
                     <td class="conLineas" >{{$reposicion->getProyecto()->nombre}}</td>
                     <td class="conLineas"  style="width: 140px;font-weight: bold;">Fecha:</td>
-                    <td class="conLineas" >{{$reposicion->getFechaHoraEmision()}}</td>
+                    <td class="conLineas" >{{$reposicion->getFechaHoraUltimaEdicion()}}</td>
                 </tr>
                 
                 <tr>

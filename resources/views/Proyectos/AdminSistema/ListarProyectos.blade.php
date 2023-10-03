@@ -133,32 +133,13 @@
 
 
   function asignarContadoresATodosProyectos(){
-
-    swal(
-          {//sweetalert
-              title: "Confirmar",
-              text: '¿Desea asignar todos los contadores activos a todos los proyectos activos?',     //mas texto
-              type: "warning",//e=[success,error,warning,info]
-              showCancelButton: true,//para que se muestre el boton de cancelar
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText:  'SÍ',
-              cancelButtonText:  'NO',
-              closeOnConfirm:     true,//para mostrar el boton de confirmar
-              html : true
-          },
-          function(value){//se ejecuta cuando damos a aceptar
-            direccion = "{{route('GestionProyectos.setearTodosLosContadoresATodosLosProyectos')}}";
-            location.href = direccion;
-          }
-      );
-
-
-
-
-
-    
+    confirmarConMensaje("Confirmación","¿Desea asignar todos los contadores activos a todos los proyectos activos?","warning",function(){
+      var direccion = "{{route('GestionProyectos.setearTodosLosContadoresATodosLosProyectos')}}";
+      location.href = direccion;
+    })
   }
+
+
 
   function guardar(codProyecto){
     var codGerente=$('#Proyecto'+codProyecto).val();

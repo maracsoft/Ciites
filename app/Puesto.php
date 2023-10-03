@@ -62,5 +62,11 @@ class Puesto extends Model
     }
 
 
+    public static function getCodPuesto_EquipoPPM(){
+        return static::getPuestoPorNombre('EquipoPPM')->codPuesto;
+    }
+    public static function getCodPuesto_DireccionPPM(){
+      return static::getPuestoPorNombre('DireccionPPM')->codPuesto;
+    }
     
 }

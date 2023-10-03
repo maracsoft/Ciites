@@ -30,7 +30,7 @@ class ComponentRenderizer
 
 
     /* El nombre es el name y id que tendrá el input con el valor output de codDistrito */
-    static function LugarSelector($name,$codDistritoSeleccionado = -1){    
+    static function LugarSelector($name,$codDistritoSeleccionado = -1,$disabled = false){    
 
         $codDepartamentoSeleccionado = null;
         $codProvinciaSeleccionada = null;
@@ -61,7 +61,8 @@ class ComponentRenderizer
             compact('name','listaDepartamentos','listaProvincias','listaDistritos',
             'codDistritoSeleccionado','codDepartamentoSeleccionado','codProvinciaSeleccionada',
             'listaProvinciasDelDep',
-            'listaDistritosDeProv'
+            'listaDistritosDeProv',
+            'disabled'
         
         ));
     }

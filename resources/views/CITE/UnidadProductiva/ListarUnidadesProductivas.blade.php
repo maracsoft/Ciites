@@ -3,7 +3,9 @@
 @section('titulo')
     CITE - Listar UnidadesProductivas
 @endsection
-
+@section('tiempoEspera')
+    <div class="loader" id="pantallaCarga"></div>
+@endsection
 @section('contenido')
 @php
 
@@ -134,14 +136,18 @@
 
                 <td class="d-flex flex-row">
 
-                    <a href="{{route('CITE.UnidadesProductivas.Ver',$unidadProductiva->getId())}}" class='btn btn-info btn-xs mr-1' title="Ver UnidadProductiva">
+                    <a href="{{route('CITE.UnidadesProductivas.Ver',$unidadProductiva->getId())}}" class='btn btn-info btn-xs mr-1' title="Ver Unidad Productiva">
                         <i class="fas fa-eye"></i>
                     </a>
                     <a href="{{route('CITE.UnidadesProductivas.Editar',$unidadProductiva->getId())}}" class='btn btn-warning btn-xs' title="Editar UnidadProductiva">
                         <i class="fas fa-pen"></i>
                     </a>
 
-
+                    @if($unidadProductiva->usuarioLogeadoPuedeEliminar())
+                      <button @if($unidadProductiva->apareceEnOtrasTablas()) disabled title="La unidad productiva aparece en otras tablas" @endif type="button" class="ml-1 btn btn-danger btn-xs" onclick="clickEliminar({{$unidadProductiva->getId()}},'{{$unidadProductiva->getDenominacion()}}')">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    @endif
 
                 </td>
             </tr>
@@ -158,5 +164,45 @@
 
   </div>
 
+
+@endsection
+@section('script')
+<script>
+
+
+    $(document).ready(function(){
+      $(".loader").fadeOut("slow");
+    });
+
+  @if($unidadProductiva->usuarioLogeadoPuedeEliminar())
+    var codUnidadProductivaEliminar = 0;
+    function clickEliminar(codUnidadProductiva,nombre){
+      codUnidadProductivaEliminar = codUnidadProductiva;
+      confirmarConMensaje("Confirmación","¿Desea eliminar a la unidad productiva "+nombre+" de la base de datos?",'warning',ejecutarEliminar)
+    }
+
+    function ejecutarEliminar(){
+      //llamamos a un endpoint modo API y luego recargamos la página (para no perder la busqueda y paginacion actual)
+      $(".loader").show();
+      $.get('/Cite/UnidadesProductivas/Eliminar/'+codUnidadProductivaEliminar,function(data){
+         
+        data = JSON.parse(data);
+
+        alertaMensaje(data.titulo,data.mensaje,data.tipoWarning);
+       
+        setTimeout(function(){
+          location.reload();
+        }, 3000);
+
+
+        
+      });
+
+    }
+
+  @endif
+
+
+</script>
 
 @endsection

@@ -4,10 +4,11 @@ namespace App\Models\CITE;
 
 use App\ArchivoGeneral;
 use App\Distrito;
+use App\MaracModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
-class ArchivoServicio extends Model
+class ArchivoServicio extends MaracModel
 {
     public $table = "cite-archivo_servicio";
     protected $primaryKey ="codArchivoServicio";
@@ -15,6 +16,12 @@ class ArchivoServicio extends Model
     public $timestamps = false;
     protected $fillable = [''];
     
+    public function tieneTipoArchivo(){
+      return $this->codTipoMedioVerificacion != null;
+    }
+    public function getTipoArchivo(){
+      return TipoMedioVerificacion::findOrFail($this->codTipoMedioVerificacion);
+    }
 
     public function getArchivo(){
         return ArchivoGeneral::findOrFail($this->codArchivo);

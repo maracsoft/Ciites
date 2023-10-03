@@ -62,8 +62,23 @@
     'options_id_field'=>null,
     'size'=>'sm',
     'max_width'=>'250px',
-    
   ]); 
+
+  $comp_filtros->añadirFiltro([
+    'name'=>'codigoContrapartida',
+    'label'=>'Contrapartida:',
+    'show_label'=>true,
+    'placeholder'=>'Buscar por Contrapartida',
+    'type'=>'text',
+    'function'=>'contains',
+    'options'=>[],
+    'options_label_field'=>'',
+    'options_id_field'=>null,
+    'size'=>'sm',
+    'max_width'=>'250px',
+  ]); 
+
+
   $comp_filtros->añadirFiltro([
       'name'=>'justificacion',
       'label'=>'Justificación:',
@@ -169,6 +184,9 @@
 
                   
                   <th width="3%"  scope="col" >Origen & Proyecto</th>         
+                  <th>
+                    Contrapartida
+                  </th>
                   <th width="20%">Justificacion</th>              
                   <th width="5%"  scope="col" style="text-align: center">F. Atención</th>
                   
@@ -196,6 +214,9 @@
                 
                 
                 <td style = "padding: 0.40rem">{{$itemRequerimiento->getProyecto()->getOrigenYNombre()}}</td>
+                <td>
+                  {{$itemRequerimiento->codigoContrapartida}}
+                </td>
                 <td style="padding:0.40rem">
                   {{$itemRequerimiento->getJustificacionAbreviada()}}
                 </td>

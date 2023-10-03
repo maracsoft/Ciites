@@ -41,6 +41,24 @@ Listar Solicitudes
     'max_width'=>'250px',
       
   ]); 
+
+  $comp_filtros->añadirFiltro([
+    'name'=>'codigoContrapartida',
+    'label'=>'Contrapartida:',
+    'show_label'=>true,
+    'placeholder'=>'Buscar por Contrapartida',
+    'type'=>'text',
+    'function'=>'contains',
+    'options'=>[],
+    'options_label_field'=>'',
+    'options_id_field'=>null,
+    'size'=>'sm',
+    'max_width'=>'250px',
+  ]); 
+
+    
+
+
   $comp_filtros->añadirFiltro([
       'name'=>'justificacion',
       'label'=>'Justificación:',
@@ -138,7 +156,9 @@ Listar Solicitudes
                   <th width="7%"  scope="col" style="text-align: center">F. Aprobación</th>
                   <th width="10%"  scope="col">Colaborador </th>
                   <th>Origen & Proyecto</th>
-          
+                  <th>
+                    Contrapartida
+                  </th>
                   <th width="10%"  scope="col">Gerente/Director/a</th>
                   <th>
                     Justificación
@@ -168,7 +188,9 @@ Listar Solicitudes
                   <td style = "padding: 0.40rem; text-align: center">{{$itemSolicitud->formatoFechaHoraRevisado()}}</td>
                   <td style = "padding: 0.40rem"> {{$itemSolicitud->getNombreSolicitante()}} </td>
                   <td style = "padding: 0.40rem">{{$itemSolicitud->getProyecto()->getOrigenYNombre()  }}</td>
-                  
+                  <td>
+                    {{$itemSolicitud->codigoContrapartida}}
+                  </td>
                   <td style = "padding: 0.40rem"> {{$itemSolicitud->getNombreEvaluador()}} </td>
                   <td>
                     {{$itemSolicitud->getJustificacionAbreviada()}}

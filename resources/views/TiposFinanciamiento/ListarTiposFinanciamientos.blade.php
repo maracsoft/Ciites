@@ -50,23 +50,10 @@
                     <a href="{{route('TipoFinanciamiento.editar',$itemTipoFinanciamiento->codTipoFinanciamiento)}}" class="btn btn-info btn-sm btn-icon icon-left"><i class="entypo-pencil"></i>Editar</a>
 
                     <!--Boton eliminar -->
-                    <a href="#" class="btn btn-danger btn-sm btn-icon icon-left" title="Le quita el acceso al sistema." onclick="swal({//sweetalert
-                            title:'Confirmación',
-                            text: '¿Está seguro de eliminar el tipo de financiamiento?',     //mas texto
-                            //type: 'warning',  
-                            type: '',
-                            showCancelButton: true,//para que se muestre el boton de cancelar
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText:  'SÍ',
-                            cancelButtonText:  'NO',
-                            closeOnConfirm:     true,//para mostrar el boton de confirmar
-                            html : true
-                        },
-                        function(){//se ejecuta cuando damos a aceptar
-                            window.location.href='{{route('TipoFinanciamiento.eliminar',$itemTipoFinanciamiento->codTipoFinanciamiento)}}';
-
-                        });"><i class="entypo-cancel"></i>Eliminar</a>
+                    <a href="#" class="btn btn-danger btn-sm btn-icon icon-left" title="Le quita el acceso al sistema." onclick="clickEliminarTipo({{$itemTipoFinanciamiento->codTipoFinanciamiento}})">
+                        <i class="entypo-cancel"></i>
+                        Eliminar
+                    </a>
 
                 </td>
             </tr>
@@ -79,5 +66,23 @@
 
   </div>
 
+
+@endsection
+
+@section('script')
+
+<script>
+  var id_eliminar = null;
+  function clickEliminarTipo(id){
+    id_eliminar = id;
+    confirmarConMensaje("Confirmación","¿Desea eliminar el tipo de financiamiento?","warning",ejecutarEliminacion)
+
+  }
+  function ejecutarEliminacion(){
+
+    window.location.href = "/TipoFinanciamiento/eliminar/" + id_eliminar; 
+  }
+
+</script>
 
 @endsection

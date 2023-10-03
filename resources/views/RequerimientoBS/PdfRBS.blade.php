@@ -63,8 +63,8 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="font-weight: bold;">Fecha y Hora Emisión:</td>
-                        <td colspan="1">{{$requerimiento->formatoFechaHoraEmision()}}</td>
+                        <td style="font-weight: bold;">Fecha y Hora:</td>
+                        <td colspan="1">{{$requerimiento->getFechaHoraUltimaEdicion()}}</td>
                         <td style="font-weight: bold;">Proyecto:</td>
                         <td colspan="1">{{$requerimiento->getProyecto()->nombre}}</td>
                         

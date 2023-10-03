@@ -12,7 +12,7 @@
   }
  </style>
 <div class="card-body">
-    
+
   <div class="well">
     <H3 style="text-align: center;">
     <strong>
@@ -22,13 +22,13 @@
     </H3>
   </div>
   <div class="row">
-   
+
 
 
     <div class="col-md-2">
       <button type="button" id="" class="btn btn-primary m-2" onclick="limpiarModalparametro()"
           data-toggle="modal" data-target="#ModalParametro">
-          Nuevo 
+          Nuevo
           <i class="fas fa-plus"></i>
       </button>
 
@@ -36,7 +36,7 @@
 
 
     <div class="col-md-10">
-      
+
     </div>
   </div>
     @include('Layout.MensajeEmergenteDatos')
@@ -44,19 +44,19 @@
     <div id="contenedor" class="">
       @include('ParametroSistema.inv_ListarParametros')
     </div>
-    
-  
+
+
 
   </div>
 
 
 
-  
+
 
 <div class="modal fade" id="ModalParametro" tabindex="-1" aria-labelledby="" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-          
+
 
               <div class="modal-header">
                   <h5 class="modal-title" id="TituloModalParametro">Nuevo Parametro</h5>
@@ -65,15 +65,15 @@
                   </button>
               </div>
               <div class="modal-body">
-                  
+
 
                   <form id="frmParametro" name="frmParametro" action="" method="POST">
                       <input type="{{App\Configuracion::getInputTextOHidden()}}" name="codParametro" id="codParametro" value="0">
-                      
+
                       @csrf
-                      
+
                       <div class="row">
-                            
+
                           <div class="col-12">
                             <label for="">Tipo Parámetro</label>
                             <select class="form-control" name="codTipoParametro" id="codTipoParametro" onchange="cambioTipoParametro(this.value)">
@@ -88,23 +88,28 @@
                           <div class="col-12">
                             <label for="">Nombre</label>
                             <input type="text" class="form-control" name="nombre" id="nombre">
-   
-  
+
+
                           </div>
 
-                          <div class="col-12">  
+                          <div class="col-12">
+                            <label for="">Módulo</label>
+                            <input type="text" class="form-control" name="modulo" id="modulo">
+                          </div>
+
+                          <div class="col-12">
                               <label for="">Valor</label>
-                              
-                              
+
+
 
                               <input type="text" class="form-control" id="input_value_string" value=""  oninput="updateValueParameter(this.value)" >
                               <input type="number" class="hidden form-control" id="input_value_int" value=""   oninput="updateValueParameter(this.value)">
                               <textarea type="text" class="hidden form-control" id="input_value_large_string"  oninput="updateValueParameter(this.value)"></textarea>
-                              
+
                               <div class="hidden" id="input_value_boolean">
                                 <x-toggle-button name="mostrarEnListas" :initialValue="0" onChangeFunctionName="updateValueParameterFromToggle" setExternalValueFunctionName="setToggleValue"/>
                               </div>
-                              
+
                               {{-- Este input tiene el valor siempre, pero está como hidden --}}
                               <div class="d-flex m-1">
 
@@ -113,17 +118,17 @@
                               </div>
 
                           </div>
-                         
+
 
                           <div class="col-12">
                               <label for="">Descripción</label>
                               <textarea class="form-control" name="descripcion" id="descripcion" cols="" rows="5"
                               ></textarea>
-                              
+
                           </div>
-                           
-                          
-                          
+
+
+
                           <div class="col">
                               <label for="">Creacion</label>
                               <input type="text" class="form-control" name="fechaHoraCreacion" id="fechaHoraCreacion" readonly>
@@ -138,9 +143,9 @@
                               <label for="">Fecha baja</label>
                               <input type="text" class="form-control" name="fechaHoraBaja" id="fechaHoraBaja" readonly>
                           </div>
-                          
-                      </div>                            
-                      
+
+                      </div>
+
                   </form>
 
               </div>
@@ -151,9 +156,9 @@
 
                   <button type="button" class="m-1 btn btn-primary" onclick="clickGuardarNuevoParametro()">
                       Guardar <i class="fas fa-save"></i>
-                  </button>   
+                  </button>
               </div>
-          
+
       </div>
   </div>
 </div>
@@ -170,7 +175,7 @@
 
     var listaTipoParametros = @json($listaTipoParametro);
     var tipo_parametro = {};
-    
+
     $(document).ready(function(){
       actualizarTabla();
     });
@@ -178,7 +183,7 @@
 
     function actualizarTabla(){
       ruta = "{{route('ParametroSistema.JSON_GetParametros')}}";
-              
+
         $.get(ruta, function(dataRecibida){
           listaParametros = JSON.parse(dataRecibida);
         });
@@ -211,8 +216,8 @@
         document.getElementById('input_value_' + tipo_parametro.nombre).value = value;
 
       }
-        
-      
+
+
 
     }
 
@@ -226,18 +231,18 @@
       document.getElementById('input_value_boolean').classList.add('hidden');
 
       document.getElementById('input_value_' + tipo_parametro.nombre).classList.remove('hidden');
-      
+
       /* Valor por defecto */
       if(tipo_parametro.nombre == "boolean")
         setToggleValue(false);
       else
         InputValor.value = "";
-      
+
     }
 
 
     function clickGuardarNuevoParametro(){
-      
+
       msjError = validarFormParametro();
       if(msjError!="")
       {
@@ -245,7 +250,9 @@
           return ;
       }
 
-      nombre = document.getElementById('nombre').value; 
+      nombre = document.getElementById('nombre').value;
+      modulo = document.getElementById('modulo').value;
+
       descripcion = document.getElementById('descripcion').value;
       valor = document.getElementById('valor').value;
       codTipoParametro = document.getElementById('codTipoParametro').value;
@@ -259,18 +266,19 @@
           descripcion : descripcion ,
           valor : valor,
           codTipoParametro:codTipoParametro,
-          codParametro : codParametro
-      }; 
+          codParametro : codParametro,
+          modulo:modulo
+      };
 
       ruta = "{{route('ParametroSistema.guardarYActualizar')}}";
-        
+
       $.post(ruta, datosAEnviar, function(dataRecibida){
           console.log('DATA RECIBIDA:');
           console.log(dataRecibida);
-          
+
           objetoRespuesta = JSON.parse(dataRecibida);
           alertaMensaje(objetoRespuesta.titulo,objetoRespuesta.mensaje,objetoRespuesta.tipoWarning);
-          
+
           actualizarTabla();
 
       });
@@ -278,25 +286,27 @@
       cerrarModal('ModalParametro');
       limpiarModalparametro();
     }
-    
+
 
     function validarFormParametro(){
-        
+
         msjError ="";
         msjError = validarTamañoMaximoYNulidad(msjError,'nombre',200,'Nombre');
         msjError = validarTamañoMaximoYNulidad(msjError,'descripcion',200,'Descripción');
         msjError = validarTamañoMaximoYNulidad(msjError,'valor',1000,'Valor');
+        msjError = validarTamañoMaximoYNulidad(msjError,'modulo',200,'modulo');
+
         return msjError;
     }
 
-    
+
     function clickEditarParametro(codParametro){
         limpiarModalparametro();
 
 
         parametro = listaParametros.find(element => element.codParametro == codParametro);
         cambioTipoParametro(parametro.codTipoParametro);
-        
+
         document.getElementById('descripcion').value = parametro.descripcion;
         document.getElementById('nombre').value = parametro.nombre;
         document.getElementById('valor').value = parametro.valor;
@@ -305,18 +315,20 @@
         document.getElementById('fechaHoraActualizacion').value = parametro.fechaHoraActualizacion;
         document.getElementById('fechaHoraBaja').value = parametro.fechaHoraBaja;
         document.getElementById('codTipoParametro').value = parametro.codTipoParametro;
-        
-        
-        
-         
+
+        document.getElementById('modulo').value = parametro.modulo;
+
+
+
+
         document.getElementById('codParametro').value = parametro.codParametro;
-        
+
     }
 
-    
+
     function limpiarModalparametro(){
 
-        
+
         document.getElementById('descripcion').value ="";
         document.getElementById('nombre').value ="";
         document.getElementById('valor').value = "";
@@ -324,7 +336,8 @@
         document.getElementById('fechaHoraActualizacion').value = "";
         document.getElementById('fechaHoraBaja').value = "";
         document.getElementById('codTipoParametro').value = "";
-        
+        document.getElementById('modulo').value = "";
+
 
         document.getElementById('codParametro').value = "0"
 
@@ -332,8 +345,8 @@
         InputValueInt.value = "";
         InputValueLargeString.value = "";
         setToggleValue(false);
-        
-        
+
+
     }
 
 
@@ -342,7 +355,7 @@
 
         console.log('Se eliminará el ' + codParametro);
         para = listaParametros.find(element => element.codParametro == codParametro);
-         
+
         codParametroAEliminar = codParametro;
 
         confirmarConMensaje('Confirmación','¿Seguro de eliminar el parámetro "'+para.nombre+'" ?','warning',ejecutarEliminacionParametro);
@@ -356,7 +369,7 @@
         $.get(ruta, function(dataRecibida){
             console.log('DATA RECIBIDA:');
             console.log(dataRecibida);
-            
+
             objetoRespuesta = JSON.parse(dataRecibida);
             alertaMensaje(objetoRespuesta.titulo,objetoRespuesta.mensaje,objetoRespuesta.tipoWarning);
             actualizarTabla();
@@ -375,6 +388,6 @@
     min-width: 180px;
     outline: 0;
   }
-  
+
 </style>
 @endsection

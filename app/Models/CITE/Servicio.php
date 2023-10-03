@@ -13,6 +13,7 @@ use App\Mes;
 use App\MesAño;
 use App\ParametroSistema;
 use DateTime;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -25,9 +26,16 @@ class Servicio extends Model
     protected $fillable = [''];
 
     public function getMesAño(){
-        return MesAño::findOrFail($this->codMesAño);
+      $fecha_termino = $this->fechaTermino;
+
+      $mes_termino = date('m', strtotime($fecha_termino));
+      $año_termino = date('Y', strtotime($fecha_termino));
+      return MesAño::where('año',$año_termino)->where('codMes',$mes_termino)->first();
     }
 
+    public function getActividadPAT() : ActividadCite {
+      return ActividadCite::findOrFail($this->codActividad);
+    }
 
     function sePuedeEliminar(){
         $emp = Empleado::getEmpleadoLogeado();
@@ -58,11 +66,18 @@ class Servicio extends Model
         return Fecha::formatoParaVistas($this->fechaTermino);
     }
 
+     
+
     function getFechaHoraCreacion(){
 
         return Fecha::formatoFechaHoraParaVistas($this->fechaHoraCreacion);
     }
 
+    public function esPagado(){
+      $tipo_acceso = $this->getTipoAcceso();
+      return $tipo_acceso->nombre == "Pagado";
+    }
+    
     function getEmpleadoCreador(){
         return Empleado::findOrFail($this->codEmpleadoCreador);
     }
@@ -113,8 +128,24 @@ class Servicio extends Model
       }
     }
 
+    public function tieneTipoCDP(){
+      return $this->codTipoCDP != null;
+    }
 
-    public function getTipoCDP(){
+    public function getTipoCDP_nombre(){
+      if($this->tieneTipoCDP()){
+        $tipo_cdp = $this->getTipoCDP();
+        return $tipo_cdp->nombre; 
+      }else{
+        return "";
+      }
+    }
+
+    
+    private function getTipoCDP(){
+        if(!$this->tieneTipoCDP()){
+          throw new Exception("Error en el servicio ".$this->getId(). " al tratar de ejecutar getTipoCDP(). codTipoCDP es null");
+        }
         return CDP::findOrFail($this->codTipoCDP);
     }
 
@@ -128,6 +159,27 @@ class Servicio extends Model
     }
     function getListaArchivoServicio(){
         return ArchivoServicio::where('codServicio',$this->getId())->get();
+    }
+    
+    function tieneArchivos(){
+      $cant =  ArchivoServicio::where('codServicio',$this->getId())->count();
+      return $cant > 0;
+    }
+
+    function tieneArchivosExportables(){
+      $codsTipos = [];
+      $lista_tipos = $this->getListaTiposMediosVerificacionNecesarios();
+      foreach ($lista_tipos as $tipo_medio) {
+        $codsTipos [] = $tipo_medio->codTipoMedioVerificacion;
+      }
+
+      $cant =  ArchivoServicio::where('codServicio',$this->getId())->whereIn('codTipoMedioVerificacion',$codsTipos)->count();
+      return $cant > 0;
+    }
+    
+    public function getListaOtrosArchivos($codsArchivosServiciosYaMostrados){
+      return ArchivoServicio::whereNotIn('codArchivoServicio',$codsArchivosServiciosYaMostrados)->where('codServicio',$this->codServicio)->get();
+
     }
 
     function getRelaAsistenciaServicio(){
@@ -201,15 +253,62 @@ class Servicio extends Model
     }
 
 
+    private static function getCodsServiciosValidosParaFechasFiltradas(string $fechaInicio_sql,string $fechaTermino_sql,array $codsCadenaSeleccionados) : array {
+      
+      $lista = Servicio::where(static::FiltroEspecialFechas($fechaInicio_sql,$fechaTermino_sql))->get();
+      $array = [];
+      foreach ($lista as $servicio) {
+ 
+        
+        $unidad = $servicio->getUnidadProductiva();
+        $valido = false;
+
+        if(count($codsCadenaSeleccionados) != 0){
+          if(in_array($unidad->codCadena,$codsCadenaSeleccionados)){
+            $valido = true;
+          }
+        }else{
+          $valido = true;
+        }
+        
+        if($valido){
+          $array[] = $servicio->getId();
+        }
+          
+      }
+      return $array;
+    }
+
+    
+    
+
     /* OBJETOS REPORTES */
-    static function getReporteServiciosPorRegion(){
+    static function getReporteServiciosPorRegion($fechaInicio_sql,$fechaTermino_sql,array $codsCadenaSeleccionados){
+
+        $codsServiciosValidos = static::getCodsServiciosValidosParaFechasFiltradas($fechaInicio_sql,$fechaTermino_sql,$codsCadenaSeleccionados);
+        
+        $string_cods = implode(",",$codsServiciosValidos);
+        
+  
+        if($string_cods == ""){
+          $where = " false ";
+        }else{
+          $where = " S.codServicio IN ($string_cods) ";
+        }
+
         $sqlServiciosPorRegion =
-            "SELECT count(S.codServicio) as cantidad, DEP.nombre as region, DEP.codDepartamento FROM `cite-servicio` S
-                INNER JOIN distrito D on S.codDistrito = D.codDistrito
-                INNER JOIN provincia P on P.codProvincia = D.codProvincia
-                INNER JOIN departamento DEP on DEP.codDepartamento = P.codDepartamento
-                GROUP BY DEP.codDepartamento,DEP.nombre
-                ORDER BY count(S.codServicio) DESC";
+            "SELECT 
+              count(S.codServicio) as cantidad, 
+              DEP.nombre as region, 
+              DEP.codDepartamento 
+            FROM `cite-servicio` S
+            INNER JOIN distrito D on S.codDistrito = D.codDistrito
+            INNER JOIN provincia P on P.codProvincia = D.codProvincia
+            INNER JOIN departamento DEP on DEP.codDepartamento = P.codDepartamento
+            WHERE $where
+            GROUP BY DEP.codDepartamento,DEP.nombre
+            ORDER BY count(S.codServicio) DESC
+          ";
 
 
         $labels = [];
@@ -235,17 +334,84 @@ class Servicio extends Model
         return $obj;
     }
 
+    static function getReporteServiciosPorActividad($fechaInicio_sql,$fechaTermino_sql,array $codsCadenaSeleccionados){
 
-    public static function getReporteServiciosPorProvincia($codDepartamento){
+      $codsServiciosValidos = static::getCodsServiciosValidosParaFechasFiltradas($fechaInicio_sql,$fechaTermino_sql,$codsCadenaSeleccionados);
+      
+      $string_cods = implode(",",$codsServiciosValidos);
+      
+
+      if($string_cods == ""){
+        $where = " false ";
+      }else{
+        $where = " S.codServicio IN ($string_cods) ";
+      }
+
+      $sqlServiciosPorActividad =
+          "SELECT 
+            count(S.codServicio) as cantidad, 
+            ACT.nombre as nombre,
+            ACT.codActividad as codActividad
+          FROM `cite-servicio` S
+          INNER JOIN `cite-actividad` ACT on ACT.codActividad = S.codActividad
+          WHERE $where
+          GROUP BY ACT.codActividad,ACT.nombre
+          ORDER BY count(S.codServicio) DESC
+        ";
+
+
+      $labels = [];
+      $valores = [];
+      $colores = [];
+      $listaActividades = DB::select($sqlServiciosPorActividad);
+      foreach ($listaActividades as $actividad) {
+          $actividad_model = ActividadCite::findOrFail($actividad->codActividad);
+          $tipo_serv = $actividad_model->getTipoServicio();
+          $modalidad = $tipo_serv->getModalidad();
+
+
+          $labels[] = $modalidad->nombre." - ".$actividad->nombre;
+          $valores[] = $actividad->cantidad;
+          $r= rand(50,255);
+          $g = rand(80,200);
+          $colores[] = "rgb($r,$g,100)";
+      }
+
+      $obj = [
+          'listaActividades'=>$listaActividades,
+          'labels'=>$labels,
+          'valores'=>$valores,
+          'colores'=>$colores
+      ];
+
+      return $obj;
+    }
+
+     
+    public static function getReporteServiciosPorProvincia($fechaInicio_sql,$fechaTermino_sql,array $codsCadenaSeleccionados){
+        $codsServiciosValidos = static::getCodsServiciosValidosParaFechasFiltradas($fechaInicio_sql,$fechaTermino_sql,$codsCadenaSeleccionados);
+        $string_cods = implode(",",$codsServiciosValidos);
+
+        if($string_cods == ""){
+          $where = " false ";
+        }else{
+          $where = " S.codServicio IN ($string_cods) ";
+        }
 
         $sqlServiciosPorProvincia =
-            "SELECT count(S.codServicio) as cantidad, P.nombre as provincia, DEP.nombre as departamento, P.codProvincia FROM `cite-servicio` S
-                    INNER JOIN distrito D on S.codDistrito = D.codDistrito
-                    INNER JOIN provincia P on P.codProvincia = D.codProvincia
-                    INNER JOIN departamento DEP on DEP.codDepartamento = P.codDepartamento
-                    WHERE DEP.codDepartamento = $codDepartamento
-                    GROUP BY P.codProvincia,P.nombre,DEP.nombre
-                    ORDER BY count(S.codServicio) DESC";
+            "SELECT 
+              count(S.codServicio) as cantidad, 
+              P.nombre as provincia, 
+              DEP.nombre as departamento, 
+              P.codProvincia 
+            FROM `cite-servicio` S
+            INNER JOIN distrito D on S.codDistrito = D.codDistrito
+            INNER JOIN provincia P on P.codProvincia = D.codProvincia
+            INNER JOIN departamento DEP on DEP.codDepartamento = P.codDepartamento
+            WHERE $where
+            GROUP BY P.codProvincia,P.nombre,DEP.nombre
+            ORDER BY count(S.codServicio) DESC
+          ";
 
 
         $labels = [];
@@ -271,8 +437,15 @@ class Servicio extends Model
         return $obj;
     }
 
-    public static function getReporteServiciosPorUnidad(){
+    public static function getReporteServiciosPorUnidad($fechaInicio_sql,$fechaTermino_sql,array $codsCadenaSeleccionados){
+        $codsServiciosValidos = static::getCodsServiciosValidosParaFechasFiltradas($fechaInicio_sql,$fechaTermino_sql,$codsCadenaSeleccionados);
+        $string_cods = implode(",",$codsServiciosValidos);
 
+        if($string_cods == ""){
+          $where = " false ";
+        }else{
+          $where = " S.codServicio IN ($string_cods) ";
+        }
 
         $sqlServiciosPorUnidad =
             "SELECT
@@ -283,6 +456,7 @@ class Servicio extends Model
                 sum(nroHorasEfectivas) as HorasAcumuladas
             FROM `cite-unidad_productiva` UP
             INNER JOIN `cite-servicio` S on S.codUnidadProductiva = UP.codUnidadProductiva
+            WHERE $where
             GROUP BY UP.codUnidadProductiva,UP.razonSocial,UP.nombrePersona
             ORDER BY CantidadServicios DESC
             ";
@@ -319,6 +493,130 @@ class Servicio extends Model
 
     }
 
+    public static function getReporteServiciosPorCadena($fechaInicio_sql,$fechaTermino_sql,array $codsCadenaSeleccionados){
+      $codsServiciosValidos = static::getCodsServiciosValidosParaFechasFiltradas($fechaInicio_sql,$fechaTermino_sql,$codsCadenaSeleccionados);
+      $string_cods = implode(",",$codsServiciosValidos);
+
+      if($string_cods == ""){
+        $where = " false ";
+      }else{
+        $where = " S.codServicio IN ($string_cods) ";
+      }
+
+      $sqlServiciosPorUnidad =
+          "
+          SELECT 
+            count(S.codServicio) as cantidad, 
+            C.nombre as nombre,
+            C.codCadena
+          FROM `cite-servicio` S
+          INNER JOIN `cite-unidad_productiva` UP on S.codUnidadProductiva = UP.codUnidadProductiva
+          INNER JOIN `cite-cadena` C on UP.codCadena = C.codCadena
+          WHERE $where
+          GROUP BY C.codCadena,C.nombre
+          ORDER BY count(S.codServicio) DESC
+          ";
+
+      
+      $labels = [];
+      $valores = [];
+      $colores = [];
+      $listaCadenas = DB::select($sqlServiciosPorUnidad);
+      foreach ($listaCadenas as $cadena) {
+ 
+          $labels[] = $cadena->nombre;
+          $valores[] = $cadena->cantidad;
+          $r= rand(50,255);
+          $g = rand(80,200);
+          $colores[] = "rgb($r,$g,100)";
+      }
+
+      $obj = [
+          'listaCadenas'=>$listaCadenas,
+          'labels'=>$labels,
+          'valores'=>$valores,
+          'colores'=>$colores
+      ];
+
+      return $obj;
+
+  }
+
+    public static function FiltroEspecialFechas($fechaInicio,$fechaFin){
+      return function($query) use ($fechaInicio,$fechaFin) {
+        $query->where(function($query1) use ($fechaInicio,$fechaFin){
+         $query1->where('fechaInicio','<=',$fechaInicio)->where('fechaTermino','>=',$fechaInicio)->where('fechaTermino','<=',$fechaFin);
+        })
+        ->orWhere(function($query2) use ($fechaInicio,$fechaFin){
+         $query2->where('fechaInicio','>=',$fechaInicio)->where('fechaInicio','<=',$fechaFin)->where('fechaTermino','>=',$fechaFin);
+        })
+        ->orWhere(function($query3) use ($fechaInicio,$fechaFin){
+         $query3->where('fechaInicio','<=',$fechaInicio)->where('fechaTermino','>=',$fechaFin);
+        })
+        ->orWhere(function($query4) use ($fechaInicio,$fechaFin){
+         $query4->where('fechaInicio','>=',$fechaInicio)->where('fechaTermino','<=',$fechaFin);
+        });
+     };
+
+    }
+
+    public function getArchivoServicio_SegunTipoMedioVerificacion($codTipoMedioVerificacion){
+      $lista = ArchivoServicio::where('codTipoMedioVerificacion',$codTipoMedioVerificacion)->where('codServicio',$this->codServicio)->get();
+      if(count($lista) == 0 ){
+        return null;
+      }
+        
+      return $lista[0];
+    }
+
+
+    public function getListaTiposMediosVerificacionNecesarios(){
+      $actividad = $this->getActividadPAT();
+      $tipos_medios = $actividad->getListaTipoMedioVerificacion();
+      return $tipos_medios;
+    }
+
+    public function getMensajeArchivosFaltantes(){
+
+      //obtenemos los codigos de los codTipoMedioVerificacion que se necesitan segun la actividad
+      $actividad = $this->getActividadPAT();
+      $tipos_medios = $actividad->getListaTipoMedioVerificacion();
+      
+      $nombres = [];
+      foreach ($tipos_medios as $tipo_medio_necesario) {
+        $cantidad = ArchivoServicio::where('codServicio',$this->codServicio)->where('codTipoMedioVerificacion',$tipo_medio_necesario->codTipoMedioVerificacion)->count();
+        $tiene = $cantidad > 0;
+        if(!$tiene){
+          $nombres[] = $tipo_medio_necesario->nombre; 
+        }
+      }
+      if(count($nombres) == 0){
+        return "No falta ningún archivo.";
+      }
+      
+      return "Faltan los archivos : " .implode(",",$nombres);
+    }
+
+    public function faltanArchivosPorSubir() : bool {
+      
+      //obtenemos los codigos de los codTipoMedioVerificacion que se necesitan segun la actividad
+      $actividad = $this->getActividadPAT();
+      $tipos_medios = $actividad->getListaTipoMedioVerificacion();
+      
+      $nombres = [];
+      foreach ($tipos_medios as $tipo_medio_necesario) {
+        $cantidad = ArchivoServicio::where('codServicio',$this->codServicio)->where('codTipoMedioVerificacion',$tipo_medio_necesario->codTipoMedioVerificacion)->count();
+        $tiene = $cantidad > 0;
+        if(!$tiene){
+          $nombres[] = $tipo_medio_necesario->nombre; 
+        }
+      }
+      if(count($nombres) == 0){
+        return false;
+      }
+      
+      return true;
+    }
 
 
     /* ----------------------------------------- HTML COMPONENTS ------------------------------------ */
@@ -339,7 +637,7 @@ class Servicio extends Model
 
 
     public function html_getArchivosDelServicio(bool $mostrarBotonEliminar){
-
+        
         $listaArchivos = [];
         foreach($this->getListaArchivoServicio() as $archivoServicio) {
             $archivoGen = $archivoServicio->getArchivo();

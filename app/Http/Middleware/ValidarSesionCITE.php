@@ -26,7 +26,8 @@ class ValidarSesionCITE
             return $next($request);
         
         //si no tuvo ninguno, lo echa patras
-        $codErrorHistorial = ErrorHistorial::registrarError("Acceso a ruta sin permiso", app('request')->route()->getAction(),"");
+        $codErrorHistorial = ErrorHistorial::registrarError("Acceso a ruta sin permiso ValidarSesionCITE ", app('request')->route()->getAction(),"");
+        
         $msj = Configuracion::getMensajeError($codErrorHistorial);
         return redirect()->route('error')->with('datos',$msj);
 

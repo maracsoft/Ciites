@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col text-center">
             <h1>
-                Bienvenido Juguitoooooooooo
+                Bienvenido Juguito xd1
             </h1>
         </div>
     </div>
@@ -91,6 +91,47 @@
             </div>
         </div>
     </div>
+
+
+
+
+    <div class="row mt-1">
+      <div class="col">
+          <div class="card">
+              <div class="card-header">
+                  <h3>
+                      CRONS
+                  </h3>
+                  
+              </div>
+              <div class="card-body">
+                                
+                <a target="_blank" href="{{route('PPM.SemestreOrganizacion.ProcesarPersonasReniecPendientes')}}" class="btn btn-primary">    
+                  CRON Personas - Ejecutar 
+                </a>
+
+                <a target="_blank" href="{{route('AdminPanel.VerLogCron')}}" class="btn btn-primary">    
+                  CRON PERSONAS - Ver log
+                </a>
+
+                <a target="_blank" href="{{route('AdminPanel.BorrarLogCron')}}" class="btn btn-primary">    
+                  Borrar LOG DE CRON PERSONAS
+                </a>
+
+
+                <a target="_blank" href="{{route('CITE.ReporteMensual.PoblarReportesDelAñoActual')}}" class="btn btn-primary">    
+                  CITE-PoblarReportesDelAñoActual
+                </a>
+     
+
+
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+
     @csrf
 
 

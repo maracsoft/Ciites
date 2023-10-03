@@ -19,6 +19,8 @@ use App\Models\CITE\ClasificacionRangoVentas;
 use App\Models\CITE\EstadoDocumento;
 use App\Models\CITE\RelacionUsuarioUnidad;
 use App\Models\CITE\UsuarioCite;
+use App\Models\PPM\PPM_Organizacion;
+use App\Models\PPM\PPM_Sincronizador;
 use App\RespuestaAPI;
 use App\UI\UIFiltros;
 use Carbon\Carbon;
@@ -53,7 +55,7 @@ class UnidadProductivaController extends Controller
     }
     public function Ver($id){
         $unidadProductiva = UnidadProductiva::findOrFail($id);
-        return view('CITE.UnidadProductiva.VerUnidadProductiva',compact('unidadProductiva','query_object'));
+        return view('CITE.UnidadProductiva.VerUnidadProductiva',compact('unidadProductiva'));
 
     }
 
@@ -65,8 +67,11 @@ class UnidadProductivaController extends Controller
         $listaCadenas = Cadena::orderBy('nombre','ASC')->get();
         $listaEstadosUnidad = EstadoDocumento::All();
 
+        $listaOrganizaciones = PPM_Organizacion::TodasParaSelect();
+        
+
         return view('CITE.UnidadProductiva.CrearUnidadProductiva',
-                compact('listaTipoPersoneria','listaDepartamentos','listaCadenas','listaRangos','listaEstadosUnidad'));
+                compact('listaTipoPersoneria','listaDepartamentos','listaCadenas','listaRangos','listaEstadosUnidad','listaOrganizaciones'));
     }
 
 
@@ -129,7 +134,8 @@ class UnidadProductivaController extends Controller
 
             $unidadProductiva->nroServiciosHistorico = 0;
 
-
+            $unidadProductiva->setDataFromRequest($request);
+            
             $unidadProductiva->save();
 
             db::commit();
@@ -160,6 +166,9 @@ class UnidadProductivaController extends Controller
         $listaCadenas = Cadena::orderBy('nombre','ASC')->get();
         $listaRangos = ClasificacionRangoVentas::All();
 
+        $listaOrganizaciones = PPM_Organizacion::TodasParaSelect();
+        
+
         $departamento = $unidadProductiva->getDepartamento();
         $provincia = $unidadProductiva->getProvincia();
         $distrito = $unidadProductiva->getDistrito();
@@ -167,6 +176,7 @@ class UnidadProductivaController extends Controller
 
         return view('CITE.UnidadProductiva.EditarUnidadProductiva',
             compact('listaTipoPersoneria','listaDepartamentos','unidadProductiva','listaEstadosUnidad','listaCadenas','listaRangos',
+            'listaOrganizaciones',
             'departamento',
             'provincia',
             'distrito'
@@ -243,6 +253,9 @@ class UnidadProductivaController extends Controller
 
             $unidadProductiva->codEstadoDocumento = $request->codEstadoDocumento;
 
+            $unidadProductiva->setDataFromRequest($request);
+
+
             $unidadProductiva->save();
 
             db::commit();
@@ -269,7 +282,7 @@ class UnidadProductivaController extends Controller
 
             DB::beginTransaction();
 
-
+            $unidad_productiva = UnidadProductiva::findOrFail($request->codUnidadProductiva);
             $listaUsuarios = $request->listaUsuariosAAgregar;
             foreach ($listaUsuarios as $user) {
 
@@ -289,6 +302,8 @@ class UnidadProductivaController extends Controller
                         $usuario->correo = $user['correo'];
                         $usuario->fechaHoraCreacion = Carbon::now();
                         $usuario->codEmpleadoCreador =Empleado::getEmpleadoLogeado()->getId();
+                        $usuario->updateNombreBusqueda();
+            
 
                         $usuario->save();
                     }else{//USUARIO YA EXISTE , si se le mandan valores no vacios en los campos opcionales, remplazará a los antiguos
@@ -318,9 +333,21 @@ class UnidadProductivaController extends Controller
 
             }
 
+            $msj_extra = "";
+            $enlace_ppm_activado = $unidad_productiva->tieneEnlacePPM();
+            if($enlace_ppm_activado){
+              $organizacion = $unidad_productiva->getOrganizacionEnlazada();
+
+              $dnis_añadidos = PPM_Sincronizador::SincronizarSocios($organizacion,$unidad_productiva);
+              $se_realizaron_cambios_sincronizacion = count($dnis_añadidos['dnis_añadidos_a_unidad']) > 0 || count($dnis_añadidos['dnis_añadidos_a_organizacion']);
+              if($se_realizaron_cambios_sincronizacion){
+                $msj_extra = "(y a la Organización gracias al enlace)";
+              }
+            }
+
 
             DB::commit();
-            return RespuestaAPI::respuestaOk("Los nuevos usuarios fueron añadidos exitosamente a la unidad productiva. <br> Recargando la página...");
+            return RespuestaAPI::respuestaOk("Los nuevos usuarios fueron añadidos exitosamente a la unidad productiva $msj_extra. <br> Recargando la página...");
         } catch (\Throwable $th) {
 
             DB::rollBack();
@@ -342,11 +369,25 @@ class UnidadProductivaController extends Controller
             $rela = RelacionUsuarioUnidad::findOrFail($codRelacion);
             $nombre = $rela->getUsuario()->getNombreCompleto();
             $codUnidadProductiva = $rela->codUnidadProductiva;
+            
+
+            $unidad_productiva = UnidadProductiva::findOrFail($codUnidadProductiva);
+            $enlace_ppm_activado = $unidad_productiva->tieneEnlacePPM();
+
+            $msj_extra = "";
+            if($enlace_ppm_activado){
+              $se_elimino_del_ppm = $rela->eliminarSuscripcionPPM();
+              if($se_elimino_del_ppm){
+                $msj_extra = " y de la organización (el enlace PPM está activado).";
+              }
+            }
+
+            
             $rela->delete();
             db::commit();
 
             return redirect()->route('CITE.UnidadesProductivas.Editar',$codUnidadProductiva)
-                    ->with('datos',"Se ha eliminado al usuario $nombre de la unidad productiva");
+                    ->with('datos_ok',"Se ha eliminado al usuario $nombre de la unidad productiva $msj_extra");
 
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -356,14 +397,39 @@ class UnidadProductivaController extends Controller
                                                              $codRelacion
                                                             );
             return redirect()->route('CITE.UnidadesProductivas.Ver',$codUnidadProductiva)
-            ->with('datos',Configuracion::getMensajeError($codErrorHistorial));
+            ->with('datos_error',Configuracion::getMensajeError($codErrorHistorial));
 
         }
 
 
     }
 
+    public function Eliminar($codUnidadProductiva){
+      try {
+        
+        db::beginTransaction();
+        $unidad = UnidadProductiva::findOrFail($codUnidadProductiva);
+        if($unidad->apareceEnOtrasTablas()){
+          return RespuestaAPI::respuestaError("No se puede eliminar la unidad productiva porque aparece en otras tablas");
+        }
 
+        if(!$unidad->usuarioLogeadoPuedeEliminar()){
+          return RespuestaAPI::respuestaError("No tiene permisos para eliminar la unidad productiva");
+        }
+
+        $nombre = $unidad->getDenominacion();
+        $unidad->delete();
+
+        db::commit();
+        return RespuestaAPI::respuestaOk("Se eliminó a la unidad productiva \"".$nombre."\" de la base de datos, recargando la página para actualizar los datos...");
+        
+      } catch (\Throwable $th) {
+        db::rollBack();
+
+        throw $th;
+      }
+      
+    }
 
 
 
@@ -580,6 +646,43 @@ class UnidadProductivaController extends Controller
         $listaUnidadesProductivas = UnidadProductiva::All();
 
         return view('CITE.UnidadProductiva.ExportarUnidadesProductivas',compact('listaUnidadesProductivas'));
+
+    }
+
+    public function SincronizarConPPM(Request $request){
+
+      try{
+        db::beginTransaction();
+        $codUnidadProductiva = $request->codUnidadProductiva;
+        $unidad_productiva = UnidadProductiva::findOrFail($codUnidadProductiva);
+        $enlace_ppm_activado = $unidad_productiva->tieneEnlacePPM();
+  
+        if(!$enlace_ppm_activado){
+          return redirect()->route('CITE.UnidadesProductivas.Editar',$codUnidadProductiva)->with('datos_error',"ERROR: Para sincronizar la unidad productiva con su organización de PPM, se requiere tener activado el enlace");
+        }
+  
+        $organizacion = $unidad_productiva->getOrganizacionEnlazada();
+  
+        $dnis_añadidos = PPM_Sincronizador::SincronizarSocios($organizacion,$unidad_productiva);
+        $msj = PPM_Sincronizador::GetMsjAñadicionOrganizacion($dnis_añadidos);
+      
+        db::commit();
+        
+        return redirect()->route('CITE.UnidadesProductivas.Editar',$codUnidadProductiva)
+                      ->with('datos_ok',$msj);
+         
+      } catch (\Throwable $th) {
+  
+        DB::rollBack();
+        Debug::mensajeError("OrganizacionController SincronizarConCITE",$th);
+        $codErrorHistorial=ErrorHistorial::registrarError($th,
+                                                        app('request')->route()->getAction(),
+                                                        $codUnidadProductiva
+                                                        );
+        return redirect()->route('CITE.UnidadesProductivas.Editar',$codUnidadProductiva)
+        ->with('datos_error',Configuracion::getMensajeError($codErrorHistorial));
+  
+      }
 
     }
 }

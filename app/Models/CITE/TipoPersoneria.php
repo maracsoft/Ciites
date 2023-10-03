@@ -13,6 +13,11 @@ class TipoPersoneria extends Model
     protected $fillable = [''];
 
 
+    /* Nombres de los tipo personeria que se copiaran al modulo de PPM como organizacion */
+    const NombresTiposCopiarPPM = [
+      "ASOCIACION",
+      "COOPERATIVA"
+    ];
 
 
 }

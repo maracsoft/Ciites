@@ -358,7 +358,9 @@
         </ul>
       </li>
 
-
+     
+    
+     
       
       <li class="nav-item has-treeview">
         <a href="#" class="nav-link">
@@ -399,7 +401,7 @@
           <li class="nav-item">
             <a href="{{route('CITE.ReporteMensual.VerMatriz')}}" class="nav-link">
                 <i class="far fa-address-card nav-icon"></i>
-                <p>Matriz Seguimiento</p>
+                <p>Reportes Mensuales</p>
             </a>
           </li>
           <li class="nav-item">
@@ -409,9 +411,77 @@
             </a>
           </li>
 
- 
-          
+          <li class="nav-item">
+            <a href="{{route('CITE.Actividades.Listar')}}" class="nav-link">
+                <i class="far fa-address-card nav-icon"></i>
+                <p>Admin-Actividades</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{route('CITE.TiposMediosVerificacion.Listar')}}" class="nav-link">
+                <i class="far fa-address-card nav-icon"></i>
+                <p>Admin-CITE Formatos</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{route('CITE.MatrizPat.Ver')}}" class="nav-link">
+                <i class="far fa-address-card nav-icon"></i>
+                <p>Matriz PAT</p>
+            </a>
+          </li>
            
+
+        </ul>
+      </li>
+
+      
+      <li class="nav-item has-treeview">
+        <a href="#" class="nav-link">
+          <i class="far fa-building nav-icon"></i>
+          <p>
+            PPM
+            <i class="right fas fa-angle-left"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+                      
+          <li class="nav-item">
+            <a href="{{route('PPM.Organizacion.Listar')}}" class="nav-link">
+                <i class="far fa-address-card nav-icon"></i>
+                <p>Organizaciones</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('PPM.Actividad.Listar')}}" class="nav-link">
+                <i class="far fa-address-card nav-icon"></i>
+                <p>Actividades</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{route('PPM.Persona.Listar')}}" class="nav-link">
+                <i class="far fa-address-card nav-icon"></i>
+                <p>Población Meta</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('PPM.Indicadores.VerRegistrar')}}" class="nav-link">
+                <i class="far fa-address-card nav-icon"></i>
+                <p>Registro de Indicadores</p>
+            </a>
+          </li>
+          
+          <li class="nav-item">
+            <a href="{{route('PPM.Dashboard.Ver')}}" class="nav-link">
+                <i class="far fa-address-card nav-icon"></i>
+                <p>Dashboard</p>
+            </a>
+          </li>
+          
+          
+          
 
         </ul>
       </li>

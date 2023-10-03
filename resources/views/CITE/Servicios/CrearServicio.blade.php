@@ -11,10 +11,10 @@
 @section('contenido')
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-<div >
-    <p class="h2" style="text-align: center">
-        Registrar Servicio
-    </p>
+<div class="col-12 py-2">
+  <div class="page-title">
+    Crear Servicio
+  </div>
 </div>
 <div class="card m-3">
     <div class="card-header">
@@ -38,7 +38,7 @@
             @csrf
             
             <div class="row  internalPadding-1 mx-2">
-                <div  class="col-6">
+                <div class="col-12 col-sm-6">
                     <label for="codUnidadProductiva" id="" class="">
                         Unidad Productiva:
                     </label>
@@ -59,38 +59,32 @@
                 
 
 
-
-
-
-                
-                
-
-
-                <div  class="col-6">
-                    <label for="codModalidad" id="" class="">
-                        Modalidad:
-                    </label>
-                
-                    <select class="form-control"  id="codModalidad" name="codModalidad" onchange="actualizarModalidad(this.value)">
-                        <option value="-1">-- Modalidad --</option>
-                        @foreach($listaModalidades as $modalidad)
-                            <option value="{{$modalidad->getId()}}">
-                                {{$modalidad->nombre}}
-                            </option>
-                        @endforeach
-                        
-                    </select>   
+                <div class="col-12 col-sm-6">
+                  <label for="codTipoAcceso" id="" class="">
+                      Tipo Acceso:
+                  </label>
+              
+                  <select class="form-control"  id="codTipoAcceso" name="codTipoAcceso"  onchange="actualizarTipoAcceso(this.value)">
+                      <option value="-1">-- Tipo Acceso --</option>
+                      @foreach($listaTipoAcceso as $tipoAcceso)
+                          <option value="{{$tipoAcceso->getId()}}">
+                              {{$tipoAcceso->nombre}}
+                          </option>
+                      @endforeach
+                      
+                  </select>   
                 </div>
-                
 
-                <div class="col-12 row fondoPlomoCircular p-3 my-1 hidden" id="divConvenio">
+
+                
+                <div class="col-12 col-sm-12 row fondoPlomoCircular p-3 my-1 hidden" id="divConvenio">
 
                     <div  class="col-2">
                         <label for="codTipoCDP" id="" class="">
                             Comprobante:
                         </label>
                         <select class="form-control"  id="codTipoCDP" name="codTipoCDP"  >
-                            <option value="-1">- Tipo Comprobante -</option>
+                            <option value="">- Tipo Comprobante -</option>
                             @foreach($listaTipoCDP as $cdp)
                                 <option value="{{$cdp->getId()}}">
                                     {{$cdp->nombreCDP}}
@@ -132,15 +126,7 @@
                     </div>
                 </div>
                 
-
-
-                
-
-                
-
-
-                
-                <div  class="col-2">
+                <div class="col-12 col-sm-2">
                     <label for="cantidadServicio" id="" class="">
                         Cantidad Servicios:
                     </label>
@@ -149,19 +135,9 @@
 
                 </div>
                 
-
-
-                <div  class="col-2">
-                    <label for="totalParticipantes" id="" class="">
-                        Total Participantes:
-                    </label>
-                    
-                    <input type="number" class="form-control" id="totalParticipantes" name="totalParticipantes"/> 
-
-                </div>
+               
                 
-
-                <div  class="col-2">
+                <div class="col-12 col-sm-2">
                     <label for="nroHorasEfectivas" id="" class="">
                         Nro Horas efectivas:
                     </label>
@@ -169,37 +145,45 @@
                     <input type="number" class="form-control" id="nroHorasEfectivas" name="nroHorasEfectivas"/> 
                 </div>
                 
-
-
-                <div  class="col-6">
+                <div class="col-12 col-sm-8">
                     <label for="descripcion" id="" class="">
                         Descripción del servicio:
                     </label>
                 
-                    <textarea class="form-control" id="descripcion" name="descripcion" rows="2"
+                    <textarea class="form-control" id="descripcion" name="descripcion" rows="1"
                     ></textarea>
 
                 </div>
 
-                
-                <div  class="col-4">
+                <div class="col-12 col-sm-3">
+                  <label for="codModalidad" id="" class="">
+                      Modalidad:
+                  </label>
+              
+                  <select class="form-control"  id="codModalidad" name="codModalidad" onchange="changeModalidad(this.value)">
+                      <option value="-1">-- Modalidad --</option>
+                      @foreach($listaModalidades as $modalidad)
+                          <option value="{{$modalidad->getId()}}">
+                              {{$modalidad->nombre}}
+                          </option>
+                      @endforeach
+                      
+                  </select>   
+                </div>
+
+                <div class="col-12 col-sm-3">
                     <label for="codTipoServicio" id="" class="">
                         Tipo Servicio:
                     </label>
                     
-                    <select class="form-control"  id="codTipoServicio" name="codTipoServicio" onchange="actualizarTipo(this.value)">
+                    <select class="form-control"  id="codTipoServicio" name="codTipoServicio" onchange="actualizarTipoServicio(this.value)">
                         <option value="-1">-- Tipo Servicio --</option>
-                        @foreach($listaTipoServicio as $tipoServ)
-                            <option value="{{$tipoServ->getId()}}">
-                                {{$tipoServ->nombre}}
-                            </option>
-                        @endforeach
+                         
                         
                     </select>   
                 </div>
 
-                
-                <div  class="col-4">
+                <div class="col-12 col-sm-6">
                     <label for="codActividad" id="" class="">
                         Actividad :
                     </label>
@@ -211,46 +195,12 @@
                     </select>   
                 </div>
                 
-                <div  class="col-4">
-                    <label for="codTipoAcceso" id="" class="">
-                        Tipo Acceso:
-                    </label>
-                
-                    <select class="form-control"  id="codTipoAcceso" name="codTipoAcceso">
-                        <option value="-1">-- Tipo Acceso --</option>
-                        @foreach($listaTipoAcceso as $tipoAcceso)
-                            <option value="{{$tipoAcceso->getId()}}">
-                                {{$tipoAcceso->nombre}}
-                            </option>
-                        @endforeach
-                        
-                    </select>   
-                </div>
+               
+                 
 
-                
-                <div  class="col-4">
-                    <label for="codMesAño" id="" class="">
-                        Mes:
-                    </label>
-                
-                    <select class="form-control"  id="codMesAño" name="codMesAño">
-                        <option value="-1">-- Mes --</option>
-                        @foreach($listaMesesAño as $mesAño)
-                            <option value="{{$mesAño->getId()}}"
-                                @if($mesAño->getId() == $codMesAñoActual )
-                                    selected
-                                @endif
-                                
-                                >
-                                {{$mesAño->getTexto()}}
-                            </option>
-                        @endforeach
-                        
-                    </select>   
-                </div>
+                <div class="col-sm-2"></div>
 
-
-                <div class="col-4">
+                <div class="col-12 col-sm-4">
                     <label for="">Fecha Inicio:</label>
 
                     <div class="input-group date form_date " data-date-format="dd/mm/yyyy" data-provide="datepicker">
@@ -267,7 +217,7 @@
 
                 </div>
 
-                <div class="col-4">
+                <div class="col-12 col-sm-4">
                     <label for="">Fecha Fin:</label>
 
                     <div class="input-group date form_date " data-date-format="dd/mm/yyyy" data-provide="datepicker">
@@ -282,6 +232,7 @@
                     </div>
 
                 </div>
+                <div class="col-sm-2"></div>
                 
 
         
@@ -291,13 +242,7 @@
 
             </div>
 
-            <div class="row p-2 mt-2">
-                <div class="col-8"></div>
-                <div class="col-4" >            
-                    {{App\ComponentRenderizer::subirArchivos()}}
-
-                </div>  
-            </div>
+           
 
             
             <div class="d-flex flex-row m-4">

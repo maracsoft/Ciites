@@ -151,6 +151,7 @@
                                     <i class="fas fa-chart-bar fa-sm"></i>
                                     Seguimiento
                                 </a>
+                                
                                 @if($proyecto->sePuedeEditar())
                                 <a href="{{route('IndicadorActividad.RegistrarMetas',$indicador->codIndicadorActividad )}}" class="btn btn-success btn-sm">
                                     <i class="fas fa-eye fa-sm"></i>

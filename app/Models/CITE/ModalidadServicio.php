@@ -14,5 +14,8 @@ class ModalidadServicio extends Model
 
 
 
+    public function getTiposServicio(){
+      return TipoServicio::where('codModalidad',$this->codModalidad)->get();
+    }
 
 }

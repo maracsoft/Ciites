@@ -28,9 +28,25 @@ use App\LogeoHistorial;
 use App\MetaEjecutada;
 use App\Models\CITE\ReporteMensualCite;
 use App\Models\CITE\Servicio;
+use App\Models\CITE\TipoPersoneria;
 use App\Models\CITE\UnidadProductiva;
 use App\Models\CITE\UsuarioCite;
 use App\Models\Notificaciones\Notificacion;
+use App\Models\PPM\PPM_ArchivoEjecucion;
+use App\Models\PPM\PPM_AsistenciaDetalleprod;
+use App\Models\PPM\PPM_DetalleProducto;
+use App\Models\PPM\PPM_EjecucionActividad;
+use App\Models\PPM\PPM_FGE_Item;
+use App\Models\PPM\PPM_FGE_Marcacion;
+use App\Models\PPM\PPM_FGE_Option;
+use App\Models\PPM\PPM_FGE_Segmento;
+use App\Models\PPM\PPM_Organizacion;
+use App\Models\PPM\PPM_Participacion;
+use App\Models\PPM\PPM_Persona;
+use App\Models\PPM\PPM_Inscripcion;
+use App\Models\PPM\PPM_RelacionOrganizacionSemestre;
+use App\Models\PPM\PPM_RelacionPersonaSemestre;
+use App\Models\PPM\PPM_Sincronizador;
 use App\Numeracion;
 use App\OperacionDocumento;
 use App\OrdenCompra;
@@ -179,7 +195,11 @@ class JobsController extends Controller
       case 'migrarPuestosDeTablaEmpleadoATablaEmpleadoPuesto': $this->migrarPuestosDeTablaEmpleadoATablaEmpleadoPuesto(); break;
       case 'migrarRolesDeCITEANuevoSistemaPuestos' : $this->migrarRolesDeCITEANuevoSistemaPuestos(); break;
       case 'remplazarCodEmpleadoDePerfilesViejos' : $this->remplazarCodEmpleadoDePerfilesViejos(); break;
-
+      case 'PPM_ClonarUnidadesAOrganizaciones' : $this->PPM_ClonarUnidadesAOrganizaciones(); break;
+      case 'PPM_BorrarTodasLasTablas' : $this->PPM_BorrarTodasLasTablas(); break;
+      case 'PPM_FGE_ImportarData' : $this->PPM_FGE_ImportarData(); break;
+      
+      
       default:
         throw new Exception("No se encontró una funcion asociada al job con el nombre ".$job->functionName);
         break;
@@ -375,4 +395,107 @@ class JobsController extends Controller
 
   }
 
+
+  /* 
+  copia el contenido de 
+    UnidadProductiva -> PPM_Organizacion
+    UsuarioCite -> PPM_Persona
+    RelacionUsuarioUnidad -> PPM_Inscripcion
+  */
+
+  public function PPM_ClonarUnidadesAOrganizaciones(){
+    try {
+      db::beginTransaction();
+      $listaUnidades = UnidadProductiva::GetUnidadesQueSeClonaranPPM();
+    
+      foreach ($listaUnidades as $unidad) {
+        Debug::LogMessage("------------- Clonando unidad ".$unidad->ruc." a PPM");
+        
+        //creamos la organizacion
+        $organizacion = $unidad->crearOrganizacionEnBase();
+        $organizacion->save();
+
+        //Enlazamos
+        $unidad->activar_enlace_ppm = 1;
+        $unidad->codOrganizacionEnlazadaPPM = $organizacion->getId();
+        $unidad->save();
+        
+        // Sincronizamos los socios
+        PPM_Sincronizador::SincronizarSocios($organizacion,$unidad);
+
+      }
+
+      db::commit();
+    } catch (\Throwable $th) {
+      db::rollBack();
+      throw $th;
+    }
+   
+
+  }
+
+
+
+  /* Script para correr solo localmente */
+  public function PPM_BorrarTodasLasTablas(){
+
+    try {
+      DB::beginTransaction();
+
+      $entorno = ParametroSistema::getEntorno();
+      if($entorno != "local"){
+        throw new Exception("ESTE SCRIPT SOLO PUEDE SER EJECUTADO EN EL ENTORNO LOCAL");
+      }
+
+      PPM_AsistenciaDetalleprod::query()->delete();
+      PPM_DetalleProducto::query()->delete();
+      PPM_FGE_Marcacion::query()->delete();
+      PPM_RelacionOrganizacionSemestre::query()->delete();
+      PPM_Participacion::query()->delete();
+      PPM_RelacionPersonaSemestre::query()->delete();
+      PPM_Inscripcion::query()->delete();
+      PPM_ArchivoEjecucion::query()->delete();
+      PPM_EjecucionActividad::query()->delete();
+      PPM_Organizacion::query()->delete();
+      PPM_Persona::query()->delete();
+
+      DB::commit();
+      return "Se borraron las tablas de PPM exitosamente";
+    } catch (\Throwable $th) {
+      DB::rollBack();
+      throw $th;
+    }
+    
+
+  }
+
+
+  public function PPM_FGE_ImportarData(){
+
+    try {
+      
+      db::beginTransaction();
+
+      $fp = fopen ("D:\Repositorios\Cedepas\Documentacion\ModuloPPM\cuestionario_fge.csv","r");
+      
+      while ($data = fgetcsv ($fp, 1000, ";")) {
+        
+        $segmento_name = $data[0];
+        $item_description = $data[1];
+        $option_description = $data[2];
+        $valor = intval(substr($option_description,0,1));
+        
+        $segmento = PPM_FGE_Segmento::BuscarYSiNoExisteCrear($segmento_name);
+        $item = PPM_FGE_Item::BuscarYSiNoExisteCrear($item_description,$segmento);
+        $option = PPM_FGE_Option::BuscarYSiNoExisteCrear($option_description,$item,$valor);
+
+      }
+
+      db::commit();
+    } catch (\Throwable $th) {
+      db::rollBack();
+      throw $th;
+    }
+
+  }
 }

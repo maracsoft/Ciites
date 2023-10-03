@@ -25,7 +25,11 @@ use App\Models\CITE\UsuarioCite;
 use App\Models\CITE\AsistenciaServicio;
 use App\ParametroSistema;
 use App\Models\CITE\ActividadCite;
+use App\Models\CITE\Cadena;
+use App\Models\CITE\RelacionTipoMedioActividad;
 use App\Models\CITE\RelacionUsuarioUnidad;
+
+use App\Models\CITE\TipoMedioVerificacion;
 use App\RespuestaAPI;
 use App\TipoArchivoGeneral;
 use App\UI\UIFiltros;
@@ -34,16 +38,16 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\Calculation\Web\Service;
+use ZipArchive;
 
 class ServicioController extends Controller
 {
     const PAGINATION = 25;
 
     public function Listar(Request $request){
-        $codDepartamento = $request->codDepartamento;
-        $codMesAño= $request->codMesAño; 
-        $codEmpleadoBuscar = $request->codEmpleadoBuscar;
+        $empleadoLogeado = Empleado::getEmpleadoLogeado();
 
+        $listaActividades = ActividadCite::All();
 
         $listaServicios = Servicio::where('codServicio','>','0');
         $filtros_usados_paginacion = UIFiltros::getFiltersCompleteArray($listaServicios,$request->getQueryString());
@@ -53,18 +57,20 @@ class ServicioController extends Controller
          
         $listaServicios = $listaServicios->orderBy('codServicio','DESC')->paginate(static::PAGINATION);
 
- 
+        $listaTiposServicio = TipoServicio::where('codModalidad',1)->get();
+       
+        $listaTipoMedioVerificacion = TipoMedioVerificacion::All();
 
         $todasLasUnidadesProduc = UnidadProductiva::All();
         foreach ($todasLasUnidadesProduc as $u) {
           $u->razonYRUC = $u->getDenominacion()." - ".$u->getRucODNI();
         }
         $listaDepartamentos = Departamento::All();
-        $listaMesAño = MesAño::getMesesDeEsteAñoYAnterior();
+       
         $listaEmpleados = Empleado::getListaEmpleadosPorApellido();
         $listaModalidades = ModalidadServicio::All();
-        return view('CITE.Servicios.ListarServicios',compact('listaServicios','listaDepartamentos','filtros_usados','filtros_usados_paginacion',
-                'listaMesAño','listaModalidades','codDepartamento','codMesAño','codEmpleadoBuscar','listaEmpleados','todasLasUnidadesProduc'));
+        return view('CITE.Servicios.ListarServicios',compact('listaServicios','listaDepartamentos','filtros_usados','filtros_usados_paginacion','listaTipoMedioVerificacion',
+                'listaModalidades','listaEmpleados','todasLasUnidadesProduc','listaActividades','listaTiposServicio','empleadoLogeado'));
 
     }
 
@@ -87,18 +93,20 @@ class ServicioController extends Controller
         $listaDepartamentos = Departamento::All();
 
         $listaActividades = ActividadCite::All();
-
-        $codMesAñoActual = MesAño::getActual()->getId();
+ 
         $listaMesesAño = MesAño::getMesesDeEsteAñoYAnterior();
         $listaTipoCDP = CDP::All();
 
+
+        $empleadoLogeado = Empleado::getEmpleadoLogeado();
+      
 
         return view('CITE.Servicios.CrearServicio',compact('listaUnidadesProductivas','listaTipoServicio',
             'listaModalidades',
             'listaTipoAcceso',
             'listaDepartamentos',
-            'listaMesesAño','listaTipoCDP','codMesAñoActual','listaActividades'
-            ));
+            'listaMesesAño','listaTipoCDP','listaActividades','empleadoLogeado'
+    ));
     }
 
 
@@ -117,14 +125,19 @@ class ServicioController extends Controller
             $servicio->codModalidad = $request->codModalidad;
             $servicio->codTipoAcceso = $request->codTipoAcceso;
             $servicio->codDistrito = $request->ComboBoxDistrito;
-            $servicio->codMesAño = $request->codMesAño;
+   
             $servicio->descripcion = $request->descripcion;
             $servicio->cantidadServicio = $request->cantidadServicio;
-            $servicio->totalParticipantes = $request->totalParticipantes;
+            
             $servicio->nroHorasEfectivas = $request->nroHorasEfectivas;
-
-
-            $servicio->codTipoCDP = $request->codTipoCDP;
+            
+            
+            if($request->codTipoCDP){
+              if($request->codTipoCDP != "-1"){
+                $servicio->codTipoCDP = $request->codTipoCDP;
+              }
+            }
+              
             $servicio->baseImponible = $request->baseImponible;
             $servicio->igv = $request->igv;
             $servicio->total = $request->total;
@@ -140,44 +153,10 @@ class ServicioController extends Controller
             $servicio->save();
 
 
-            if( !is_null($request->nombresArchivos) && $request->nombresArchivos!="[]" ){ //SI NO ES NULO Y No está vacio
-
-                $nombresArchivos = json_decode($request->nombresArchivos); //ahora llega un vector en JSON ["archivo1.pdf","archivo2.pdf"]
-
-                $j=0;
-                $codTipoArchivo = TipoArchivoGeneral::getCodigo('ServicioCite');
-                foreach ($request->file('filenames') as $archivo)
-                {
-                    //Primero guardamos el archivo para obtener su id
-                    $archivoGen = new ArchivoGeneral();
-                    $archivoGen->nombreGuardado = "nombreTemporal.marac";
-                    $archivoGen->nombreAparente = $nombresArchivos[$j];
-                    $archivoGen->codTipoArchivo = $codTipoArchivo;
-                    $archivoGen->save();
-
-                    $nombreArchivoGuardado = ArchivoGeneral::formatoNombre($archivoGen->getId(),$nombresArchivos[$j]);
-                    Debug::mensajeSimple('el nombre de guardado de la imagen es:'.$nombreArchivoGuardado);
-                    $archivoGen->nombreGuardado = $nombreArchivoGuardado;
-                    $archivoGen->save();
-
-                    $archivoServicio = new ArchivoServicio();
-                    $archivoServicio->codServicio = $servicio->codServicio;
-                    $archivoServicio->codArchivo = $archivoGen->getId();
-                    $archivoServicio->save();
-
-                    $fileget = \File::get( $archivo );
-
-                    Storage::disk('archivoGeneral')
-                    ->put($nombreArchivoGuardado,$fileget );
-                    $j++;
-                }
-            }
-
             db::commit();
 
 
-            return redirect()->route('CITE.Servicios.Editar',$servicio->getId())
-                ->with('datos','Servicio creado exitosamente.');
+            return redirect()->route('CITE.Servicios.Editar',$servicio->getId())->with('datos_ok','Servicio creado exitosamente.');
         } catch (\Throwable $th) {
             Debug::mensajeError('ServicioController CONTROLLER guardar',$th);
             DB::rollBack();
@@ -201,8 +180,8 @@ class ServicioController extends Controller
         $listaTipoAcceso = TipoAcceso::All();
         $listaDepartamentos = Departamento::All();
         $listaActividades = ActividadCite::All();
-
-        $codMesAñoActual = MesAño::getActual()->getId();
+        $listaTipoArchivos = TipoMedioVerificacion::TodosOrdenadosPorFormato();
+ 
         $listaMesesAño = MesAño::getMesesDeEsteAñoYAnterior();
         $listaTipoCDP = CDP::All();
 
@@ -217,13 +196,17 @@ class ServicioController extends Controller
 
         $linkDrive = ParametroSistema::getParametroSistema('cite-servicio-link-drive')->valor;
 
+ 
+        $empleadoLogeado = Empleado::getEmpleadoLogeado();
+      
+
         return view('CITE.Servicios.EditarServicio',compact('listaUnidadesProductivas','listaTipoServicio',
-                'listaModalidades',
+                'listaModalidades','listaTipoArchivos',
                 'listaTipoAcceso',
                 'listaDepartamentos','listaTipoCDP',
-                'listaMesesAño','linkDrive',
+                'listaMesesAño','linkDrive','empleadoLogeado',
                 'servicio','departamento','provincia','distrito',
-                'listaRelacionUsuariosAsociados','listaUsuariosYAsistencia','codMesAñoActual','listaActividades'
+                'listaRelacionUsuariosAsociados','listaUsuariosYAsistencia','listaActividades'
             ));
     }
 
@@ -238,7 +221,6 @@ class ServicioController extends Controller
         $listaDepartamentos = Departamento::All();
         $listaActividades = ActividadCite::All();
 
-        $codMesAñoActual = MesAño::getActual()->getId();
         $listaMesesAño = MesAño::getMesesDeEsteAñoYAnterior();
         $listaTipoCDP = CDP::All();
 
@@ -257,7 +239,7 @@ class ServicioController extends Controller
                 'listaDepartamentos','listaTipoCDP',
                 'listaMesesAño',
                 'servicio','departamento','provincia','distrito',
-                'listaRelacionUsuariosAsociados','listaUsuariosYAsistencia','codMesAñoActual','listaActividades'
+                'listaRelacionUsuariosAsociados','listaUsuariosYAsistencia','listaActividades'
             ));
     }
 
@@ -276,13 +258,18 @@ class ServicioController extends Controller
             $servicio->codModalidad = $request->codModalidad;
             $servicio->codTipoAcceso = $request->codTipoAcceso;
             $servicio->codDistrito = $request->ComboBoxDistrito;
-            $servicio->codMesAño = $request->codMesAño;
+     
             $servicio->descripcion = $request->descripcion;
             $servicio->cantidadServicio = $request->cantidadServicio;
-            $servicio->totalParticipantes = $request->totalParticipantes;
+            
             $servicio->nroHorasEfectivas = $request->nroHorasEfectivas;
-
-            $servicio->codTipoCDP = $request->codTipoCDP;
+            
+            if($request->codTipoCDP){
+              if($request->codTipoCDP != "-1"){
+                $servicio->codTipoCDP = $request->codTipoCDP;
+              }
+            }
+            
             $servicio->baseImponible = $request->baseImponible;
             $servicio->igv = $request->igv;
             $servicio->total = $request->total;
@@ -294,53 +281,10 @@ class ServicioController extends Controller
 
             $servicio->save();
 
-
-
-            if( !is_null($request->nombresArchivos) && $request->nombresArchivos!="[]" ){ //SI NO ES NULO Y No está vacio
-                $nombresArchivos = json_decode($request->nombresArchivos); //ahora llega un vector en JSON ["archivo1.pdf","archivo2.pdf"]
-                $j=0;
-                $codTipoArchivo = TipoArchivoGeneral::getCodigo('ServicioCite');
-                foreach ($request->file('filenames') as $archivo)
-                {
-                    //Primero guardamos el archivo para obtener su id
-                    $archivoGen = new ArchivoGeneral();
-                    $archivoGen->nombreGuardado = "nombreTemporal.marac";
-                    $archivoGen->nombreAparente = $nombresArchivos[$j];
-                    $archivoGen->codTipoArchivo = $codTipoArchivo;
-                    $archivoGen->save();
-
-                    $nombreArchivoGuardado = ArchivoGeneral::formatoNombre($archivoGen->getId(),$nombresArchivos[$j]);
-                    Debug::mensajeSimple('el nombre de guardado de la imagen es:'.$nombreArchivoGuardado);
-                    $archivoGen->nombreGuardado = $nombreArchivoGuardado;
-                    $archivoGen->save();
-
-                    $archivoServicio = new ArchivoServicio();
-                    $archivoServicio->codServicio = $servicio->codServicio;
-                    $archivoServicio->codArchivo = $archivoGen->getId();
-                    $archivoServicio->save();
-
-                    $fileget = \File::get( $archivo );
-
-                    Storage::disk('archivoGeneral')
-                    ->put($nombreArchivoGuardado,$fileget );
-                    $j++;
-                }
-            }
-
-
-
-
-
-
-
-
-
-
             $nombre = $servicio->descripcion;
             db::commit();
 
-            return redirect()->route('CITE.Servicios.Listar')
-                ->with('datos',"Servicio '$nombre' actualizado exitosamente.");
+            return redirect()->route('CITE.Servicios.Editar',$servicio->codServicio)->with('datos_ok',"Servicio '$nombre' actualizado exitosamente.");
         } catch (\Throwable $th) {
             Debug::mensajeError('ServicioController CONTROLLER guardar',$th);
             DB::rollBack();
@@ -349,11 +293,134 @@ class ServicioController extends Controller
                                                              json_encode($request->toArray())
                                                             );
             return redirect()->route('CITE.Servicios.Listar')
-            ->with('datos',Configuracion::getMensajeError($codErrorHistorial));
+            ->with('datos_error',Configuracion::getMensajeError($codErrorHistorial));
         }
 
     }
 
+    public function SubirArchivos(Request $request){
+       
+      try{
+
+        DB::beginTransaction();
+        $codServicio = $request->codServicio;
+        $codTipoMedioVerificacion = $request->codTipoMedioVerificacion;
+
+        $servicio = Servicio::findOrFail($codServicio);
+
+        if( is_null($request->nombreArchivo) || $request->nombreArchivo=="" ){
+          redirect()->route('CITE.Servicios.Editar',$codServicio)->with('datos_error',"ERROR: No se adjuntó ningún archivo");
+        }
+
+        $nombreArchivo = json_decode($request->nombreArchivo)[0];  
+        
+        $codTipoArchivo = TipoArchivoGeneral::getCodigo('ServicioCite');
+
+        $archivo = null;
+        foreach ($request->file('file_serv') as $ar) {
+          $archivo = $ar;
+        }
+       
+        //Primero guardamos el archivo para obtener su id
+        $archivoGen = new ArchivoGeneral();
+        $archivoGen->nombreGuardado = "nombreTemporal.marac";
+        $archivoGen->nombreAparente = $nombreArchivo;
+        $archivoGen->codTipoArchivo = $codTipoArchivo;
+        $archivoGen->save();
+
+        $nombreArchivoGuardado = ArchivoGeneral::formatoNombre($archivoGen->getId(),$nombreArchivo);
+        
+        $archivoGen->nombreGuardado = $nombreArchivoGuardado;
+        $archivoGen->save();
+
+        $archivoServicio = new ArchivoServicio();
+        $archivoServicio->codServicio = $servicio->codServicio;
+        $archivoServicio->codTipoMedioVerificacion = $request->codTipoMedioVerificacion;
+        $archivoServicio->codArchivo = $archivoGen->getId();
+        $archivoServicio->save();
+
+        $fileget = \File::get($archivo);
+
+        Storage::disk('archivoGeneral')->put($nombreArchivoGuardado,$fileget );
+
+        $proyect_folder_path = ParametroSistema::getParametroSistema("proyect_folder_path")->valor;
+
+        //hasta aqui ya está guardado el archivo, pero debemos verificar si es un PDF compatible con nuestra librería de compresiones.
+        $ruta_documento_test = $proyect_folder_path."/tests/test_merge_pdf.pdf";
+        $ruta_archivo_subido = $proyect_folder_path."/storage/app/archivoGeneral/".$archivoGen->nombreGuardado;
+        $ruta_destino = $proyect_folder_path."/tests/archivo_generado_test.pdf";
+
+        try {
+          $pdf = new \Jurosh\PDFMerge\PDFMerger;
+          
+          $pdf->addPDF($ruta_documento_test, 'all');
+          $pdf->addPDF($ruta_archivo_subido, 'all');
+          
+          $pdf->merge('file', $ruta_destino);
+        } catch (\Throwable $th) {
+          DB::rollBack();
+          return redirect()->route('CITE.Servicios.Editar',$codServicio)->with('mostrar_modal_archivo_nocompatible',"1");
+        }
+        
+        DB::commit();
+          
+        return redirect()->route('CITE.Servicios.Editar',$codServicio)->with('datos_ok',"Se ha subido el archivo $nombreArchivo exitosamente");
+      } catch (\Throwable $th) {
+        Debug::mensajeError('ServicioController CONTROLLER SubirArchivos',$th);
+        DB::rollBack();
+        $codErrorHistorial=ErrorHistorial::registrarError($th,
+                                                        app('request')->route()->getAction(),
+                                                        json_encode($request->toArray())
+                                                        );
+        return redirect()->route('CITE.Servicios.Editar',$codServicio)
+        ->with('datos',Configuracion::getMensajeError($codErrorHistorial));
+      }
+
+
+
+    }
+
+    public function ActualizarTipoDeUnArchivo(Request $request){
+      
+      try {
+
+        DB::beginTransaction();
+       
+        $archivo_servicio = ArchivoServicio::findOrFail($request->codArchivoServicio);
+        $servicio = $archivo_servicio->getServicio();
+
+        if($request->codTipoMedioVerificacion){
+          $tipo_archivo_servicio = TipoMedioVerificacion::findOrFail($request->codTipoMedioVerificacion);
+          $formato_name = $tipo_archivo_servicio->nombre;
+          $archivo_servicio->codTipoMedioVerificacion = $tipo_archivo_servicio->getId(); 
+        }else{
+          $archivo_servicio->codTipoMedioVerificacion = null; 
+          $formato_name = "Ningun tipo de archivo";
+        }
+        
+        $archivo_servicio->save();
+
+        $archivo_gen = $archivo_servicio->getArchivo();
+        $name = $archivo_gen->nombreAparente;
+
+        //ahora calculamos los archivos que le faltan al servicio segun su actividad
+        $mensaje_archivos_faltantes = $servicio->getMensajeArchivosFaltantes();
+        DB::commit();
+
+
+
+        return RespuestaAPI::respuestaDatosOk("Se actualizó el tipo de archivo de \"$name\" a \"$formato_name\" exitosamente.",$mensaje_archivos_faltantes);
+      } catch (\Throwable $th) {
+
+          DB::rollBack();
+          Debug::mensajeError("servicioController ActualizarTipoDeUnArchivo",$th);
+          $codErrorHistorial=ErrorHistorial::registrarError($th,
+                                                          app('request')->route()->getAction(),
+                                                          json_encode($request->toArray())
+                                                          );
+          return RespuestaAPI::respuestaError(Configuracion::getMensajeError($codErrorHistorial));
+      }
+    }
 
     public function ExportarExcel(Request $request){
 
@@ -368,20 +435,8 @@ class ServicioController extends Controller
         $listaServicios = Servicio::where('codModalidad',$request->codModalidad)
                                 ->where('fechaTermino','>=',$fechaInicio)
                                 ->where('fechaInicio','<=',$fechaFin)
-                                ->where(function($query) use ($fechaInicio,$fechaFin) {
-                                   $query->where(function($query1) use ($fechaInicio,$fechaFin){
-                                    $query1->where('fechaInicio','<=',$fechaInicio)->where('fechaTermino','>=',$fechaInicio)->where('fechaTermino','<=',$fechaFin);
-                                   })
-                                   ->orWhere(function($query2) use ($fechaInicio,$fechaFin){
-                                    $query2->where('fechaInicio','>=',$fechaInicio)->where('fechaInicio','<=',$fechaFin)->where('fechaTermino','>=',$fechaFin);
-                                   })
-                                   ->orWhere(function($query3) use ($fechaInicio,$fechaFin){
-                                    $query3->where('fechaInicio','<=',$fechaInicio)->where('fechaTermino','>=',$fechaFin);
-                                   })
-                                   ->orWhere(function($query4) use ($fechaInicio,$fechaFin){
-                                    $query4->where('fechaInicio','>=',$fechaInicio)->where('fechaTermino','<=',$fechaFin);
-                                   });
-                                })
+
+                                ->where(Servicio::FiltroEspecialFechas($fechaInicio,$fechaFin))
                                 ->join('cite-unidad_productiva','cite-unidad_productiva.codUnidadProductiva','=','cite-servicio.codUnidadProductiva')
       //ordenamiento por tabla cliente (nombrePersona,razonSocial) y luego por tabla servicio (descripcion)
                                 ->orderBy('nombrePersona','ASC')
@@ -505,7 +560,8 @@ class ServicioController extends Controller
                 $usuario->nombres = mb_strtoupper($request->nombres);
                 $usuario->apellidoPaterno = mb_strtoupper($request->apellidoPaterno);
                 $usuario->apellidoMaterno = mb_strtoupper($request->apellidoMaterno);
-
+                $usuario->updateNombreBusqueda();
+                
                 $usuario->codEmpleadoCreador =Empleado::getEmpleadoLogeado()->getId();
                 $usuario->fechaHoraCreacion = Carbon::now();
 
@@ -604,7 +660,7 @@ class ServicioController extends Controller
             db::commit();
 
             return redirect()->route('CITE.Servicios.Editar',$codServicio)
-                    ->with('datos',"Se ha eliminado al usuario $nombre del servicio");
+                    ->with('datos_ok',"Se ha eliminado al usuario $nombre del servicio");
 
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -614,7 +670,7 @@ class ServicioController extends Controller
                                                              $codRelacion
                                                             );
             return redirect()->route('CITE.Servicios.Editar',$codServicio)
-            ->with('datos',Configuracion::getMensajeError($codErrorHistorial));
+            ->with('datos_error',Configuracion::getMensajeError($codErrorHistorial));
 
         }
 
@@ -633,12 +689,10 @@ class ServicioController extends Controller
             $nombreServ = $archivoServicio->getServicio()->descripcion;
             $archivoServicio->eliminarArchivo();
 
-
-
             db::commit();
 
             return redirect()->route('CITE.Servicios.Editar',$codServicio)
-                    ->with('datos',"Se ha eliminado al archivo $nombre del servicio $nombreServ");
+                    ->with('datos_ok',"Se ha eliminado al archivo $nombre del servicio $nombreServ");
 
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -679,7 +733,7 @@ class ServicioController extends Controller
             db::commit();
 
             return redirect()->route('CITE.Servicios.Listar')
-                ->with('datos',"Se ha eliminado TOTALMENTE el servicio '$nombre', esto implica sus archivos,asistencias y el servicio mismo.");
+                ->with('datos_ok',"Se ha eliminado TOTALMENTE el servicio '$nombre', esto implica sus archivos,asistencias y el servicio mismo.");
         } catch (\Throwable $th) {
             DB::rollBack();
             Debug::mensajeError("servicioController EliminarArchivo",$th);
@@ -688,7 +742,7 @@ class ServicioController extends Controller
                                                              $codServicio
                                                             );
             return redirect()->route('CITE.Servicios.Listar')
-            ->with('datos',Configuracion::getMensajeError($codErrorHistorial));
+            ->with('datos_error',Configuracion::getMensajeError($codErrorHistorial));
 
         }
 
@@ -697,28 +751,187 @@ class ServicioController extends Controller
 
 
     function verDashboard(Request $request){
-        /* Cantidad de Servicios por region */
-        /* Servicios por fecha  */
+        
+      $fechaInicio = $request->fechaInicio; 
+      $fechaTermino = $request->fechaTermino; 
 
-        $codDepartamento = $request->codDepartamento;
-        if($codDepartamento=="")
-            $codDepartamento = 1;
+      if($request->codsCadena != ""){
+        $codsCadena = explode(",",$request->codsCadena);
+      }else{
+        $codsCadena = [];
+      }
+      
+      $año_actual = date("Y");
 
-        $serviciosPorRegion_obj = Servicio::getReporteServiciosPorRegion();
-        $serviciosPorProvincia_obj = Servicio::getReporteServiciosPorProvincia($codDepartamento);
-        $serviciosPorUnidad_obj = Servicio::getReporteServiciosPorUnidad();
-        $listaDepartamentos = Departamento::All();
+      if(!$request->fechaInicio){
+        $fechaInicio = "01/01/$año_actual";
+      }
+      if(!$request->fechaTermino){
+        $año_siguiente = $año_actual + 1;
+        $fechaTermino = "01/01/$año_siguiente";
+      }
+
+      $fechaInicio_sql = Fecha::formatoParaSQL($fechaInicio);
+      $fechaTermino_sql = Fecha::formatoParaSQL($fechaTermino);
 
 
-        return view('CITE.DashboardCITE',compact('codDepartamento','listaDepartamentos',
-                'serviciosPorRegion_obj','serviciosPorProvincia_obj','serviciosPorUnidad_obj'));
+      $serviciosPorRegion_obj = Servicio::getReporteServiciosPorRegion($fechaInicio_sql,$fechaTermino_sql,$codsCadena);
+      $serviciosPorProvincia_obj = Servicio::getReporteServiciosPorProvincia($fechaInicio_sql,$fechaTermino_sql,$codsCadena);
+      $serviciosPorUnidad_obj = Servicio::getReporteServiciosPorUnidad($fechaInicio_sql,$fechaTermino_sql,$codsCadena);
+      $serviciosPorActividad_obj = Servicio::getReporteServiciosPorActividad($fechaInicio_sql,$fechaTermino_sql,$codsCadena);
+
+      $serviciosPorCadena_obj = Servicio::getReporteServiciosPorCadena($fechaInicio_sql,$fechaTermino_sql,$codsCadena);
+
+      
+      $listaDepartamentos = Departamento::All();
+      $listaCadenas = Cadena::All();
+      
+      $empLogeado = Empleado::getEmpleadoLogeado();
+      $codsCadena = $request->codsCadena;
+      return view('CITE.DashboardCITE',compact('listaDepartamentos','fechaInicio','fechaTermino','listaCadenas',
+              'serviciosPorRegion_obj','serviciosPorProvincia_obj','serviciosPorUnidad_obj','empLogeado','codsCadena','serviciosPorActividad_obj','serviciosPorCadena_obj'));
     }
 
 
+    
+    public function DescargarReporteHitos(Request $request){
+      $listaTipoServicio = TipoServicio::All();
+      $fechaInicio = Fecha::formatoParaSQL($request->fechaInicio);
+      $fechaFin = Fecha::formatoParaSQL($request->fechaFin);
+
+      $descargarExcel = ParametroSistema::exportacionExcelActivada();
+
+      $rangoFechas = $request->fechaInicio." al ".$request->fechaFin;
+      $filename = "Reporte de HITOS CITE $rangoFechas .xls";
 
 
+      return view('CITE.Servicios.ReporteHitos',compact('listaTipoServicio','fechaInicio','fechaFin','descargarExcel','filename'));
+
+    }
+
+    /* 
+    Genera 1 pdf por cada servicio que calza en los filtros que se le manda
+
+    */
+    public static function GenerarPdfsUnidos($codActividad,$fecha_inicio,$fecha_fin){
+     
+      $proyect_folder_path = ParametroSistema::getParametroSistema("proyect_folder_path")->valor;
+
+      // Obtenemos el listado de servicios que trabajaremos
+      $listaServicios = Servicio::where('codActividad',$codActividad)->where('fechaTermino','>',$fecha_inicio)->where('fechaTermino','<',$fecha_fin)->get();
+      //para cada servicio, obtenemos sus archivos generales y los unificamos en un solo PDF
+
+      foreach ($listaServicios as $servicio) {
+        
+        $tiene_archivos = $servicio->tieneArchivosExportables();
+        if($tiene_archivos){
+          
+          
+          $actividad = $servicio->getActividadPAT();
+          $lista_relacion_tipomedio = RelacionTipoMedioActividad::where('codActividad',$actividad->codActividad)->orderBy('nro_orden','ASC')->get();
 
 
+          $folder_archivosgen = $proyect_folder_path."/storage/app/archivoGeneral/";
+          $pdf = new \Jurosh\PDFMerge\PDFMerger;
+          
+          foreach ($lista_relacion_tipomedio as $relacion_tipomedio) {
+            
+            $archivo_serv = $servicio->getArchivoServicio_SegunTipoMedioVerificacion($relacion_tipomedio->codTipoMedioVerificacion);
+            if($archivo_serv){
+              $archivo_general = $archivo_serv->getArchivo();
+
+              $ruta_archivogen = $folder_archivosgen.$archivo_general->nombreGuardado; 
+              
+              $pdf->addPDF($ruta_archivogen, 'all');
+              
+            }else{
+              
+            }
+          }
+          $pdf->merge('file', $proyect_folder_path.'/storage/app/pdfs_unidos/MediosVerificacionServicio_'.$servicio->getId().'.pdf');
+        }else{
+          
+
+        }
+
+      }
+      return $listaServicios;
+    }
+
+
+    public function GenerarComprimidoDeArchivos(Request $request){
+      
+      $codActividad = $request->codActividad;       
+      $fecha_inicio = Fecha::formatoParaSQL($request->fecha_inicio); 
+      $fecha_fin = Fecha::formatoParaSQL($request->fecha_fin); 
+
+      $listaServicios = static::GenerarPdfsUnidos($codActividad,$fecha_inicio,$fecha_fin);
+      
+      $proyect_folder_path = ParametroSistema::getParametroSistema("proyect_folder_path")->valor;
+      $carpeta_archivos_pdfs_unidos = $proyect_folder_path."/storage/app/pdfs_unidos/";
+
+      $carpeta_destino = $proyect_folder_path."/storage/app/comprimidos/";
+
+      $fecha = date("Y_m_d___H_i_s");
+      $nombre_comprimido = "medios_verificacion_$fecha.zip";
+      $zip = new ZipArchive();
+      $res = $zip->open($carpeta_destino.$nombre_comprimido, ZipArchive::CREATE);
+      
+      if(!($res === TRUE)){
+        return RespuestaAPI::respuestaError("Ocurrio un error al comprimir los archivos");
+      }
+
+      if(count($listaServicios) == 0){
+        return RespuestaAPI::respuestaError("No hay ningún servicio que cumpla con los filtros ingresados.");
+      }
+
+    
+      $algun_servicio_tiene_archivos = false;
+
+      foreach ($listaServicios as $servicio) {
+        
+        $tiene_archivos = $servicio->tieneArchivosExportables();
+
+        if($tiene_archivos){
+          $algun_servicio_tiene_archivos = true;
+          $id = $servicio->getId();
+          // Añadimos un archivo en la raiz del zip.
+          $archivo_name = $carpeta_archivos_pdfs_unidos."/MediosVerificacionServicio_$id.pdf";
+           
+          
+          $existe = file_exists($archivo_name);
+          if(!$existe){
+            return RespuestaAPI::respuestaError("Ocurrio un error al comprimir los archivos, servicio $id");
+          }
+          $res2 = $zip->addFile($archivo_name,"MediosVerificacionServicio_$id.pdf");
+          
+          if(!$res2){
+            return RespuestaAPI::respuestaError("Ocurrio un error al comprimir los archivos, servicio $id");
+          }
+        }
+      }
+
+      if(!$algun_servicio_tiene_archivos){ //si ningun servicio resulto tener archivos, mandamos error
+        return RespuestaAPI::respuestaError("Ninguno de los servicios que cumplen con el criterio de búsqueda tiene archivos");
+      }
+
+      $res3 = $zip->close();
+      if(!$res3){
+        return RespuestaAPI::respuestaError("Ocurrio un error al comprimir los archivos");
+      }
+
+      $vista = view('CITE.Servicios.Inv_ServiciosCoincidentes',compact('listaServicios','nombre_comprimido'))->render();
+      
+      return RespuestaAPI::respuestaDatosOk("Se generó el archivo comprimido exitosamente",$vista);
+
+    }
+
+
+    function DescargarArchivoComprimido($nombre_archivo){
+      
+      return Storage::download("/comprimidos/".$nombre_archivo);
+
+    }
 
     /* --------------------------- FUNCIONES OPERACIONES ------------------------  */
     /* --------------------------- FUNCIONES OPERACIONES ------------------------  */
@@ -959,6 +1172,21 @@ class ServicioController extends Controller
         return "listo";
     }
 
+
+
+    /* retorna los servicios que tienen el codTipoCDP en null pero están como tipo acceso "pagado" */
+    public function GetServiciosInvalidos(){
+      
+      $tipo_acceso_pagado = TipoAcceso::where('nombre','Pagado')->first();
+      echo "codsServicios invalidos: <br>";
+      $lista = Servicio::whereNull('codTipoCDP')->where('codTipoAcceso','=',$tipo_acceso_pagado->codTipoAcceso)->get();
+      foreach ($lista as $servicio) {
+        echo $servicio->getId()."<br>";
+      }
+      echo "<br> <br> LISTO";
+
+      return;
+    }
 
 
 }

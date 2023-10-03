@@ -1,7 +1,7 @@
 @extends('Layout.Plantilla')
 
 @section('titulo')
-  Ver UnidadProductiva
+  Ver Unidad Productiva
 @endsection
 
 @section('tiempoEspera')
@@ -12,7 +12,7 @@
 
 <div >
     <p class="h2" style="text-align: center">
-        Ver UnidadProductiva
+        Ver Unidad Productiva
     </p>
 </div>
 
@@ -51,44 +51,44 @@
         <div class="card-body">
 
             <div class="row  internalPadding-1 mx-2">
-                <div  class="col-2 centerLabels">
+                <div  class="col-sm-2 centerLabels">
                     <label  class="">
                         Tipo Personería:
                     </label>
 
 
                 </div>
-                <div class="col-10">
+                <div class="col-sm-10">
                     <input type="text" class="form-control" value="{{$unidadProductiva->getTipoPersoneria()->nombre}}" readonly>
 
                 </div>
 
 
-                <div  class="col-2">
+                <div  class="col-sm-2">
                     <label for="codTipoPersoneria" id="lvlProyecto" class="">
                         Documento:
                     </label>
                 </div>
-                <div class="col-4">
+                <div class="col-sm-4">
                      <input type="text" class="form-control" value="{{$unidadProductiva->getEstadoDocumento()->nombre}}" readonly>
                 </div>
-                <div  class="col-2">
+                <div  class="col-sm-2">
                     <label for="codCadena" class="">
                         Cadena:
                     </label>
                 </div>
-                <div class="col-4">
+                <div class="col-sm-4">
                     <input type="text" class="form-control" value="{{$unidadProductiva->getNombreCadena()}}" readonly>
                 </div>
 
                 @if($unidadProductiva->getEstadoDocumento()->nombre=="RUC")
-                    <div  class="col-2  centerLabels">
+                    <div  class="col-sm-2  centerLabels">
                         <label >RUC:
                             <b id="contadorRUC" style="color: rgba(0, 0, 0, 0.548)"></b>
 
                         </label>
                     </div>
-                    <div class="col-4">
+                    <div class="col-sm-4">
 
                         <div class="d-flex flex-col">
 
@@ -99,10 +99,10 @@
 
                     </div>
 
-                    <div  class="col-2  centerLabels">
+                    <div  class="col-sm-2  centerLabels">
                         <label for="razonSocial" id="">Razón Social</label>
                     </div>
-                    <div class="col-4">
+                    <div class="col-sm-4">
                         <input type="text" class="form-control" value="{{$unidadProductiva->razonSocial}}" readonly>
 
                     </div>
@@ -110,14 +110,14 @@
                 @endif
 
                 @if($unidadProductiva->getEstadoDocumento()->nombre=="DNI")
-                    <div  class="col-2  centerLabels">
+                    <div  class="col-sm-2  centerLabels">
                         <label for="dni" id="">DNI:
                             <b id="contadordni" style="color: rgba(0, 0, 0, 0.548)"></b>
 
                         </label>
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-sm-4">
 
                         <input type="text" class="form-control" value="{{$unidadProductiva->dni}}" readonly>
 
@@ -125,17 +125,17 @@
                     </div>
 
 
-                    <div  class="col-2  centerLabels">
+                    <div  class="col-sm-2  centerLabels">
                         <label for="" id="">Nombre persona:</label>
                     </div>
-                    <div class="col-4">
+                    <div class="col-sm-4">
                         <input type="text" class="form-control" value="{{$unidadProductiva->nombrePersona}}" readonly>
 
                     </div>
                 @endif
 
 
-                <div class="col-6">
+                <div class="col-sm-6">
                     <div class="form-check">
                         <input style="" class="form-check-input" type="checkbox" value="1"
                             id="enTramite" name="enTramite" onclick="return false;">
@@ -144,44 +144,44 @@
                         </label>
                     </div>
                 </div>
-                <div  class="col-2">
+                <div  class="col-sm-2">
                     <label for="" id="">Rango ventas:</label>
                 </div>
-                <div class="col-4">
+                <div class="col-sm-4">
                     <input type="text" class="form-control" value="{{$unidadProductiva->getClasificacionRangoVentas()->nombre}}" readonly>
 
                 </div>
 
-                <div  class="col-2  centerLabels">
+                <div  class="col-sm-2  centerLabels">
                     <label for="" id="">Dirección:</label>
                 </div>
-                <div class="col-10">
+                <div class="col-sm-10">
                     <input type="text" class="form-control" value="{{$unidadProductiva->direccion}}" readonly>
 
                 </div>
 
 
 
-                <div class="col-4">
+                <div class="col-sm-4">
                     <label for="">
                         Departamento:
                     </label>
                     <input type="text" class="form-control" value="{{$unidadProductiva->getNombreDepartamento()}}" readonly>
                 </div>
-                <div class="col-4">
+                <div class="col-sm-4">
                     <label for="">
                         Provincia:
                     </label>
                     <input type="text" class="form-control" value="{{$unidadProductiva->getNombreProvincia()}}"  readonly>
                 </div>
-                <div class="col-4">
+                <div class="col-sm-4">
                     <label for="">
                         Distrito:
                     </label>
                     <input type="text" class="form-control" value="{{$unidadProductiva->getNombreDistrito()}}" readonly>
                 </div>
 
-                <div class="col-12 text-right">
+                <div class="col-sm-12 text-right">
 
                 </div>
 

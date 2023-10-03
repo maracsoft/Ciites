@@ -20,6 +20,7 @@ use App\ErrorHistorial;
 use App\EstadoSolicitudFondos;
 use App\FakerCedepas;
 use App\Fecha;
+use App\Http\Controllers\JobsController;
 use App\Http\Controllers\OperacionesController;
 use App\Http\Controllers\PersonaPoblacionController;
 use App\MaracsoftBot;
@@ -32,6 +33,7 @@ use App\Models\CITE\RelacionUsuarioUnidad;
 use App\Models\CITE\Servicio;
 use App\Models\CITE\UnidadProductiva;
 use App\Models\CITE\UsuarioCite;
+use App\Models\PPM\PPM_Organizacion;
 use App\Numeracion;
 use App\OperacionDocumento;
 use App\OrdenCompra;
@@ -55,6 +57,8 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Monolog\ErrorHandler;
+use Illuminate\Support\Facades\Log;
+
 
 Route::get('/PaginaEnMantenimiento/','UserController@paginaEnMantenimiento')->name('mantenimiento');
 
@@ -104,8 +108,6 @@ Route::group(['middleware'=>"Mantenimiento"],function()
 
     Route::get('/probandoCosas',function(){
       
-
-    
     });
 
     Route::get('/serviciosDistritosRepetidos',function(){
@@ -208,6 +210,9 @@ Route::group(['middleware'=>"Mantenimiento"],function()
     Route::get('/GestiónUsuarios/asignarContadorATodosProyectos/{codEmpleadoContador}','EmpleadoController@asignarContadorATodosProyectos');
     Route::get('/GestiónUsuarios/quitarContadorATodosProyectos/{codEmpleadoContador}','EmpleadoController@quitarContadorATodosProyectos');
 
+    Route::post('/GestiónUsuarios/AsignarContadorAProyectosPorComas','EmpleadoController@AsignarContadorAProyectosPorComas')->name('GestionUsuarios.AsignarContadorAProyectosPorComas');
+    Route::post('/GestiónUsuarios/QuitarContadorAProyectosPorComas','EmpleadoController@QuitarContadorAProyectosPorComas')->name('GestionUsuarios.QuitarContadorAProyectosPorComas');
+    
 
     Route::get('/GestiónUsuarios/asignarProyectoAObservador/{cadena}','EmpleadoController@asignarProyectoAObservador');
     Route::get('/GestiónUsuarios/asignarObservadorATodosProyectos/{codEmpleadoContador}','EmpleadoController@asignarObservadorATodosProyectos');
@@ -215,8 +220,13 @@ Route::group(['middleware'=>"Mantenimiento"],function()
     
 
 
+    Route::post('/GestiónUsuarios/AsignarObservadorAProyectosPorComas','EmpleadoController@AsignarObservadorAProyectosPorComas')->name('GestionUsuarios.AsignarObservadorAProyectosPorComas');
+    Route::post('/GestiónUsuarios/QuitarObservadorAProyectosPorComas','EmpleadoController@QuitarObservadorAProyectosPorComas')->name('GestionUsuarios.QuitarObservadorAProyectosPorComas');
+    
     
 
+    /* CRON JOB */
+    Route::get('/PPM/Cron/ProcesarPersonasReniecPendientes','PPM\SemestreOrganizacionController@ProcesarPersonasReniecPendientes')->name('PPM.SemestreOrganizacion.ProcesarPersonasReniecPendientes');
 
 
 
@@ -503,6 +513,10 @@ Route::group(['middleware'=>"Mantenimiento"],function()
             
             Route::get('/AdminPanel/Ver','AdminPanelController@VerPanel')->name('AdminPanel.VerPanel');
             Route::get('/AdminPanel/VerPhpInfo','AdminPanelController@VerPhpInfo')->name('AdminPanel.VerPhpInfo');
+            
+            Route::get('/AdminPanel/VerLogCron','AdminPanelController@VerLogCron')->name('AdminPanel.VerLogCron');
+            Route::get('/AdminPanel/BorrarLogCron','AdminPanelController@BorrarLogCron')->name('AdminPanel.BorrarLogCron');
+            
             
             
             /* *********************** MODULO DE JOBS ************************ */
@@ -1593,6 +1607,8 @@ Route::group(['middleware'=>"Mantenimiento"],function()
 
 
             Route::get('/Cite/UnidadesProductivas/Reporte','CITE\UnidadProductivaController@Reporte')->name('CITE.UnidadesProductivas.Reporte');
+            Route::post('/Cite/UnidadesProductivas/SincronizarConPPM','CITE\UnidadProductivaController@SincronizarConPPM')->name('CITE.UnidadesProductivas.SincronizarConPPM');
+
 
 
             Route::post('/Cite/UnidadProductiva/AñadirGrupoDeSocios','CITE\UnidadProductivaController@AñadirGrupoDeSocios')->name('CITE.Servicios.AñadirGrupoDeSocios');
@@ -1610,6 +1626,9 @@ Route::group(['middleware'=>"Mantenimiento"],function()
 
             Route::post('/Cite/Servicios/GuardarAsistencias/','CITE\ServicioController@GuardarAsistencias')->name('CITE.Servicios.GuardarAsistencias');
 
+            Route::post('/Cite/Servicios/SubirArchivos','CITE\ServicioController@SubirArchivos')->name('CITE.Servicios.SubirArchivos');
+            Route::post('/Cite/Servicios/ActualizarTipoDeUnArchivo','CITE\ServicioController@ActualizarTipoDeUnArchivo')->name('CITE.Servicios.ActualizarTipoDeUnArchivo');
+            
 
             Route::get('/Cite/Servicios/Editar/{id}','CITE\ServicioController@Editar')->name('CITE.Servicios.Editar');
 
@@ -1619,6 +1638,8 @@ Route::group(['middleware'=>"Mantenimiento"],function()
             Route::get('/Cite/Servicios/EliminarRelacionUsuario/{codRelacion}','CITE\ServicioController@EliminarRelacionUsuario')->name('CITE.Servicios.EliminarRelacionUsuario');
 
 
+            Route::get('/Cite/Servicios/GenerarComprimidoDeArchivos','CITE\ServicioController@GenerarComprimidoDeArchivos')->name('CITE.Servicios.GenerarComprimidoDeArchivos');
+            Route::get('/Cite/Servicios/DescargarArchivoComprimido/{nombre_archivo}','CITE\ServicioController@DescargarArchivoComprimido')->name('CITE.Servicios.DescargarArchivoComprimido');
 
 
             Route::post('/Cite/Servicios/Actualizar/','CITE\ServicioController@Actualizar')->name('CITE.Servicios.Actualizar');
@@ -1628,6 +1649,7 @@ Route::group(['middleware'=>"Mantenimiento"],function()
             Route::post('/Cite/Servicios/AñadirGrupoDeUsuarios','CITE\ServicioController@AñadirGrupoDeUsuarios')->name('CITE.Servicios.AñadirGrupoDeUsuarios');
 
 
+            Route::get('/Cite/Servicios/VerArchivo/{codArchivoGeneral}/{ada}','ArchivoGeneralController@VerArchivoPDF')->name('CITE.Servicios.VerArchivo');
             Route::get('/Cite/Servicios/DescargarArchivo/{id}','ArchivoGeneralController@DescargarArchivo')->name('CITE.Servicios.DescargarArchivo');
             Route::get('/Cite/Servicios/EliminarArchivo/{codArchivoServicio}','CITE\ServicioController@EliminarArchivo')->name('CITE.Servicios.EliminarArchivo');
 
@@ -1636,11 +1658,19 @@ Route::group(['middleware'=>"Mantenimiento"],function()
             Route::get('/Cite/Servicios/ExportarExcelSinConvenio','CITE\ServicioController@ExportarExcelSinConvenio')->name('CITE.Servicios.ExportarExcelSinConvenio');
             Route::get('/Cite/Servicios/ExportarExcel','CITE\ServicioController@ExportarExcel')->name('CITE.Servicios.ExportarExcel');
 
+            Route::get('/Cite/Servicios/DescargarReporteHitos','CITE\ServicioController@DescargarReporteHitos')->name('CITE.Servicios.DescargarReporteHitos');
+
+
+            Route::get('/Cite/Servicios/GetServiciosInvalidos','CITE\ServicioController@GetServiciosInvalidos')->name('CITE.Servicios.GetServiciosInvalidos');
+            
+
             Route::get('/CITE/eliminarTotalmente/{codServ}','CITE\ServicioController@eliminarTotalmente')->name('CITE.Servicios.EliminarTotalmente');
 
             /* USUARIOS */
             Route::get('/Cite/Usuarios/Crear','CITE\UsuarioCiteController@Crear')->name('CITE.Usuarios.Crear');
             Route::get('/Cite/Usuarios/{id}/Editar','CITE\UsuarioCiteController@Editar')->name('CITE.Usuarios.Editar');
+
+            Route::get('/Cite/Usuarios/{id}/Eliminar','CITE\UsuarioCiteController@Eliminar')->name('CITE.Usuarios.Eliminar');
 
             Route::post('/Cite/Usuarios/Guardar','CITE\UsuarioCiteController@Guardar')->name('CITE.Usuarios.Guardar');
             Route::post('/Cite/Usuarios/Actualizar','CITE\UsuarioCiteController@Actualizar')->name('CITE.Usuarios.Actualizar');
@@ -1653,21 +1683,194 @@ Route::group(['middleware'=>"Mantenimiento"],function()
             Route::post('/Cite/Usuarios/VincularServicio','CITE\UsuarioCiteController@VincularServicio')->name('CITE.Usuarios.VincularServicio');
 
 
+
+            /* CRUD ACTIVIDADES (gestion de archivos de cada una) */
+            Route::get('/Cite/Actividades/Listar','CITE\ActividadCiteController@Listar')->name('CITE.Actividades.Listar');
+            
+            Route::get('/Cite/Actividades/Crear','CITE\ActividadCiteController@Crear')->name('CITE.Actividades.Crear');
+            Route::get('/Cite/Actividades/{id}/Editar','CITE\ActividadCiteController@Editar')->name('CITE.Actividades.Editar');
+
+            Route::get('/Cite/Actividades/Eliminar/{id}','CITE\ActividadCiteController@Eliminar')->name('CITE.Actividades.Eliminar');
+
+            Route::post('/Cite/Actividades/Guardar','CITE\ActividadCiteController@Guardar')->name('CITE.Actividades.Guardar');
+            Route::post('/Cite/Actividades/Actualizar','CITE\ActividadCiteController@Actualizar')->name('CITE.Actividades.Actualizar');
+            
+            Route::post('/Cite/Actividades/AñadirFormatos','CITE\ActividadCiteController@AñadirFormatos')->name('CITE.Actividades.AñadirFormatos');
+            Route::get('/Cite/Actividades/QuitarFormatoDeActividad/{id}','CITE\ActividadCiteController@QuitarFormatoDeActividad')->name('CITE.Actividades.QuitarFormatoDeActividad');
+
+            Route::post('/Cite/Actividades/ActualizarNumeroOrden','CITE\ActividadCiteController@ActualizarNumeroOrden')->name('CITE.Actividades.ActualizarNumeroOrden');
+            /* CRUD INDICADORES DE ACTIVIDADES */
+            Route::post('/Cite/Actividades/GuardarActualizarIndicador','CITE\ActividadCiteController@GuardarActualizarIndicador')->name('CITE.Actividades.GuardarActualizarIndicador');
+            Route::get('/Cite/Actividades/EliminarIndicador/{codIndicador}','CITE\ActividadCiteController@EliminarIndicador')->name('CITE.Actividades.EliminarIndicador');
+            
+
+            /* CRUD FORMATOS DE LOS MEDIOS DE VERIFICACION */
+
+            Route::get('/Cite/TiposMediosVerificacion/Listar','CITE\TipoMedioVerificacionController@Listar')->name('CITE.TiposMediosVerificacion.Listar');
+            Route::get('/Cite/FormatosCite','CITE\TipoMedioVerificacionController@VerFormatos')->name('CITE.TiposMediosVerificacion.VerFormatos');
+            
+            Route::get('/Cite/TiposMediosVerificacion/Editar/{id}','CITE\TipoMedioVerificacionController@Editar')->name('CITE.TiposMediosVerificacion.Editar');
+            Route::post('/Cite/TiposMediosVerificacion/Actualizar','CITE\TipoMedioVerificacionController@Actualizar')->name('CITE.TiposMediosVerificacion.Actualizar');
+            
+            Route::get('/Cite/TiposMediosVerificacion/DescargarArchivo/{codArchivoGeneral}','ArchivoGeneralController@DescargarArchivo')->name('CITE.TiposMediosVerificacion.DescargarArchivo');
+           
+            
+            /* MATRIZ PAT */
+
+            Route::get('/Cite/MatrizPat/Ver','CITE\MatrizPatController@VerMatriz')->name('CITE.MatrizPat.Ver');
+            Route::get('/Cite/MatrizPat/Inv_Matriz','CITE\MatrizPatController@Inv_Matriz')->name('CITE.MatrizPat.Inv_Matriz');
+
+            Route::get('/Cite/MatrizPat/Inv_Modal/{codIndicador}/{codMes}/{codRegion}','CITE\MatrizPatController@Inv_Modal')->name('CITE.MatrizPat.Inv_Modal');
+
+            Route::get('/Cite/MatrizPat/Inv_ModalMetaAnual/{codIndicador}','CITE\MatrizPatController@Inv_ModalMetaAnual')->name('CITE.MatrizPat.Inv_ModalMetaAnual');
+            Route::post('/Cite/MatrizPat/GuardarActualizarMetaAnual','CITE\MatrizPatController@GuardarActualizarMetaAnual')->name('CITE.MatrizPat.GuardarActualizarMetaAnual');
+            
+            Route::post('/Cite/MatrizPat/GuardarActualizarMeta','CITE\MatrizPatController@GuardarActualizarMeta')->name('CITE.MatrizPat.GuardarActualizarMeta');
+            
         });
-        /*
-        Route::get('/separarUsuarios','CITE\ServicioController@separarUsuarios');
 
-        Route::get('/convertirFechasAFormatoSQL','CITE\ServicioController@convertirFechasAFormatoSQL');
-        Route::get('/Cite/UnidadesProductivas/eliminarUnidadesProductivas999','CITE\UnidadProductivaController@eliminarUnidadesProductivas999');
-        Route::get('/Cite/UnidadesProductivas/poblarDirecciones','CITE\UnidadProductivaController@poblarDirecciones');
 
-        */
+        /* ************************************************************************************************ */
+        /* ************************************************************************************************ */
+        /* ************************************************************************************************ */
+        /* ************************************************************************************************ */
+        /* ************************************************************************************************ */
+        /* ************************************************************************************************ */
+        /* ***************************************** MODULO PPM ****************************************** */
+        /* ************************************************************************************************ */
+        /* ************************************************************************************************ */
+        /* ************************************************************************************************ */
+        /* ************************************************************************************************ */
+        /* ************************************************************************************************ */
+        /* ************************************************************************************************ */
+        /* ************************************************************************************************ */
+
+        Route::group(['middleware'=>"ValidarSesionPPM"],function()
+        {
+          /* CRUD ACTIVIDAD */
+
+          Route::get('/PPM/Actividad/Listar','PPM\EjecucionActividadController@Listar')->name('PPM.Actividad.Listar');
+          Route::get('/PPM/Actividad/Crear','PPM\EjecucionActividadController@Crear')->name('PPM.Actividad.Crear');
+          Route::get('/PPM/Actividad/Editar/{id}','PPM\EjecucionActividadController@Editar')->name('PPM.Actividad.Editar');
+
+          Route::get('/PPM/Actividad/CrearEnBaseAOtro/{id}','PPM\EjecucionActividadController@CrearEnBaseAOtro')->name('PPM.Actividad.CrearEnBaseAOtro');
+          Route::post('/PPM/Actividad/Duplicar','PPM\EjecucionActividadController@Duplicar')->name('PPM.Actividad.Duplicar');
+
+          
+          Route::get('/PPM/Actividad/Ver/{id}','PPM\EjecucionActividadController@Ver')->name('PPM.Actividad.Ver');
+          
+          Route::get('/PPM/Actividad/Inv_Participaciones/{id}','PPM\EjecucionActividadController@Inv_Participaciones')->name('PPM.Actividad.Inv_Participaciones');
+          
+          Route::post('/PPM/Actividad/Guardar','PPM\EjecucionActividadController@Guardar')->name('PPM.Actividad.Guardar');
+          Route::post('/PPM/Actividad/Actualizar','PPM\EjecucionActividadController@Actualizar')->name('PPM.Actividad.Actualizar');
+
+          Route::get('/PPM/Actividad/Eliminar/{id}','PPM\EjecucionActividadController@Eliminar')->name('PPM.Actividad.Eliminar');
+
+          Route::get('/PPM/Actividad/DescargarArchivo/{id}','ArchivoGeneralController@DescargarArchivo')->name('PPM.Actividad.DescargarArchivo');
+          Route::get('/PPM/Actividad/EliminarArchivo/{codArchivoEjecucion}','PPM\EjecucionActividadController@EliminarArchivo')->name('PPM.Actividad.EliminarArchivo');
+
+          Route::get('/PPM/Actividad/EliminarParticipacion/{codParticipacion}','PPM\EjecucionActividadController@EliminarParticipacion')->name('PPM.Actividad.EliminarParticipacion');
+
+          Route::post('/PPM/Actividad/GuardarAsistenciaInterna','PPM\EjecucionActividadController@GuardarAsistenciaInterna')->name('PPM.Actividad.GuardarAsistenciaInterna');
+          
+          Route::post('/PPM/Actividad/AgregarAsistenciaExterna','PPM\EjecucionActividadController@AgregarAsistenciaExterna')->name('PPM.Actividad.AgregarAsistenciaExterna');
+          
+          Route::get('/PPM/Dashboard/Ver','PPM\EjecucionActividadController@VerDashboard')->name('PPM.Dashboard.Ver');
+          
+          
+          /* CRUD ORGANIZACION */
+          
+          Route::get('/PPM/Organizacion/Listar','PPM\OrganizacionController@Listar')->name('PPM.Organizacion.Listar');
+          Route::get('/PPM/Organizacion/Crear','PPM\OrganizacionController@Crear')->name('PPM.Organizacion.Crear');
+          Route::get('/PPM/Organizacion/Editar/{id}','PPM\OrganizacionController@Editar')->name('PPM.Organizacion.Editar');
+          Route::get('/PPM/Organizacion/Ver/{id}','PPM\OrganizacionController@Ver')->name('PPM.Organizacion.Ver');
+          
+          Route::post('/PPM/Organizacion/Guardar','PPM\OrganizacionController@Guardar')->name('PPM.Organizacion.Guardar');
+          Route::post('/PPM/Organizacion/Actualizar','PPM\OrganizacionController@Actualizar')->name('PPM.Organizacion.Actualizar');
+
+          Route::get('/PPM/Organizacion/Eliminar/{id}','PPM\OrganizacionController@Eliminar')->name('PPM.Organizacion.Eliminar');
+          
+          Route::post('/PPM/Organizacion/AñadirGrupoDeSocios','PPM\OrganizacionController@AñadirGrupoDeSocios')->name('PPM.Organizacion.AñadirGrupoDeSocios');
+
+          Route::get('/PPM/Organizacion/EliminarRelacionPersonaOrganizacion/{id}','PPM\OrganizacionController@EliminarRelacionPersonaOrganizacion')->name('PPM.Organizacion.EliminarRelacionPersonaOrganizacion');
+          
+          
+
+          
+          
+          Route::post('/PPM/Organizacion/SincronizarConCITE','PPM\OrganizacionController@SincronizarConCITE')->name('PPM.Organizacion.SincronizarConCITE');
+          
+          Route::post('/PPM/Organizacion/ActualizarCargo','PPM\OrganizacionController@ActualizarCargo')->name('PPM.Organizacion.ActualizarCargo');
+          
+          /* DENTRO DEL INDICADOR 3.1 (semestre-organizacion) */
+           
+          Route::post('/PPM/SemestreOrganizacion/GuardarProductosDetalle','PPM\SemestreOrganizacionController@GuardarProductosDetalle')->name('PPM.SemestreOrganizacion.GuardarProductosDetalle');
+          Route::post('/PPM/SemestreOrganizacion/ImportarArchivo','PPM\SemestreOrganizacionController@ImportarArchivoCultivoCadena')->name('PPM.SemestreOrganizacion.ImportarArchivo');
+          
+          Route::get('/PPM/SemestreOrganizacion/VerAñadirProductos/{codRelacion}','PPM\SemestreOrganizacionController@VerAñadirProductos')->name('PPM.SemestreOrganizacion.VerAñadirProductos');
+          Route::get('/PPM/SemestreOrganizacion/VerAñadirCultivoCadena/{codRelacion}','PPM\SemestreOrganizacionController@VerAñadirCultivoCadena')->name('PPM.SemestreOrganizacion.VerAñadirCultivoCadena');
+          
+          Route::get('/PPM/SemestreOrganizacion/InvModalDetalleProducto/{codDetalleProducto}','PPM\SemestreOrganizacionController@InvModalDetalleProducto')->name('PPM.SemestreOrganizacion.InvModalDetalleProducto');
+          Route::post('/PPM/SemestreOrganizacion/ActualizarDetalleProducto_producto','PPM\SemestreOrganizacionController@ActualizarDetalleProducto_producto')->name('PPM.SemestreOrganizacion.ActualizarDetalleProducto_producto');
+          Route::post('/PPM/SemestreOrganizacion/ActualizarDetalleProducto_cultivocadena','PPM\SemestreOrganizacionController@ActualizarDetalleProducto_cultivocadena')->name('PPM.SemestreOrganizacion.ActualizarDetalleProducto_cultivocadena');
+          
+
+          
+          Route::get('/PPM/SemestreOrganizacion/EliminarDetalleProducto/{codDetalleProducto}','PPM\SemestreOrganizacionController@EliminarDetalleProducto')->name('PPM.SemestreOrganizacion.EliminarDetalleProducto');
+          
+
+          Route::post('/PPM/SemestreOrganizacion/GuardarAsistenciaDetalleProd','PPM\SemestreOrganizacionController@GuardarAsistenciaDetalleProd')->name('PPM.SemestreOrganizacion.GuardarAsistenciaDetalleProd');
+          Route::get('/PPM/SemestreOrganizacion/InvModalVerNivelProductivo/{codRelacion}','PPM\SemestreOrganizacionController@InvModalVerNivelProductivo')->name('PPM.SemestreOrganizacion.InvModalVerNivelProductivo');
+          
+
+
+
+          /* CRUD PERSONAS */
+
+          Route::get('/PPM/Persona/Listar','PPM\PersonaPPMController@Listar')->name('PPM.Persona.Listar');
+          Route::get('/PPM/Persona/Crear','PPM\PersonaPPMController@Crear')->name('PPM.Persona.Crear');
+          Route::get('/PPM/Persona/Editar/{id}','PPM\PersonaPPMController@Editar')->name('PPM.Persona.Editar');
+          Route::get('/PPM/Persona/Ver/{id}','PPM\PersonaPPMController@Ver')->name('PPM.Persona.Ver');
+          
+          Route::post('/PPM/Persona/Guardar','PPM\PersonaPPMController@Guardar')->name('PPM.Persona.Guardar');
+          Route::post('/PPM/Persona/Actualizar','PPM\PersonaPPMController@Actualizar')->name('PPM.Persona.Actualizar');
+          Route::post('/PPM/Persona/AsociarAOrganizacion','PPM\PersonaPPMController@AsociarAOrganizacion')->name('PPM.Persona.AsociarAOrganizacion');
+
+          Route::get('/PPM/Persona/Eliminar/{id}','PPM\PersonaPPMController@Eliminar')->name('PPM.Persona.Eliminar');
+          
+                   
+          Route::get('/PPM/Personas/BuscarPorDni/{dni}','PPM\PersonaPPMController@BuscarPorDni')->name('PPM.Personas.BuscarPorDNI');
+
+
+          /* REGISTRO DE INDICADORES */
+          
+          Route::get('/PPM/Indicadores/Registrar','PPM\IndicadorPPMController@VerRegistrar')->name('PPM.Indicadores.VerRegistrar');
+          Route::post('/PPM/Indicadores/Inv_VerTabla','PPM\IndicadorPPMController@Inv_VerTabla')->name('PPM.Indicadores.Inv_VerTabla');
+          Route::get('/PPM/Indicadores/GetModalFichaGestionEmpresarial/{id}','PPM\IndicadorPPMController@GetModalFichaGestionEmpresarial')->name('PPM.Indicadores.GetModalFichaGestionEmpresarial');
+          
+          Route::get('/PPM/Indicadores/DescargarReporteIndicador','PPM\IndicadorPPMController@DescargarReporteIndicador')->name('PPM.Indicadores.DescargarReporteIndicador');
+          
+          Route::post('/PPM/Indicadores/ActualizarFichaGestionEmpresarial','PPM\IndicadorPPMController@ActualizarFichaGestionEmpresarial')->name('PPM.Indicadores.ActualizarFichaGestionEmpresarial');
+          Route::get('/PPM/Indicadores/ExportarFichasGestionEmpresarial','PPM\IndicadorPPMController@ExportarFichasGestionEmpresarial')->name('PPM.Indicadores.ExportarFichasGestionEmpresarial');
+          
+          
+
+          Route::post('/PPM/Indicadores/GuardarIndicadores11','PPM\IndicadorPPMController@GuardarIndicadores11')->name('PPM.Indicadores.GuardarIndicadores11');
+          Route::post('/PPM/Indicadores/GuardarIndicadores12','PPM\IndicadorPPMController@GuardarIndicadores12')->name('PPM.Indicadores.GuardarIndicadores12');
+          Route::post('/PPM/Indicadores/GuardarIndicadores21','PPM\IndicadorPPMController@GuardarIndicadores21')->name('PPM.Indicadores.GuardarIndicadores21');
+          Route::post('/PPM/Indicadores/GuardarIndicadores22','PPM\IndicadorPPMController@GuardarIndicadores22')->name('PPM.Indicadores.GuardarIndicadores22');
+          Route::post('/PPM/Indicadores/GuardarIndicadores32','PPM\IndicadorPPMController@GuardarIndicadores32')->name('PPM.Indicadores.GuardarIndicadores32');
+          
+          
+        });
+
+        
 
         /* FUNCIONES PROPIAS DEL ADMINISTRADOR DEL SISTEMA */
 
         Route::group(['middleware'=>"ValidarSesionAdminSistema"],function()
         {
-          Route::get('/Cite/ReporteMensual/poblarReportesDelAno/{ano}','CITE\ReporteMensualController@poblarReportesDelAño')->name('CITE.ReporteMensual.poblarReportesDelAño');
+          Route::get('/Cite/ReporteMensual/PoblarReportesDelAñoActual','CITE\ReporteMensualController@PoblarReportesDelAñoActual')->name('CITE.ReporteMensual.PoblarReportesDelAñoActual');
 
 
           Route::get('/Cite/UnidadesProductivas/poblarRazonSocial/{limite}','CITE\UnidadProductivaController@poblarRazonSocial');

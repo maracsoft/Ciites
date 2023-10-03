@@ -1,7 +1,23 @@
 <script>
 
+    const Select2OrganizacionEnlazada = document.getElementById("codOrganizacionEnlazadaPPM"); 
+    const BotonIrOrganizacion = document.getElementById("boton_ir_organizacion"); 
+
+    function actualizarTieneEnlacePPM(checked){
+      
+      var select2 = document.querySelector('[data-id="codOrganizacionEnlazadaPPM"]');
+      select2.disabled = !checked;
+
+      if(checked && Select2OrganizacionEnlazada.value != "-1"){
+        mostrarBotonIrOrganizacion();
+      }else{
+        ocultarBotonIrOrganizacion();
+      }
+    }
+
+
     function actualizarTieneCadena(checked){
-        console.log("checked",checked);
+         
         if(checked){
             newVal = 1;
             document.getElementById('codCadena').readonly = false;
@@ -16,13 +32,20 @@
         }
 
         document.getElementById('tieneCadena').value = newVal;
-        console.log(newVal);
+        
     }
+    const InputRUC = document.getElementById("ruc");
 
     function validarForm(){
         msj='';
         limpiarEstilos(['codTipoPersoneria','ruc','razonSocial','dni','nombrePersona','direccion','codClasificacion',
             'codCadena','codEstadoDocumento']);
+
+        try {
+          limpiarEstilos(["codOrganizacionEnlazadaPPM"]);
+        } catch (error) {
+          
+        }
 
 
 
@@ -64,7 +87,25 @@
 
         }
 
+        if(document.getElementById("activar_enlace_ppm").checked){
+          
+          msj = validarSelect(msj, 'codOrganizacionEnlazadaPPM', -1, 'Organización Enlazada de PPM');
 
+          if(msj == ""){
+            //verificamos que la organizacion enlazada tenga el mismo RUC
+            
+            var unidad = ListaOrganizaciones.find(e => e.codOrganizacion == Select2OrganizacionEnlazada.value); //obtenemos la unidad seleccionada por el select2
+ 
+            var unidad_ruc = InputRUC.value; 
+
+            if(unidad.ruc != unidad_ruc){
+              ponerEnRojo("codOrganizacionEnlazadaPPM");
+              msj = "La organización enlazada debe tener el mismo RUC que la unidad productiva actual ("+ unidad_ruc +")";
+            }
+          }
+
+    
+        }
 
 
 
@@ -212,6 +253,14 @@
         divDNI.classList.remove("hidden")
     }
 
+    function ocultarBotonIrOrganizacion() {
+      BotonIrOrganizacion.classList.add("hidden")
+    }
+
+    function mostrarBotonIrOrganizacion() {
+      BotonIrOrganizacion.classList.remove("hidden")
+    }
+
 
     function actualizarDocumentoTramite(CheckBox){
 
@@ -222,6 +271,39 @@
 
         document.getElementById('ruc').readOnly = enTramite;
 
+    }
+
+
+      
+    function changedOrganizacionEnlazada(){
+      
+      if(Select2OrganizacionEnlazada.value == "-1"){
+        ocultarBotonIrOrganizacion();
+        return;
+      }
+      mostrarBotonIrOrganizacion();
+
+      var org = ListaOrganizaciones.find(e => e.codOrganizacion ==  Select2OrganizacionEnlazada.value);
+      BotonIrOrganizacion.title = "Ir a la Organización enlazada " + org.razonYRUC;
+    }
+
+    function clickIrAOrganizacionEnlazada(){
+      if(Select2OrganizacionEnlazada.value == -1){
+        alerta("Debe enlazar una unidad productiva primero");
+        return;
+      }
+      var ruta = "/PPM/Organizacion/Editar/" + Select2OrganizacionEnlazada.value;
+      window.open(ruta, "_blank");
+    }
+
+
+    function clickSincronizarIntegrantes(){
+      confirmarConMensaje("¿Desea sincronizar los integrantes con la organización del PPM?",
+                        "Después de realizar esta sincronización, la unidad productiva y la organización enlazada tendrán los mismos integrantes/socios","warning",
+                        function(){
+                          document.formSincronizarPPM.submit(); 
+                        }
+      );
     }
 
 </script>

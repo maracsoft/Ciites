@@ -113,10 +113,7 @@
                                 </td>
                                 <td style="color: {{$indicador->getColorPorcentajeEjecucion()}}">
                                     {{$indicador->calcularPorcentajeEjecucion()}}
-                                    {{-- <a href="{{route('IndicadorActividad.Ver',$indicador->codIndicadorActividad )}}" 
-                                        class="btn btn-success btn-sm">
-                                        <i class="fas fa-chart-bar"></i>
-                                    </a> --}}
+                                    
                                 </td>
                                     
                                 @foreach ($proyecto->getMesesDeEjecucion() as $mes)

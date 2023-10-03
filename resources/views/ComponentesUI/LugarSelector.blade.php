@@ -12,6 +12,8 @@
     $output_name = $name;
 
     $initialValue = $codDistritoSeleccionado;
+
+    $disabled_string = $disabled ? 'disabled' : '';
     
 @endphp
         
@@ -19,8 +21,8 @@
             <label for="">
                 Región:
             </label>
-            <select class="form-control"  id="{{$cb_dep_name}}" name="{{$cb_dep_name}}" onchange="clickSelectDepartamento{{$name}}()" >
-                <option value="-1">-- Región --</option>
+            <select class="form-control" id="{{$cb_dep_name}}" name="{{$cb_dep_name}}" onchange="clickSelectDepartamento{{$name}}()" {{$disabled_string}}>
+                <option value="-1">- Región -</option>
                 @foreach($listaDepartamentos as $departamento)
                     <option value="{{$departamento->getId()}}"
                         @if($codDepartamentoSeleccionado == $departamento->getId())
@@ -38,8 +40,8 @@
             <label for="">
                 Provincia:
             </label>
-            <select class="form-control"  id="{{$cb_pro_name}}" name="{{$cb_pro_name}}"  onchange="clickSelectProvincia{{$name}}()" >
-                <option value="-1">-- Provincia --</option>
+            <select class="form-control" id="{{$cb_pro_name}}" name="{{$cb_pro_name}}"  onchange="clickSelectProvincia{{$name}}()" {{$disabled_string}}>
+                <option value="-1">- Provincia -</option>
                 @foreach($listaProvinciasDelDep as $prov)
                     <option value="{{$prov->getId()}}"
                         @if($codProvinciaSeleccionada == $prov->getId())
@@ -56,10 +58,10 @@
             <label for="">
                 Distrito:
             </label>
-            <select class="form-control"  id="{{$cb_dis_name}}" name="{{$cb_dis_name}}" onchange="clickSelectDistrito{{$name}}(this.value)">
-                <option value="-1">-- Distrito --</option>
+            <select class="form-control" id="{{$cb_dis_name}}" name="{{$cb_dis_name}}" onchange="clickSelectDistrito{{$name}}(this.value)" {{$disabled_string}}>
+                <option value="-1">- Distrito -</option>
                 @foreach($listaDistritosDeProv as $distr)
-                    <option value="{{$prov->getId()}}"
+                    <option value="{{$distr->getId()}}"
                         @if($codDistritoSeleccionado == $distr->getId())
                             selected
                         @endif

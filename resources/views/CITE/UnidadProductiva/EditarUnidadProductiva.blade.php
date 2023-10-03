@@ -19,9 +19,7 @@
 
 @include('Layout.MensajeEmergenteDatos')
 
-<form method = "POST" action = "{{route('CITE.UnidadesProductivas.Actualizar')}}" id="frmUnidadProd" name="frmUnidadProd"  enctype="multipart/form-data">
-    <input type="hidden" name="codUnidadProductiva" value="{{$unidadProductiva->getId()}}">
-    @csrf
+
 
     <div class="card mx-2">
         <div class="card-header ui-sortable-handle" style="cursor: move;">
@@ -49,225 +47,268 @@
             </div>
         </div>
         <div class="card-body">
+          <form method = "POST" action = "{{route('CITE.UnidadesProductivas.Actualizar')}}" id="frmUnidadProd" name="frmUnidadProd"  enctype="multipart/form-data">
+            <input type="hidden" name="codUnidadProductiva" value="{{$unidadProductiva->getId()}}">
+            @csrf
+          
+              <div class="row  internalPadding-1">
+                  <div  class="col-sm-2">
+                      <label for="codTipoPersoneria" id="lvlProyecto" class="">
+                          Tipo Personería:
+                      </label>
+                  </div>
+                  <div class="col-sm-10">
+                      <select class="form-control"  id="codTipoPersoneria" name="codTipoPersoneria">
+                          <option value="-1">-- Tipo Personeria --</option>
+                          @foreach($listaTipoPersoneria as $tipoPersoneria)
+                              <option value="{{$tipoPersoneria->getId()}}"
+                                  @if($tipoPersoneria->getId() == $unidadProductiva->codTipoPersoneria)
+                                      selected
+                                  @endif
+                                  >
+                                  {{$tipoPersoneria->nombre}}
+                              </option>
+
+                          @endforeach
+
+                      </select>
+                  </div>
 
 
-            <div class="row  internalPadding-1">
-                <div  class="col-2">
-                    <label for="codTipoPersoneria" id="lvlProyecto" class="">
-                        Tipo Personería:
+
+                  <div  class="col-sm-2">
+                      <label for="codTipoPersoneria" id="lvlProyecto" class="">
+                          Documento:
+                      </label>
+                  </div>
+                  <div class="col-sm-4">
+                      <select class="form-control"  id="codEstadoDocumento" name="codEstadoDocumento"
+                              onchange="actualizarEstadoDocumento(this.value)">
+                          @foreach($listaEstadosUnidad as $estadoUnidad)
+                              <option value="{{$estadoUnidad->getId()}}"
+                                  @if($estadoUnidad->getId() == $unidadProductiva->codEstadoDocumento)
+                                      selected
+                                  @endif
+                                  >
+                                  {{$estadoUnidad->nombre}}
+                              </option>
+
+                          @endforeach
+
+                      </select>
+                  </div>
+                  <div  class="col-sm-2">
+                      <input type="checkbox" value="1" id="tieneCadena" name="tieneCadena"
+                          @if ($unidadProductiva->getTieneCadena()) checked @endif
+                          onclick="actualizarTieneCadena(this.checked)">
+                      <label class="" for="tieneCadena">
+                          Tiene Cadena:
+                      </label>
+                  </div>
+                  <div class="col-sm-4">
+                      <select class="form-control"  id="codCadena" name="codCadena"
+                      @if (!$unidadProductiva->getTieneCadena()) disabled @endif >
+                          <option value="-1">- Cadena -</option>
+                          @foreach($listaCadenas as $cadena)
+                              <option value="{{$cadena->getId()}}"
+                                  @if($cadena->getId() == $unidadProductiva->codCadena)
+                                      selected
+                                  @endif
+                                  >
+                                  {{$cadena->nombre}}
+                              </option>
+                          @endforeach
+                      </select>
+                  </div>
+
+
+
+
+                  <div class="col-12 row hidden" id="divRUC">
+
+
+                      <div  class="col-sm-2">
+                          <label for="" id="">RUC:
+                              <b id="contadorRUC" style="color: rgba(0, 0, 0, 0.548)"></b>
+
+                          </label>
+                      </div>
+                      <div class="col-sm-4">
+
+                          <div class="d-flex flex-col">
+
+                              <input type="number" class="form-control" name="ruc" id="ruc" value="{{$unidadProductiva->ruc}}"
+                              @if($unidadProductiva->estaEnTramite())
+                                  readonly
+                              @endif
+                              >
+
+                              <div class="d-flex mr-auto">
+                                  <button type="button" title="Buscar por RUC en la base de datos de Sunat"
+                                  class="btn-sm btn btn-info d-flex align-items-center" id="botonBuscarPorRUC" onclick="consultarPorRuc()" >
+                                      <i class="fas fa-search mr-1"></i>
+
+                                  </button>
+
+                              </div>
+                          </div>
+
+                      </div>
+
+
+                      <div  class="col-sm-2">
+                          <label for="razonSocial" id="">Razón Social</label>
+                      </div>
+                      <div class="col-sm-4">
+                          <input type="text" class="form-control" name="razonSocial" id="razonSocial" value="{{$unidadProductiva->razonSocial}}">
+                      </div>
+
+                  </div>
+
+
+                  <div class="col-12 row hidden" id="divDNI">
+
+                      <div  class="col-sm-2">
+                          <label for="dni" id="">DNI:
+                              <b id="contadordni" style="color: rgba(0, 0, 0, 0.548)"></b>
+
+                          </label>
+                      </div>
+
+                      <div class="col-sm-4">
+
+                          <div class="d-flex flex-col">
+
+                              <input type="number" class="form-control" name="dni" id="dni" value="{{$unidadProductiva->dni}}">
+
+                              <div class="d-flex mr-auto">
+                                  <button type="button" title="Buscar por DNI en la base de datos de Sunat"
+                                  class="btn-sm btn btn-info d-flex align-items-center" id="botonBuscarPorRUC" onclick="consultarPorDNI()" >
+                                      <i class="fas fa-search mr-1"></i>
+
+                                  </button>
+
+                              </div>
+                          </div>
+
+                      </div>
+
+
+                      <div  class="col-sm-2">
+                          <label for="" id="">Nombre persona:</label>
+                      </div>
+                      <div class="col-sm-4">
+                          <input type="text" class="form-control" name="nombrePersona" id="nombrePersona" value="{{$unidadProductiva->nombrePersona}}">
+                      </div>
+
+                  </div>
+
+
+                  <div class="col-sm-6">
+                      <div class="form-check">
+                          <input style="" class="form-check-input" type="checkbox" value="1" id="enTramite" name="enTramite" onclick="actualizarDocumentoTramite(this)"
+                          @if($unidadProductiva->estaEnTramite())
+                              checked
+                          @endif
+                          >
+                          <label class="form-check-label" for="enTramite">
+                              Documento En trámite
+                          </label>
+                      </div>
+                  </div>
+                  <div class="col-sm-6"></div>
+                  <div  class="col-sm-2 d-none">
+                      <label for="" id="">Rango ventas:</label>
+                  </div>
+                  <div class="col-sm-4 d-none">
+                      <select class="form-control"  id="codClasificacion" name="codClasificacion" >
+                          <option value="-1">-- Clasificación  --</option>
+                          @foreach($listaRangos as $rango)
+                              <option value="{{$rango->getId()}}"
+                                  @if($rango->getId() == $unidadProductiva->codClasificacion)
+                                      selected
+                                  @endif
+                                  >
+                                  {{$rango->nombre}} [{{$rango->minimo}}-{{$rango->maximo}}]
+                              </option>
+                          @endforeach
+
+                      </select>
+                  </div>
+
+
+
+                  <div  class="col-sm-2">
+                      <label for="" id="">Dirección:</label>
+                  </div>
+                  <div class="col-sm-10">
+                      <input type="text" class="form-control" name="direccion" id="direccion" value="{{$unidadProductiva->direccion}}">
+                  </div>
+
+
+                  {{App\ComponentRenderizer::LugarSelector('ComboBoxDistrito',$unidadProductiva->codDistrito)}}
+
+
+                  <div class="col-sm-6" title="Activando esta opción, al editar los miembros de esta unidad productiva, se editarán también en la organización enlazada del PPM">
+                            
+                    <input class="cursor-pointer" type="checkbox" value="1" id="activar_enlace_ppm" name="activar_enlace_ppm" 
+                      @if($unidadProductiva->tieneEnlacePPM()) checked @endif onclick="actualizarTieneEnlacePPM(this.checked)">
+                    
+                    <label class="ml-1 cursor-pointer" for="activar_enlace_ppm">
+                        Activar enlace PPM:
                     </label>
-                </div>
-                <div class="col-10">
-                    <select class="form-control"  id="codTipoPersoneria" name="codTipoPersoneria">
-                        <option value="-1">-- Tipo Personeria --</option>
-                        @foreach($listaTipoPersoneria as $tipoPersoneria)
-                            <option value="{{$tipoPersoneria->getId()}}"
-                                @if($tipoPersoneria->getId() == $unidadProductiva->codTipoPersoneria)
-                                    selected
-                                @endif
-                                >
-                                {{$tipoPersoneria->nombre}}
+                    
+                    <div class="d-flex flex-row">
+                      <select id="codOrganizacionEnlazadaPPM" name="codOrganizacionEnlazadaPPM" data-select2-id="1" tabindex="-1" onchange="changedOrganizacionEnlazada()"
+                          class="fondoBlanco form-control select2 select2-hidden-accessible selectpicker"   aria-hidden="true"  data-live-search="true">
+                          <option value="-1">
+                            - Organización PPM Enlazada -
+                          </option>
+                          @foreach($listaOrganizaciones as $org)
+                            <option value="{{$org->getId()}}" {{$org->isThisSelected($unidadProductiva->codOrganizacionEnlazadaPPM)}}>
+                              {{$org['razonYRUC']}}
                             </option>
-
-                        @endforeach
-
-                    </select>
-                </div>
+                          @endforeach
+                      </select>
 
 
+                      @php
+                        $hidden_class = "hidden";
+                        if($unidadProductiva->codOrganizacionEnlazadaPPM){
+                          $hidden_class = "";
+                        }
+                      @endphp
+                    
 
-                <div  class="col-2">
-                    <label for="codTipoPersoneria" id="lvlProyecto" class="">
-                        Documento:
-                    </label>
-                </div>
-                <div class="col-4">
-                    <select class="form-control"  id="codEstadoDocumento" name="codEstadoDocumento"
-                            onchange="actualizarEstadoDocumento(this.value)">
-                        @foreach($listaEstadosUnidad as $estadoUnidad)
-                            <option value="{{$estadoUnidad->getId()}}"
-                                @if($estadoUnidad->getId() == $unidadProductiva->codEstadoDocumento)
-                                    selected
-                                @endif
-                                >
-                                {{$estadoUnidad->nombre}}
-                            </option>
+                      <button id="boton_ir_organizacion" type="button" class="ml-1 btn btn-primary {{$hidden_class}}" title="Ir a la Organización enlazada " onclick="clickIrAOrganizacionEnlazada()">
+                        <i class="fas fa-edit"></i>
+                      </button>
 
-                        @endforeach
-
-                    </select>
-                </div>
-                <div  class="col-2">
-                    <input type="checkbox" value="1" id="tieneCadena" name="tieneCadena"
-                        @if ($unidadProductiva->getTieneCadena()) checked @endif
-                        onclick="actualizarTieneCadena(this.checked)">
-                    <label class="" for="tieneCadena">
-                        Tiene Cadena:
-                    </label>
-                </div>
-                <div class="col-4">
-                    <select class="form-control"  id="codCadena" name="codCadena"
-                    @if (!$unidadProductiva->getTieneCadena()) disabled @endif >
-                        <option value="-1">- Cadena -</option>
-                        @foreach($listaCadenas as $cadena)
-                            <option value="{{$cadena->getId()}}"
-                                @if($cadena->getId() == $unidadProductiva->codCadena)
-                                    selected
-                                @endif
-                                >
-                                {{$cadena->nombre}}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-
-
-
-
-                <div class="col-12 row hidden" id="divRUC">
-
-
-                    <div  class="col-2">
-                        <label for="" id="">RUC:
-                            <b id="contadorRUC" style="color: rgba(0, 0, 0, 0.548)"></b>
-
-                        </label>
-                    </div>
-                    <div class="col-4">
-
-                        <div class="d-flex flex-col">
-
-                            <input type="number" class="form-control" name="ruc" id="ruc" value="{{$unidadProductiva->ruc}}"
-                            @if($unidadProductiva->estaEnTramite())
-                                readonly
-                            @endif
-                            >
-
-                            <div class="d-flex mr-auto">
-                                <button type="button" title="Buscar por RUC en la base de datos de Sunat"
-                                class="btn-sm btn btn-info d-flex align-items-center" id="botonBuscarPorRUC" onclick="consultarPorRuc()" >
-                                    <i class="fas fa-search mr-1"></i>
-
-                                </button>
-
-                            </div>
-                        </div>
 
                     </div>
 
-
-                    <div  class="col-2">
-                        <label for="razonSocial" id="">Razón Social</label>
-                    </div>
-                    <div class="col-4">
-                        <input type="text" class="form-control" name="razonSocial" id="razonSocial" value="{{$unidadProductiva->razonSocial}}">
-                    </div>
-
-                </div>
-
-
-                <div class="col-12 row hidden" id="divDNI">
-
-                    <div  class="col-2">
-                        <label for="dni" id="">DNI:
-                            <b id="contadordni" style="color: rgba(0, 0, 0, 0.548)"></b>
-
-                        </label>
-                    </div>
-
-                    <div class="col-4">
-
-                        <div class="d-flex flex-col">
-
-                            <input type="number" class="form-control" name="dni" id="dni" value="{{$unidadProductiva->dni}}">
-
-                            <div class="d-flex mr-auto">
-                                <button type="button" title="Buscar por DNI en la base de datos de Sunat"
-                                class="btn-sm btn btn-info d-flex align-items-center" id="botonBuscarPorRUC" onclick="consultarPorDNI()" >
-                                    <i class="fas fa-search mr-1"></i>
-
-                                </button>
-
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                    <div  class="col-2">
-                        <label for="" id="">Nombre persona:</label>
-                    </div>
-                    <div class="col-4">
-                        <input type="text" class="form-control" name="nombrePersona" id="nombrePersona" value="{{$unidadProductiva->nombrePersona}}">
-                    </div>
-
-                </div>
-
-
-                <div class="col-6">
-                    <div class="form-check">
-                        <input style="" class="form-check-input" type="checkbox" value="1" id="enTramite" name="enTramite" onclick="actualizarDocumentoTramite(this)"
-                        @if($unidadProductiva->estaEnTramite())
-                            checked
-                        @endif
-                        >
-                        <label class="form-check-label" for="enTramite">
-                            Documento En trámite
-                        </label>
-                    </div>
-                </div>
-                <div class="col-6"></div>
-                <div  class="col-2 d-none">
-                    <label for="" id="">Rango ventas:</label>
-                </div>
-                <div class="col-4 d-none">
-                    <select class="form-control"  id="codClasificacion" name="codClasificacion" >
-                        <option value="-1">-- Clasificación  --</option>
-                        @foreach($listaRangos as $rango)
-                            <option value="{{$rango->getId()}}"
-                                @if($rango->getId() == $unidadProductiva->codClasificacion)
-                                    selected
-                                @endif
-                                >
-                                {{$rango->nombre}} [{{$rango->minimo}}-{{$rango->maximo}}]
-                            </option>
-                        @endforeach
-
-                    </select>
-                </div>
+                  </div>
 
 
 
-                <div  class="col-2">
-                    <label for="" id="">Dirección:</label>
-                </div>
-                <div class="col-10">
-                    <input type="text" class="form-control" name="direccion" id="direccion" value="{{$unidadProductiva->direccion}}">
-                </div>
+              </div>
 
 
-                {{App\ComponentRenderizer::LugarSelector('ComboBoxDistrito',$unidadProductiva->codDistrito)}}
+              <div class="row">
+                  <div class="ml-auto m-1">
 
+                      <button type="button" class="btn btn-primary" id="btnEditar" data-loading-text="<i class='fa a-spinner fa-spin'></i> Registrando"
+                          onclick="clickGuardar()">
+                          <i class='fas fa-save'></i>
+                          Guardar
+                      </button>
 
+                  </div>
 
+              </div>
 
+          </form>
 
-
-            </div>
-
-
-            <div class="row">
-                <div class="ml-auto m-1">
-
-                    <button type="button" class="btn btn-primary" id="btnEditar" data-loading-text="<i class='fa a-spinner fa-spin'></i> Registrando"
-                        onclick="clickGuardar()">
-                        <i class='fas fa-save'></i>
-                        Guardar
-                    </button>
-
-                </div>
-
-            </div>
 
         </div>
     </div>
@@ -360,11 +401,28 @@
             </h3>
         </div>
         <div class="card-body">
+            <div class="d-flex flex-row">
+              @if($unidadProductiva->tieneEnlacePPM())
+               
+                <form method="POST" id="formSincronizarPPM" name="formSincronizarPPM" action="{{route('CITE.UnidadesProductivas.SincronizarConPPM')}}" >
+                  @csrf
+                   
+                  <input type="hidden" name="codUnidadProductiva" value="{{$unidadProductiva->codUnidadProductiva}}">
+                  <button type="button" onclick="clickSincronizarIntegrantes()" class="btn btn-sm btn-success">
+                    <i class="mr-1 fas fa-sync"></i>  
+                    Sincronizar Integrantes con Organización
+                  </button>
+        
+                </form>
+
+              @endif
+            </div>
             <div class="d-flex flex-row py-3">
+                
 
                 <button type="button" id="" class="btn btn-sm btn-success "
                     data-toggle="modal" data-target="#ModalPresidenteGerente">
-                    Presidente / Gerente
+                    Modificar Presidente o Gerente
                     <i class="fas fa-user-circle"></i>
                 </button>
 
@@ -375,86 +433,89 @@
                 </button>
             </div>
 
-            <table class="table table-striped table-bordered table-condensed table-hover" >
-                <thead  class="thead-default">
-                    <tr>
-                        <th class="text-right">
-                            DNI
-                        </th>
-                        <th class="text-left">
-                            Nombre
-                        </th>
-                        <th class="text-right">
-                            Teléfono
-                        </th>
-                        <th class="text-right">
-                            Correo
-                        </th>
-                        <th>
-                            Opciones
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($unidadProductiva->getUsuariosAsociados() as $relaUsuarioAsociado )
-                        @php
-                            $usuario = $relaUsuarioAsociado->getUsuario();
-                        @endphp
-                        <tr>
-                            <td class="text-right">
-                                {{$usuario->dni}}
-                            </td>
-                            <td class="text-left">
-                                <div class="d-flex flex-row">
-                                    <div>
-                                        {{$usuario->getNombreCompleto()}}
-                                    </div>
-                                    <div class="ml-auto">
+            <div class="table-responsive">
+              
+              <table class="table table-striped table-bordered table-condensed table-hover" >
+                  <thead  class="thead-default">
+                      <tr>
+                          <th class="text-right">
+                              DNI
+                          </th>
+                          <th class="text-left">
+                              Nombre
+                          </th>
+                          <th class="text-right">
+                              Teléfono
+                          </th>
+                          <th class="text-right">
+                              Correo
+                          </th>
+                          <th>
+                              Opciones
+                          </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      @foreach($unidadProductiva->getUsuariosAsociados() as $relaUsuarioAsociado )
+                          @php
+                              $usuario = $relaUsuarioAsociado->getUsuario();
+                          @endphp
+                          <tr>
+                              <td class="text-right">
+                                  {{$usuario->dni}}
+                              </td>
+                              <td class="text-left">
+                                  <div class="d-flex flex-row">
+                                      <div>
+                                          {{$usuario->getNombreCompleto()}}
+                                      </div>
+                                      <div class="ml-auto">
 
 
 
-                                        @if($unidadProductiva->codUsuarioPresidente == $usuario->getId())
-                                            (Presidente)
-                                        @endif
-                                        @if($unidadProductiva->codUsuarioGerente == $usuario->getId())
-                                            (Gerente)
-                                        @endif
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-right">
-                                {{$usuario->telefono}}
-                            </td>
-                            <td class="text-right">
-                                {{$usuario->correo}}
-                            </td>
-                            <td class="text-center">
-                                <a href="{{route('CITE.Usuarios.Ver',$usuario->getId())}}" class='btn btn-info btn-xs' title="Ver Usuario">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="{{route('CITE.Usuarios.Editar',$usuario->getId())}}" class='btn btn-info btn-xs' title="Editar Usuario">
-                                    <i class="fas fa-pen"></i>
-                                </a>
+                                          @if($unidadProductiva->codUsuarioPresidente == $usuario->getId())
+                                              (Presidente)
+                                          @endif
+                                          @if($unidadProductiva->codUsuarioGerente == $usuario->getId())
+                                              (Gerente)
+                                          @endif
+                                      </div>
+                                  </div>
+                              </td>
+                              <td class="text-right">
+                                  {{$usuario->telefono}}
+                              </td>
+                              <td class="text-right">
+                                  {{$usuario->correo}}
+                              </td>
+                              <td class="text-center">
+                                  <a href="{{route('CITE.Usuarios.Ver',$usuario->getId())}}" class='btn btn-info btn-xs' title="Ver Usuario">
+                                      <i class="fas fa-eye"></i>
+                                  </a>
+                                  <a href="{{route('CITE.Usuarios.Editar',$usuario->getId())}}" class='btn btn-info btn-xs' title="Editar Usuario">
+                                      <i class="fas fa-pen"></i>
+                                  </a>
 
-                                <button onclick="clickEliminarUsuarioDeLaUnidad({{$relaUsuarioAsociado->getId()}})" type="button" class="btn btn-danger btn-xs" title="Eliminar usuario del servicio">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+                                  <button onclick="clickEliminarUsuarioDeLaUnidad({{$relaUsuarioAsociado->getId()}})" type="button" class="btn btn-danger btn-xs" title="Eliminar usuario del servicio">
+                                      <i class="fas fa-trash"></i>
+                                  </button>
 
-                            </td>
+                              </td>
 
-                        </tr>
-                    @endforeach
-                    @if(count($unidadProductiva->getUsuariosAsociados()) == 0)
-                        <tr>
-                            <td class="text-center" colspan="5">
-                                No hay usuarios registrados en este servicio
-                            </td>
-                        </tr>
-                    @endif
+                          </tr>
+                      @endforeach
+                      @if(count($unidadProductiva->getUsuariosAsociados()) == 0)
+                          <tr>
+                              <td class="text-center" colspan="5">
+                                  No hay usuarios registrados en este servicio
+                              </td>
+                          </tr>
+                      @endif
 
-                </tbody>
-            </table>
+                  </tbody>
+              </table>
 
+            </div>
 
 
 
@@ -477,9 +538,7 @@
     </div>
 
 
-</form>
-
-
+ 
 
 
 
@@ -498,7 +557,7 @@
                 </div>
                 <div class="modal-body row">
 
-                    <div class="col-4">
+                    <div class="col-sm-4">
                         <div>
                             <label for="">DNI:</label>
                         </div>
@@ -519,30 +578,30 @@
                         </div>
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-sm-4">
                         <label for="">Teléfono:</label>
                         <input type="number" class="form-control" id="telefono" name="telefono" value="">
 
 
                     </div>
-                    <div class="col-4">
+                    <div class="col-sm-4">
                         <label for="">Correo:</label>
                         <input type="email" class="form-control" id="correo" name="correo" value="">
 
                     </div>
-                    <div class="col-4">
+                    <div class="col-sm-4">
                         <label for="">Nombres:</label>
                         <input type="text" class="form-control" id="nombres" name="nombres" value="">
 
                     </div>
-                    <div class="col-4">
+                    <div class="col-sm-4">
 
                         <label for="">Apellido Paterno:</label>
                         <input type="text" class="form-control" id="apellidoPaterno" name="apellidoPaterno" value="">
 
 
                     </div>
-                    <div class="col-4">
+                    <div class="col-sm-4">
 
                         <label for="">Apellido Materno:</label>
                         <input type="text"  class="form-control" id="apellidoMaterno" name="apellidoMaterno" value="">
@@ -565,9 +624,9 @@
                         </div>
 
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 table-responsive">
 
-
+                      
                         <table class="table table-striped table-bordered table-condensed table-hover" >
                             <thead  class="thead-default">
                                 <tr>
@@ -716,18 +775,30 @@
 @section('script')
 
 <script type="application/javascript">
-    //se ejecuta cada vez que escogewmos un file
+   
         var codPresupProyecto = -1;
+
+        var tiene_enlace = {{$unidadProductiva->activar_enlace_ppm}};
+
+        var ListaOrganizaciones = @json($listaOrganizaciones); 
 
 
         var listaTipoPersoneria = @php echo $listaTipoPersoneria; @endphp;
         var tipoPersoneriaSeleccionada = {};
         $(document).ready(function(){
-            $(".loader").fadeOut("slow");
+             
             mostrarDivRUC();
             actualizarEstadoDocumento({{$unidadProductiva->codEstadoDocumento}});
-            //contadorCaracteres('ruc','contadorRUC',11);
-            //contadorCaracteres('observacion','contadorObservacion',{{App\Configuracion::tamañoObservacionOC}});
+            
+            if(tiene_enlace)
+              changedOrganizacionEnlazada();
+
+            /* Para darle tiempo al navegador que renderice el Select2 de bootstrap */
+            setTimeout(() => {
+              actualizarTieneEnlacePPM(tiene_enlace);
+              $(".loader").fadeOut("slow");
+            }, 500);
+
 
         });
 
@@ -871,32 +942,39 @@
                 const user = listaUsuariosAAgregar[index];
                 var nombreComp = user.nombres + " "+  user.apellidoPaterno  + " "+ user.apellidoMaterno;
                 var htmlFila=
-                    `<tr class="selected">
-                        <td style="text-align:center;">
-                          `+user.dni+`
-                        </td>
-                        <td>
-                           `+nombreComp+`
-                        </td>
-                        <td  style="text-align:right;">
-                             `+user.correo+`
+                /* html */
+                `
+                  <tr class="selected">
+                      <td style="text-align:center;">
+                        [DNI]
+                      </td>
+                      <td>
+                        [NombreCompleto]
+                      </td>
+                      <td class="text-right">
+                        [Correo]
+                      </td>
+                      <td class="text-right">
+                        [Telefono]
+                      </td>
+                      <td style="text-align:center;">
+                          <button type="button" class="btn btn-danger btn-xs" onclick="clickEliminarUsuario([DNI]);">
+                              <i class="fa fa-times" ></i>
+                          </button>
+                          <button type="button" class="btn btn-xs" onclick="clickEditarUsuario([DNI]);">
+                              <i class="fas fa-pen"></i>
+                          </button>
+                      </td>
+                  </tr>         
+                `;
 
-                        </td>
-                        <td  style="text-align:right;">
-
-                            `+ user.telefono+`
-                        </td>
-
-                        <td style="text-align:center;">
-                            <button type="button" class="btn btn-danger btn-xs" onclick="clickEliminarUsuario(`+user.dni+`);">
-                                <i class="fa fa-times" ></i>
-                            </button>
-                            <button type="button" class="btn btn-xs" onclick="clickEditarUsuario(`+user.dni+`);">
-                                <i class="fas fa-pen"></i>
-                            </button>
-                        </td>
-                    </tr>         `;
-                htmlTotal += htmlFila;
+                var hidrate_object = {
+                  DNI:user.dni,
+                  NombreCompleto:nombreComp,
+                  Correo:user.correo,
+                  Telefono:user.telefono
+                };
+                htmlTotal += hidrateHtmlString(htmlFila,hidrate_object);
 
             }
             tbody.innerHTML = htmlTotal;
@@ -918,6 +996,11 @@
         }
 
         function clickGuardarNuevosSocios(){
+            if(listaUsuariosAAgregar.length == 0){
+              alerta("No ha insertado personas para agregar");
+              return;
+            }
+            
             url = "/Cite/UnidadProductiva/AñadirGrupoDeSocios";
             formData = {
                 listaUsuariosAAgregar,

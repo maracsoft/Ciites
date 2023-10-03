@@ -92,17 +92,21 @@
                                 
                                 </td>
                                 @foreach($empleado->getReportesMensualesCITE($listaAños) as $reporteMensual)
+                                    @php
+                                      $estado = $reporteMensual->getEstado();
+                                    @endphp
+                                    
                                     @if($reporteMensual->getDebeReportar())
                                         <td class="text-center">
-                                            <button class="btn btn-xs btn-{{$reporteMensual->getEstado()->claseBoton}}"
+                                            <button class="btn btn-xs btn-{{$estado->claseBoton}}"
                                             data-toggle="modal" data-target="#ModalVerReporte" onclick="clickVerReporte({{$reporteMensual->getId()}})">
-                                                <i class="fas fa-{{$reporteMensual->getEstado()->icono}}"></i>
+                                                <i class="fas fa-{{$estado->icono}}"></i>
                                             </button>    
                                         </td>
                                     @else
                                         <td class="celdaPloma text-center">
-                                            <button class="btn btn-xs btn-{{$reporteMensual->getEstado()->claseBoton}}" onclick="programarReporte({{$reporteMensual->codReporte}},'{{$reporteMensual->getMsjInfo()}}')" >
-                                                <i class="fa fa-{{$reporteMensual->getEstado()->icono}}"></i>
+                                            <button class="btn btn-xs btn-{{$estado->claseBoton}}" onclick="programarReporte({{$reporteMensual->codReporte}},'{{$reporteMensual->getMsjInfo()}}')" >
+                                                <i class="fa fa-{{$estado->icono}}"></i>
                                             </button>    
                                         </td>
                                     @endif

@@ -19,16 +19,18 @@ class ParametroSistemaController extends Controller
     public function listar(){
         $listaTipoParametro = TipoParametroSistema::All();
         $lista = ParametroSistema::All();
+        $modulos = ParametroSistema::getModulosConParametros();
 
-        return view('ParametroSistema.ListarParametros',compact('lista','listaTipoParametro'));
+        return view('ParametroSistema.ListarParametros',compact('modulos','listaTipoParametro'));
 
     }
 
     public function inv_listado(){
 
-        $lista = ParametroSistema::All();
+      $modulos = ParametroSistema::getModulosConParametros();
 
-        return view('ParametroSistema.inv_ListarParametros',compact('lista'));
+
+      return view('ParametroSistema.inv_ListarParametros',compact('modulos'));
 
     }
 
@@ -42,15 +44,15 @@ class ParametroSistemaController extends Controller
 
         try{
             DB::beginTransaction();
-            
+
 
             if($request->codParametro=="0"){ // NUEVO
 
                 $parametro = new ParametroSistema();
                 $parametro->fechaHoraCreacion = Carbon::now();
                 $msj = "creado";
-            
-            }else{ //EXISTENTE 
+
+            }else{ //EXISTENTE
                 $parametro = ParametroSistema::findOrFail($request->codParametro);
                 $parametro->fechaHoraActualizacion = Carbon::now();
                 $msj = "actualizado";
@@ -58,9 +60,11 @@ class ParametroSistemaController extends Controller
             $parametro->nombre = $request->nombre;
             $parametro->valor = $request->valor;
             $parametro->descripcion = $request->descripcion;
+            $parametro->modulo = $request->modulo;
+
             $parametro->codTipoParametro = $request->codTipoParametro;
-            
-            
+
+
             $parametro->save();
 
             db::commit();
@@ -73,7 +77,7 @@ class ParametroSistemaController extends Controller
                                                              json_encode($request->toArray())
                                                             );
             return RespuestaAPI::respuestaError(Configuracion::getMensajeError($codErrorHistorial));
-            
+
         }
 
     }
@@ -81,10 +85,10 @@ class ParametroSistemaController extends Controller
     public function darDeBaja($codParametro){
         try{
             DB::beginTransaction();
-            
+
             $parametro = ParametroSistema::findOrFail($codParametro);
             $parametro->fechaHoraBaja = Carbon::now();
-            
+
             $parametro->save();
 
             db::commit();
@@ -96,7 +100,7 @@ class ParametroSistemaController extends Controller
                                                             $codParametro
                                                             );
             return RespuestaAPI::respuestaError(Configuracion::getMensajeError($codErrorHistorial));
-            
+
         }
     }
 

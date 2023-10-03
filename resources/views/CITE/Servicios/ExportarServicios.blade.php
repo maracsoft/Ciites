@@ -5,7 +5,7 @@ $fondoPlomo = "background-color: #D0CECE;";
 $textLeft = "text-align:left";
 $textCenter = "text-align:center";
 $textoRojo = "color:red";
-
+$fonto_amarillo = "background-color:#ffff00";
 if($descargarExcel){
   header("Pragma: public");
   header("Expires: 0");
@@ -18,14 +18,13 @@ if($descargarExcel){
 
 $br ="<br style='mso-data-placement:same-cell;'/>";
 
-if($convenio){
-    $cantColumnas = 29;
-    $cantColumnasServicio = 19;
-}else{
-    $cantColumnas = 24;
-    $cantColumnasServicio = 14;
-}     
-    
+
+
+$cantColumnas = 32;
+$cantColumnasServicio = 22;
+
+
+
 ?>
 <meta charset="utf-8">
  
@@ -66,6 +65,7 @@ if($convenio){
             <th style="{{$textCenter}}"  colspan="10">
                 INFORMACIÓN DE LA EMPRESA BENEFICIARIA
             </th>
+             
             <th style="{{$textCenter}}" colspan="{{$cantColumnasServicio}}">
                 DATOS DEL SERVICIO
             </th>
@@ -94,11 +94,10 @@ if($convenio){
             
             <th rowspan="2" style="{{$fondoPlomo}}">CLASIFICACIÓN DE EMPRESAS SEGÚN RANGO DE VENTAS</th>
             
-            <th  colspan="4" style="{{$fondoPlomo}}">
+            <th colspan="4" style="{{$fondoPlomo}}">
                 DIRECCIÓN DE LA EMPRESA, INSTITUCIÓN O PERSONA
- 
-
             </th>
+
             {{-- SERVICIO --}}
             <th rowspan="2" style="{{$fondoPlomo}}">
                 TIPO DE SERVICIO BRINDADO
@@ -108,8 +107,17 @@ if($convenio){
                 @php echo $br @endphp 4. SERVICIO DE DIFUSIÓN
                 @php echo $br @endphp 5. ACTIVIDADES DE ARTICULACIÓN
             </th>
+            <th rowspan="2" style="{{$fondoPlomo}}">
+              N° Actividad
+            </th>
+            <th rowspan="2"  style="{{$fondoPlomo}}">
+              Actividad según PAT
+            </th>
             <th rowspan="2" style="{{$fondoPlomo}} {{$textoRojo}}">
               codServicio
+            </th>
+            <th rowspan="2" style="{{$fondoPlomo}} {{$textoRojo}}">
+              Subio todos los archivos
             </th>
 
 
@@ -141,11 +149,11 @@ if($convenio){
                 UBICACIÓN (LUGAR DONDE SE REALIZÓ EL SERVICIO O ACTIVIDAD)
             </th>
 
-            @if($convenio)
-                <th colspan="5" style="{{$fondoPlomo}}">
-                    INGRESOS
-                </th>
-            @endif
+        
+            <th colspan="5" style="{{$fondoPlomo}}">
+                INGRESOS
+            </th>
+        
 
             <th rowspan="2" style="{{$fondoPlomo}}">
                 EJECUCIÓN DE SERVICIOS
@@ -165,13 +173,13 @@ if($convenio){
             <th style="{{$fondoPlomo}}">PROVINCIA</th>
             <th style="{{$fondoPlomo}}">DEPARTAMENTO</th>
 
-            @if($convenio)
-                <th style="{{$fondoPlomo}}">TIPO DE COMPROBANTE (Factura, Boleta, otro)</th>
-                <th style="{{$fondoPlomo}}">N° COMPROBANTE</th>
-                <th style="{{$fondoPlomo}}">BASE IMPONIBLE</th>
-                <th style="{{$fondoPlomo}}">IGV</th>
-                <th style="{{$fondoPlomo}}">TOTAL</th>
-            @endif
+            
+            <th style="{{$fondoPlomo}}">TIPO DE COMPROBANTE (Factura, Boleta, otro)</th>
+            <th style="{{$fondoPlomo}}">N° COMPROBANTE</th>
+            <th style="{{$fondoPlomo}}">BASE IMPONIBLE</th>
+            <th style="{{$fondoPlomo}}">IGV</th>
+            <th style="{{$fondoPlomo}}">TOTAL</th>
+            
        
             
             
@@ -229,13 +237,30 @@ if($convenio){
                     @endif
                 </td>
 
+                 
                 {{-- SERVICIO --}}
                 <td >
-                    {{$servicio->getTipoServicio()->getId()}}
+                    {{$servicio->getTipoServicio()->indice}}
                 </td>
+                <td  style="">
+                    {{$servicio->getActividadPAT()->indice}}
+                </td>
+                <td  style=""> 
+                    {{mb_strtoupper($servicio->getActividadPAT()->getTextoDescripcion())}}
+                </td>
+
                 <td style="{{$textoRojo}}">
                   {{$servicio->getId()}}
                 </td>
+                <td style="{{$textoRojo}}">
+                  @if($servicio->faltanArchivosPorSubir())
+                    FALTAN SUBIR
+                  @else
+                    SUBIÓ TODOS
+                  @endif
+                </td>
+                
+                
                 <td >
                     {{mb_strtoupper($servicio->descripcion)}}
                 </td>
@@ -270,9 +295,9 @@ if($convenio){
                     {{$servicio->getDistrito()->getProvincia()->getDepartamento()->nombre}}
                 </td>
 
-                @if($convenio)
+                @if($servicio->esPagado())
                     <td>
-                        {{mb_strtoupper($servicio->getTipoCDP()->nombreCDP)}}
+                        {{mb_strtoupper($servicio->getTipoCDP_nombre())}}
                     </td>
                     <td>
                         {{$servicio->nroComprobante}}
@@ -286,6 +311,16 @@ if($convenio){
                     <td>
                         {{$servicio->total}}
                     </td>
+
+                  
+                @else
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  
+                  
                 @endif
 
 

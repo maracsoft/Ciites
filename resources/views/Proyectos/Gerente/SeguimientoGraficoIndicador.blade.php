@@ -115,26 +115,10 @@
                       </td>
 
                       <td style="text-align: center">
-                          <!--
-                          <i class="fas fa-pen"></i>
-                          -->  
-                          @if(!is_null($constantes[$i][0]) && !is_null($constantes[$i][1]))
-                          <a href="#" title="Eliminar" onclick="swal({//sweetalert
-                              title:'¿Seguro de eliminar la cantidad del periodo {{$arr[$i]['y']}}?',
-                              //type: 'warning',  
-                              type: 'warning',
-                              showCancelButton: true,//para que se muestre el boton de cancelar
-                              confirmButtonColor: '#3085d6',
-                              cancelButtonColor: '#d33',
-                              confirmButtonText:  'SÍ',
-                              cancelButtonText:  'NO',
-                              closeOnConfirm:     true,//para mostrar el boton de confirmar
-                              html : true
-                          },
-                          function(){//se ejecuta cuando damos a aceptar
-                            window.location.href='{{route('IndicadorActividad.EliminarValor',$indices[$i])}}';
-                          });"><i class="fas fa-trash"></i></a>  
-                          @endif
+                           
+                        @if(!is_null($constantes[$i][0]) && !is_null($constantes[$i][1]))
+                          <a href="#" title="Eliminar" onclick="clickEliminar({{$indices[$i]}},'{{$arr[$i]['y']}}')"><i class="fas fa-trash"></i></a>  
+                        @endif
                           
                       </td>
                       
@@ -172,4 +156,24 @@
 
 
 
+@endsection
+
+@section('script')
+<script>
+
+
+  var id_eliminar = null;
+  function clickEliminar(id,periodo){
+    id_eliminar = id;
+    confirmarConMensaje("Confirmación","¿Seguro de eliminar la cantidad del periodo "+periodo+"?","warning",function(){
+      var ruta = "/GestionProyectos/IndicadorActividad/{id}/eliminar";
+      window.location.href = ruta;
+    
+
+    });
+
+  }
+ 
+  
+</script>
 @endsection

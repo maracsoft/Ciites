@@ -2,11 +2,11 @@
     
     function validarFormulario(){
         msj='';
-        var conConvenio = document.getElementById('codModalidad').value == 1;
+        var es_pagado = document.getElementById('codTipoAcceso').value == 2;
 
 
-        limpiarEstilos(['codUnidadProductiva','codTipoServicio','codModalidad','codTipoAcceso','cantidadServicio','totalParticipantes',
-            'nroHorasEfectivas','descripcion','codMesAño','fechaInicio','fechaTermino',
+        limpiarEstilos(['codUnidadProductiva','codTipoServicio','codModalidad','codTipoAcceso','cantidadServicio',
+            'nroHorasEfectivas','descripcion','fechaInicio','fechaTermino',
             'codTipoCDP','baseImponible','igv','total','nroComprobante','codActividad'])
         
         msj = validarSelect(msj,'codUnidadProductiva',-1,'Unidad Productiva');
@@ -16,25 +16,23 @@
         
         msj = validarSelect(msj,'codModalidad',-1,'Modalidad');
         msj = validarSelect(msj,'codTipoAcceso',-1,'Tipo Acceso');
-        msj = validarSelect(msj,'codMesAño',-1,'Mes');
-        //msj = validarSelect(msj,'ComboBoxDistrito',-1,'Distrito');
-        //msj = validarSelect(msj,'ComboBoxDepartamento',-1,'Departamento');
-        //msj = validarSelect(msj,'ComboBoxProvincia',-1,'Provincia');
+
         msj = validarLugarSelector_ComboBoxDistrito(msj);
 
 
-        if(conConvenio){
-            msj = validarSelect(msj,'codTipoCDP',-1,'Tipo de comprobante de pago');
-            msj = validarPositividadYNulidad(msj,'baseImponible','Base imponible');
-            msj = validarPositividadYNulidad(msj,'igv','IGV');
-            msj = validarPositividadYNulidad(msj,'total','Total');
-            msj = validarNulidad(msj,'nroComprobante','Número de comprobante');
+        if(es_pagado){
+
+            //msj = validarSelect(msj,'codTipoCDP',"",'Tipo de comprobante de pago');
+            //msj = validarPositividadYNulidad(msj,'baseImponible','Base imponible');
+            //msj = validarPositividadYNulidad(msj,'igv','IGV');
+            //msj = validarPositividadYNulidad(msj,'total','Total');
+            //msj = validarNulidad(msj,'nroComprobante','Número de comprobante');
         }
                 
         msj = validarTamañoMaximoYNulidad(msj,'descripcion',500,'Descripcion');
 
         msj = validarPositividadYNulidad(msj,'cantidadServicio','Cantidad Servicio');
-        msj = validarPositividadYNulidad(msj,'totalParticipantes','Total Participantes');
+        
         msj = validarPositividadYNulidad(msj,'nroHorasEfectivas','Nro horas efectivas');
         
         msj = validarNulidad(msj,'fechaInicio','Fecha Inicio');
@@ -44,20 +42,51 @@
     }
 
     
-     
+    const ListaModalidades = @json($listaModalidades);
+    const ListaTiposServicio = @json($listaTipoServicio);
+
+    const SelectTipoServicio = document.getElementById("codTipoServicio");
+    
+    function changeModalidad(codModalidadSeleccionada){
+      
+      var tipos_servicio = ListaTiposServicio.filter(e => e.codModalidad == codModalidadSeleccionada)    
+      console.log("tipos_servicio",tipos_servicio)
+
+      const plantilla_html = `
+        <option value="[ID]">
+          [LABEL]
+        </option>
+      `;
+
+      var hidration_data = {
+        ID:"-1",
+        LABEL:"- Seleccionar -"
+      };
+      var html_string = "";
+      html_string += hidrateHtmlString(plantilla_html,hidration_data);
+
+      
+      for (let index = 0; index < tipos_servicio.length; index++) {
+        const tipo_serv = tipos_servicio[index];        
         
+        hidration_data = {
+          ID:tipo_serv.codTipoServicio,
+          LABEL:tipo_serv.nombre
+        };
+        html_string += hidrateHtmlString(plantilla_html,hidration_data);
 
-
-
-
+      }
+      SelectTipoServicio.innerHTML = html_string;
+    }
+  
 
 
 
 
 
     
-    function actualizarModalidad(codModalidad){
-        if(codModalidad == 1){ //CON CONVENIO, MOSTRAR EL DIV
+    function actualizarTipoAcceso(codModalidad){
+        if(codModalidad == 2){ //PAGADO, MOSTRAR EL DIV
             document.getElementById('divConvenio').classList.remove('hidden')
         }else{
             document.getElementById('divConvenio').classList.add('hidden')
@@ -66,7 +95,7 @@
     }
 
     var listaActividades = @php echo $listaActividades @endphp 
-    function actualizarTipo(codTipoServicio){
+    function actualizarTipoServicio(codTipoServicio){
 
         var listaDisponible = listaActividades.filter(e=>e.codTipoServicio == codTipoServicio);
         console.log("listaDisponible",listaDisponible)
@@ -90,27 +119,27 @@
     }
         
  
- 
 
-        /* FORMULAS 
-            base + igv = total
-            base + base*0.18 = total
-            base*1.18 = total
-        
-        */
-        const InputBaseImponible = document.getElementById('baseImponible')
-        const InputIGV = document.getElementById('igv') 
-        const InputTotal = document.getElementById('total')
-        
-        function cambioBaseImponible(){
-            InputIGV.value = number_format(parseFloat(InputBaseImponible.value)*0.18 , 2);
-            InputTotal.value = number_format(parseFloat(InputBaseImponible.value)*1.18 , 2);
-        }
 
-        function cambioTotal(){
-            InputIGV.value = number_format(parseFloat(InputTotal.value)*0.18/1.18,2);
-            InputBaseImponible.value =number_format(parseFloat(InputTotal.value)/1.18,2 );
+    /* FORMULAS 
+        base + igv = total
+        base + base*0.18 = total
+        base*1.18 = total
+    
+    */
+    const InputBaseImponible = document.getElementById('baseImponible')
+    const InputIGV = document.getElementById('igv') 
+    const InputTotal = document.getElementById('total')
+    
+    function cambioBaseImponible(){
+        InputIGV.value = number_format(parseFloat(InputBaseImponible.value)*0.18 , 2);
+        InputTotal.value = number_format(parseFloat(InputBaseImponible.value)*1.18 , 2);
+    }
 
-        }
+    function cambioTotal(){
+        InputIGV.value = number_format(parseFloat(InputTotal.value)*0.18/1.18,2);
+        InputBaseImponible.value =number_format(parseFloat(InputTotal.value)/1.18,2 );
+
+    }
 
 </script>

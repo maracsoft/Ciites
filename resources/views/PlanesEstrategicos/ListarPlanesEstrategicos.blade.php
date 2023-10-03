@@ -55,23 +55,7 @@
                    
                     
                     <!--Boton eliminar -->
-                    <a href="#" class="btn btn-danger btn-sm btn-icon icon-left" title="Le quita el acceso al sistema." onclick="swal({//sweetalert
-                            title:'Confirmación',
-                            text: '¿Está seguro de desactivar el objetivo estratégico del año {{$itemPlanEstrategico->año}}?',     //mas texto
-                            //type: 'warning',  
-                            type: '',
-                            showCancelButton: true,//para que se muestre el boton de cancelar
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText:  'SÍ',
-                            cancelButtonText:  'NO',
-                            closeOnConfirm:     true,//para mostrar el boton de confirmar
-                            html : true
-                        },
-                        function(){//se ejecuta cuando damos a aceptar
-                            window.location.href='{{route('PlanEstrategico.eliminar',$itemPlanEstrategico->codPEI)}}';
-
-                        });">
+                    <a href="#" class="btn btn-danger btn-sm btn-icon icon-left" title="Le quita el acceso al sistema." onclick="clickEliminarPlan({{$itemPlanEstrategico->codPEI}})">
                       <i class="fas fa-arrow-down"></i>
                       Desactivar
                     </a>
@@ -95,6 +79,16 @@
 
 <script>
 
+  var id_eliminar = null;
+  function clickEliminarPlan(id){
+    id_eliminar = id;
+    confirmarConMensaje("Confirmación","¿Desea eliminar el plan estratégico?","warning",ejecutarEliminacion)
+  }
+
+  function ejecutarEliminacion(){
+    window.location.href='/PlanEstrategico/eliminar/' + id_eliminar;
+
+  }
 
   function confirmar(){
     confirmarConMensaje("Confirmación","¿Desea generar todas las relaciones faltantes entre proyectos y obj estrategicos?",'warning',ejecutar);
