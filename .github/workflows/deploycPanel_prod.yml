@@ -1,0 +1,51 @@
+
+on: 
+  push:
+    branches: [produccion]
+name: Deploy Produccion
+jobs:
+  FTP-Deploy-Action:
+    if: github.ref_name == 'produccion'
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: send telegram started-deploy message on push
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ vars.TELEGRAM_DEPLOY_CHANNEL_ID }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          STARTED DEPLOY:
+          Repository: ${{ github.repository }}
+          Autor: ${{ github.actor }} 
+          Commit: ${{ github.event.commits[0].message }}
+          Branch: ${{ github.ref_name }}
+
+    - name: get lastest code
+      uses: actions/checkout@v3
+      
+    - name: sync files
+      uses: SamKirkland/FTP-Deploy-Action@4.3.3
+      with:
+        server: ${{vars.FTP_SERVER}}
+        username: ${{vars.FTP_USERNAME_PROD}}
+        password: ${{secrets.FTP_PASSWORD_PROD}}
+        port: 21
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          **/vendor/**
+          
+    - name: send telegram message on push
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ vars.TELEGRAM_DEPLOY_CHANNEL_ID }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          FINISHED DEPLOY:
+          Repository: ${{ github.repository }}
+          Autor: ${{ github.actor }} 
+          Commit: ${{ github.event.head_commit.message }}
+          Branch: ${{ github.ref_name }}
+          Ver cambios: https://github.com/${{ github.repository }}/commit/${{github.sha}}
