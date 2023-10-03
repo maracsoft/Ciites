@@ -1,4 +1,4 @@
-<div id="CSS_SEP" name="SelectMultipleContainer_{{$name}}" class="">
+<div id="CSS_SEP" class="">
    
   <input type="hidden" class="" name="{{$name}}" id="{{$id}}">
   <div class="d-flex flex-row">
@@ -48,8 +48,7 @@
 
     document.addEventListener("click", JS_SEP_clickSomewhere);
     document.getElementById("search_input_{{$id}}").addEventListener("keyup", function(event) {
-      if (event.key === "Enter") {
-         
+      if (event.keyCode === 13) {
         JS_SEP_pressedEnter();
       }
     });
@@ -259,8 +258,6 @@
   }
 
 
-  
-
 </script>
 
  
@@ -273,11 +270,6 @@
     max-height: 350px;
     overflow:scroll;
     overflow-x:hidden;
-  }
-
-  #CSS_SEP.error{
-    box-shadow: 0 0 5px 3px rgba(220, 53, 69, 0.6);
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   }
 
   #CSS_SEP .inside-input{

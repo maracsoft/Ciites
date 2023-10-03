@@ -11,7 +11,6 @@ use App\ErrorHistorial;
 use App\EstadoActivoInventario;
 use App\Http\Controllers\Controller;
 use App\Migracion;
-use App\ParametroSistema;
 use App\Proyecto;
 use App\RespuestaAPI;
 use App\RevisionInventario;
@@ -30,11 +29,19 @@ class MigracionController extends Controller
 {
 
   private function getMigrationFiles(){
-   
-    $ruta_configurada = ParametroSistema::getParametroSistema('ruta_migraciones')->valor;
-    $real_path = realpath($ruta_configurada);
+    $actual_path = getcwd();
 
+    if(Configuracion::enProduccion()){
+      $real_path = realpath($actual_path."/../../repositories/Cedepas");
+    }else{
+      $real_path = "..";
+    }
+    
+    $real_path.="/database/phinx/migrations";
+    error_log("path ". $real_path);
+    
     $listaMigraciones_files = scandir($real_path);
+
     
     $array_final = [];
     foreach ($listaMigraciones_files as $filename) {

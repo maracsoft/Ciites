@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Models\CITE\ReporteMensualCite;
-use App\Models\CITE\Servicio;
 use App\Models\MaracModel;
 use App\Models\MaracModelInterface;
 use App\Models\Notificaciones\Notificacion;
@@ -36,14 +35,6 @@ class Empleado extends Model implements MaracModelInterface
     public function getFechaNacimiento() : string{
       return Fecha::formatoParaVistas($this->fechaNacimiento);
 
-    }
-
-    public static function prepararParaSelect($listaEmpleados){
-      foreach ($listaEmpleados as $empleado) {
-        $empleado['getNombreCompleto'] = $empleado->getNombreCompleto();
-      }
-
-      return $listaEmpleados;
     }
 
 
@@ -608,36 +599,21 @@ class Empleado extends Model implements MaracModelInterface
      }
 
 
-    /* 
-    ************************************** CITE **********************************************
-    ************************************** CITE **********************************************
-    ************************************** CITE **********************************************
-    ************************************** CITE **********************************************
-    ************************************** CITE **********************************************
-    ************************************** CITE **********************************************
-    ************************************** CITE **********************************************
-    ************************************** CITE **********************************************
-    ************************************** CITE **********************************************
-    ************************************** CITE **********************************************
-    ************************************** CITE **********************************************
-    ************************************** CITE **********************************************
-    ************************************** CITE **********************************************
-    
-    */
+     /* CITE */
 
 
-    public function esArticulador() : bool{
-      $codPuestoEsperado = Puesto::getCodPuesto_Articulador();
-      return $this->verificarPuesto($codPuestoEsperado);
+      public function esArticulador() : bool{
+        $codPuestoEsperado = Puesto::getCodPuesto_Articulador();
+        return $this->verificarPuesto($codPuestoEsperado);
 
+     }
+
+     public function esEquipo() : bool{
+        $codPuestoEsperado = Puesto::getCodPuesto_Equipo();
+        return $this->verificarPuesto($codPuestoEsperado);
     }
 
-    public function esEquipo() : bool{
-      $codPuestoEsperado = Puesto::getCodPuesto_Equipo();
-      return $this->verificarPuesto($codPuestoEsperado);
-    }
-
-    public function seDebeImprimirMenuCITE() : bool {
+    public function imprimirMenuCITE() : bool {
 
       return $this->esArticulador() || $this->esEquipo() || $this->esUGE();
 
@@ -652,126 +628,59 @@ class Empleado extends Model implements MaracModelInterface
 
      }
 
-    /*
-    verifica si al usuario le debe aparecer un mensaje de alerta de registrar su reporte CITE
-    Condiciones:
-      debe ser equipo
-    */
-    public function mostrarMensajeDeRegistrarTuReporte() : bool {
-      if(!$this->esEquipo()) //si no es equipo, no
-          return false;
-
-      $codMesActual = intval(date('n'));
-      $añoActual = intval(date('Y'));
-      $diaActual = intval(date('d'));
-
-      /* El mensaje solo aparece despues del 26 */
-      if($diaActual < 26){
-          return false;
-      }
-
-      Debug::mensajeSimple('wey'.$añoActual);
-
-      $listaReporte = ReporteMensualCite::where('codMes',$codMesActual)
-          ->where('año',$añoActual)
-          ->where('codEmpleado',$this->getId())
-          ->get();
-      if(count($listaReporte) == 0){
-          return false; //No hay ningun registro para ese mes
-      }
-
-      //si hay registro, verificamos su estado
-      $reporte = $listaReporte[0];
-      if(!$reporte->getDebeReportar())
-          return false;
-
-      //si debe reportar, verificamos si el reporte ya está en aprobado
-      if($reporte->estaAprobado())
-          return false;
-
-      return true;
-
-    }
-
-    public static function getEmpleadosEquipo(){
-      $codPuestoEquipo = Puesto::getCodPuesto_Equipo();
-      $relas = EmpleadoPuesto::where('codPuesto',$codPuestoEquipo)->get();
-      $codsEmpleadosEquipo = [];
-      foreach ($relas as $rela) {
-        $codsEmpleadosEquipo[] = $rela->codEmpleado;
-      }
-      $listaEmpleados = Empleado::whereIn('codEmpleado',$codsEmpleadosEquipo)->get();
-      return $listaEmpleados;
-    }
-
-    public function getReportesMensualesCITE(array $listaAños){
-
-      return ReporteMensualCite::where('codEmpleado',$this->codEmpleado)
-          ->whereIn('año',$listaAños)
-          ->orderBy('año','ASC')
-          ->orderBy('codMes','ASC')
-          ->get();
-
-
-    }
-
-
-    public function getServiciosPendientesDeTerminar(){
-      
-      $servicios = Servicio::where('codEmpleadoCreador',$this->codEmpleado)->get();
-      $codsServiciosFaltan = [];
-      foreach ($servicios as $servicio) {
-        if($servicio->faltanArchivosPorSubir()){
-          $codsServiciosFaltan[] = $servicio->codServicio;
-        }
-      }
-
-      return Servicio::whereIn('codServicio',$codsServiciosFaltan)->get();
-      
-    }
-
-
-     /* 
-     ************************************** PPM **********************************************
-     ************************************** PPM **********************************************
-     ************************************** PPM **********************************************
-     ************************************** PPM **********************************************
-     ************************************** PPM **********************************************
-     ************************************** PPM **********************************************
-     ************************************** PPM **********************************************
-     ************************************** PPM **********************************************
-     ************************************** PPM **********************************************
-     ************************************** PPM **********************************************
-     ************************************** PPM **********************************************
-     ************************************** PPM **********************************************
-     ************************************** PPM **********************************************
-     
-
+     /*
+     verifica si al usuario le debe aparecer un mensaje de alerta de registrar su reporte CITE
+     Condiciones:
+        debe ser equipo
      */
+     public function mostrarMensajeDeRegistrarTuReporte() : bool {
+        if(!$this->esEquipo()) //si no es equipo, no
+            return false;
 
-     
+        $codMesActual = intval(date('n'));
+        $añoActual = intval(date('Y'));
+        $diaActual = intval(date('d'));
 
-    public function esDireccionPPM() : bool{
-      $codPuestoEsperado = Puesto::getCodPuesto_DireccionPPM();
-      return $this->verificarPuesto($codPuestoEsperado);
-    }
+        /* El mensaje solo aparece despues del 26 */
+        if($diaActual < 26){
+            return false;
+        }
 
-    public function esEquipoPPM() : bool{
-      $codPuestoEsperado = Puesto::getCodPuesto_EquipoPPM();
-      return $this->verificarPuesto($codPuestoEsperado);
-    }
+        Debug::mensajeSimple('wey'.$añoActual);
 
-    public function seDebeImprimirMenuPPM() : bool {
-      return $this->esDireccionPPM() || $this->esEquipoPPM() || $this->esUGE();
-    }
+        $listaReporte = ReporteMensualCite::where('codMes',$codMesActual)
+            ->where('año',$añoActual)
+            ->where('codEmpleado',$this->getId())
+            ->get();
+        if(count($listaReporte) == 0){
+            return false; //No hay ningun registro para ese mes
+        }
 
-     public function puedeGenerarReportesPPM(){
-      if($this->esDireccionPPM())
-          return true;
-      if($this->esUGE())
-          return true;
-      return false;
+        //si hay registro, verificamos su estado
+        $reporte = $listaReporte[0];
+        if(!$reporte->getDebeReportar())
+            return false;
+
+        //si debe reportar, verificamos si el reporte ya está en aprobado
+        if($reporte->estaAprobado())
+            return false;
+
+        return true;
 
      }
+
+
+     public function getReportesMensualesCITE(array $listaAños){
+
+        return ReporteMensualCite::where('codEmpleado',$this->codEmpleado)
+            ->whereIn('año',$listaAños)
+            ->orderBy('año','ASC')
+            ->orderBy('codMes','ASC')
+            ->get();
+
+
+     }
+
+
 
 }

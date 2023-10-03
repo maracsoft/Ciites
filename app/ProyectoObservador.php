@@ -18,14 +18,4 @@ class ProyectoObservador extends Model
     public function getProyecto() : Proyecto {
         return Proyecto::findOrFail($this->codProyecto);
     }
-
-    public static function verificarExistencia($codProyecto,$codEmpleado): bool {
-      $search = ProyectoObservador::where('codEmpleadoObservador','=',$codEmpleado)->where('codProyecto',$codProyecto)->get();
-      if(count($search) == 0){
-        return false;
-      }
-
-      return true;
-    }
-
 }

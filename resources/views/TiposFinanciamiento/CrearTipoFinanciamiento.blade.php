@@ -48,10 +48,23 @@ class="form-horizontal form-groups-bordered" method="post" enctype="multipart/fo
                     <br>
                     <div class="col" style=" text-align:center">
                         
-                        <button type="button" class="btn btn-primary float-right" onclick="validarregistro()">
-                          <i class='fas fa-save'></i> 
-                          Registrar
-                        </button> 
+                        <button type="button" class="btn btn-primary float-right" id="btnRegistrar" data-loading-text="<i class='fa a-spinner fa-spin'></i> Registrando" onclick="swal({//sweetalert
+                            title:'¿Seguro de crear el tipo de financiamiento?',
+                            text: '',     //mas texto
+                            type: 'info',//e=[success,error,warning,info]
+                            showCancelButton: true,//para que se muestre el boton de cancelar
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText:  'SÍ',
+                            cancelButtonText:  'NO',
+                            closeOnConfirm:     true,//para mostrar el boton de confirmar
+                            html : true
+                        },
+                        function(){//se ejecuta cuando damos a aceptar
+                            validarregistro();
+                        });">
+                        <i class='fas fa-save'></i> 
+                        Registrar</button> 
                         
                         <a href="{{route('TipoFinanciamiento.listar')}}" class='btn btn-info float-left'>
                             <i class="fas fa-arrow-left"></i> 

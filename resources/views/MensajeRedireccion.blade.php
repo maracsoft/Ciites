@@ -2,7 +2,7 @@
 <html>
 <head>
 	 <meta charset="utf-8"/>
-     <title>CEDEPAS Norte</title>
+     <title>CIITES Norte</title>
 	 <link rel="shortcut icon" href="/img/LogoCedepas.png" type="image/png">
   
      <meta http-equiv="X-UA-Compatible" content="IE=edge">

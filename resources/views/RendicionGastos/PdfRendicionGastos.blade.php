@@ -68,7 +68,7 @@
                     <td style="width: 100px; font-weight: bold;">Proyecto:</td>
                     <td>{{$rendicion->getNombreProyecto()}}</td>
                     <td style="width: 140px;font-weight: bold;">Fecha:</td>
-                    <td>{{$rendicion->getFechaHoraUltimaEdicion()}}</td>
+                    <td>{{$rendicion->formatoFechaHoraRendicion()}}</td>
                 </tr>
                 
                 <tr>

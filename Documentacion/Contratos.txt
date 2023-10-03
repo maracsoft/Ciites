@@ -1,0 +1,16 @@
+PLAZO FIJO
+	CEDEPAS 
+		Tipico o normal
+		Especial (cambia el horario)
+	GPC: se le añade en la clausula PRIMERO
+		Tipico o normal
+		
+LOCACION
+	CEDEPAS
+		PNatural
+		PJuridica
+	GPC
+		PNatural
+		PJuridica
+
+		

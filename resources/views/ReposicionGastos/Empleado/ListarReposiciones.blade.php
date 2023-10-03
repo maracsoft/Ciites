@@ -39,20 +39,6 @@ Listar Reposiciones
   ]); 
 
   $comp_filtros->añadirFiltro([
-    'name'=>'codigoContrapartida',
-    'label'=>'Contrapartida:',
-    'show_label'=>true,
-    'placeholder'=>'Buscar por Contrapartida',
-    'type'=>'text',
-    'function'=>'contains',
-    'options'=>[],
-    'options_label_field'=>'',
-    'options_id_field'=>null,
-    'size'=>'sm',
-    'max_width'=>'250px',
-  ]); 
-
-  $comp_filtros->añadirFiltro([
       'name'=>'resumen',
       'label'=>'Resumen actividad:',
       'show_label'=>true,
@@ -121,9 +107,6 @@ Listar Reposiciones
                   
                   <th  scope="col">Origen & Proyecto</th>              
                   <th>
-                    Contrapartida
-                  </th>
-                  <th>
                     Resumen actividad
                   </th>
                 
@@ -151,9 +134,6 @@ Listar Reposiciones
 
                 <td style = "padding: 0.40rem">{{$itemreposicion->getProyecto()->getOrigenYNombre()  }}</td>
                 <td>
-                  {{$itemreposicion->codigoContrapartida}}
-                </td>
-                <td>
                   {{$itemreposicion->getResumenAbreviado()}}
                 </td>
               
@@ -179,7 +159,21 @@ Listar Reposiciones
                     </a>
                   @endif
                   @if($itemreposicion->codEstadoReposicion<3)
-                      <a href="#" class="btn btn-sm btn-danger" title="Cancelar Reposición" onclick="clickCancelarReposicion({{$itemreposicion->codReposicionGastos}},'{{$itemreposicion->codigoCedepas}}')">
+                      <a href="#" class="btn btn-sm btn-danger" title="Cancelar Reposición" onclick="swal({//sweetalert
+                          title:'¿Está seguro de cancelar la reposicion: {{$itemreposicion->codigoCedepas}} ?',
+                          //type: 'warning',  
+                          type: 'warning',
+                          showCancelButton: true,//para que se muestre el boton de cancelar
+                          confirmButtonColor: '#3085d6',
+                          cancelButtonColor: '#d33',
+                          confirmButtonText:  'SÍ',
+                          cancelButtonText:  'NO',
+                          closeOnConfirm:     true,//para mostrar el boton de confirmar
+                          html : true
+                      },
+                      function(){//se ejecuta cuando damos a aceptar
+                        window.location.href='{{route('ReposicionGastos.cancelar',$itemreposicion->codReposicionGastos)}}';
+                      });">
                         <i class="fas fa-trash-alt"> </i>
                     </a>
                   @endif
@@ -207,20 +201,7 @@ Listar Reposiciones
 @endsection
 
 
-@section('script')
-
-<script>
-  var id_eliminar = null;
-  function clickCancelarReposicion(id,codigo){
-    id_eliminar = id;
-    confirmarConMensaje("Confirmación","¿Está seguro de cancelar la reposicion "+codigo+"?","warning",ejecutarEliminacion)
-
-  }
-  function ejecutarEliminacion(){
-
-    window.location.href = "/ReposicionGastos/"+id_eliminar+"/Cancelar"; 
-  }
-
-</script>
-
-@endsection
+<?php 
+  $fontSize = '14pt';
+?>
+ 

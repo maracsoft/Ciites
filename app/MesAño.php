@@ -5,7 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-class MesAño extends MaracModel
+class MesAño extends Model
 {
     public $timestamps = false;
 

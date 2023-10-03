@@ -13,7 +13,13 @@
     }
 
     /* Para reducire el espacio entre inputs de cualquier VER  */
-    
+    .col{
+    /* background-color: orange; */
+        flex-basis: 0;
+        flex-grow: 1;
+        max-width: 100%;
+        margin-bottom: 5px;
+    }
 
     .colLabel{
         

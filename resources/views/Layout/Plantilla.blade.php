@@ -8,7 +8,7 @@
 
   {{-- Cambiar esto por una url d --}}
 
-  <link rel="shortcut icon" href="/img/LogoCedepas.png" type="image/png">
+  <link rel="shortcut icon" href="/img/isologo.ico" type="image/png">
   
   
   <!-- Tell the browser to be responsive to screen width -->
@@ -31,9 +31,191 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
- 
 
-  @include('RenderedCss')
+  <style>
+    .fondoPlomoCircular{
+            border-radius: 10px;
+            background-color:rgb(190, 190, 190)
+      }
+
+      
+    .fontSize6{
+      font-size: 6pt;
+    }
+    .fontSize7{
+      font-size: 7pt;
+    }
+    .fontSize8{
+      font-size: 8pt;
+    }
+    .fontSize9{
+      font-size: 9pt;
+    }
+    .fontSize10{
+      font-size: 10pt;
+    }
+    
+    .fontSize11{
+      font-size: 11pt;
+    }
+    .fontSize12{
+      font-size: 12pt;
+    }
+    .fontSize13{
+      font-size: 13pt;
+    }
+    .fontSize14{
+      font-size: 14pt;
+    }
+    .fontSize15{
+      font-size: 15pt;
+    }
+    .fontSize16{
+      font-size: 16pt;
+    }
+    .fontSize17{
+      font-size: 17pt;
+    }
+    .fontSize18{
+      font-size: 18pt;
+    }
+    .fontSize19{
+      font-size: 19pt;
+    }
+    
+    
+    
+    .tabla-detalles{
+      min-width: 800px;
+    }
+    .tabla-detalles th{
+      padding: 5px;
+    }
+
+    .notificacionXRendir{
+      background-color: rgb(87, 180, 44);
+      
+    }
+
+    .notificacionObservada{
+      background-color: rgb(209, 101, 101);
+          
+    }
+    .form-control-undefined {
+        display: block;
+        width: 100%;
+        height: calc(2.25rem + 2px);
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        box-shadow: 0 0 5px 3px #dc354599;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+
+    .loader {
+      position: fixed;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      background: url('/img/espera.gif') 50% 50% no-repeat rgb(249,249,249);
+      background-size: 10%;
+      opacity: .8;
+    }
+
+
+    .hovered:hover{
+        background-color:rgb(97, 170, 170);
+        border-radius: 3px;
+    }
+
+    .naranjaPrueba{
+
+      background-color: orange;
+    }
+    .verdePrueba{
+
+      background-color: rgb(0, 255, 55);
+    }
+
+    .letraRoja{
+      color:#ff4444;
+    }
+
+    .letraVerde{
+      color: rgb(58, 255, 58);
+    }
+
+    .letraAmarilla{
+      color:rgb(255, 255, 96);
+    }
+
+    .internalPadding-1 > *{
+        padding: 0.15rem;
+    }
+    .hidden{
+        display:none;
+    }
+
+    .fondoBlanco{
+        background-color: white !important;
+    }
+
+    tr.FilaPaddingReducido td{
+        padding:0.3rem
+    }
+
+    .rows_count{
+      color: #495057;
+      background-color: #ced4da;
+      border-radius: 7px;
+      
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 7px;
+      padding-bottom: 5px;
+       
+    }
+    
+    .table-container{
+      overflow-x: auto;
+      padding-bottom: 20px;
+    }
+    .rows_count span{
+      font-weight: 800;
+    }
+    
+    .label_puestos{
+      color: #b9c0cb;
+      margin: -2px;
+      padding: 0px;
+      font-size: 10pt;
+      font-weight: 500 !important;
+    }
+
+    .nombrecompleto-usuario{
+      font-size: smaller;
+      font-weight: 800;
+      color: white !important;
+
+    }
+    .image-logo-container{
+      background-color: white;
+      margin-right: -8px;
+      margin-left: -8px;
+      
+    }
+
+    
+  </style>
+
 
   @yield('estilos')
 
@@ -102,18 +284,21 @@
   {{--  {{route('bienvenido')}} --}}
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="{{ route('user.home') }}" class="brand-link">
-      <img src="/img/logo cuadrado.png"
-           alt="AdminLTE Logo"
-           class="brand-image img-circle elevation-3"
-           style="opacity: .8">
-      <span class="brand-text font-weight-light">CEDEPAS Norte</span>
-    </a>
+    
+
 
 
     <!-- Sidebar -->
+
+ 
+
     <div class="sidebar">
+      <div class="image-logo-container">
+          <a href="{{route('user.home')}}">
+            <img src="/img/logo-ciites.png" class="brand-image w-100 px-3">
+          </a>
+          
+      </div>
       <!-- Sidebar user (optional) -->
 
 
@@ -143,24 +328,6 @@
         </div>
 
       </div>
-    
-      @if($empLogeadoPlantilla->esAdminSistema())
-              
-        @if(App\ParametroSistema::mostrarMsj())
-          <div class="msj_parametros_faltantes">
-            {{App\ParametroSistema::getMsjFaltantes()}}
-          </div>
-        @endif
-      @endif
-
-      @php
-        $entorno = App\ParametroSistema::getEntorno();  
-      @endphp
-      @if($entorno!="produccion")
-        <div class="nombre-entorno">
-          Entorno: {{$entorno}}
-        </div>
-      @endif
 
 
       <!-- Sidebar Menu -->
@@ -189,18 +356,13 @@
                     @include('Layout.MenuLateral.UGE')
                 @endif
                 {{-- CITE --}}
-                @if($empLogeadoPlantilla->seDebeImprimirMenuCITE())
+                @if($empLogeadoPlantilla->imprimirMenuCITE())
                     @include('Layout.MenuLateral.MenusCITE')
                 @endif
                 @if($empLogeadoPlantilla->esObservador())
                     @include('Layout.MenuLateral.Observador')
                 @endif
 
-                @if($empLogeadoPlantilla->seDebeImprimirMenuPPM())
-                  @include('Layout.MenuLateral.MenusPPM')
-              
-                @endif
-                
             @endif
 
 
@@ -254,9 +416,9 @@
 {{-- La lógica del loader show y hide depende de esta librería --}}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
-
-{{--  https://sweetalert2.github.io/#download --}}
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- LIBRERIAS PARA NOTIFICACION DE ELIMINACION--->
+<script src="/adminlte/dist/js/sweetalert.min.js"></script>
+<link rel="stylesheet" href="/adminlte/dist/css/sweetalert.css">
 
 <script src="/calendario/js/bootstrap-datepicker.js"></script>
  
@@ -291,58 +453,39 @@
 
   }
 
- 
- 
 
+  function clickeoButton(){
+    confirmarConMensaje(funcionAEjecutarSiSí);
 
-  function confirmarConMensaje(titulo,html,tipoMensaje,nombreFuncionAEjecutar){
-
-
-    Swal.fire({
-      title: titulo,
-      html: html,     //mas texto
-      icon: tipoMensaje,//e=[success,error,warning,info]
-      showCancelButton: true,//para que se muestre el boton de cancelar
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText:  'SÍ',
-      cancelButtonText:  'NO',
-      reverseButtons:true
-      
-     
-    }).then((result) => {
-      
-      if (result.isConfirmed) {
-        nombreFuncionAEjecutar();
-      } 
-    })
- 
   }
 
-  
-  function confirmarConMensajeYCancelar(titulo,html,tipoMensaje,nombreFuncionAEjecutar,nombreFuncionNo){
 
-    Swal.fire({
-      title: titulo,
-      html: html,     //mas texto
-      icon: tipoMensaje,//e=[success,error,warning,info]
-      showCancelButton: true,//para que se muestre el boton de cancelar
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText:  'SÍ',
-      cancelButtonText:  'NO',
-      reverseButtons:true
-      
-    
-    }).then((result) => {
-      
-      if (result.isConfirmed) {
-        nombreFuncionAEjecutar();
-      }else{
-        nombreFuncionNo();
-      }
-    })
+  function funcionAEjecutarSiSí(){
+    console.log('oye ya estamos adentro');
 
+  }
+
+
+
+  function confirmarConMensaje(titulo,texto,tipoMensaje,nombreFuncionAEjecutar){
+    swal(
+          {
+              title: titulo,
+              text: texto,     //mas texto
+              type: tipoMensaje,//e=[success,error,warning,info]
+              showCancelButton: true,//para que se muestre el boton de cancelar
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText:  'SÍ',
+              cancelButtonText:  'NO',
+              closeOnConfirm:     true,//para mostrar el boton de confirmar
+              html : true
+          },
+          function(value){//se ejecuta cuando damos a aceptar
+            if(value)
+              nombreFuncionAEjecutar();
+          }
+      );
   }
 
 
@@ -360,97 +503,110 @@
 
 
   function confirmar(msj,type,formName){
-    Swal.fire({
-      title: msj,
-      text: '',     //mas texto
-      icon: type,//e=[success,error,warning,info]
-      
-      showCancelButton: true,//para que se muestre el boton de cancelar
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText:  'SÍ',
-      cancelButtonText:  'NO',
-      reverseButtons:true
-      
-      
-    }).then((result) => {
-      
-      if (result.isConfirmed) {
-        document.getElementById(formName).submit();
-      } 
-    })
-
- 
+      swal(
+          {
+              title: msj,
+              text: '',     //mas texto
+              type: type,//e=[success,error,warning,info]
+              showCancelButton: true,//para que se muestre el boton de cancelar
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText:  'SÍ',
+              cancelButtonText:  'NO',
+              closeOnConfirm:     true,//para mostrar el boton de confirmar
+              html : true
+          },
+          function(value){//se ejecuta cuando damos a aceptar
+              if(value) document.getElementById(formName).submit();
+          }
+      );
 
   }
   function alerta(msj){
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        html: msj,
-        confirmButtonColor:"#3085d6"
-      })
+      swal(
+          {
+              title: 'Error',
+              text: msj,     //mas texto
+              type: 'warning',//e=[success,error,warning,info]
+              showCancelButton: false,//para que se muestre el boton de cancelar
+              confirmButtonColor: '#3085d6',
+              //cancelButtonColor: '#d33',
+              confirmButtonText:  'OK',
+              //cancelButtonText:  'NO',
+              closeOnConfirm:     true,//para mostrar el boton de confirmar
+              html : true
+          },
+          function(){//se ejecuta cuando damos a aceptar
+
+          }
+      );
   }
-
-
-  // Función multiuso, usada mayormente para mostrar las respuestas de mi API
   function alertaMensaje(title,msj,type){
-      Swal.fire({
-        title: title,
-        html: msj,      
-        icon: type,//e=[success,error,warning,info,question]
-        showCancelButton: false,//para que se muestre el boton de cancelar
-        confirmButtonColor: '#3085d6',
-        confirmButtonText:  'OK',
-        
-        
-      })
- 
+      swal(
+          {
+              title: title,
+              text: msj,     //mas texto
+              type: type,//e=[success,error,warning,info]
+              showCancelButton: false,//para que se muestre el boton de cancelar
+              confirmButtonColor: '#3085d6',
+              //cancelButtonColor: '#d33',
+              confirmButtonText:  'OK',
+              //cancelButtonText:  'NO',
+              closeOnConfirm:     true,//para mostrar el boton de confirmar
+              html : true
+          },
+          function(){//se ejecuta cuando damos a aceptar
+
+          }
+      );
   }
 
 
   function alertaExitosa(titulo,msj){
+    swal(
+          {
+              title: titulo,
+              text: msj,     //mas texto
+              type: 'success',//e=[success,error,warning,info]
+              showCancelButton: false,//para que se muestre el boton de cancelar
+              confirmButtonColor: '#3085d6',
+              //cancelButtonColor: '#d33',
+              confirmButtonText:  'OK',
+              //cancelButtonText:  'NO',
+              closeOnConfirm:     true,//para mostrar el boton de confirmar
+              html : true
+          },
+          function(){//se ejecuta cuando damos a aceptar
 
-    Swal.fire({
-        title: titulo,
-        html: msj,      
-        icon: "success",//e=[success,error,warning,info,question]
-        showCancelButton: false,//para que se muestre el boton de cancelar
-        confirmButtonColor: '#3085d6',
-        confirmButtonText:  'OK',
-        
-        
-      })
- 
+          }
+      );
 
   }
 
 
   function confirmarCerrarSesion(){
-      confirmarConMensaje("Cerrar Sesión","¿Seguro que desea finalizar su sesión?","warning",function(){
-        location.href = "{{route('user.cerrarSesion')}}"
-      });
-  }
+      swal(
+          {
+              title: "Cerrar Sesión",
+              text: '¿Seguro que desea finalizar su sesión?',     //mas texto
+              type: "warning",//e=[success,error,warning,info]
+              showCancelButton: true,//para que se muestre el boton de cancelar
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText:  'SÍ',
+              cancelButtonText:  'NO',
+              closeOnConfirm:     true,//para mostrar el boton de confirmar
+              html : true
+          },
+          function(value){//se ejecuta cuando damos a aceptar
+              if(value)
+                location.href = "{{route('user.cerrarSesion')}}"
+          }
+      );
 
 
+    }
 
-  const NotificacionAbajoDerecha = Swal.mixin({
-    toast: true,
-    position: 'bottom-end',
-    showConfirmButton: false,
-    timer: 3000,
-    
-  });
-  
-
-  function mostrarNotificacion(icono,texto){
-    // [success,error,warning,info,question]
-    NotificacionAbajoDerecha.fire({
-      icon: icono,
-      title: texto
-    })
-    
-  }
 
   /*                       input= id del elemento del que vamos a contar caracteres
     output = bold que está dentro del label en el que pondremos el avance */

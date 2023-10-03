@@ -1,7 +1,7 @@
 @extends('Layout.Plantilla')
 
 @section('titulo')
-    Lista de Jobs
+    CITE Servicios brindados
 @endsection
 
 @section('contenido')

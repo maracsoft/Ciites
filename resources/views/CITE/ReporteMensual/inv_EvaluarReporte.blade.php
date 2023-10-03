@@ -73,7 +73,7 @@
                     @php
                         $i = 1;
                     @endphp
-                    @forelse($reporte->getOperaciones() as $operacion)
+                    @foreach($reporte->getOperaciones() as $operacion)
                         <tr>
                             <td class="p-1">
                                 {{$i}}               
@@ -97,16 +97,10 @@
                                 @endif        
                             </td>
                         </tr>
-                        @php
-                            $i++;
-                        @endphp
-                    @empty
-                        <tr>
-                          <td class="text-center" colspan="5">
-                            No hay acciones
-                          </td>
-                        </tr>
-                    @endforelse
+                    @php
+                        $i++;
+                    @endphp
+                    @endforeach
                 </tbody>
             </table>
         </div>

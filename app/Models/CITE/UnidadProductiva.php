@@ -6,16 +6,12 @@ namespace App\Models\CITE;
 use App\Distrito;
 use App\Empleado;
 use App\Fecha;
-use App\MaracModel;
 use App\MesAño;
-use App\Models\PPM\PPM_Organizacion;
-use App\Models\PPM\PPM_TipoDocumento;
 use Exception;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
-class UnidadProductiva extends MaracModel
+
+class UnidadProductiva extends Model
 {
     public $table = "cite-unidad_productiva";
     protected $primaryKey ="codUnidadProductiva";
@@ -23,29 +19,8 @@ class UnidadProductiva extends MaracModel
     public $timestamps = false;
     protected $fillable = [''];
 
-    static function getTodasParaFront(){
-      $listaUnidadesProductivas = UnidadProductiva::All();
-      foreach ($listaUnidadesProductivas as $unidad) {
-        $unidad['label_front'] = $unidad->getDenominacion()." ".$unidad->getRucODNI();
-      }
-      return $listaUnidadesProductivas;
 
-    }
-    function usuarioLogeadoPuedeEliminar(){
-      $emp = Empleado::getEmpleadoLogeado();
-      if($emp->esAdminSistema())
-          return true;
 
-      if($emp->esUGE() || $emp->esArticulador())
-          return true;
-
-      //Entonces es equipo
-      if($this->codEmpleadoCreador!=$emp->getId()) //si el logeado no lo creó, no puede eliminarlo
-          return false;
-
-      //Es equipo y sí lo creo,
-      return true;
-    }
 
 
     function getClasificacionRangoVentas(){
@@ -110,25 +85,7 @@ class UnidadProductiva extends MaracModel
     }
 
 
-    public function apareceEnOtrasTablas() : bool {
-      $count = Servicio::where('codUnidadProductiva',$this->getId())->count();
-      if($count != 0){
-        error_log("la unidad productiva ".$this->getId()." aparece en Servicio");
 
-        return true;
-      }
-
-      $count = RelacionUsuarioUnidad::where('codUnidadProductiva',$this->getId())->count();
-      if($count != 0){
-        error_log("la unidad productiva ".$this->getId()." aparece en RelacionUsuarioUnidad");
-        
-        return true;
-      }
- 
-
-      return false;
-
-    }
 
 
     //Por defecto retorna la razón social, si no tiene retorna la persona, y si no tiene LANZA ERROR
@@ -170,16 +127,15 @@ class UnidadProductiva extends MaracModel
 
 
     function getServiciosMes(int $mes ,int $año){
-       
+        $objMesAño = MesAño::where('codMes',$mes)->where('año',$año)->first();
 
         return Servicio::where('codUnidadProductiva',$this->getId())
-                ->whereYear('fecha_termino','=',$año)
-                ->whereMonth('fecha_termino','=',$mes)
+                ->where('codMesAño',$objMesAño->getId())
                 ->get();
 
     }
     function getServiciosMesConv(int $mes ,int $año,bool $conConvenio){
-        
+        $objMesAño = MesAño::where('codMes',$mes)->where('año',$año)->first();
 
         if($conConvenio)
             $conv_str = 1;
@@ -187,9 +143,7 @@ class UnidadProductiva extends MaracModel
             $conv_str = 2;
 
         return Servicio::where('codUnidadProductiva',$this->getId())
-                ->where('codModalidad',$conv_str)
-                ->whereYear('fecha_termino','=',$año)
-                ->whereMonth('fecha_termino','=',$mes)
+                ->where('codMesAño',$objMesAño->getId())->where('codModalidad',$conv_str)
                 ->get();
 
     }
@@ -284,98 +238,5 @@ class UnidadProductiva extends MaracModel
                           ->get();
         return $listaUsuarios;
 
-    }
-
-    public function tieneEnlacePPM() : bool {
-      return $this->activar_enlace_ppm;
-    }
-
-    function getOrganizacionEnlazada(){
-      return PPM_Organizacion::findOrFail($this->codOrganizacionEnlazadaPPM);
-    }
-
-    function setDataFromRequest(Request $request){
-
-      $this->activar_enlace_ppm =intval($request->boolean('activar_enlace_ppm'));; 
-      
-      if($this->activar_enlace_ppm == 1){ 
-        $this->codOrganizacionEnlazadaPPM = $request->codOrganizacionEnlazadaPPM;
-        
-        $org = PPM_Organizacion::findOrFail($this->codOrganizacionEnlazadaPPM);
-        $org->codUnidadProductivaEnlazadaCITE = $this->getId();
-        $org->activar_enlace_cite = 1;
-        $org->save();
-      }else{
-
-        if($this->codOrganizacionEnlazadaPPM != null){ //si tiene una enlazada, rompemos el enlace de Organizacion A UnidadProductiva 
-          $org = PPM_Organizacion::findOrFail($this->codOrganizacionEnlazadaPPM);
-          $org->activar_enlace_cite = 0;
-          $org->codUnidadProductivaEnlazadaCITE = null;
-          $org->save();
-        }
-        
-        $this->codOrganizacionEnlazadaPPM = null;
-      }
-
-      
-
-    }
-
-
-    function crearOrganizacionEnBase() : PPM_Organizacion {
-      $organizacion = new PPM_Organizacion();
-
-      $distrito = Distrito::findOrFail($this->codDistrito);
-      $provincia = $distrito->getProvincia();
-      $departamento = $provincia->getDepartamento();
-
-      $organizacion->codTipoDocumento = PPM_TipoDocumento::RUC;
-      
-      
-      
-      $organizacion->activar_enlace_cite = 1;
-      
-      
-      $organizacion->codTipoOrganizacion = $this->codTipoPersoneria; 
-
-      $organizacion->codDistrito = $this->codDistrito;
-      $organizacion->codProvincia = $provincia->codProvincia;
-      $organizacion->codDepartamento = $departamento->codDepartamento;
-      
-      $organizacion->direccion = $this->direccion;
-
-      $organizacion->razon_social = $this->razonSocial; 
-
-      if($organizacion->codTipoDocumento == PPM_TipoDocumento::RUC){
-        $organizacion->ruc = $this->ruc;
-        $organizacion->documento_en_tramite = $this->enTramite;
-      }else{
-        $organizacion->documento_en_tramite = 0;
-      }
-
-      if($this->codCadena){
-        $organizacion->tiene_act_economica = 1;
-        $organizacion->codActividadEconomica = $this->codCadena;          
-      }else{
-        $organizacion->tiene_act_economica = 0;
-      }
-      
-      $organizacion->codUnidadProductivaEnlazadaCITE = $this->getId();
-      
-      return $organizacion;
-
-    }
-
-
-    public static function GetUnidadesQueSeClonaranPPM() : Collection {
-      
-      $listaTipoPersoneria = TipoPersoneria::whereIn('nombre',TipoPersoneria::NombresTiposCopiarPPM)->get();
-      $array = [];
-      foreach ($listaTipoPersoneria as $tipo) {
-        $array[] = $tipo->codTipoPersoneria;
-      }
-
-      $listaUnidades = UnidadProductiva::whereIn('codTipoPersoneria',$array)->get();
-      return $listaUnidades;
     }
 }

@@ -43,10 +43,23 @@
                     <a href="{{route('GestionPuestos.edit',$itempuesto->codPuesto)}}" class="btn btn-warning btn-sm btn-icon icon-left"><i class="entypo-pencil"></i>Editar</a> 
                     <!-- <a href="" class="btn btn-danger btn-sm btn-icon icon-left"><i class="entypo-cancel"></i>Eliminar</a> -->
 
-                    <a href="#" class="btn btn-danger btn-sm btn-icon icon-left" title="Eliminar registro" onclick="clickEliminarPuesto({{$itempuesto->codPuesto}})">
-                      <i class="entypo-cancel"></i>
-                      Eliminar
-                    </a>
+                    <a href="#" class="btn btn-danger btn-sm btn-icon icon-left" title="Eliminar registro" onclick="swal({//sweetalert
+                        title:'¿Eliminar el puesto?',
+                        text: '',     //mas texto
+                        //type: 'warning',  
+                        type: '',
+                        showCancelButton: true,//para que se muestre el boton de cancelar
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText:  'SÍ',
+                        cancelButtonText:  'NO',
+                        closeOnConfirm:     true,//para mostrar el boton de confirmar
+                        html : true
+                    },
+                    function(){//se ejecuta cuando damos a aceptar
+                        window.location.href='{{route('GestionPuestos.delete',$itempuesto->codPuesto)}}';
+
+                    });"><i class="entypo-cancel"></i>Eliminar</a>
 
                 </td>
             </tr>
@@ -101,23 +114,5 @@
     
   </div>
 
-
-@endsection
-
-
-@section('script')
-<script>
-  var id_eliminar = null;
-  function clickEliminarPuesto(id){
-    id_eliminar = id;
-    confirmarConMensaje("Confirmación","¿Desea eliminar el puesto?","warning",ejecutarEliminacion)
-
-  }
-  function ejecutarEliminacion(){
-
-    window.location.href="/GestionPuestos/"+id_eliminar+"/eliminar" ;
-  }
-
-</script>
 
 @endsection

@@ -56,16 +56,8 @@
     <li class="nav-item">
         <a href="{{route('CITE.ReporteMensual.VerMatriz')}}" class="nav-link">
             <i class="far fa-address-card nav-icon"></i>
-            <p>Reportes Mensuales</p>
+            <p>Matriz Seguimiento</p>
         </a>
     </li>
-
-    <li class="nav-item">
-      <a href="{{route('CITE.MatrizPat.Ver')}}" class="nav-link">
-          <i class="far fa-address-card nav-icon"></i>
-          <p>Matriz PAT</p>
-      </a>
-    </li>
-
 @endif
 

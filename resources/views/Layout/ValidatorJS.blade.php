@@ -53,13 +53,10 @@ var expRegNombres = new RegExp("^[A-Za-zÑñ À-ÿ]+$");//para apellidos y nombr
           
 function limpiarEstilos(listaInputs){
     listaInputs.forEach(element => {
-      try {
+
+        
         quitarElRojo(element)
-      } catch (error) {
-        console.error("Ocurrió un error en la funcion quitarElRojo('"+element+"')");
-        console.error(error);
-      }  
-      
+        
     });
 
 }
@@ -126,25 +123,6 @@ function validarNoNegatividadYNulidad(msjError,id,nombreReferencial){
     return msjError;
 }
 
-
-const RegexNumero = /^[+-]?([0-9]*[.])?[0-9]+$/;
-//valida que sea un numero
-function validarNumero(msjError,id,nombreReferencial){
-    mensaje = "";
-    
-    var valor = document.getElementById(id).value;
-
-    if(!RegexNumero.test(valor)){
-      ponerEnRojo(id);   
-      mensaje="El campo "+nombreReferencial+" debe ser numérico."
-    }
-
-    if(msjError!="") //significa que ya hay un error en el flujo de validaciones
-      return msjError; 
-    else //si no hay ningun error, retorna el mensaje generado en esta funcion (el cual será nulo si no hubo error)
-      return mensaje;
-
-}
 
 function validarPositividad(msjError,id,nombreReferencial){
     mensaje ="";
@@ -361,25 +339,6 @@ function validarSelect(msjError,id,indiceSeleccionNula,nombreReferencial){
 }
 
 
-function validarFechaFormatoEspañol(msjError,id,nombreReferencial){
-  
-  const RegexDate = /^(0[0-9]|[12][0-9]|3[01])[\/](0[1-9]|1[012])[\/]\d{4}$/;
-  mensaje = "";
-
-  date_value = document.getElementById(id).value;
-  if(!RegexDate.test(date_value)){
-      ponerEnRojo(id);
-      mensaje = "El campo '" + nombreReferencial + "' debe ser una fecha válida en formato dd/mm/yyyy." ;
-  }
-
-  if(msjError!="") //significa que ya hay un error en el flujo de validaciones
-      return msjError; 
-  else //si no hay ningun error, retorna el mensaje generado en esta funcion (el cual será nulo si no hubo error)
-      return mensaje;
-
-}
-
-
 /*  */
 function validarCodigoPresupuestal(msjError,id, codPresupProyecto,nombreReferencial){
     mensaje = "";
@@ -494,17 +453,7 @@ function invocarHtmlEnID(ruta,idElemento){
     );
 
 }
-
-async function Async_InvocarHtmlEnID(ruta,idElemento){
-    
-    var data = await $.get(ruta).promise();
-    
-    console.log('Se ha actualizado el objeto de id '+idElemento + ' con contenido invocado de  ' + ruta);
-    objeto = document.getElementById(idElemento);
-    objeto.innerHTML = data;
-
-}
-
+ 
 
  //  datos = {coche: "Ford", modelo: "Focus", color: "rojo"};
 function enviarPeticionPOST(ruta,datos){
@@ -557,20 +506,5 @@ function formatearFechaAEspañol(fecha){
   return formated;
 
 }
-
-
-
-/* 
-  No trasladar este codigo a Backend, algunas versiones de node no tienen el replaceAll, para eso se usa el replace con la regexp /g
-*/
-function hidrateHtmlString(html_string,object){
-  
-  for (let field_name in object){
-    html_string = html_string.replaceAll("[" + field_name +"]",object[field_name]);
-  }
-  return html_string;
-
-}
-
 
 </script>

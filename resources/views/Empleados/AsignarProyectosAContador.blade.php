@@ -15,7 +15,7 @@
 @endsection
 @section('contenido')
 
-@include('Layout.MensajeEmergenteDatos')
+
 <div class="card-body">
 
     <div class="well">
@@ -48,52 +48,6 @@
                     Quitar todos los proyectos
                   </button>
                 </div>
-
-                <div class="col">
-                  <form action="{{route('GestionUsuarios.AsignarContadorAProyectosPorComas')}}" method="POST">
-                    @csrf
-                    <input type="hidden" name="codEmpleado" value="{{$empleado->codEmpleado}}">
-                    <div class="d-flex">
-
-                      <div>
-                        <label for="">
-                          Añadir en grupo por códigos presupuestales
-                        </label>
-                        <input class="form-control" type="text" name="array_cods_proyectos" id="array_cods_proyectos" placeholder="Separados por comas">
-                        
-                      </div>
-                      <div class="d-flex">
-                        <button class="mt-auto btn btn-success" type="submit">
-                          Añadir
-                        </button>
-                      </div>
-                 
-                    </div>
-                  </form>
-                </div>
-
-                <div class="col">
-                  <form action="{{route('GestionUsuarios.QuitarContadorAProyectosPorComas')}}" method="POST">
-                    @csrf
-                    <input type="hidden" name="codEmpleado" value="{{$empleado->codEmpleado}}">
-                    <div class="d-flex">
-
-                      <div>
-                        <label for="">
-                          Quitar en grupo por códigos presupuestales
-                        </label>
-                        <input class="form-control" type="text" name="array_cods_proyectos" id="array_cods_proyectos" placeholder="Separados por comas">
-                        
-                      </div>
-                      <div class="d-flex">
-                        <button class="mt-auto btn btn-danger" type="submit">
-                          Quitar
-                        </button>
-                      </div>
-                 
-                    </div>
-                  </form>
-                </div>
             
             </div>
 
@@ -103,13 +57,10 @@
     <table class="table table-bordered table-hover datatable table-sm" style="font-size: 10pt" id="table-3">
       <thead>                  
         <tr>
-          
+          <th>idBD</th>
           
           <th>Proyecto</th>
           <th>Estado</th>
-          <th>
-            Código Presupuestal
-          </th>
           <th>Asignado</th>
           
         </tr>
@@ -118,7 +69,11 @@
 
         @foreach($listaProyectos as $proyecto)
             <tr>
-                
+                <td>
+                    {{$proyecto->codProyecto}}
+
+                </td>
+               
                     
                
                 <td>
@@ -126,9 +81,6 @@
                 </td>
                 <td>
                     {{$proyecto->getEstado()->nombre}}
-                </td>
-                <td class="text-right">
-                  {{$proyecto->codigoPresupuestal}}
                 </td>
 
                 <td class="text-center">

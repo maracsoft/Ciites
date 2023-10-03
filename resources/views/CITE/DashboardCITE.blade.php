@@ -5,150 +5,37 @@
 @endsection
 
 @section('contenido')
- 
+<br>
+
 @include('Layout.MensajeEmergenteDatos')
 
 @php
-   
-    $estilosGrafico =  "
-    max-height: 450px;
-    display: block; ";
+    $estilosGrafico =  "height: 250px;
+                        max-height: 250px;
+                        display: block; ";
+    $estilosGraficoDoble =  " height: 250px;
+                        max-height: 300px; max-width:700px;
+                        display: block;  ";
 
-     
-
- 
 
 @endphp
-<div class="pt-2">
-
-  <div class="titulo-dash text-center my-1 mx-2">
-    <b class="fontSize18">
-      Dashboard CITE
-    </b>
-  </div>
-
-</div>
-<div class="row">
-  <div class="col-lg-4 col-12 d-flex">
-      
-    <img src="/img/usuario.png" class="my-auto dash-perfil-img img-circle elevation-2 ml-3" alt="User Image">
-    <div class="d-flex flex-column ml-2 my-auto">
-
-      <div class="fontSize14">
-        <b>
-          Bienvenid{{$empLogeado->getLetraSegunSexo()}}, {{$empLogeado->getNombreCompleto()}}
-
-        </b>
-      </div>
-      
-      <div class="fontSize12  mt-n1">
-        Estamos felices de verte de nuevo.
-      </div>
-    
-    </div>
-
-  </div>
-  <div class="col-lg-8 col-12">
-    <div class="card">
-      <form action="{{route('CITE.Dashboard.Ver')}}" method="GET" name="formFiltros">
-
-        <div class="card-body p-2">
-          <div class=" d-flex flex-wrap">
-            
-            <div class="d-flex flex-column mx-3" title="Aplique filtros para mejorar la presición de su información">
-              <i class="my-auto fas fa-filter fa-2x"></i>
-            </div>
-
-            <div>
-              <b for="">
-                Filtros:
-              </b>
-
-              <div class="d-flex">
-
-                <div class="">
-                  @php
-                  
-                    $selectMult = new App\UI\UISelectMultiple([],$codsCadena,'codsCadena',"Buscar por Cadena",false,30,12);
-                    $selectMult->setOptionsWithModel($listaCadenas,'nombre');
-                  @endphp
-
-                  {{$selectMult->render()}}
-                
-                </div>
-              </div>
-              <div class="d-flex">
 
 
-                <div class="input-group date form_date mr-1" data-date-format="dd/mm/yyyy" data-provide="datepicker">
-                  <input type="text" class="form-control form-controlw-date text-center" id="fechaInicio" name="fechaInicio" value="{{$fechaInicio}}" placeholder="Inicio">
-                  <div class="input-group-btn d-flex flex-col align-items-center">                                        
-                      <button class="btn btn-primary btn-sm date-set" type="button">
-                        <i class="fa fa-calendar"></i>
-                      </button>
-                  </div>
-                </div>
-                
-                <div class="input-group date form_date " data-date-format="dd/mm/yyyy" data-provide="datepicker">
-                  <input type="text" class="form-control form-control w-date text-center" id="fechaTermino" name="fechaTermino" value="{{$fechaTermino}}" placeholder="Fin">
-                  <div class="input-group-btn d-flex flex-col align-items-center">                                        
-                      <button class="btn btn-primary btn-sm date-set" type="button">
-                        <i class="fa fa-calendar"></i>
-                      </button>
-                  </div>
-                </div>
+    <div class="d-flex flex-row">
 
-
-                    
-                <div class="ml-3 d-flex flex-column">
-                  <button type="button" class="ml-1 mt-auto btn btn-success btn-sm mb-1 d-flex" onclick="clickBuscar()">
-                    <i class="fas fa-search my-auto mr-1"></i>
-                    Buscar
-                  </button>
-                  
-                </div>
-                <a class="ml-1 btn btn-success btn-sm d-flex" href="{{route('CITE.Dashboard.Ver')}}">
-                  <i class="fas fa-trash my-auto"></i>
-                </a>
-              
-              </div>
-              
-            </div>
-
-          
-          
-              
-          </div>
-
-      
-
+        <div class="ml-auto mb-2">
+            <a class="btn btn-sm btn-primary text-white" onclick="imprimir()" id="download">
+                <i class="fas fa-file-pdf"></i>
+                Descargar en PDF
+            </a>
         </div>
 
-      </form>
+
     </div>
-
-  </div>
-
-
-
-</div>
- 
-
-<div class="d-flex flex-row">
-
-    <div class="ml-auto mb-2">
-        <a class="btn btn-sm btn-primary text-white" onclick="imprimir()" id="download">
-            <i class="fas fa-file-pdf"></i>
-            Descargar en PDF
-        </a>
-    </div>
-
-
-</div>
 
 
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-6">
         <div class="card">
             <div class="card-header d-flex flex-row">
 
@@ -167,7 +54,7 @@
 
                 <div class="mt-2">
 
-                    @php $desplegable = new App\UI\UIDesplegable('Ver Datos',false);  @endphp
+                    @php $desplegable = new App\UI\UIDesplegable('Ver Datos');  @endphp
                     {{$desplegable->renderOpen()}}
 
                     <div class="m-2">
@@ -201,7 +88,7 @@
 
         </div>
     </div>
-    <div class="col-sm-6">
+    <div class="col-6">
         <div class="card">
             <div class="card-header d-flex flex-row">
 
@@ -213,15 +100,46 @@
 
             </div>
             <div class="card-body">
-               
-                   
-                <canvas id="serviciosPorProvincia" style="{{$estilosGrafico}}" class="chartjs-render-monitor">
-                </canvas>
+                <div class="px-6">
+                    <form action="">
+                        <div class="d-flex flex-row">
 
-                 
+
+                            <div class="m-1">
+
+                                <select id="codDepartamento" name="codDepartamento" data-select2-id="1" tabindex="-1"
+                                    class="fondoBlanco form-control form-control-sm select2 select2-hidden-accessible selectpicker"   aria-hidden="true"  data-live-search="true">
+
+                                    <option value="">- Filtro Región -</option>
+                                    @foreach($listaDepartamentos as $dep)
+                                        <option value="{{$dep->getId()}}"
+                                            @if($codDepartamento == $dep->getId())
+                                                selected
+                                            @endif
+                                            >
+                                            {{$dep->nombre}}
+                                        </option>
+                                    @endforeach
+
+                                </select>
+
+                            </div>
+
+                            <div class="m-1">
+                                <button class="btn btn-success btn-sm" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+                    <canvas id="serviciosPorProvincia" style="{{$estilosGrafico}}" class="chartjs-render-monitor">
+                    </canvas>
+
+                </div>
                 <div class="mt-2">
 
-                    @php $desplegable = new App\UI\UIDesplegable('Ver Datos',false);  @endphp
+                    @php $desplegable = new App\UI\UIDesplegable('Ver Datos');  @endphp
                     {{$desplegable->renderOpen()}}
 
                     <div class="m-2">
@@ -258,121 +176,7 @@
         </div>
     </div>
 
-    <div class="col-sm-6">
-      <div class="card">
-          <div class="card-header d-flex flex-row">
-
-              <div class="">
-                  <h3 class="m-1">
-                      Servicios por Actividad
-                  </h3>
-              </div>
-
-          </div>
-          <div class="card-body">
-             
-                 
-              <canvas id="serviciosPorActividad" style="{{$estilosGrafico}}" class="chartjs-render-monitor">
-              </canvas>
-
-              <div class="mt-2">
-
-                  @php $desplegable = new App\UI\UIDesplegable('Ver Datos',false);  @endphp
-                  {{$desplegable->renderOpen()}}
-
-                  <div class="m-2">
-                      <table class="table hable-hover table-sm">
-                          <thead class="thead-dark">
-                              <tr>
-                                  <th class="text-center" scope="col">Actividad</th>
-                                  <th class="text-center" scope="col">Cantidad de servicios</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              @foreach($serviciosPorActividad_obj['listaActividades'] as $actividad)
-                              <tr>
-                                  <td class="text-center">
-                                      {{$actividad->nombre}}
-                                  </td>
-                                  <td class="text-center">
-                                      {{$actividad->cantidad}}
-                                  </td>
-                              </tr>
-
-                              @endforeach
-
-                          </tbody>
-                      </table>
-                  </div>
-
-                  {{$desplegable->renderClose()}}
-
-              </div>
-          </div>
-
-      </div>
-    </div>
-
-
-
-    <div class="col-sm-6">
-      <div class="card">
-          <div class="card-header d-flex flex-row">
-
-              <div class="">
-                  <h3 class="m-1">
-                      Servicios por Cadena
-                  </h3>
-              </div>
-
-          </div>
-          <div class="card-body">
-             
-                 
-              <canvas id="serviciosPorCadena" style="{{$estilosGrafico}}" class="chartjs-render-monitor">
-              </canvas>
-
-              <div class="mt-2">
-
-                  @php $desplegable = new App\UI\UIDesplegable('Ver Datos',false);  @endphp
-                  {{$desplegable->renderOpen()}}
-
-                  <div class="m-2">
-                      <table class="table hable-hover table-sm">
-                          <thead class="thead-dark">
-                              <tr>
-                                  <th class="text-center" scope="col">Actividad</th>
-                                  <th class="text-center" scope="col">Cantidad de servicios</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              @foreach($serviciosPorCadena_obj['listaCadenas'] as $cadena)
-                              <tr>
-                                  <td class="text-center">
-                                      {{$cadena->nombre}}
-                                  </td>
-                                  <td class="text-center">
-                                      {{$cadena->cantidad}}
-                                  </td>
-                              </tr>
-
-                              @endforeach
-
-                          </tbody>
-                      </table>
-                  </div>
-
-                  {{$desplegable->renderClose()}}
-
-              </div>
-          </div>
-
-      </div>
-    </div>
-
-
-
-    <div class="col-sm-12">
+    <div class="col-12">
         <div class="card">
             <div class="card-header d-flex flex-row">
 
@@ -385,12 +189,12 @@
             </div>
             <div class="card-body">
                 <div class="text-center">
-                    <canvas id="serviciosPorUnidad"  style="" class="chartjs-render-monitor text-center"></canvas>
+                    <canvas id="serviciosPorUnidad"  style="{{$estilosGraficoDoble}}" class="chartjs-render-monitor text-center"></canvas>
 
                 </div>
                 <div class="mt-2">
 
-                    @php $desplegable = new App\UI\UIDesplegable('Ver Datos',false);  @endphp
+                    @php $desplegable = new App\UI\UIDesplegable('Ver Datos');  @endphp
                     {{$desplegable->renderOpen()}}
 
                     <div class="m-2">
@@ -451,7 +255,6 @@
 
 @section('script')
 
-@include('Layout.ValidatorJS')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 <script src="/plugins/chart.js/Chart.min.js"></script>
 <script>
@@ -494,33 +297,6 @@
 
 
 
-    serviciosPorActividad_obj = @json($serviciosPorActividad_obj)
-
-    var pieData_serviciosPorActividad = buildDataForPie(   serviciosPorActividad_obj.labels,serviciosPorActividad_obj.valores,serviciosPorActividad_obj.colores)
-
-    var serviciosPorActividad = $('#serviciosPorActividad').get(0).getContext('2d')
-    new Chart(serviciosPorActividad, {
-        type: 'pie',
-        data: pieData_serviciosPorActividad,
-        options: pieOptions
-    })
-
-
-
-    
-    serviciosPorCadena_obj = @json($serviciosPorCadena_obj)
-
-    var pieData_serviciosPorCadena = buildDataForPie(serviciosPorCadena_obj.labels,serviciosPorCadena_obj.valores,serviciosPorCadena_obj.colores)
-    var serviciosPorCadena = $('#serviciosPorCadena').get(0).getContext('2d')
-    new Chart(serviciosPorCadena, {
-        type: 'pie',
-        data: pieData_serviciosPorCadena,
-        options: pieOptions
-    })
-
-
-
-
 
 
 
@@ -552,7 +328,7 @@
 
     var serviciosPorUnidad = document.getElementById("serviciosPorUnidad");
     var barChart = new Chart(serviciosPorUnidad, {
-        type: 'horizontalBar',
+        type: 'bar',
         data: data_serviciosPorUnidad,
         options: {
             scales: {
@@ -592,89 +368,12 @@
 
     }
 
-    function clickBuscar(){
-      var msj = validarForm();
-      if(msj != ""){
-        alerta(msj)
-        return;
-      }
 
-      document.formFiltros.submit();
-    }
-
-    function validarForm(){
-      var msjError = "";
-      limpiarEstilos(["fechaInicio","fechaTermino"])
-
-      msjError = validarNulidad(msjError,'fechaInicio','Fecha de Inicio');
-      msjError = validarNulidad(msjError,'fechaTermino','Fecha de Término');
-      
-      msjError = validarFechaAnterior(msjError,"fechaInicio","fechaTermino","La fecha de inicio debe ser anterior a la de término");
-      
-      return msjError;
-    }
 
 
 
 
 </script>
 
-
 @endsection
 
-@section('estilos')
-<style>
-  .fondo-oscuro{
-    background-color: #c7e0e9;
- 
-    border-width: 1px;
-  }
-  .header-card .valor{
-    font-size: 17pt;
-    font-weight: 900;
-  }
-
-  .value-card{
-    
-    border-radius: 9px;
-    padding: 4px;
-  }
-  .fondo-celeste{
-    background-color: rgb(218 251 255);
-  }
-
-  .fondo-verde{
-    background-color: rgb(220, 245, 220)
-  }
-
-
-  .value-card .text-time{
-    font-size: 9pt;
-    margin-bottom: -5px;
-
-  }
-
-  .subtitulo{
-    color:#09301c;
-    font-size: 12pt;
-  }
-
-  .dash-perfil-img{
-    max-width: 50px;
-    max-height: 50px
-    
-  }
-
-  .icono-filtro{
-
-  }
-  .titulo-dash{
-    background-color: #e6e6e6;
-    border-radius: 5px;
-    padding: 5px;
-
-  }
-
-</style>
-
-@endsection

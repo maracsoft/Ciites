@@ -53,22 +53,6 @@
     'max_width'=>'250px',
     
   ]); 
-
-  $comp_filtros->añadirFiltro([
-    'name'=>'codigoContrapartida',
-    'label'=>'Contrapartida:',
-    'show_label'=>true,
-    'placeholder'=>'Buscar por Contrapartida',
-    'type'=>'text',
-    'function'=>'contains',
-    'options'=>[],
-    'options_label_field'=>'',
-    'options_id_field'=>null,
-    'size'=>'sm',
-    'max_width'=>'250px',
-  ]); 
-
-
   $comp_filtros->añadirFiltro([
       'name'=>'resumen',
       'label'=>'Resumen actividad:',
@@ -82,8 +66,6 @@
       'size'=>'sm',
       'max_width'=>'250px',
   ]); 
-
-
   $comp_filtros->añadirFiltro([
     'name'=>'codEmpleadoSolicitante',
     'label'=>'Solicitante:',
@@ -149,9 +131,6 @@
                   
                   <th scope="col">Origen & Proyecto</th>
                   <th>
-                    Contrapartida
-                  </th>
-                  <th>
                     Resumen Actividad
                   </th>
                   <th width="8%" scope="col" style="text-align: center">Total</th>
@@ -181,9 +160,6 @@
                   
 
                   <td style = "padding: 0.40rem">{{$itemreposicion->getProyecto()->getOrigenYNombre()  }}</td>
-                  <td>
-                    {{$itemreposicion->codigoContrapartida}}
-                  </td>
                   <td title="{{$itemreposicion->resumen}}">
                     {{$itemreposicion->getResumenAbreviado()}}
                   </td>

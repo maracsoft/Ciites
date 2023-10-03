@@ -52,8 +52,8 @@
     </div> 
     <div class="card-body">
 
-        <div class="row internalPadding-1">
-            <div class="col-12 col-sm-12">
+        <div class="row  internalPadding-1">
+            <div  class="col-12">
                 <label for="codUnidadProductiva" id="" class="">
                     Unidad Productiva:
                 </label>
@@ -73,7 +73,7 @@
 
 
 
-            <div class="col-12 col-sm-6">
+            <div  class="col-6">
                 <label for="codTipoServicio" id="" class="">
                     Tipo Servicio:
                 </label>
@@ -84,7 +84,7 @@
             
 
 
-            <div class="col-12 col-sm-4">
+            <div  class="col-6">
                 <label for="codModalidad" id="" class="">
                     Modalidad:
                 </label>
@@ -92,28 +92,17 @@
     
             </div>
 
-            
-            <div class="col-12 col-sm-2">
-              <label for="codTipoAcceso" id="" class="">
-                  Tipo Acceso:
-              </label>
-              <input type="text" class="form-control" value="{{$servicio->getTipoAcceso()->nombre}}" readonly /> 
-  
-            </div>
-          
-
-            @if($servicio->esPagado())
-                
-                <div class="col-12 col-sm-2">
+            @if($servicio->codModalidad==1)
+                    
+                <div  class="col-2">
                     <label for="descripcion" id="" class="">
                         Comprobante:
                     </label>
-                     
-                    <input type="text" class="form-control" value="{{$servicio->getTipoCDP_nombre()}}" readonly/> 
-                    
+                    <input type="text" class="form-control" value="{{$servicio->getTipoCDP()->nombreCDP}}" readonly/> 
+
                     
                 </div>
-                <div class="col-12 col-sm-4">
+                <div  class="col-4">
                     <label for="descripcion" id="" class="">
                         Nro comprobante:
                     </label>
@@ -121,7 +110,7 @@
                     <input type="text" class="form-control" id="nroComprobante" name="nroComprobante" value="{{$servicio->nroComprobante}}" readonly/> 
 
                 </div>
-                <div class="col-12 col-sm-2">
+                <div  class="col-2">
                     <label for="descripcion" id="" class="">
                         Base imponible:
                     </label>
@@ -129,7 +118,7 @@
                     <input type="number" class="form-control" id="baseImponible" name="baseImponible" value="{{$servicio->baseImponible}}" readonly/> 
 
                 </div>
-                <div class="col-12 col-sm-2">
+                <div  class="col-2">
                     <label for="descripcion" id="" class="">
                         IGV:
                     </label>
@@ -137,7 +126,7 @@
                     <input type="number" class="form-control" id="igv" name="igv" value="{{$servicio->igv}}" readonly/> 
 
                 </div>
-                <div class="col-12 col-sm-2">
+                <div  class="col-2">
                     <label for="descripcion" id="" class="">
                         Total:
                     </label>
@@ -149,9 +138,23 @@
                 
             @endif
 
-            <div class="col-12 col-sm-2"></div>
+            <div class="col-2"></div>
 
-            <div class="col-12 col-sm-2">
+
+            <div  class="col-2">
+                <label for="codTipoAcceso" id="" class="">
+                    Tipo Acceso:
+                </label>
+                <input type="text" class="form-control" value="{{$servicio->getTipoAcceso()->nombre}}" readonly /> 
+    
+            </div>
+            
+
+            
+
+
+            
+            <div  class="col-2">
                 <label for="descripcion" id="" class="">
                     Cantidad Servicios:
                 </label>
@@ -160,9 +163,19 @@
 
             </div>
             
- 
 
-            <div class="col-12 col-sm-2">
+
+            <div  class="col-2">
+                <label for="descripcion" id="" class="">
+                    Total Participantes:
+                </label>
+                <input type="text" class="form-control" value="{{$servicio->totalParticipantes}}" readonly /> 
+    
+
+            </div>
+            
+
+            <div  class="col-2">
                 <label for="descripcion" id="" class="">
                     Nro Horas efectivas:
                 </label>
@@ -172,7 +185,7 @@
             
 
 
-            <div class="col-12 col-sm-12">
+            <div  class="col-12">
                 <label for="descripcion" id="" class="">
                     Descripción:
                 </label>
@@ -184,7 +197,7 @@
 
 
             
-            <div class="col-12 col-sm-3">
+            <div  class="col-3">
                 <label for="codMes" id="" class="">
                     Mes:
                 </label>
@@ -194,21 +207,21 @@
             </div>
 
 
-            <div class="col-12 col-sm-3">
+            <div class="col-3">
                 <label for="">Fecha Inicio:</label>
                 <input type="text" class="form-control" value="{{$servicio->getFechaInicio()}}" readonly /> 
         
 
             </div>
 
-            <div class="col-12 col-sm-3">
+            <div class="col-3">
                 <label for="">Fecha Fin:</label>
                 <input type="text" class="form-control" value="{{$servicio->getFechaTermino()}}"  readonly/> 
         
 
             </div>
             
-            <div class="col-12 col-sm-3 centerLabels">
+            <div class="col-3  centerLabels">
                 <label for="">
                     Región // Prov // Dist:
                 </label>
@@ -225,10 +238,10 @@
             
 
         <div class="row mt-2">
-            <div class="col-12 col-sm-6">
+            <div class="col-6">
                 {{$servicio->html_getArchivosDelServicio(false)}}
             </div>
-            <div class="col-sm-6">
+            <div class="col-6">
 
             </div>
             

@@ -48,13 +48,26 @@
                 <td>{{$itemunidad->codUnidadMedida}}</td>
                 <td>{{$itemunidad->nombre}}</td>
                 <td>
-                  <a href="{{route('GestiónUnidadMedida.editar',$itemunidad->codUnidadMedida)}}" class="btn btn-info btn-sm btn-icon icon-left"><i class="entypo-pencil"></i>Editar</a>
+                    <a href="{{route('GestiónUnidadMedida.editar',$itemunidad->codUnidadMedida)}}" class="btn btn-info btn-sm btn-icon icon-left"><i class="entypo-pencil"></i>Editar</a>
 
-                  <!--Boton eliminar -->
-                  <a href="#" class="btn btn-danger btn-sm btn-icon icon-left" title="Le quita el acceso al sistema." onclick="clickEliminarUnidad({{$itemunidad->codUnidadMedida}})">
-                    <i class="entypo-cancel"></i>
-                    Eliminar
-                  </a>
+                    <!--Boton eliminar -->
+                    <a href="#" class="btn btn-danger btn-sm btn-icon icon-left" title="Le quita el acceso al sistema." onclick="swal({//sweetalert
+                            title:'¿Está seguro de eliminar la unidad?',
+                            text: '',     //mas texto
+                            //type: 'warning',  
+                            type: '',
+                            showCancelButton: true,//para que se muestre el boton de cancelar
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText:  'SÍ',
+                            cancelButtonText:  'NO',
+                            closeOnConfirm:     true,//para mostrar el boton de confirmar
+                            html : true
+                        },
+                        function(){//se ejecuta cuando damos a aceptar
+                            window.location.href='{{route('GestiónUnidadMedida.eliminar',$itemunidad->codUnidadMedida)}}';
+
+                        });"><i class="entypo-cancel"></i>Eliminar</a>
 
                 </td>
             </tr>
@@ -68,20 +81,4 @@
 </div>
 
 
-@endsection
-@section('script')
-
-<script>
-
-  var id_eliminar = null;
-  function clickEliminarUnidad(id){
-    id_eliminar = id;
-    confirmarConMensaje("Confirmación","¿Desea eliminar la unidad de medida?","warning",ejecutarEliminacion)
-  }
-
-  function ejecutarEliminacion(){
-    window.location.href= "/GestiónUnidadMedida/" + id_eliminar + "/eliminar"
-
-  }
-</script>
 @endsection

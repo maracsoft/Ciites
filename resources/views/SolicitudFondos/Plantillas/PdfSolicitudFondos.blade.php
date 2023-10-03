@@ -61,7 +61,7 @@
                 
                 <tr>
                     <td style="font-weight: bold;">Fecha:</td>
-                    <td colspan="3">{{$solicitud->getFechaHoraUltimaEdicion()}}</td>
+                    <td colspan="3">{{$solicitud->getFechaHoraEmision()}}</td>
                 </tr>
                 <tr>
                     <td style="font-weight: bold;" width="16%">Código del/a Colaborador/a:</td>

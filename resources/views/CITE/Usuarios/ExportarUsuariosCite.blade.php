@@ -37,7 +37,7 @@ $br ="<br style='mso-data-placement:same-cell;'/>";
     <tbody>
         <tr>
             <td colspan="10">
-                Anexo N° 6.1: Reporte de usuarios de los servicios del CITE privado (periodo {{$rangoFechas}})
+                Anexo N° 4.1: Reporte de usuarios de los servicios del CITE privado (periodo {{$rangoFechas}})
             </td>
         </tr>
         <tr>

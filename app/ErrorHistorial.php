@@ -137,17 +137,19 @@ class ErrorHistorial extends Model
             $error->formulario = $request;
             
             $error->save();
-            
-            $entorno = ParametroSistema::getParametroSistema("env")->valor;
-            if($entorno != "local"){
-              MaracsoftBot::enviarMensaje("CodError #".$error->codErrorHistorial."            EnProduccion?: ".Configuracion::estaEnProduccionTexto().
-              "  Empleado ".Empleado::getEmpleadoLogeado()->getNombreCompleto()." (".Empleado::getEmpleadoLogeado()->getPuestosPorComas(). 
-                      ") generó el error en ".$controllerName." -> ".$action.
-                      " DESCRIPCION DEL ERROR:                                                " .ErrorHistorial::acortarParaTelegram($error->descripcionError) );  
-            }
+                
+            MaracsoftBot::enviarMensaje("CodError #".$error->codErrorHistorial."            EnProduccion?: ".Configuracion::estaEnProduccionTexto().
+            "  Empleado ".Empleado::getEmpleadoLogeado()->getNombreCompleto()." (".Empleado::getEmpleadoLogeado()->getPuestosPorComas(). 
+                    ") generó el error en ".$controllerName." -> ".$action.
+                    " DESCRIPCION DEL ERROR:                                                " .ErrorHistorial::acortarParaTelegram($error->descripcionError) );
+                
+
+            //Debug::mensajeSimple('Codigo de error generado: '.$error->codErrorHistorial);
 
             return $error->codErrorHistorial;
 
+        
+                
         } catch (\Throwable $th) {
             Debug::mensajeError("ERROR EN EL GUARDADO DEL ERROR XD",$th);
             MaracsoftBot::enviarMensaje("ERROR NO LISTADO, Ocurrió una excepción en el guardado de un error generado por "

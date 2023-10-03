@@ -2,19 +2,16 @@
 
 namespace App\UI;
 
-use App\Debug;
 use Illuminate\Database\Eloquent\Model;
 
 class UIDesplegable implements FillableInterface{
     
     private $titulo;
     private $randomNumber;
-    private $abierto_inicialmente;
 
-    public function __construct($titulo,$abierto = true){
+    public function __construct($titulo){
       $this->randomNumber = rand(1,9999);
       $this->titulo = $titulo;
-      $this->abierto_inicialmente = $abierto;
     }
 
 //    apertura 'open'-> renderiza la parte inicial,
@@ -25,20 +22,17 @@ class UIDesplegable implements FillableInterface{
       $r = $this->randomNumber;
       $titulo = $this->titulo;
       $apertura = true;
-      $abierto_inicialmente = $this->abierto_inicialmente;
+      error_log($titulo);
 
-      
-      
-      return view('ComponentesUI.Desplegable',compact('r','apertura','titulo','abierto_inicialmente'));
+      return view('ComponentesUI.Desplegable',compact('r','apertura','titulo'));
     }
     
     public function renderClose(){
       $r = $this->randomNumber;
       $titulo = $this->titulo;
       $apertura = false;
-      $abierto_inicialmente = $this->abierto_inicialmente;
       
-      return view('ComponentesUI.Desplegable',compact('r','apertura','titulo','abierto_inicialmente'));
+      return view('ComponentesUI.Desplegable',compact('r','apertura','titulo'));
     }
     
 

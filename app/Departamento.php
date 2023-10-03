@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -38,17 +37,5 @@ class Departamento extends Model
 
         return array_column($listaDistritos,'codDistrito');
 
-    }
-
-    public static function getDepartamentosParaPat(){
-
-      $lista = new Collection();
-      $lista->push(Departamento::where('nombre','PIURA')->first());
-      $lista->push(Departamento::where('nombre','CAJAMARCA')->first());
-      $lista->push(Departamento::where('nombre','LA LIBERTAD')->first());
-      $lista->push(Departamento::where('nombre','ANCASH')->first());
-      $lista->push(Departamento::where('nombre','LIMA')->first());      
-
-      return $lista;
     }
 }

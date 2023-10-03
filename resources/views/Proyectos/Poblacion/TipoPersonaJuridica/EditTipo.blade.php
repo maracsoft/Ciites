@@ -54,10 +54,21 @@
             <br />
             <!--
              <input type="button" class="btn btn-primary"  value="Guardar" onclick="validarregistro()" /> -->
-            <button type="button" class="btn btn-primary float-right"  onclick="validarregistro()">
-              <i class='fas fa-save'></i>
-              Registrar
-            </button> 
+            <button type="button" class="btn btn-primary float-right" id="btnRegistrar" data-loading-text="<i class='fa a-spinner fa-spin'></i> Registrando" onclick="swal({//sweetalert
+                title:'¿Seguro de editar el puesto?',
+                text: '',     //mas texto
+                type: 'info',//e=[success,error,warning,info]
+                showCancelButton: true,//para que se muestre el boton de cancelar
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText:  'SÍ',
+                cancelButtonText:  'NO',
+                closeOnConfirm:     true,//para mostrar el boton de confirmar
+                html : true
+            },
+            function(){//se ejecuta cuando damos a aceptar
+                validarregistro();
+            });"><i class='fas fa-save'></i> Registrar</button> 
             <a href="{{route('GestiónTipoPersonaJuridica.Listar')}}" class='btn btn-info float-left'><i class="fas fa-arrow-left"></i> Regresar al Menu</a>
     </form>
 @endsection

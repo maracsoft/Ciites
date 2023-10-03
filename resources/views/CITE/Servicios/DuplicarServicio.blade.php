@@ -20,10 +20,10 @@
 @section('contenido')
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-<div class="col-12 py-2">
-  <div class="page-title">
-    Crear servicio en base a otro
-  </div>
+<div >
+    <p class="h1" style="text-align: center">
+        Crear servicio en base a otro
+    </p>
 </div>
 
 @include('Layout.MensajeEmergenteDatos')
@@ -44,8 +44,8 @@
         </div>
         <div class="card-body">
 
-            <div class="row internalPadding-1  ">
-                <div class="col-sm-6">
+            <div class="row  internalPadding-1  ">
+                <div  class="col-6">
                     <label for="codUnidadProductiva" id="" class="">
                         Unidad Productiva:
                     </label>
@@ -70,34 +70,40 @@
 
 
 
-                <div class="col-sm-6">
-                  <label for="codTipoAcceso" id="" class="">
-                      Tipo Acceso:
-                  </label>
 
-                  <select class="form-control"  id="codTipoAcceso" name="codTipoAcceso" onchange="actualizarTipoAcceso(this.value)">
-                      <option value="-1">-- Tipo Acceso --</option>
-                      @foreach($listaTipoAcceso as $tipoAcceso)
-                          <option value="{{$tipoAcceso->getId()}}"
-                              @if($tipoAcceso->getId() == $servicio->codTipoAcceso)
-                                  selected
-                              @endif
-                              >
-                              {{$tipoAcceso->nombre}}
-                          </option>
-                      @endforeach
 
-                  </select>
+
+
+                <div class="col-6">
+                    <label for="codModalidad" id="" class="">
+                        Modalidad:
+                    </label>
+
+                    <select class="form-control"  id="codModalidad" name="codModalidad"  onchange="actualizarModalidad(this.value)">
+                        <option value="-1">-- Modalidad --</option>
+                        @foreach($listaModalidades as $modalidad)
+                            <option value="{{$modalidad->getId()}}"
+                                @if($modalidad->getId() == $servicio->codModalidad)
+                                    selected
+                                @endif
+
+                                >
+                                {{$modalidad->nombre}}
+                            </option>
+                        @endforeach
+
+                    </select>
                 </div>
 
-                <div class="col-sm-12 row fondoPlomoCircular p-3 my-1 hidden" id="divConvenio">
 
-                    <div class="col-sm-2">
+                <div class="col-12 row fondoPlomoCircular p-3 my-1 hidden" id="divConvenio">
+
+                    <div  class="col-2">
                         <label for="descripcion" id="" class="">
                             Comprobante:
                         </label>
                         <select class="form-control"  id="codTipoCDP" name="codTipoCDP"  >
-                            <option value="">- Tipo Comprobante -</option>
+                            <option value="-1">- Tipo Comprobante -</option>
                             @foreach($listaTipoCDP as $cdp)
                                 <option value="{{$cdp->getId()}}"
                                     @if($cdp->getId() == $servicio->codTipoCDP)
@@ -111,7 +117,7 @@
 
 
                     </div>
-                    <div class="col-sm-4">
+                    <div  class="col-4">
                         <label for="descripcion" id="" class="">
                             Nro comprobante:
                         </label>
@@ -119,7 +125,7 @@
                         <input type="text" class="form-control" id="nroComprobante" name="nroComprobante"  value="{{$servicio->nroComprobante}}"/>
 
                     </div>
-                    <div  class="col-sm-2">
+                    <div  class="col-2">
                         <label for="descripcion" id="" class="">
                             Base imponible:
                         </label>
@@ -127,7 +133,7 @@
                         <input type="number" class="form-control" id="baseImponible" name="baseImponible"  value="{{$servicio->baseImponible}}" onchange="cambioBaseImponible()"/>
 
                     </div>
-                    <div  class="col-sm-2">
+                    <div  class="col-2">
                         <label for="descripcion" id="" class="">
                             IGV:
                         </label>
@@ -135,7 +141,7 @@
                         <input type="number" class="form-control" id="igv" name="igv"  value="{{$servicio->igv}}"  readonly/>
 
                     </div>
-                    <div  class="col-sm-2">
+                    <div  class="col-2">
                         <label for="descripcion" id="" class="">
                             Total:
                         </label>
@@ -145,7 +151,21 @@
                     </div>
                 </div>
 
-                <div class="col-sm-2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="col-2">
                     <label for="descripcion" id="" class="">
                         Cantidad Servicios:
                     </label>
@@ -154,9 +174,19 @@
 
                 </div>
 
-               
 
-                <div class="col-sm-2">
+
+                <div class="col-2">
+                    <label for="descripcion" id="" class="">
+                        Total Participantes:
+                    </label>
+
+                    <input type="number" class="form-control" id="totalParticipantes" name="totalParticipantes" value="{{$servicio->totalParticipantes}}"/>
+
+                </div>
+
+
+                <div class="col-2">
                     <label for="descripcion" id="" class="">
                         Nro Horas efectivas:
                     </label>
@@ -164,7 +194,9 @@
                     <input type="number" class="form-control" id="nroHorasEfectivas" name="nroHorasEfectivas" value="{{$servicio->nroHorasEfectivas}}"/>
                 </div>
 
-                <div class="col-sm-8">
+
+
+                <div class="col-6">
                     <label for="descripcion" id="" class="">
                         Descripción:
                     </label>
@@ -174,30 +206,7 @@
 
                 </div>
 
-
-                
-                <div class="col-12 col-sm-3">
-                  <label for="codModalidad" id="" class="">
-                      Modalidad:
-                  </label>
-
-                  <select class="form-control"  id="codModalidad" name="codModalidad">
-                      <option value="-1">-- Modalidad --</option>
-                      @foreach($listaModalidades as $modalidad)
-                          <option value="{{$modalidad->getId()}}"
-                              @if($modalidad->getId() == $servicio->codModalidad)
-                                  selected
-                              @endif
-
-                              >
-                              {{$modalidad->nombre}}
-                          </option>
-                      @endforeach
-
-                  </select>
-                </div>
-
-                <div class="col-sm-3">
+                <div class="col-4">
                     <label for="codTipoServicio" id="" class="">
                         Tipo Servicio:
                     </label>
@@ -218,7 +227,7 @@
                     </select>
                 </div>
 
-                <div class="col-sm-6">
+                <div class="col-4">
                     <label for="codActividad" id="" class="">
                         Actividad :
                     </label>
@@ -237,11 +246,50 @@
                 </div>
 
 
- 
 
-                <div class="col-sm-2"></div>
 
-                <div class="col-sm-4">
+                <div  class="col-4">
+                    <label for="codTipoAcceso" id="" class="">
+                        Tipo Acceso:
+                    </label>
+
+                    <select class="form-control"  id="codTipoAcceso" name="codTipoAcceso">
+                        <option value="-1">-- Tipo Acceso --</option>
+                        @foreach($listaTipoAcceso as $tipoAcceso)
+                            <option value="{{$tipoAcceso->getId()}}"
+                                @if($tipoAcceso->getId() == $servicio->codTipoAcceso)
+                                    selected
+                                @endif
+                                >
+                                {{$tipoAcceso->nombre}}
+                            </option>
+                        @endforeach
+
+                    </select>
+                </div>
+
+                <div  class="col-4">
+                    <label for="codMesAño" id="" class="">
+                        Mes:
+                    </label>
+
+                    <select class="form-control"  id="codMesAño" name="codMesAño">
+                        <option value="-1">-- Mes --</option>
+                        @foreach($listaMesesAño as $mesAño)
+                            <option value="{{$mesAño->getId()}}"
+                                @if($mesAño->getId() == $servicio->codMesAño)
+                                    selected
+                                @endif
+                                >
+                                {{$mesAño->getTexto()}}
+                            </option>
+                        @endforeach
+
+                    </select>
+                </div>
+
+
+                <div class="col-4">
                     <label for="">Fecha Inicio:</label>
 
                     <div class="input-group date form_date " data-date-format="dd/mm/yyyy" data-provide="datepicker">
@@ -258,7 +306,7 @@
 
                 </div>
 
-                <div class="col-sm-4">
+                <div class="col-4">
                     <label for="">Fecha Fin:</label>
 
                     <div class="input-group date form_date " data-date-format="dd/mm/yyyy" data-provide="datepicker">
@@ -273,7 +321,6 @@
                     </div>
 
                 </div>
-                <div class="col-sm-2"></div>
 
 
 
@@ -353,8 +400,11 @@
 
     $(document).ready(function(){
         $(".loader").fadeOut("slow");
-        actualizarTipoAcceso({{$servicio->codTipoAcceso}})
-        
+        actualizarModalidad({{$servicio->codModalidad}})
+
+        //contadorCaracteres('ruc','contadorRUC',11);
+        //contadorCaracteres('observacion','contadorObservacion',{{App\Configuracion::tamañoObservacionOC}});
+
     });
 
 

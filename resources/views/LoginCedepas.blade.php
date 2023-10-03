@@ -2,147 +2,195 @@
 <html>
 <head>
 	 <meta charset="utf-8"/>
-     <title>CEDEPAS Norte | Login</title>
-	 <link rel="shortcut icon" href="/img/LogoCedepas.png" type="image/png">
+     <title>CIITES | Login</title>
+     <link rel="shortcut icon" href="/img/isologo.ico" type="image/png">
   
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
      <meta content="width=device-width, initial-scale=1.0" name="viewport"/>      
      <link rel="stylesheet" href="/adminlte/plugins/fontawesome-free/css/all.min.css">
      <link rel="stylesheet" href="/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
      <link rel="stylesheet" href="/adminlte/dist/css/adminlte.min.css">
-  
-      @include('EstilosLogin')
+     <link  rel="stylesheet" href="public/uicons-regular-rounded/css/uicons-regular-rounded.css">
+     
 </head>
-<div class="conteiner">
+<body>
 
-	
-	
-    <br>
-<div class="login-wrap">
-	
+  <div class="main_container">
+      
+    <div class="row  row_reverse">
+      <div class="col-12 col-sm-6 text-center hexagonal_container">
+        <img class="hexagonal align-self-center" src="/img/LogoHexagonal.png" alt="">
+      </div>
+      <div class="col-12 col-sm-6 d-flex">
 
-	<form method="POST" action="{{route('user.logearse')}}">
-		@csrf  
-		<div class="login-html">
-			<input id="tab-1" type="radio" name="tab" class="sign-in" checked>
-				<label for="tab-1" class="tab" style="font-size: xx-large">Iniciar Sesión</label>
-
-
-			<input id="tab-2" type="radio" name="tab" class="sign-up">
-				<label for="tab-2" class="tab"> </label>
+        <div class="box align-self-center mx-2 mx-sm-5" style="font-size:16pt;">
+          <div class="box-header col-12 title">
+            INICIAR SESIÓN
+          </div>
+          <div class="box-body">
 
 
-			<div class="login-form">
-				<div class="sign-in-htm">
-					<div class="group">
-						<label for="user" class="label" style="font-size: medium">Usuario</label>
-						<input type="text" class="input @error('usuario') is-invalid @enderror" placeholder="Ingrese usuario" 
-							id="usuario" name="usuario" value="{{old('usuario')}}">
-						
-						@error('usuario')
-              <span class="invalid-feedback" role="alert" style="font-size: small">
-                <strong>{{$message}}</strong>
-              </span>
-						@enderror
-					</div>
-					<div class="group container_password">
-						<label for="pass" class="label" style="font-size: medium">Contraseña</label>
-						<input placeholder="Ingrese contraseña"  id="password" name="password" type="password" class="input @error('password') is-invalid @enderror" data-type="password">
-						
-            <div class="ojo_clickeable" onclick="clickIconoOjo()" title="Mostrar contraseña">
-              <i id="icono_ojo" class="fas fa-lg fa-eye"></i>
-            </div>
-
-            @error('password')
-              <span class="invalid-feedback" role="alert" style="font-size: small">
-                <strong>{{$message}}</strong>
-              </span>
-						@enderror
+            <form method="POST" action="{{route('user.logearse')}}">
+              @csrf  
 
 
-					</div>
-				
-					<div class="group">
-						<input id="ingresar" name="ingresar" type="submit" class="button" value="Ingresar">
-					</div>
-					<div class="hr"></div>
-				 
-					@if (session('datos'))
-						<div class ="alert alert-warning fade show" role ="alert" id="msjEmergenteDatos">
-							{{session('datos')}}
-						</div>
-					@endif
+                  
+              <div class="row">
+                
+                <div class="col-12">
+                  <label for="user" class="label" style="">Usuario</label>
+                  <input type="text" class="form-control form-control-lg input @error('usuario') is-invalid @enderror" placeholder="Ingrese usuario" 
+                    id="usuario" name="usuario" value="{{old('usuario')}}">
+                  
+                  @error('usuario')
+                  <span class="invalid-feedback" role="alert" style="font-size: small">
+                    <strong>{{$message}}</strong>
+                  </span>
+                  @enderror
+                </div>
+                <div class="col-12">
+                  <label for="pass" class="label" style="">Contraseña</label>
+                  <input placeholder="Ingrese contraseña" id="password" name="password"
+                    type="password" class="form-control form-control-lg input @error('password') is-invalid @enderror" data-type="password">
+                  @error('password')
+                  <span class="invalid-feedback" role="alert" style="font-size: small">
+                    <strong>{{$message}}</strong>
+                  </span>
+                  @enderror
 
-					
-				</div>
- 
-	
-			</div>
+                </div>
 
-			<div style="text-align: center">
+                <div class="col-12">
+                  <button id="ingresar" name="ingresar" type="submit" class="button-submit">
+                    INGRESAR
+                  </button>
+                </div>
 
-				<img src="/img/LogoCedepas.png"
-				width="200" height="140" >
+                <div class="col-12">
 
-			</div>
-		</div>
-		
-	</form>
+                  
+                  @if (session('datos'))
+                    <div class ="alert alert-warning fade show" role ="alert" id="msjEmergenteDatos">
+                      {{session('datos')}}
+                    </div>
+                  @endif
+                </div>
 
+              </div>
 
-</div>
-</div>
-<script>
+            </form>     
+            
+          </div>  
+            
+        </div>
+        
+      </div>
+      
+      
+    </div>
 
-  const IconoOjo = document.getElementById('icono_ojo');
-  const InputPassword = document.getElementById('password')
-  var estado_ojo = "tachado"; //normal y tachado
+  </div>
+</body>
 
-  function clickIconoOjo(){
-    if(estado_ojo=="tachado"){
-      IconoOjo.className = "fas fa-eye-slash";
-      estado_ojo = "normal";
-      InputPassword.type = "text";
-    }else{
-      IconoOjo.className = "fas fa-eye";
-      estado_ojo = "tachado";
-      InputPassword.type = "password";
-    }
-    InputPassword.focus()
-  }
-
-
-</script>
 
 <style>
-  #icono_ojo{
-    position: absolute;
-    right: 0px;
-    top: 13px;
-    cursor: pointer;
-     
+
+  html{
+    background-color: #1b3f78;
+    
   }
+  
+  .main_container{
+    background-color: #1b3f78;
+    padding: 8px;
+    height: 100vh;
+  }
+
+  .box-header{
+    background: #12a4b4;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    padding: 9px;
+    text-align: center;
+    padding-bottom: 5px !important;
+    border-bottom-width: 1px;
+    font-weight: 900;
+    border-bottom-style: solid;
+    color: #e5e5e5;
+  }
+  .box-body{
+    padding-top: 7px !important;
+    background: white;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 30px;
+  }
+  
+
+  .button-submit{
+    border: none;
+    padding: 15px 20px;
+    border-radius: 25px;
+    background: #7DAE46;
+    width: 100%;
+    color: #fff;
+    display: block;
+    font-size: 12pt;
+    font-weight: bold;
+    font-family: sans-serif;
+    margin-top: 24px;
+  }
+
+
+  .hexagonal_container{
+    padding: 20px;
+    align-self: center;
+  }
+
+  
+  @media(min-width:1000px){
+    .hexagonal_container{
+      padding: 50px;
+    }
+  }
+
+  @media(min-width:500px){
+    .hexagonal{
+      width: 100%;
+    }
+  }
+
+  @media(max-width:500px){
+    .hexagonal{
+      width: 200px;
+    }
+  }
+
+
+  /* mobile */
+  @media(max-width:575px){
+    .row_reverse{
+      flex-flow: wrap-reverse;
+    }
+    .main_container{
+      display: flex;
+      align-items: center;
  
-
-  .ojo_clickeable{
-    /* background-color: #ff000026; */
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    right: 21px;
-    top: 31px;
-    border-radius: 30px;
-    color:#252525;
-    cursor: pointer;
+    }
   }
 
-  .ojo_clickeable:hover{
-    color: #6d7479;
+  @media(min-width:575px){
+    .row_reverse{
+      height: 100vh;
+    }
   }
 
-  .container_password{
-    position: relative;
+
+
+  row_reverse
+  .title{
+
   }
+  
 </style>
-
 </html>

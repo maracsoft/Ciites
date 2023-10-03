@@ -35,23 +35,6 @@ Mis Rendiciones
     'max_width'=>'250px',
     
   ]); 
-
-  
-  $comp_filtros->añadirFiltro([
-    'name'=>'codigoContrapartida',
-    'label'=>'Contrapartida:',
-    'show_label'=>true,
-    'placeholder'=>'Buscar por Contrapartida',
-    'type'=>'text',
-    'function'=>'contains',
-    'options'=>[],
-    'options_label_field'=>'',
-    'options_id_field'=>null,
-    'size'=>'sm',
-    'max_width'=>'250px',
-  ]); 
-
-
   $comp_filtros->añadirFiltro([
       'name'=>'resumenDeActividad',
       'label'=>'Resumen actividad:',
@@ -129,12 +112,9 @@ Mis Rendiciones
             <thead class="thead-dark">
               <tr>
                 <th>Cod. Rendición</th> {{-- COD CEDEPAS --}}
-                <th style="text-align: center">F. Rendición</th>
+                <th   style="text-align: center">F. Rendición</th>
               
-                <th>Origen & Proyecto</th>
-                <th>
-                  Contrapartida  
-                </th>              
+                <th >Origen & Proyecto</th>              
                 <th>
                   Resumen Actividad
                 </th>
@@ -157,9 +137,6 @@ Mis Rendiciones
               <td style = "padding: 0.40rem; text-align: center">{{$itemRendicion->formatoFechaHoraRendicion()}}</td>
             
               <td style = "padding: 0.40rem">{{$itemRendicion->getProyecto()->getOrigenYNombre()  }}</td>
-              <td>
-                {{$itemRendicion->codigoContrapartida}}
-              </td>
               <td>
                 {{$itemRendicion->getResumenAbreviado()}}
 

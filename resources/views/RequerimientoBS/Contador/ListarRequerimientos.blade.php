@@ -49,22 +49,6 @@
     'max_width'=>'250px',
     
   ]); 
-
-  $comp_filtros->añadirFiltro([
-    'name'=>'codigoContrapartida',
-    'label'=>'Contrapartida:',
-    'show_label'=>true,
-    'placeholder'=>'Buscar por Contrapartida',
-    'type'=>'text',
-    'function'=>'contains',
-    'options'=>[],
-    'options_label_field'=>'',
-    'options_id_field'=>null,
-    'size'=>'sm',
-    'max_width'=>'250px',
-  ]); 
-
-
   $comp_filtros->añadirFiltro([
       'name'=>'justificacion',
       'label'=>'Justificación:',
@@ -169,10 +153,7 @@
             
             <th width="11%" scope="col">Solicitante</th>
             
-            <th width="19%">Origen & Proyecto</th>       
-            <th>
-              Contrapartida
-            </th>       
+            <th width="19%">Origen & Proyecto</th>              
             <th width="20%">Justificacion</th>              
             
             <th width="11%"  scope="col" style="text-align: center">Estado</th>
@@ -194,9 +175,6 @@
                 <td style = "padding: 0.40rem">{{$itemRequerimiento->getEmpleadoSolicitante()->getNombreCompleto()}}</td>
                 
                 <td style = "padding: 0.40rem">[{{$itemRequerimiento->getProyecto()->codigoPresupuestal}}] {{$itemRequerimiento->getProyecto()->nombre  }}</td>
-                <td>
-                  {{$itemRequerimiento->codigoContrapartida}}
-                </td>
                 <td style="padding:0.40rem">{{$itemRequerimiento->getJustificacionAbreviada()}}</td>
                 
                 <td style="text-align: center; padding: 0.40rem">

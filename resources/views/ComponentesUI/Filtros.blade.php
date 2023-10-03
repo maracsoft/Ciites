@@ -188,7 +188,7 @@
  
   function clickSubmit_{{$r}}(){
 
-    msj = validateForm_{{$r}}();
+    msj = validateForm();
     if(msj!=""){
       alerta(msj);
       return;
@@ -265,7 +265,7 @@
     return query_url;
   }
 
-  function validateForm_{{$r}}(){
+  function validateForm(){
 
     msj = "";
 
@@ -300,19 +300,6 @@
 
   }
 
-
-  /* esta lista solo son los form_control */
-  const listaFiltros = document.querySelectorAll('#componente_filtros_{{$r}} .form-control')
-  listaFiltros.forEach(input => {
-    
-    input.addEventListener("keypress", function(event) {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        clickSubmit_{{$r}}();
-      }
-    });
-
-  });
   
 
 

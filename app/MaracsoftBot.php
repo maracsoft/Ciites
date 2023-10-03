@@ -31,7 +31,10 @@ class MaracsoftBot {
     /* Envia un mensaje al canal de maracsoft */
     public static function enviarMensaje($msg){
 
-        $idDestino = ParametroSistema::getParametroSistema("telegram_errorchannel_id")->valor;
+        if(Configuracion::direccionDelMensaje())
+            $idDestino = MaracsoftBot::idCanalLogsProduccion;
+        else 
+            $idDestino = MaracsoftBot::idCanalLogsPruebas;
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, MaracsoftBot::getURLMensajes());

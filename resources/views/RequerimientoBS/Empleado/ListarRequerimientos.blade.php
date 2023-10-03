@@ -48,23 +48,6 @@
       'max_width'=>'250px',
        
     ]); 
-
-
-    $comp_filtros->añadirFiltro([
-      'name'=>'codigoContrapartida',
-      'label'=>'Contrapartida:',
-      'show_label'=>true,
-      'placeholder'=>'Buscar por Contrapartida',
-      'type'=>'text',
-      'function'=>'contains',
-      'options'=>[],
-      'options_label_field'=>'',
-      'options_id_field'=>null,
-      'size'=>'sm',
-      'max_width'=>'250px',
-    ]); 
-
-  
     $comp_filtros->añadirFiltro([
       'name'=>'justificacion',
       'label'=>'Justificación:',
@@ -163,10 +146,7 @@
           
           <th width="6%"  scope="col" style="text-align: center">Gerente/Director/a</th>
             
-          <th  scope="col">Origen & Proyecto</th>
-          <th>
-            Contrapartida
-          </th>         
+          <th  scope="col">Origen & Proyecto</th>         
           <th>Justificacion</th>     
           <th width="11%"  scope="col" style="text-align: center">Estado</th>
           
@@ -189,7 +169,7 @@
       
             <tr>
               <td style = "padding: 0.40rem">
-                  {{$itemRequerimiento->codigoCedepas}}
+                  {{$itemRequerimiento->codigoCedepas  }}
               </td>
               <td style = "padding: 0.40rem">
                   {{$itemRequerimiento->formatoFechaHoraEmision()}}
@@ -205,10 +185,7 @@
               <td style = "padding: 0.40rem">
                   {{$itemRequerimiento->getProyecto()->getOrigenYNombre()}}
               </td>
-              <td>
-                {{$itemRequerimiento->codigoContrapartida}}
-                
-              </td>
+              
               <td>
                   {{$itemRequerimiento->getJustificacionAbreviada()}}
               </td>

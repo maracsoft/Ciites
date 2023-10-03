@@ -12,13 +12,7 @@ class TipoAcceso extends Model
     public $timestamps = false;
     protected $fillable = [''];
 
-    public static function getCodGratuito(){
-      $lista = TipoAcceso::where('nombre',"Gratuito")->get();
-      return $lista[0]->getId();
-    }
 
-    public static function getCodPagado(){
-      $lista = TipoAcceso::where('nombre',"Pagado")->get();
-      return $lista[0]->getId();
-    }
+
+
 }

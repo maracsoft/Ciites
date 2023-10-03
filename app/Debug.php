@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Log;
 
 class Debug extends Model
 {
@@ -59,14 +58,4 @@ class Debug extends Model
         return $cont.' <script> x = '.$cont.' </script>';
     }
 
-
-    public static function LogMessage($msg){
-      
-      Log::channel('maraclog')->info($msg);
-      
-    }
-
-    public static function CronLogMessage($msg){
-      Log::channel('cron_personas')->info($msg); 
-    }
 }

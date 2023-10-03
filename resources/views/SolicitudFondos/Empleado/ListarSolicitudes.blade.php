@@ -39,24 +39,8 @@ Mis Solicitudes
       'options_id_field'=>null,
       'size'=>'sm',
       'max_width'=>'250px',
+       
     ]); 
-
-    $comp_filtros->añadirFiltro([
-      'name'=>'codigoContrapartida',
-      'label'=>'Contrapartida:',
-      'show_label'=>true,
-      'placeholder'=>'Buscar por Contrapartida',
-      'type'=>'text',
-      'function'=>'contains',
-      'options'=>[],
-      'options_label_field'=>'',
-      'options_id_field'=>null,
-      'size'=>'sm',
-      'max_width'=>'250px',
-    ]); 
-
-    
-
     $comp_filtros->añadirFiltro([
       'name'=>'justificacion',
       'label'=>'Justificación:',
@@ -163,9 +147,6 @@ Mis Solicitudes
                   <th width="9%" scope="col" style="text-align: center">F. Emisión</th>
                 
                   <th scope="col">Origen & Proyecto</th>
-                  <th >
-                    Contrapartida
-                  </th>
                   <th>
                     Justificación
                   </th>
@@ -195,9 +176,6 @@ Mis Solicitudes
                   </td>
                   <td style = "padding: 0.40rem">
                     {{$itemSolicitud->getProyecto()->getOrigenYNombre()}}
-                  </td>
-                  <td>
-                    {{$itemSolicitud->codigoContrapartida}}
                   </td>
                   <td>
                     {{$itemSolicitud->getJustificacionAbreviada()}}
@@ -239,7 +217,21 @@ Mis Solicitudes
                               
 
 
-                              <a href="#" class="btn btn-sm btn-danger" title="Cancelar Solicitud" onclick="clickCancelarSolicitud({{$itemSolicitud->codSolicitud}},'{{$itemSolicitud->codigoCedepas}}')">
+                              <a href="#" class="btn btn-sm btn-danger" title="Cancelar Solicitud" onclick="swal({//sweetalert
+                                    title:'¿Está seguro de cancelar la solicitud: {{$itemSolicitud->codigoCedepas}} ?',
+                                    //type: 'warning',  
+                                    type: 'warning',
+                                    showCancelButton: true,//para que se muestre el boton de cancelar
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText:  'SÍ',
+                                    cancelButtonText:  'NO',
+                                    closeOnConfirm:     true,//para mostrar el boton de confirmar
+                                    html : true
+                                },
+                                function(){//se ejecuta cuando damos a aceptar
+                                  window.location.href='{{route('SolicitudFondos.Empleado.cancelar',$itemSolicitud->codSolicitud)}}';
+                                });">
                                 <i class="fas fa-trash-alt"></i>
                               </a>
                                 
@@ -303,21 +295,3 @@ Mis Solicitudes
   
 
 </style>
-
-@section('script')
-
-<script>
-  var id_eliminar = null;
-  function clickCancelarSolicitud(id,codigo){
-    id_eliminar = id;
-    confirmarConMensaje("Confirmación","¿Está seguro de cancelar la solicitud "+codigo+"?","warning",ejecutarEliminacion)
-
-  }
-  function ejecutarEliminacion(){
-    
-    window.location.href = "/SolicitudFondos/Empleado/delete/"+id_eliminar; 
-  }
-
-</script>
-
-@endsection

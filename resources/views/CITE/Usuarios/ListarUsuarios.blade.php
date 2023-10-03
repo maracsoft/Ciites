@@ -3,14 +3,12 @@
 @section('titulo')
    Usuarios del CITE
 @endsection
-@section('tiempoEspera')
-    <div class="loader" id="pantallaCarga"></div>
-@endsection
+
 @section('contenido')
 
 @php
 
-  $comp_filtros = new App\UI\UIFiltros(false,$filtros_usados);
+$comp_filtros = new App\UI\UIFiltros(false,$filtros_usados);
 
   
   $comp_filtros->añadirFiltro([
@@ -27,10 +25,10 @@
     'max_width'=>'',
   ]);
   $comp_filtros->añadirFiltro([
-    'name'=>'nombrecompleto_busqueda',
-    'label'=>'Nombre',
+    'name'=>'nombres',
+    'label'=>'Nombres',
     'show_label'=>true,
-    'placeholder'=>'Buscar por nombre',
+    'placeholder'=>'Buscar por nombres',
     'type'=>'text',
     'function'=>'contains',
     'options'=>[],
@@ -39,7 +37,33 @@
     'size'=>'sm',
     'max_width'=>'250px',
   ]);
- 
+  $comp_filtros->añadirFiltro([
+    'name'=>'apellidoPaterno',
+    'label'=>'Ap Paterno:',
+    'show_label'=>true,
+    'placeholder'=>'Buscar por apellido paterno',
+    'type'=>'text',
+    'function'=>'contains',
+    'options'=>[],
+    'options_label_field'=>'texto',
+    'options_id_field'=>null,
+    'size'=>'sm',
+    'max_width'=>'',
+  ]);
+  $comp_filtros->añadirFiltro([
+    'name'=>'apellidoMaterno',
+    'label'=>'Ap Materno:',
+    'show_label'=>true,
+    'placeholder'=>'Buscar por apellido materno',
+    'type'=>'text',
+    'function'=>'contains',
+    'options'=>[],
+    'options_label_field'=>'texto',
+    'options_id_field'=>null,
+    'size'=>'sm',
+    'max_width'=>'',
+  ]);
+  
 
   
 
@@ -83,7 +107,7 @@
                     DNI
                 </th>
                 <th class="text-left">
-                    Nombre y Apellidos
+                    Nombre
                 </th>
                 <th class="text-right">
                     Teléfono
@@ -91,13 +115,9 @@
                 <th class="text-right">
                     Correo
                 </th>
-                <th class="text-center">
-                  #Servicios
+                <th class="text-right">
+                    #Servicios
                 </th>
-                <th class="text-center">
-                  #Unid Productivas
-                </th>
-            
                 
                 <th>
                     Opciones
@@ -122,26 +142,17 @@
                     <td class="text-right">
                         {{$usuario->correo}}
                     </td>
-                    <td class="text-center">
+                    <td>
                         {{$usuario->getCantidadServicios()}}
                     </td>
                     <td  class="text-center">
-                        {{$usuario->getCantidadUnidades()}}
-                    </td>
-                    <td class="text-center">
                         <a href="{{route('CITE.Usuarios.Ver',$usuario->getId())}}" class="btn btn-info btn-xs">
                             <i class="fas fa-eye"></i>
                         </a> 
                         <a href="{{route('CITE.Usuarios.Editar',$usuario->getId())}}" class="btn btn-warning btn-xs">
                             <i class="fas fa-pen"></i>
                         </a>
-                        @if($usuario->usuarioLogeadoPuedeEliminar())
-
-                          <button @if($usuario->apareceEnOtrasTablas()) disabled title="El usuario aparece en otras tablas" @endif type="button" class="btn btn-danger btn-xs" onclick="clickEliminar({{$usuario->getId()}},'{{$usuario->getNombreCompleto()}}')">
-                            <i class="fas fa-trash"></i>
-                          </button>
                         
-                        @endif
 
                     </td>
                 </tr>
@@ -165,7 +176,7 @@
       <div class="modal-content">
               <div class="modal-header">
                   <h5 class="modal-title" id="">
-                      Reporte de Usuarios - Excel
+                      Reporte de servicios - Excel
                   </h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
@@ -249,16 +260,9 @@
 
 
 @section('script')
- 
+@include('Layout.ValidatorJS')
 <script>
-
-    
-    $(document).ready(function(){
-
-    
-
-      $(".loader").fadeOut("slow");
-    });
+  
 
     function validarReporte(){
         limpiarEstilos(['reporte_codModalidad','reporte_fechaInicio','reporte_fechaFin'])
@@ -299,34 +303,7 @@
         link.setAttribute("href", url);
         link.click();
     }
-  
-  
 
-    var codUsuarioEliminar = 0;
-    function clickEliminar(codUsuario,nombre){
-      codUsuarioEliminar = codUsuario;
-      confirmarConMensaje("Confirmación","¿Desea eliminar al usuario "+nombre+" de la base de datos?",'warning',ejecutarEliminar)
-    }
-
-    function ejecutarEliminar(){
-      //llamamos a un endpoint modo API y luego recargamos la página (para no perder la busqueda y paginacion actual)
-      $(".loader").show();
-      $.get('/Cite/Usuarios/'+codUsuarioEliminar+'/Eliminar',function(data){
-        
-        data = JSON.parse(data);
-
-        alertaMensaje(data.titulo,data.mensaje,data.tipoWarning);
-       
-        setTimeout(function(){
-          location.reload();
-        }, 3000);
-
-
-        
-      });
-
-    }
- 
 </script>
 
 @endsection

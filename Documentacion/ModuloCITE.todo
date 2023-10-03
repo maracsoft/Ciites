@@ -1,0 +1,241 @@
+
+Descripción general del módulo:
+    CEDEPAS Norte brinda servicios a diferentes clientes
+    Quiere un modulo para registrar la información de sus clientes (P.Nat y P.Juridicas) y las ocurrencias de sus servicios
+
+
+    RUC salga razonSocial y direccion
+    pedir listado de clasificacion rango ventas
+
+
+    DNI solo se activa para PERSONA NAT SIN NEGOCIO
+    RUC PARA LOS DEMÁS
+
+    Añadir opcion que diga RUC EN TRAMITE (activandola el ruc se hace opcional)
+
+
+    Añadir el campo abreviacion a servicio (es lo mismo que descripcion pero abreviado)
+
+TABLAS:
+    ✔ UnidadesProductivas: puede ser P.Nat y Juridica, tiene: ruc/dni, razonSocial, tipo persona, clasificacion @done(23-05-22 10:06)
+    algunos clientes no tienen ruc, añadir opcion para cuando no tienen
+    ✔ Servicio @done(23-05-22 10:06)
+        Añadir archivos a servicio (fotos,videos,etc)
+    ✔ Tipo de personeria @done(23-05-22 10:06)
+    ✔ Tipo de servicio @done(23-05-22 10:06)
+    ✔ Modalidad del servicio @done(23-05-22 10:06)
+
+
+Vistas:
+    ✔ Registrar cliente @done(02-05-22 15:10)
+    ✔ Actualizar UnidadProductiva @done(24-05-22 02:51)
+    ✔ Listar cliente @done(02-05-22 15:10)
+    ✔ Registrar servicio @done(02-05-22 15:10)
+    ✔ Actualizar Servicio ? @done(24-05-22 00:00)
+    ✔ Listar Servicios @done(02-05-22 15:10)
+    ✔ Actualizar usuario @done(24-05-22 02:51)
+
+Reportes:
+    ✔ Reporte servicios excel @done(02-05-22 15:10)
+    ✔ Reporte clientes @done(02-05-22 15:10)
+    ✔ Reporte usuarios @done(23-05-22 21:28)
+
+
+
+DUDAS para la reunion:
+    ✔ Pedir listado de rangos para clasificacion ventas (no la tienen xd) @done(02-05-22 16:18)
+    ✔ Numero servicios en cliente, hay un numero en el excel pero no coincide con la lista de servicios @done(02-05-22 16:18)
+    ✔ Algunos RUC tienen 10 digitos (faltaria validar esto) @done(02-05-22 16:20)
+
+
+
+    ✔ En la tabla cliente añadir el numero de servicios pero este es historico, el reporte que tenia era mensual @done(02-05-22 16:20)
+
+
+
+    ✔ VERIFICAR ERROR de guardado de usuarios @done(16-05-22 11:19)
+
+
+    ✔ Hacer tipo de reportes en reporte clientes @done(16-05-22 13:55)
+    ✔ revisar error con las fechas @done(16-05-22 10:25)
+
+    ✔ TODOS LOS EXPORTABLES IGUALES A LOS QUE ME PASARON @done(16-05-22 13:55)
+
+
+
+    ✔ en la direccion de clientes, que jale de la sunat pero que deje editarlo @done(16-05-22 13:55)
+
+
+    ✔ añadir a rango ventas que se quede en blanco @done(16-05-22 13:55)
+
+
+
+
+    ☐ limitar archivos a X MB  en las pruebas me confirman a cuanto lo limito
+
+
+    ✔ arreglar tildes de los nombres jalando de la sunat @done(16-05-22 13:55)
+
+    ✔ La región del excel de clientes no fue tomada en cuenta, sino la que figuraba en el de servicios @done(16-05-22 12:26)
+
+
+    Reporte de anexo 4.1
+    CAMBIAR CABECERA DE DIRECCIONES EN REPORTE SERVICIOS
+
+    ✔ Añadir a tipo personería EN PROCESO DE FORMALIZACIÓN @done(23-05-22 21:28)
+
+
+    ✔ El miercoles miguel ya me pasa la data completa @done(21-05-22 16:04)
+
+    ✔ Los clientes tienen usuarios @done(23-05-22 10:05)
+
+    ✔ CAMBIAR NOMBRE DE CLIENTES A UNIDAD PRODUCTIVA (SON LO MISMO) @done(21-05-22 16:18)
+
+    ✔ Los usuarios pueden participar en servicios @done(23-05-22 10:04)
+    ✔ Los usuarios no necesariamente tienen que pertenecer a la unidad productiva para asistir a su servicio @done(23-05-22 10:04)
+    ✔ Las unidades productivas tienen usuarios ya definidos, y se marca su asistencia a los servicios o no @done(23-05-22 10:04)
+
+
+    ✔ EN LA BD dejar que se pueda poner mayusculas y minusculas @done(23-05-22 10:07)
+
+    ✔ CADENA ES OTRA TABLA SELECCIONABLE, PONER UN SELECT @done(23-05-22 10:04)
+
+
+    ✔ al momento de añadir usuarios a un servicio, @done(23-05-22 10:05)
+        ✔ que sea para marcar (como asistencia) y añadir externos @done(23-05-22 10:05)
+        ✔ pero tambien que se pueda añadir por DNI @done(23-05-22 10:05)
+
+
+    ☐ Añadir historial de ediciones?
+    ✔ Añadir quien creo unidProd, usuario, y serv @done(12-06-22 17:04)
+
+
+ROLES Y PERMISOS:
+    Articuladores  puede registrar de todo y sí pueden generar reportes
+    4,13,26,14
+
+    UGE puede registrar de todo y generar reportes
+
+    listaEquipos Sí pueden registrar cosas y no generar reportes
+    29,60,24,20,39,10,38,79,7
+
+
+
+SISTEMA DE NOTIFICACIONES:
+    Le avisa a Articuladores y UGE (Y estos pueden marcarlo como ya visto)
+        Que a todos les avise si ya está el reporte del mes
+
+    Los reportes no son obligatorios, pero se limitan a un mes un empleado
+
+    Los que marcan son Equipo
+    
+    La marcacion de que ya ingresó es mensual
+    Que puedan registrarlo cualquier día
+
+    Estados
+        SI TIENE QUE REPORTAR Y YA REPORTÓ
+        SI TIENE QUE REPORTAR Y NO REPORTA AUN
+        NO TIENE QUE REPORTAR Y NO REPORTA
+
+    Hacer recordatorio desde los 26 a los que tienen que reportar y no reportan (Si ya acabó el mes y no reportó, que siga el recordatorio infinitamente)
+
+HACERLO COMO UNA MATRIZ
+REMPLAZAR EN LISTAR SERVICIOS LA MODALIDAD  POR CONVENIO ¿?
+
+SISTEMA DE ESTADOS
+    Creado
+    Revisado
+    Observado
+    Subsanado
+
+
+✔ añadir nuevo campo select en servicio @done(12-06-22 17:04)
+Tambien me tienen que pasar la MATRIZ
+
+
+
+
+
+    ✔ CAMBIAR TP POR TIPO PERSONERIA @done(13-06-22 19:19)
+
+    AÑADIR FILTRO DE BUSCAR
+        POR REGIONES A UNIDADES PRODUCTIVAS y
+        CADENA
+
+    PERIODOS (DE MES A MES)
+
+
+
+
+    Servicios filtros:
+            modalidad, acceso, region, periodos, unidad productiva
+
+
+    ☐ Reportes estadisticos xd
+
+    cuantos usuarios fueron atendidos por cada region
+
+
+    REMPLAZAR DEPARTAMENTO POR REGION
+
+
+
+
+DASHBOARD:
+    ☐ servicios por cadena, region
+
+Observaciones Reunión 10/06/2022:
+    ✔ Duplicar servicio @done(13-06-22 21:19)
+    ✔ Agregar en la vista de servicio que se pueda agregar socios a la unidad productiva @done(18-06-22 16:02)
+    ✔ Asistencia de usuarios agregar busqueda por nombre y o por dni @done(18-06-22 16:02)
+    ✔ Revisar ordenamiento de ventana modal de asistencia (Ordenado x nombre)@done(13-06-22 19:21)
+    ✔ Añadir presidente y gerente a unidad productiva (que aparezca abajo en la lista de socios) @done(13-06-22 21:45)
+    ✔ Añadir al excel una nueva columna que sea el id de la base de datos (esta columna rompería el formato pero es para ayudar a ) @done(13-06-22 19:22)
+    ✔ Añadir filtro de region al reporte por provincias @done(14-06-22 23:34)
+    ✔ En unidad productiva añadir un checkbox que diga sin datos de cadena (NUEVO DATO) @done(14-06-22 23:14)
+    ✔ Añadir filtro region a listados @done(14-06-22 17:07)
+    ✔ El reporte de servicios debe ser por fechas (tomando en cuenta la fecha inicio ) @done(13-06-22 19:22)
+
+
+
+El reporte de excel:
+    ✔ cuando no tengan ruc, que diga 'EN PROCESO DE FORMALIZACIÓN' EN VEZ DE SIN DATOS @done(18-06-22 16:51)
+    ✔ Quitar de todos lados donde dice "(DNI)" donde se listan xd @done(18-06-22 16:02)
+
+
+
+
+
+
+
+
+
+
+Organización del tutorial:
+
+  Equipo:
+    
+  
+
+
+  Articuladores y UGE:
+
+
+
+Reunion viernes 13 01 2023:
+  ✔ Añadir filtro de unidad productiva al listar servicios @done(16-01-23 00:50)
+  ✔ En reporte excel servicios y usuarios, algunos salen en minusculas @done(16-01-23 00:50)
+  ✔ Al registrar/editar unidad productiva, ocultar el rango de ventas (solo de la vista, que siga existiendo y reportandose) @done(16-01-23 00:50)
+  ✘ Cuando se registra la unidad productiva, que aparezca la opcion de agregar socios y que aparezca alerta si no se agregó a ninguna persona @cancelled(26-01-23 15:20)
+  ✔ Acerca de esta observación, una vez que se termina de crear la unidad productiva ya no lo regresará al Listar sino al Editar con el mensaje 'Por favor añada a los socios correspondientes' @done(26-01-23 15:22)
+  ✔ En el reporte de usuarios se están duplicando algunos , no coincide la suma de participantes del reporte de servicios con el conteo de reporte de usuarios (VER SEPTIEMBRE) @done(26-01-23 15:22)
+  ✘ Solo la persona que crea y los UGE deberian poder modificar o eliminar el servicio @cancelled(16-01-23 00:50)
+  ✔ Requerimiento de filtro por fechas inicio y final @done(16-01-23 00:50)
+  ✔ Poner el link del drive en el editar servicio @done(16-01-23 00:50)
+
+
+  ✔ Añadir mensaje popup antes de salir al menu en unidad productiva cuando no se agregó ningun socio @done(02-02-23 13:49)
+  ✔ Eliminar y editar solo uge y el que lo creó @done(02-02-23 13:45)
+  ✔ Subir el mensajito del link de drive @done(02-02-23 13:45)
+
+  

@@ -256,7 +256,33 @@
             contadorCaracteres('observacion','contador2','{{App\Configuracion::tamañoMaximoObservacion}}');
         });
     
-   
+        
+    /*
+    function observarRendicion(){
+        textoObs = $('#observacion').val();
+        codigoSolicitud = {{$rendicion->codRendicionGastos}};
+        console.log('Se presionó el botón observar, el textoobservacion es ' + textoObs + ' y el cod de la rendicion es ' +  codigoSolicitud);
+        if(textoObs==''){
+            alerta('Debe ingresar la observacion');
+        }else{
+            swal({//sweetalert
+                title:'¿Seguro de observar la rendicion?',
+                text: '',
+                type: 'info',  
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText:  'SÍ',
+                cancelButtonText:  'NO',
+                closeOnConfirm:     true,//para mostrar el boton de confirmar
+                html : true
+            },
+            function(){
+                location.href = '/rendiciones/observar/'+ codigoSolicitud +'*' +textoObs;
+            });
+        }
+    }
+    */
     function observarRendicion() {
         textoObs = $('#observacion').val();
         codigoSolicitud = {{$rendicion->codRendicionGastos}};

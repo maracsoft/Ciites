@@ -20,7 +20,6 @@ use App\Models\CITE\RelacionUsuarioUnidad;
 use App\Models\CITE\Servicio;
 use App\Models\CITE\UsuarioCite;
 use App\ParametroSistema;
-use App\RespuestaAPI;
 use App\UI\UIFiltros;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -48,8 +47,7 @@ class UsuarioCiteController extends Controller
             $usuario->apellidoPaterno = mb_strtoupper($request->apellidoPaterno);
             $usuario->telefono = $request->telefono;
             $usuario->correo = $request->correo;
-            $usuario->updateNombreBusqueda();
-            
+
             $usuario->fechaHoraCreacion = Carbon::now();
             $usuario->codEmpleadoCreador =Empleado::getEmpleadoLogeado()->getId();
 
@@ -79,28 +77,6 @@ class UsuarioCiteController extends Controller
         return view('CITE.Usuarios.EditarUsuario',compact('usuario'));
     }
 
-    public function Eliminar($codUsuario){
-      try {
-        db::beginTransaction();
-        $usuario = UsuarioCite::findOrFail($codUsuario);
-        if($usuario->apareceEnOtrasTablas()){
-          return RespuestaAPI::respuestaError("No se puede eliminar al usuario porque aparece en otras tablas");
-        }
-
-        $nombre = $usuario->getNombreCompleto();
-        $usuario->delete();
-
-        db::commit();
-        return RespuestaAPI::respuestaOk("Se eliminó al usuario ".$nombre." de la base de datos, recargando la página para actualizar los datos...");
-        
-      } catch (\Throwable $th) {
-        db::rollBack();
-
-        throw $th;
-      }
-      
-    }
-
     public function Actualizar(Request $request){
 
         try{
@@ -113,7 +89,6 @@ class UsuarioCiteController extends Controller
             $usuario->apellidoPaterno = mb_strtoupper($request->apellidoPaterno);
             $usuario->telefono = $request->telefono;
             $usuario->correo = $request->correo;
-            $usuario->updateNombreBusqueda();
 
             $usuario->fechaHoraActualizacion = Carbon::now();
 
@@ -141,18 +116,28 @@ class UsuarioCiteController extends Controller
     /* Le llega un JSON que tiene un vector de usuarios */
     public function listar(Request $request){
 
+
+        $apellidos = $request->apellidos;
         $listaModalidades = ModalidadServicio::All();
 
+        
         $listaUsuarios = UsuarioCite::orderBy('codUsuario','DESC');
         $filtros_usados_paginacion = UIFiltros::getFiltersCompleteArray($listaUsuarios,$request->getQueryString());
         
         $listaUsuarios = UIFiltros::buildQuery($listaUsuarios,$request->getQueryString());
         $filtros_usados = UIFiltros::getQueryValues($listaUsuarios,$request->getQueryString());
+        
+         
+        
 
         $listaUsuarios = $listaUsuarios->orderBy('codUsuario','DESC')->paginate(static::PAGINATION);
          
+        $obj = json_decode(json_encode($listaUsuarios));
+        $cant = $obj->total;
         
-        
+        $msjCantidadResultados = "La busqueda arrojó ".$cant." coincidencias";
+         
+
         return view('CITE.Usuarios.ListarUsuarios',compact('listaUsuarios','listaModalidades','filtros_usados','filtros_usados_paginacion'));
     }
 
@@ -174,7 +159,20 @@ class UsuarioCiteController extends Controller
 
       /* Join especial para ordenar por razonsocial y nombres */
       $listaAsistenciasServicio = AsistenciaServicio::where('codModalidad',$request->codModalidad)
-                                ->where(Servicio::FiltroEspecialFechas($fechaInicio,$fechaFin))
+                                ->where(function($query) use ($fechaInicio,$fechaFin) {
+                                  $query->where(function($query1) use ($fechaInicio,$fechaFin){
+                                    $query1->where('fechaInicio','<=',$fechaInicio)->where('fechaTermino','>=',$fechaInicio)->where('fechaTermino','<=',$fechaFin);
+                                  })
+                                  ->orWhere(function($query2) use ($fechaInicio,$fechaFin){
+                                    $query2->where('fechaInicio','>=',$fechaInicio)->where('fechaInicio','<=',$fechaFin)->where('fechaTermino','>=',$fechaFin);
+                                  })
+                                  ->orWhere(function($query3) use ($fechaInicio,$fechaFin){
+                                    $query3->where('fechaInicio','<=',$fechaInicio)->where('fechaTermino','>=',$fechaFin);
+                                  })
+                                  ->orWhere(function($query4) use ($fechaInicio,$fechaFin){
+                                    $query4->where('fechaInicio','>=',$fechaInicio)->where('fechaTermino','<=',$fechaFin);
+                                  });
+                              })
 
                               ->join('cite-usuario','cite-usuario.codUsuario','=','cite-asistencia_servicio.codUsuario')
                               ->join('cite-servicio','cite-servicio.codServicio','=','cite-asistencia_servicio.codServicio')

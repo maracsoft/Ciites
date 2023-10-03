@@ -1,7 +1,7 @@
 @extends('Layout.Plantilla')
 
 @section('titulo')
-    Mis Reportes mensuales de CITE
+    CITE Servicios brindados
 @endsection
 
 @section('contenido')

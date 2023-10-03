@@ -9,43 +9,18 @@
 @endsection
 
 @section('contenido')
+@php
+  $file_uploader = new App\UI\FileUploader("nombresArchivos","filenames",10,true,"Subir archivos");
+  
+
+@endphp
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<div >
+    <p class="h1" style="text-align: center">
+        Editar Servicio
+    </p>
+</div>
 <style>
-  .guia_step{
-    color: #00ab00;
-    font-size: 14pt;
-    line-height: 22px;
-    
-
-  }
-
-  @media(min-width:990px){ /* desktop */
-    .guia_conversion{
-      width: 60%;
-    }
-  }
-
-  @media(max-width:990px){ /* mobile */
-    .guia_conversion{
-      width: 100%;
-    }
-  }
-
-
-
-  .mensaje_compatibilidad{
-    
-    font-size: 14pt;
-    line-height: 22px;
-    margin-bottom: 12px;
-  }
-
-  #mensaje_archivos_faltantes{
-    font-size: 12pt;
-    background-color: #ededed;
-    padding: 5px 10px;
-    color: #ff0d0d;
-    border-radius: 7px;
-  }
   .pequeñaRow{
     padding:0px !important; 
     
@@ -76,13 +51,6 @@
   }
 
 </style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-<div class="col-12 py-2">
-  <div class="page-title">
-    Editar Servicio
-  </div>
-</div>
-
 @include('Layout.MensajeEmergenteDatos')
 <form method = "POST" action = "{{route('CITE.Servicios.Actualizar')}}" id="frmrepo" name="frmrepo"  enctype="multipart/form-data">
     <input type="hidden" name="codServicio" value="{{$servicio->getId()}}">
@@ -115,10 +83,8 @@
             </div>
         </div>
         <div class="card-body">
-          <div>
 
-            
-            <div class="row">
+            <div class="row  internalPadding-1  ">
                 <div  class="col-12 col-sm-6">
                     <label for="codUnidadProductiva" id="" class="">
                         Unidad Productiva:
@@ -142,34 +108,32 @@
                     </select>
                 </div>
 
+
+
+
+
+
+
                 <div class="col-12 col-sm-6">
-                  <label for="codTipoAcceso" id="" class="">
-                      Tipo Acceso:
-                  </label>
+                    <label for="codModalidad" id="" class="">
+                        Modalidad:
+                    </label>
 
-                  <select class="form-control"  id="codTipoAcceso" name="codTipoAcceso"  onchange="actualizarTipoAcceso(this.value)">
-                      <option value="-1">-- Tipo Acceso --</option>
-                      @foreach($listaTipoAcceso as $tipoAcceso)
-                          <option value="{{$tipoAcceso->getId()}}"
-                              @if($tipoAcceso->getId() == $servicio->codTipoAcceso)
-                                  selected
-                              @endif
-                              >
-                              {{$tipoAcceso->nombre}}
-                          </option>
-                      @endforeach
+                    <select class="form-control"  id="codModalidad" name="codModalidad"  onchange="actualizarModalidad(this.value)">
+                        <option value="-1">-- Modalidad --</option>
+                        @foreach($listaModalidades as $modalidad)
+                            <option value="{{$modalidad->getId()}}"
+                                @if($modalidad->getId() == $servicio->codModalidad)
+                                    selected
+                                @endif
 
-                  </select>
+                                >
+                                {{$modalidad->nombre}}
+                            </option>
+                        @endforeach
+
+                    </select>
                 </div>
-
-
-
-
-
-
-
-                
-
 
 
                 <div class="col-12 row fondoPlomoCircular p-3 my-1 hidden" id="divConvenio">
@@ -179,7 +143,7 @@
                             Comprobante:
                         </label>
                         <select class="form-control"  id="codTipoCDP" name="codTipoCDP"  >
-                            <option value="">- Tipo Comprobante -</option>
+                            <option value="-1">- Tipo Comprobante -</option>
                             @foreach($listaTipoCDP as $cdp)
                                 <option value="{{$cdp->getId()}}"
                                     @if($cdp->getId() == $servicio->codTipoCDP)
@@ -252,7 +216,14 @@
 
 
 
-               
+                <div class="col-12 col-sm-2">
+                    <label for="descripcion" id="" class="">
+                        Total Participantes:
+                    </label>
+
+                    <input type="number" class="form-control" id="totalParticipantes" name="totalParticipantes" value="{{$servicio->totalParticipantes}}"/>
+
+                </div>
 
 
                 <div class="col-12 col-sm-2">
@@ -265,7 +236,7 @@
 
 
 
-                <div class="col-12 col-sm-8">
+                <div class="col-12 col-sm-6">
                     <label for="descripcion" id="" class="">
                         Descripción:
                     </label>
@@ -275,36 +246,14 @@
 
                 </div>
 
-                <div class="col-12 col-sm-3">
-                  <label for="codModalidad" id="" class="">
-                      Modalidad:
-                  </label>
-
-                  <select class="form-control"  id="codModalidad" name="codModalidad" onchange="changeModalidad(this.value)">
-                      <option value="-1">-- Modalidad --</option>
-                      @foreach($listaModalidades as $modalidad)
-                          <option value="{{$modalidad->getId()}}"
-                              @if($modalidad->getId() == $servicio->codModalidad)
-                                  selected
-                              @endif
-
-                              >
-                              {{$modalidad->nombre}}
-                          </option>
-                      @endforeach
-
-                  </select>
-                </div>
-
-
-                <div class="col-12 col-sm-3">
+                <div class="col-12 col-sm-4">
                     <label for="codTipoServicio" id="" class="">
                         Tipo Servicio:
                     </label>
 
-                    <select class="form-control"  id="codTipoServicio" name="codTipoServicio" onchange="actualizarTipoServicio(this.value)">
+                    <select class="form-control"  id="codTipoServicio" name="codTipoServicio" onchange="actualizarTipo(this.value)">
                         <option value="-1">-- Tipo Servicio --</option>
-                        @foreach($servicio->getModalidad()->getTiposServicio() as $tipoServ)
+                        @foreach($listaTipoServicio as $tipoServ)
                             <option value="{{$tipoServ->getId()}}"
                                 @if($tipoServ->getId() == $servicio->codTipoServicio)
                                     selected
@@ -318,7 +267,7 @@
                     </select>
                 </div>
 
-                <div class="col-12 col-sm-6">
+                <div class="col-12 col-sm-4">
                     <label for="codActividad" id="" class="">
                         Actividad :
                     </label>
@@ -337,9 +286,48 @@
                 </div>
 
 
- 
 
-                <div class="col-sm-2"></div>
+
+                <div  class="col-12 col-sm-4">
+                    <label for="codTipoAcceso" id="" class="">
+                        Tipo Acceso:
+                    </label>
+
+                    <select class="form-control"  id="codTipoAcceso" name="codTipoAcceso">
+                        <option value="-1">-- Tipo Acceso --</option>
+                        @foreach($listaTipoAcceso as $tipoAcceso)
+                            <option value="{{$tipoAcceso->getId()}}"
+                                @if($tipoAcceso->getId() == $servicio->codTipoAcceso)
+                                    selected
+                                @endif
+                                >
+                                {{$tipoAcceso->nombre}}
+                            </option>
+                        @endforeach
+
+                    </select>
+                </div>
+
+                <div  class="col-12 col-sm-4">
+                    <label for="codMesAño" id="" class="">
+                        Mes:
+                    </label>
+
+                    <select class="form-control"  id="codMesAño" name="codMesAño">
+                        <option value="-1">-- Mes --</option>
+                        @foreach($listaMesesAño as $mesAño)
+                            <option value="{{$mesAño->getId()}}"
+                                @if($mesAño->getId() == $servicio->codMesAño)
+                                    selected
+                                @endif
+                                >
+                                {{$mesAño->getTexto()}}
+                            </option>
+                        @endforeach
+
+                    </select>
+                </div>
+
 
                 <div class="col-12 col-sm-4">
                     <label for="">Fecha Inicio:</label>
@@ -373,7 +361,6 @@
                     </div>
 
                 </div>
-                <div class="col-sm-2"></div>
 
 
 
@@ -383,8 +370,42 @@
 
 
 
+            <div class="row mt-2"> {{-- ARCHIVOS --}}
+                <div class="col-6">
+                    {{$servicio->html_getArchivosDelServicio(true)}}
+                    {{$file_uploader->render()}}
+                    <div class="mt-2">
+                      <div class="d-flex">
+                          
+                        <a target="_blank" href="{{$linkDrive}}" class="link-drive d-flex">
+                          <div class="d-flex flex-column mr-2">
+                            <img src="/img/icono-drive.png" alt="" class="my-auto link-drive-img">
+                          </div>
+                          <div class="d-flex flex-column">
+                            <div>
+                              Subir archivos al drive
+                            </div>
+                            <div class=" fontSize10 mt-n1">
+                              (Subir a la carpeta de tu unidad técnica)
+                            </div>
+                          </div>
+                            
+                            
+                          
+                        </a>
+                        
+                      </div>
+                      
+                    </div>
 
-            <div class="row mt-2">
+
+                </div>
+                <div class="col-6">
+
+                </div>
+
+            </div>
+            <div class="row">
                 <div class="col-6"></div>
                 <div class="col-6 row">
                     <div class="ml-auto">
@@ -400,7 +421,6 @@
 
             </div>
 
-          </div>
 
         </div>
     </div>
@@ -538,33 +558,271 @@
     </div>
 </div>
 
-@include('CITE.Servicios.CardArchivos')
 
-<div class="d-flex flex-row m-4">
-    <div class="">
 
-        <button type="button" onclick="clickRegresarMenu()" class='btn btn-info '>
-            <i class="fas fa-arrow-left"></i>
-            Regresar al Menú
-        </button>
+    <div class="d-flex flex-row m-4">
+        <div class="">
+
+            <a href="{{route('CITE.Servicios.Listar')}}" class='btn btn-info '>
+                <i class="fas fa-arrow-left"></i>
+                Regresar al Menú
+            </a>
+
+        </div>
+        <div class="ml-auto">
+
+
+        </div>
 
     </div>
-    <div class="ml-auto">
 
 
+
+
+
+
+{{-- MODAL DE AGREGAR ASOCIADOS --}}
+<div class="modal  fade" id="ModalListaAsistencia" tabindex="-1" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="">
+                        Asistencia de usuarios al servicio
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body row">
+                    <div class="col-12 row">
+                        <div class="col-10">
+
+                            @php
+                                $i=1;
+                            @endphp
+                            <select id="codUsuarioBusquedaRapida" data-select2-id="1" tabindex="-1" onchange="cambioUsuarioBuscado(this.value)"
+                                class="fondoBlanco form-control form-control-sm select2-hidden-accessible selectpicker"   aria-hidden="true"  data-live-search="true">
+
+                                <option value="-1" class="fontSize9">- Buscar Usuario -</option>
+                                @foreach($listaUsuariosYAsistencia as $usuario)
+                                    
+                                    <option value="{{$usuario->getId()}}" class="fontSize9">
+                                        {{$i}}. {{$usuario->getNombreCompleto()}} {{$usuario->dni}}
+                                    </option>
+                                @php
+                                    $i++;
+                                @endphp
+                                @endforeach
+
+                            </select>
+
+
+                        </div>
+                        <div class="col-2">
+                            <button id="botonBusqueda" class="btn btn-success btn-sm" type="button" onclick="clickMarcarAsistenciaBusquedaRapida()">
+                                <span id="msjBusqueda">Marcar asistencia</span>
+                                <i id="iconoBusqueda" class="fa fa-check"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 row mt-2">
+                        <div class="col-12 align-self-end">
+                            <label class="d-flex" for="">
+                                Usuarios de la unidad productiva
+                            </label>
+                        </div>
+
+
+                    </div>
+
+
+                    {{-- TABLA --}}
+                    <div class="col-12">
+                        <table class="table table-striped table-bordered table-condensed table-hover" >
+                            <thead  class="thead-default">
+                                <tr>
+                                    <th class="text-center">
+                                        #
+                                    </th>
+                                    <th class="text-left">
+                                      Nombres
+                                    </th>
+                                    <th class="text-center">
+                                      DNI
+                                    </th>
+                                    <th class="text-center">
+                                        Asistencia
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="modal_AsistenciaUsuarios">
+                                @php
+                                    $i=1;
+                                @endphp
+                                @foreach($listaUsuariosYAsistencia as $usuario)
+                                    <tr>
+                                        <td class="pequeñaRow text-center">
+                                          {{$i}}
+                                        </td>
+                                        <td class="pequeñaRow">
+                                          <label for="CB_Asistencia_{{$usuario->codUsuario}}">
+                                            {{$usuario->getNombreCompleto()}}
+                                          </label>
+                                        </td>
+                                        <td class="pequeñaRow text-center">
+                                            <label for="CB_Asistencia_{{$usuario->codUsuario}}">
+                                                {{$usuario->dni}}
+                                            </label>
+                                        </td>
+                                        <td class="pequeñaRow text-center">
+                                            <input type="checkbox" class="specialCB" value="1" id="CB_Asistencia_{{$usuario->codUsuario}}"
+                                            {{$usuario->asistencia ? 'checked' : ''}}
+
+                                                onchange="clickCambiarAsistencia({{$usuario->getId()}},this.checked)">
+
+                                        </td>
+                                    </tr>
+                                @php
+                                  $i++;
+                                @endphp
+                                @endforeach
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Salir
+                    </button>
+
+                    <button type="button" class="m-1 btn btn-primary" onclick="clickGuardarNuevaAsistencia()">
+                        Guardar
+                        <i class="fas fa-save"></i>
+                    </button>
+                </div>
+
+
+        </div>
     </div>
-
 </div>
 
 
+{{-- MODAL DE AGREGAR EXTERNOS --}}
+<div class="modal  fade" id="ModalAgregarExterno" tabindex="-1" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="">
+                        Agregar participantes al servicio
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body row">
 
 
 
-@include('CITE.Servicios.ModalAsistenciaInterna')
+                        <form action="{{route('CITE.Servicios.agregarAsistenciaExterna')}}" id="frmAgregarAsistenciaExterna" name="frmAgregarAsistenciaExterna"  method="POST">
+                            @csrf
+                            <input type="hidden" name="codServicio" value="{{$servicio->codServicio}}">
+                           {{--  <div class="fontSize10 ">
+                                Entiendase como usuario externo, quien no pertenece aún a la unidad productiva del servicio.
+                            </div> --}}
+                            <div class="mr-1 my-2 row">
 
-@include('CITE.Servicios.ModalAgregarExterno')
 
-@include('CITE.Servicios.ModalArchivoNoCompatible')
+                                <div class="col-4">
+                                    <div>
+                                        <label for="">DNI:</label>
+                                    </div>
+                                    <div class="d-flex">
+
+
+                                        <div>
+                                            <input type="number" class="form-control" id="dni" name="dni" value="">
+                                        </div>
+                                        <div>
+                                            <button type="button" title="Buscar por DNI en la base de datos de Sunat"
+                                                class="btn-sm btn btn-info d-flex align-items-center m-1" id="botonBuscarPorRUC" onclick="consultarPorDNI()" >
+                                                <i class="fas fa-search m-1"></i>
+
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-4">
+                                    <label for="">Teléfono:</label>
+                                    <input type="number" class="form-control" id="telefono" name="telefono" value="">
+
+
+                                </div>
+                                <div class="col-4">
+                                    <label for="">Correo:</label>
+                                    <input type="email" class="form-control" id="correo" name="correo" value="">
+
+                                </div>
+                                <div class="col-4">
+                                    <label for="">Nombres:</label>
+                                    <input type="text" class="form-control" id="nombres" name="nombres" value="">
+
+                                </div>
+                                <div class="col-4">
+
+                                    <label for="">Apellido Paterno:</label>
+                                    <input type="text" class="form-control" id="apellidoPaterno" name="apellidoPaterno" value="">
+
+
+                                </div>
+                                <div class="col-4">
+
+                                    <label for="">Apellido Materno:</label>
+                                    <input type="text"  class="form-control" id="apellidoMaterno" name="apellidoMaterno" value="">
+
+                                </div>
+
+
+
+
+                            </div>
+                            <div>
+                                <input type="checkbox" value="1" id="inscribirEnUnidad" name="inscribirEnUnidad">
+                                <label class="" for="inscribirEnUnidad">
+                                    Inscribir en la unidad(como socio)
+                                </label>
+                            </div>
+                            
+                        </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Salir
+                    </button>
+
+                    <button type="button" class="m-1 btn btn-primary" onclick="agregarAsistenciaExterna()">
+                        Guardar
+                        <i class="fas fa-save"></i>
+                    </button>
+                </div>
+
+
+        </div>
+    </div>
+</div>
+
 
 
 @endsection
@@ -589,22 +847,14 @@
 
 <script type="application/javascript">
 
-    const MostrarModalArchivoNocompatible = @if (session('mostrar_modal_archivo_nocompatible')) true @else false @endif
-
-    @php
-      session(['mostrar_modal_archivo_nocompatible' => null]);
-    @endphp
-
-    var ModalArchivoNocompatible = new bootstrap.Modal(document.getElementById("ModalArchivoNocompatible"), {});
-  
 
     $(document).ready(function(){
         $(".loader").fadeOut("slow");
-        actualizarTipoAcceso({{$servicio->codTipoAcceso}})
+        actualizarModalidad({{$servicio->codModalidad}})
 
-        if(MostrarModalArchivoNocompatible){
-          ModalArchivoNocompatible.show();
-        }
+        //contadorCaracteres('ruc','contadorRUC',11);
+        //contadorCaracteres('observacion','contadorObservacion',{{App\Configuracion::tamañoObservacionOC}});
+
     });
 
 
@@ -620,6 +870,58 @@
         confirmar('¿Está seguro de actualizar el servicio?','info','frmrepo');
 
     }
+
+
+
+
+
+
+    /* AGREGAR USUARIOS EXTERNOS EN MODAL */
+    function agregarAsistenciaExterna(){
+
+        msjError = validarUsuarioExterno();
+        if(msjError!=""){
+            alerta(msjError);
+            return;
+        }
+
+        document.frmAgregarAsistenciaExterna.submit();
+    }
+
+
+    function validarUsuarioExterno(){
+
+        msj = "";
+        limpiarEstilos(['dni','nombres','telefono','apellidoMaterno','correo','apellidoPaterno',])
+
+        msj = validarTamañoExacto(msj,'dni',8,'DNI')
+        //msj = validarTamañoMaximoYNulidad(msj,'telefono',200,'telefono')
+        //msj = validarTamañoMaximoYNulidad(msj,'correo',200,'correo')
+        msj = validarTamañoMaximoYNulidad(msj,'nombres',200,'nombres')
+        msj = validarTamañoMaximoYNulidad(msj,'apellidoPaterno',200,'apellidoPaterno')
+        msj = validarTamañoMaximoYNulidad(msj,'apellidoMaterno',200,'apellidoMaterno')
+
+        if(validarQueYaEsteEnElServicio() !="" )
+            msj = validarQueYaEsteEnElServicio();
+
+
+        return msj;
+    }
+
+
+    var usuariosDelServicio = @php echo $servicio->getUsuarios()  @endphp
+
+
+    function validarQueYaEsteEnElServicio(){
+        //verificamos que no esté ya en el servicio
+        var dni = document.getElementById('dni').value;
+        var listaDNIiguales = usuariosDelServicio.filter(e => e.dni == dni);
+        if(listaDNIiguales.length!=0)
+            return "El usuario de DNI " + dni +" ya se encuentra en el servicio actual"
+        return "";
+    }
+
+
 
     async function consultarPorDNI(){
 
@@ -688,6 +990,68 @@
         );
     }
 
+
+
+
+
+
+
+
+
+
+    /* MODAL LISTA DE ASISTENCIAS DE USUARIOS INTERNOS */
+
+    function clickGuardarNuevaAsistencia(){
+        url = "/Cite/Servicios/GuardarAsistencias";
+        formData = {
+            listaUsuariosYAsistencia,
+            codServicio : "{{$servicio->codServicio}}",
+            _token	 	: "{{ csrf_token() }}"
+        }
+        request =  {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(formData)
+        }
+
+        maracFetch(url,request,function(objetoRespuesta){
+
+            console.log(objetoRespuesta);
+            $(".loader").show();
+            alertaMensaje(objetoRespuesta.titulo,objetoRespuesta.mensaje,objetoRespuesta.tipoWarning);
+
+
+            setTimeout(function(){
+                location.href = "{{route('CITE.Servicios.Editar',$servicio->codServicio)}}"
+            }, 1500);
+
+        })
+
+    }
+
+    var listaUsuariosYAsistencia = @php echo $listaUsuariosYAsistencia @endphp
+
+    function clickCambiarAsistencia(codUsuario,nuevoValor){
+        console.log('(clickCambiarAsistencia) codUsuario',codUsuario)
+        console.log('(clickCambiarAsistencia) nuevoValor',nuevoValor)
+
+        for (let index = 0; index < listaUsuariosYAsistencia.length; index++) {
+            const element = listaUsuariosYAsistencia[index];
+            if(element.codUsuario == codUsuario)
+                listaUsuariosYAsistencia[index].nuevaAsistencia = nuevoValor;
+
+        }
+
+        console.log('listaUsuariosYAsistencia',listaUsuariosYAsistencia)
+        actualizarBotonBusqueda();
+
+    }
+
+
+
+
+
+
     /* CRUD USUARIOS DEL SERVICIO PERO RENDERIZADO EN EL SERV POR PHP */
 
     var codRelacionAEliminar = 0;
@@ -701,22 +1065,56 @@
     }
 
 
-    const MensajeArchivosFaltantesString = "{{$servicio->getMensajeArchivosFaltantes()}}"
-    function clickRegresarMenu(){
-      
-      if(MensajeArchivosFaltantesString == "No falta ningún archivo."){
-        location.href = "{{route('CITE.Servicios.Listar')}}";
+    /* Busqueda rapida x nombre y dni */
 
-      }else{
-        confirmarConMensaje("¿Desea regresar al listado de servicios?",MensajeArchivosFaltantesString,"warning",function(){
-          location.href = "{{route('CITE.Servicios.Listar')}}";
-        })
-      }
+    function cambioUsuarioBuscado(newValue){
+        
 
-      
+        codUsuarioSeleccionado = newValue;
+        actualizarBotonBusqueda();
     }
 
- 
+    var codUsuarioSeleccionado = 0;
+
+    function actualizarBotonBusqueda(){
+        var relacion = listaUsuariosYAsistencia.find(e => e.codUsuario == codUsuarioSeleccionado);
+        console.log("nuevaAsistencia de: " + codUsuarioSeleccionado ,relacion.nuevaAsistencia);
+        if(relacion.nuevaAsistencia){
+            claseIcono = "fa fa-trash";
+            claseBoton = "btn btn-danger btn-sm";
+            msjBusqueda = "Eliminar asistencia";
+        }else{
+            claseIcono = "fa fa-check";
+            claseBoton = "btn btn-success btn-sm";
+            msjBusqueda = "Marcar asistencia";
+        }
+
+        document.getElementById("msjBusqueda").innerHTML = msjBusqueda;
+        document.getElementById("botonBusqueda").className = claseBoton
+        document.getElementById("iconoBusqueda").className = claseIcono
+
+    }
+
+
+
+    function clickMarcarAsistenciaBusquedaRapida(){
+        
+
+        codUsuarioSeleccionado = document.getElementById('codUsuarioBusquedaRapida').value
+
+        if(codUsuarioSeleccionado=="-1"){
+          alerta("Seleccione un usuario válido")
+          return;
+        }
+
+
+        var comboBox = document.getElementById('CB_Asistencia_'+codUsuarioSeleccionado) //hacemos click
+        comboBox.checked = !comboBox.checked;
+
+        clickCambiarAsistencia(codUsuarioSeleccionado,comboBox.checked);
+        actualizarBotonBusqueda();
+
+    }
 
 
 </script>

@@ -8,7 +8,6 @@ use App\ActividadPrincipal;
 use App\Configuracion;
 use App\Debug;
 use App\Empleado;
-use App\EmpleadoPuesto;
 use App\Models\CITE\UnidadProductiva as UnidadProductiva; 
 
 use App\ErrorHistorial;
@@ -33,17 +32,15 @@ class ReporteMensualController extends Controller
         
     
     */
-    static function PoblarReportesDelAñoActual(){
-        $año = date("Y");
-
+    function poblarReportesDelAño($año){
+        
         try {
             
             DB::beginTransaction();
+            $codigosEmpEquipo = ParametroSistema::getParametroSistema('listaEquipos')->valor;
+            $listaCodigos = explode(',',$codigosEmpEquipo);
+            $listaEmpleados = Empleado::whereIn('codEmpleado',$listaCodigos)->get();
             
-            $listaEmpleados = Empleado::getEmpleadosEquipo();
-
-            $codEstadoProgramado = EstadoReporteMensual::getCodigoProgramado();
-
             $msjEmpleados = "";
             foreach ($listaEmpleados as $emp){
                 for ($codMes=1; $codMes <= 12 ; $codMes++) { 
@@ -59,12 +56,11 @@ class ReporteMensualController extends Controller
                         $reporte->codMes = $codMes;
                         $reporte->codEmpleado = $emp->getId();
                         $reporte->comentario = "";
-                        $reporte->debeReportar = 1;
+                        $reporte->debeReportar = 0;
                         
-                        $reporte->codEstado = $codEstadoProgramado;
+                        $reporte->codEstado = EstadoReporteMensual::getCodigoNoProgramado();
                         $reporte->save();
                         $msjEmpleados .= ",".$emp->getNombreCompleto() ." mes=".$codMes." <br>";
- 
                     }
                 }
                 
@@ -86,12 +82,10 @@ class ReporteMensualController extends Controller
     function VerMatriz(){
         try {
 
-            
-            $listaEmpleados = Empleado::getEmpleadosEquipo();
-
-            $año_actual = date("Y");
-
-            $listaAños =  [$año_actual];
+            $codigosEmpEquipo = ParametroSistema::getParametroSistema('listaEquipos')->valor;
+            $listaCodigos = explode(',',$codigosEmpEquipo);
+            $listaEmpleados = Empleado::whereIn('codEmpleado',$listaCodigos)->get();
+            $listaAños =  [2022];
             $listaMeses = Mes::All();
             
             $listaReportesMensuales = ReporteMensualCite::AllWithData();
@@ -113,7 +107,6 @@ class ReporteMensualController extends Controller
 
     /* Primer paso del historial */
     function Programar($codReporte){
-
         $reporte = ReporteMensualCite::findOrFail($codReporte);
         $reporte->debeReportar = 1;
         $reporte->codEstado = EstadoReporteMensual::getCodigoProgramado();
@@ -132,7 +125,7 @@ class ReporteMensualController extends Controller
         );  
     
         return redirect()->route('CITE.ReporteMensual.VerMatriz')
-            ->with('datos_ok',"Se programó exitosamente un reporte de ".$reporte->getMsjInfo());
+            ->with('datos',"Se programó exitosamente un reporte de ".$reporte->getMsjInfo());
 
     }
     function Cancelar($codReporte){
@@ -156,7 +149,7 @@ class ReporteMensualController extends Controller
         );  
 
         return redirect()->route('CITE.ReporteMensual.VerMatriz')
-            ->with('datos_ok',"Se Canceló exitosamente el reporte de ".$reporte->getMsjInfo());
+            ->with('datos',"Se Canceló exitosamente el reporte de ".$reporte->getMsjInfo());
     }
 
 
@@ -196,7 +189,7 @@ class ReporteMensualController extends Controller
 
             db::commit();
             return redirect()->route('CITE.ReporteMensual.VerMatriz')
-                ->with('datos_ok',"Se Observó exitosamente el reporte de ".$reporte->getMsjInfo());
+                ->with('datos',"Se Observó exitosamente el reporte de ".$reporte->getMsjInfo());
 
 
         } catch (\Throwable $th) {
@@ -231,7 +224,7 @@ class ReporteMensualController extends Controller
 
             db::commit();
             return redirect()->route('CITE.ReporteMensual.VerMatriz')
-                ->with('datos_ok',"Se Aprobó exitosamente el reporte de ".$reporte->getMsjInfo());
+                ->with('datos',"Se Aprobó exitosamente el reporte de ".$reporte->getMsjInfo());
 
         } catch (\Throwable $th) {
             db::rollBack();
@@ -280,17 +273,16 @@ class ReporteMensualController extends Controller
         }
         
         return redirect()->route('CITE.ReporteMensual.MisReportes')
-            ->with('datos_ok',"Se marcó como listo el reporte de ".$reporte->getMsjInfo());
+            ->with('datos',"Se marcó como listo el reporte de ".$reporte->getMsjInfo());
     }
     
 
     
 
     function MisReportes(){
-        $año = date("Y");
 
         $emp = Empleado::getEmpleadoLogeado();
-        $listaReportes = ReporteMensualCite::where('año',$año)->where('codEmpleado','=',$emp->getId())->get();
+        $listaReportes = ReporteMensualCite::where('año',2022)->where('codEmpleado','=',$emp->getId())->get();
         return view('CITE.ReporteMensual.MisReportes',compact('listaReportes'));
 
     }

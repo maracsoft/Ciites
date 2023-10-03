@@ -1,17 +1,7 @@
-
-@php
-  if($abierto_inicialmente){
-    $show = "show";
-  }else{
-    $show = "";
-  }
-    
-@endphp
-
 @if($apertura)
   <div class="panel-group card">
     <div class="panel panel-default">
-        <a class="titulo " onclick="girarIconoDesplegable{{$r}}()" data-toggle="collapse" href="#collapseArchivos{{$r}}"> 
+        <a class="titulo" onclick="girarIconoDesplegable{{$r}}()" data-toggle="collapse" href="#collapseArchivos{{$r}}"> 
             <div class="panel-heading card-header" style="">
                 <h4 class="panel-title card-title" style="">
                     {{$titulo}}
@@ -19,9 +9,9 @@
                 <i id="iconoGirador{{$r}}" class="fas fa-plus iconoGirador iconoGiradorRotado" style="float:right"></i>
             </div>
         </a>
-        <div id="collapseArchivos{{$r}}" class="panel-collapse collapse card-body p-0 {{$show}}">
+        <div id="collapseArchivos{{$r}}" class="panel-collapse collapse card-body p-0 show">
 
-       
+
 @else
 
           {{-- AQUÍ VA EL CONTENIDO --}}
