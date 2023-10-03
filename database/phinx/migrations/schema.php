@@ -42,7 +42,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'descripcion' => 
         array (
@@ -65,7 +66,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -125,7 +127,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'descripcion' => 
         array (
@@ -148,7 +151,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codResultadoEsperado' => 
         array (
@@ -167,11 +171,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -194,8 +199,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_actividad_res_and_resultado_esperado' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'actividad_res',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_actividad_res_and_resultado_esperado',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codResultadoEsperado',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_actividad_res_and_resultado_esperado' => 
+        array (
+          'TABLE_NAME' => 'actividad_res',
+          'COLUMN_NAME' => 'codResultadoEsperado',
+          'CONSTRAINT_NAME' => 'fk_relation_actividad_res_and_resultado_esperado',
+          'REFERENCED_TABLE_NAME' => 'resultado_esperado',
+          'REFERENCED_COLUMN_NAME' => 'codResultadoEsperado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'archivo_orden' => 
     array (
@@ -231,7 +266,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreGuardado' => 
         array (
@@ -254,7 +290,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codOrdenCompra' => 
         array (
@@ -273,11 +310,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreAparente' => 
         array (
@@ -300,7 +338,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -323,8 +362,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_archivo_orden_and_orden_compra' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'archivo_orden',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_archivo_orden_and_orden_compra',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codOrdenCompra',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_archivo_orden_and_orden_compra' => 
+        array (
+          'TABLE_NAME' => 'archivo_orden',
+          'COLUMN_NAME' => 'codOrdenCompra',
+          'CONSTRAINT_NAME' => 'fk_relation_archivo_orden_and_orden_compra',
+          'REFERENCED_TABLE_NAME' => 'orden_compra',
+          'REFERENCED_COLUMN_NAME' => 'codOrdenCompra',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'archivo_proyecto' => 
     array (
@@ -360,7 +429,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreDeGuardado' => 
         array (
@@ -383,7 +453,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codProyecto' => 
         array (
@@ -402,11 +473,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraSubida' => 
         array (
@@ -429,7 +501,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codTipoArchivoProyecto' => 
         array (
@@ -448,11 +521,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreAparente' => 
         array (
@@ -475,7 +549,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -498,8 +573,66 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_archivo_proyecto_and_proyecto' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'archivo_proyecto',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_archivo_proyecto_and_proyecto',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codProyecto',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_archivo_proyecto_and_tipo_archivo_proyecto' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'archivo_proyecto',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_archivo_proyecto_and_tipo_archivo_proyecto',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codTipoArchivoProyecto',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_archivo_proyecto_and_proyecto' => 
+        array (
+          'TABLE_NAME' => 'archivo_proyecto',
+          'COLUMN_NAME' => 'codProyecto',
+          'CONSTRAINT_NAME' => 'fk_relation_archivo_proyecto_and_proyecto',
+          'REFERENCED_TABLE_NAME' => 'proyecto',
+          'REFERENCED_COLUMN_NAME' => 'codProyecto',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_archivo_proyecto_and_tipo_archivo_proyecto' => 
+        array (
+          'TABLE_NAME' => 'archivo_proyecto',
+          'COLUMN_NAME' => 'codTipoArchivoProyecto',
+          'CONSTRAINT_NAME' => 'fk_relation_archivo_proyecto_and_tipo_archivo_proyecto',
+          'REFERENCED_TABLE_NAME' => 'tipo_archivo_proyecto',
+          'REFERENCED_COLUMN_NAME' => 'codTipoArchivoProyecto',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'archivo_rend' => 
     array (
@@ -535,7 +668,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreDeGuardado' => 
         array (
@@ -558,7 +692,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codRendicionGastos' => 
         array (
@@ -577,11 +712,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreAparente' => 
         array (
@@ -604,7 +740,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -627,8 +764,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_archivo_rend_and_rendicion_gastos' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'archivo_rend',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_archivo_rend_and_rendicion_gastos',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codRendicionGastos',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_archivo_rend_and_rendicion_gastos' => 
+        array (
+          'TABLE_NAME' => 'archivo_rend',
+          'COLUMN_NAME' => 'codRendicionGastos',
+          'CONSTRAINT_NAME' => 'fk_relation_archivo_rend_and_rendicion_gastos',
+          'REFERENCED_TABLE_NAME' => 'rendicion_gastos',
+          'REFERENCED_COLUMN_NAME' => 'codRendicionGastos',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'archivo_repo' => 
     array (
@@ -664,7 +831,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreDeGuardado' => 
         array (
@@ -687,7 +855,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codReposicionGastos' => 
         array (
@@ -706,11 +875,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreAparente' => 
         array (
@@ -733,7 +903,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -756,8 +927,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_archivo_repo_and_reposicion_gastos' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'archivo_repo',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_archivo_repo_and_reposicion_gastos',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codReposicionGastos',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_archivo_repo_and_reposicion_gastos' => 
+        array (
+          'TABLE_NAME' => 'archivo_repo',
+          'COLUMN_NAME' => 'codReposicionGastos',
+          'CONSTRAINT_NAME' => 'fk_relation_archivo_repo_and_reposicion_gastos',
+          'REFERENCED_TABLE_NAME' => 'reposicion_gastos',
+          'REFERENCED_COLUMN_NAME' => 'codReposicionGastos',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'archivo_req_admin' => 
     array (
@@ -793,7 +994,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreDeGuardado' => 
         array (
@@ -816,7 +1018,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codRequerimiento' => 
         array (
@@ -835,11 +1038,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreAparente' => 
         array (
@@ -862,7 +1066,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -885,8 +1090,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_archivo_req_admin_and_requerimiento_bs' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'archivo_req_admin',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_archivo_req_admin_and_requerimiento_bs',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codRequerimiento',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_archivo_req_admin_and_requerimiento_bs' => 
+        array (
+          'TABLE_NAME' => 'archivo_req_admin',
+          'COLUMN_NAME' => 'codRequerimiento',
+          'CONSTRAINT_NAME' => 'fk_relation_archivo_req_admin_and_requerimiento_bs',
+          'REFERENCED_TABLE_NAME' => 'requerimiento_bs',
+          'REFERENCED_COLUMN_NAME' => 'codRequerimiento',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'archivo_req_emp' => 
     array (
@@ -922,7 +1157,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreDeGuardado' => 
         array (
@@ -945,7 +1181,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codRequerimiento' => 
         array (
@@ -964,11 +1201,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreAparente' => 
         array (
@@ -991,7 +1229,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -1014,8 +1253,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_archivo_req_emp_and_requerimiento_bs' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'archivo_req_emp',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_archivo_req_emp_and_requerimiento_bs',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codRequerimiento',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_archivo_req_emp_and_requerimiento_bs' => 
+        array (
+          'TABLE_NAME' => 'archivo_req_emp',
+          'COLUMN_NAME' => 'codRequerimiento',
+          'CONSTRAINT_NAME' => 'fk_relation_archivo_req_emp_and_requerimiento_bs',
+          'REFERENCED_TABLE_NAME' => 'requerimiento_bs',
+          'REFERENCED_COLUMN_NAME' => 'codRequerimiento',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'archivo_solicitud' => 
     array (
@@ -1051,7 +1320,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreDeGuardado' => 
         array (
@@ -1074,7 +1344,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codSolicitud' => 
         array (
@@ -1093,11 +1364,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreAparente' => 
         array (
@@ -1120,7 +1392,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -1143,8 +1416,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_archivo_solicitud_and_solicitud_fondos' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'archivo_solicitud',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_archivo_solicitud_and_solicitud_fondos',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codSolicitud',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_archivo_solicitud_and_solicitud_fondos' => 
+        array (
+          'TABLE_NAME' => 'archivo_solicitud',
+          'COLUMN_NAME' => 'codSolicitud',
+          'CONSTRAINT_NAME' => 'fk_relation_archivo_solicitud_and_solicitud_fondos',
+          'REFERENCED_TABLE_NAME' => 'solicitud_fondos',
+          'REFERENCED_COLUMN_NAME' => 'codSolicitud',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'contacto_financiera' => 
     array (
@@ -1180,7 +1483,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombres' => 
         array (
@@ -1203,7 +1507,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'apellidos' => 
         array (
@@ -1226,7 +1531,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'telefono' => 
         array (
@@ -1249,7 +1555,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'correo' => 
         array (
@@ -1272,7 +1579,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'documentoIdentidad' => 
         array (
@@ -1295,7 +1603,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codNacionalidad' => 
         array (
@@ -1314,11 +1623,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEntidadFinanciera' => 
         array (
@@ -1337,11 +1647,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaDeBaja' => 
         array (
@@ -1349,7 +1660,7 @@ return array (
           'TABLE_NAME' => 'contacto_financiera',
           'COLUMN_NAME' => 'fechaDeBaja',
           'ORDINAL_POSITION' => '9',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -1364,7 +1675,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -1387,8 +1699,66 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'cite_contacto_financiera" y "entidad_financiera' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'contacto_financiera',
+            'Non_unique' => '1',
+            'Key_name' => 'cite_contacto_financiera" y "entidad_financiera',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEntidadFinanciera',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_cite_contacto_financiera_and_nacionalidad' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'contacto_financiera',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_cite_contacto_financiera_and_nacionalidad',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codNacionalidad',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'cite_contacto_financiera" y "entidad_financiera' => 
+        array (
+          'TABLE_NAME' => 'contacto_financiera',
+          'COLUMN_NAME' => 'codEntidadFinanciera',
+          'CONSTRAINT_NAME' => 'cite_contacto_financiera" y "entidad_financiera',
+          'REFERENCED_TABLE_NAME' => 'entidad_financiera',
+          'REFERENCED_COLUMN_NAME' => 'codEntidadFinanciera',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_cite_contacto_financiera_and_nacionalidad' => 
+        array (
+          'TABLE_NAME' => 'contacto_financiera',
+          'COLUMN_NAME' => 'codNacionalidad',
+          'CONSTRAINT_NAME' => 'fk_relation_cite_contacto_financiera_and_nacionalidad',
+          'REFERENCED_TABLE_NAME' => 'nacionalidad',
+          'REFERENCED_COLUMN_NAME' => 'codNacionalidad',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'departamento' => 
     array (
@@ -1424,7 +1794,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -1447,7 +1818,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -1507,7 +1879,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fecha' => 
         array (
@@ -1530,7 +1903,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'lugar' => 
         array (
@@ -1553,7 +1927,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'detalle' => 
         array (
@@ -1576,7 +1951,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'importe' => 
         array (
@@ -1599,7 +1975,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codDJGastosMovilidad' => 
         array (
@@ -1618,11 +1995,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -1645,8 +2023,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_detalle_dj_gastosmovilidad_and_dj_gastosmovilidad' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'detalle_dj_gastosmovilidad',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_detalle_dj_gastosmovilidad_and_dj_gastosmovilidad',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codDJGastosMovilidad',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_detalle_dj_gastosmovilidad_and_dj_gastosmovilidad' => 
+        array (
+          'TABLE_NAME' => 'detalle_dj_gastosmovilidad',
+          'COLUMN_NAME' => 'codDJGastosMovilidad',
+          'CONSTRAINT_NAME' => 'fk_relation_detalle_dj_gastosmovilidad_and_dj_gastosmovilidad',
+          'REFERENCED_TABLE_NAME' => 'dj_gastosmovilidad',
+          'REFERENCED_COLUMN_NAME' => 'codDJGastosMovilidad',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'detalle_dj_gastosvarios' => 
     array (
@@ -1682,7 +2090,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fecha' => 
         array (
@@ -1705,7 +2114,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'concepto' => 
         array (
@@ -1728,7 +2138,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'importe' => 
         array (
@@ -1751,7 +2162,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codDJGastosVarios' => 
         array (
@@ -1770,11 +2182,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -1797,8 +2210,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_detalle_dj_gastosvarios_and_dj_gastosvarios' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'detalle_dj_gastosvarios',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_detalle_dj_gastosvarios_and_dj_gastosvarios',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codDJGastosVarios',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_detalle_dj_gastosvarios_and_dj_gastosvarios' => 
+        array (
+          'TABLE_NAME' => 'detalle_dj_gastosvarios',
+          'COLUMN_NAME' => 'codDJGastosVarios',
+          'CONSTRAINT_NAME' => 'fk_relation_detalle_dj_gastosvarios_and_dj_gastosvarios',
+          'REFERENCED_TABLE_NAME' => 'dj_gastosvarios',
+          'REFERENCED_COLUMN_NAME' => 'codDJGastosVarios',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'detalle_dj_gastosviaticos' => 
     array (
@@ -1834,7 +2277,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fecha' => 
         array (
@@ -1857,7 +2301,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'lugar' => 
         array (
@@ -1880,7 +2325,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'montoDesayuno' => 
         array (
@@ -1903,7 +2349,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'montoAlmuerzo' => 
         array (
@@ -1926,7 +2373,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'montoCena' => 
         array (
@@ -1949,7 +2397,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'totalDia' => 
         array (
@@ -1972,7 +2421,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codDJGastosViaticos' => 
         array (
@@ -1991,11 +2441,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -2018,8 +2469,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_detalle_dj_gastosviaticos_and_dj_gastosviaticos' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'detalle_dj_gastosviaticos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_detalle_dj_gastosviaticos_and_dj_gastosviaticos',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codDJGastosViaticos',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_detalle_dj_gastosviaticos_and_dj_gastosviaticos' => 
+        array (
+          'TABLE_NAME' => 'detalle_dj_gastosviaticos',
+          'COLUMN_NAME' => 'codDJGastosViaticos',
+          'CONSTRAINT_NAME' => 'fk_relation_detalle_dj_gastosviaticos_and_dj_gastosviaticos',
+          'REFERENCED_TABLE_NAME' => 'dj_gastosviaticos',
+          'REFERENCED_COLUMN_NAME' => 'codDJGastosViaticos',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'detalle_orden_compra' => 
     array (
@@ -2055,7 +2536,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'cantidad' => 
         array (
@@ -2078,7 +2560,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'descripcion' => 
         array (
@@ -2101,7 +2584,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'valorDeVenta' => 
         array (
@@ -2124,7 +2608,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'precioVenta' => 
         array (
@@ -2147,7 +2632,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'subtotal' => 
         array (
@@ -2170,7 +2656,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codOrdenCompra' => 
         array (
@@ -2189,11 +2676,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'exoneradoIGV' => 
         array (
@@ -2216,7 +2704,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codUnidadMedida' => 
         array (
@@ -2235,11 +2724,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -2262,8 +2752,66 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_detalle_orden_compra_and_orden_compra' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'detalle_orden_compra',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_detalle_orden_compra_and_orden_compra',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codOrdenCompra',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_detalle_orden_compra_and_unidad_medida' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'detalle_orden_compra',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_detalle_orden_compra_and_unidad_medida',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codUnidadMedida',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_detalle_orden_compra_and_orden_compra' => 
+        array (
+          'TABLE_NAME' => 'detalle_orden_compra',
+          'COLUMN_NAME' => 'codOrdenCompra',
+          'CONSTRAINT_NAME' => 'fk_relation_detalle_orden_compra_and_orden_compra',
+          'REFERENCED_TABLE_NAME' => 'orden_compra',
+          'REFERENCED_COLUMN_NAME' => 'codOrdenCompra',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_detalle_orden_compra_and_unidad_medida' => 
+        array (
+          'TABLE_NAME' => 'detalle_orden_compra',
+          'COLUMN_NAME' => 'codUnidadMedida',
+          'CONSTRAINT_NAME' => 'fk_relation_detalle_orden_compra_and_unidad_medida',
+          'REFERENCED_TABLE_NAME' => 'unidad_medida',
+          'REFERENCED_COLUMN_NAME' => 'codUnidadMedida',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'detalle_reposicion_gastos' => 
     array (
@@ -2299,7 +2847,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codReposicionGastos' => 
         array (
@@ -2318,11 +2867,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaComprobante' => 
         array (
@@ -2345,7 +2895,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nroComprobante' => 
         array (
@@ -2368,7 +2919,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'concepto' => 
         array (
@@ -2391,7 +2943,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'importe' => 
         array (
@@ -2414,7 +2967,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codigoPresupuestal' => 
         array (
@@ -2437,7 +2991,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nroEnReposicion' => 
         array (
@@ -2460,7 +3015,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codTipoCDP' => 
         array (
@@ -2479,11 +3035,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'contabilizado' => 
         array (
@@ -2506,7 +3063,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'pendienteDeVer' => 
         array (
@@ -2529,7 +3087,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -2552,8 +3111,66 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_detalle_reposicion_gastos_and_cdp' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'detalle_reposicion_gastos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_detalle_reposicion_gastos_and_cdp',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codTipoCDP',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_detalle_reposicion_gastos_and_reposicion_gastos' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'detalle_reposicion_gastos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_detalle_reposicion_gastos_and_reposicion_gastos',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codReposicionGastos',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_detalle_reposicion_gastos_and_cdp' => 
+        array (
+          'TABLE_NAME' => 'detalle_reposicion_gastos',
+          'COLUMN_NAME' => 'codTipoCDP',
+          'CONSTRAINT_NAME' => 'fk_relation_detalle_reposicion_gastos_and_cdp',
+          'REFERENCED_TABLE_NAME' => 'cdp',
+          'REFERENCED_COLUMN_NAME' => 'codTipoCDP',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_detalle_reposicion_gastos_and_reposicion_gastos' => 
+        array (
+          'TABLE_NAME' => 'detalle_reposicion_gastos',
+          'COLUMN_NAME' => 'codReposicionGastos',
+          'CONSTRAINT_NAME' => 'fk_relation_detalle_reposicion_gastos_and_reposicion_gastos',
+          'REFERENCED_TABLE_NAME' => 'reposicion_gastos',
+          'REFERENCED_COLUMN_NAME' => 'codReposicionGastos',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'detalle_requerimiento_bs' => 
     array (
@@ -2589,7 +3206,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codRequerimiento' => 
         array (
@@ -2608,11 +3226,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'cantidad' => 
         array (
@@ -2635,7 +3254,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codUnidadMedida' => 
         array (
@@ -2654,11 +3274,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'descripcion' => 
         array (
@@ -2681,7 +3302,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codigoPresupuestal' => 
         array (
@@ -2704,7 +3326,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -2727,8 +3350,66 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_detalle_requerimiento_bs_and_requerimiento_bs' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'detalle_requerimiento_bs',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_detalle_requerimiento_bs_and_requerimiento_bs',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codRequerimiento',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_detalle_requerimiento_bs_and_unidad_medida' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'detalle_requerimiento_bs',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_detalle_requerimiento_bs_and_unidad_medida',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codUnidadMedida',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_detalle_requerimiento_bs_and_requerimiento_bs' => 
+        array (
+          'TABLE_NAME' => 'detalle_requerimiento_bs',
+          'COLUMN_NAME' => 'codRequerimiento',
+          'CONSTRAINT_NAME' => 'fk_relation_detalle_requerimiento_bs_and_requerimiento_bs',
+          'REFERENCED_TABLE_NAME' => 'requerimiento_bs',
+          'REFERENCED_COLUMN_NAME' => 'codRequerimiento',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_detalle_requerimiento_bs_and_unidad_medida' => 
+        array (
+          'TABLE_NAME' => 'detalle_requerimiento_bs',
+          'COLUMN_NAME' => 'codUnidadMedida',
+          'CONSTRAINT_NAME' => 'fk_relation_detalle_requerimiento_bs_and_unidad_medida',
+          'REFERENCED_TABLE_NAME' => 'unidad_medida',
+          'REFERENCED_COLUMN_NAME' => 'codUnidadMedida',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'distrito' => 
     array (
@@ -2764,7 +3445,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -2787,7 +3469,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codProvincia' => 
         array (
@@ -2806,11 +3489,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -2833,8 +3517,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_distrito_and_provincia' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'distrito',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_distrito_and_provincia',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codProvincia',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_distrito_and_provincia' => 
+        array (
+          'TABLE_NAME' => 'distrito',
+          'COLUMN_NAME' => 'codProvincia',
+          'CONSTRAINT_NAME' => 'fk_relation_distrito_and_provincia',
+          'REFERENCED_TABLE_NAME' => 'provincia',
+          'REFERENCED_COLUMN_NAME' => 'codProvincia',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'dj_gastosmovilidad' => 
     array (
@@ -2870,7 +3584,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'domicilio' => 
         array (
@@ -2893,7 +3608,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'importeTotal' => 
         array (
@@ -2916,7 +3632,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codMoneda' => 
         array (
@@ -2935,11 +3652,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleado' => 
         array (
@@ -2958,11 +3676,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codDJGastosMovilidad' => 
         array (
@@ -2985,7 +3704,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codigoCedepas' => 
         array (
@@ -3008,7 +3728,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -3031,8 +3752,66 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_dj_gastosmovilidad_and_empleado' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'dj_gastosmovilidad',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_dj_gastosmovilidad_and_empleado',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleado',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_dj_gastosmovilidad_and_moneda' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'dj_gastosmovilidad',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_dj_gastosmovilidad_and_moneda',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codMoneda',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_dj_gastosmovilidad_and_empleado' => 
+        array (
+          'TABLE_NAME' => 'dj_gastosmovilidad',
+          'COLUMN_NAME' => 'codEmpleado',
+          'CONSTRAINT_NAME' => 'fk_relation_dj_gastosmovilidad_and_empleado',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_dj_gastosmovilidad_and_moneda' => 
+        array (
+          'TABLE_NAME' => 'dj_gastosmovilidad',
+          'COLUMN_NAME' => 'codMoneda',
+          'CONSTRAINT_NAME' => 'fk_relation_dj_gastosmovilidad_and_moneda',
+          'REFERENCED_TABLE_NAME' => 'moneda',
+          'REFERENCED_COLUMN_NAME' => 'codMoneda',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'dj_gastosvarios' => 
     array (
@@ -3068,7 +3847,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraCreacion' => 
         array (
@@ -3091,7 +3871,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'domicilio' => 
         array (
@@ -3114,7 +3895,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'importeTotal' => 
         array (
@@ -3137,7 +3919,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codMoneda' => 
         array (
@@ -3156,11 +3939,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleado' => 
         array (
@@ -3179,11 +3963,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codigoCedepas' => 
         array (
@@ -3206,7 +3991,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -3229,8 +4015,66 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_dj_gastosvarios_and_empleado' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'dj_gastosvarios',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_dj_gastosvarios_and_empleado',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleado',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_dj_gastosvarios_and_moneda' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'dj_gastosvarios',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_dj_gastosvarios_and_moneda',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codMoneda',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_dj_gastosvarios_and_empleado' => 
+        array (
+          'TABLE_NAME' => 'dj_gastosvarios',
+          'COLUMN_NAME' => 'codEmpleado',
+          'CONSTRAINT_NAME' => 'fk_relation_dj_gastosvarios_and_empleado',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_dj_gastosvarios_and_moneda' => 
+        array (
+          'TABLE_NAME' => 'dj_gastosvarios',
+          'COLUMN_NAME' => 'codMoneda',
+          'CONSTRAINT_NAME' => 'fk_relation_dj_gastosvarios_and_moneda',
+          'REFERENCED_TABLE_NAME' => 'moneda',
+          'REFERENCED_COLUMN_NAME' => 'codMoneda',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'dj_gastosviaticos' => 
     array (
@@ -3266,7 +4110,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraCreacion' => 
         array (
@@ -3289,7 +4134,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'domicilio' => 
         array (
@@ -3312,7 +4158,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'importeTotal' => 
         array (
@@ -3335,7 +4182,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codMoneda' => 
         array (
@@ -3354,11 +4202,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleado' => 
         array (
@@ -3377,11 +4226,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codigoCedepas' => 
         array (
@@ -3404,7 +4254,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -3427,8 +4278,66 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_dj_gastosviaticos_and_empleado' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'dj_gastosviaticos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_dj_gastosviaticos_and_empleado',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleado',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_dj_gastosviaticos_and_moneda' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'dj_gastosviaticos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_dj_gastosviaticos_and_moneda',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codMoneda',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_dj_gastosviaticos_and_empleado' => 
+        array (
+          'TABLE_NAME' => 'dj_gastosviaticos',
+          'COLUMN_NAME' => 'codEmpleado',
+          'CONSTRAINT_NAME' => 'fk_relation_dj_gastosviaticos_and_empleado',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_dj_gastosviaticos_and_moneda' => 
+        array (
+          'TABLE_NAME' => 'dj_gastosviaticos',
+          'COLUMN_NAME' => 'codMoneda',
+          'CONSTRAINT_NAME' => 'fk_relation_dj_gastosviaticos_and_moneda',
+          'REFERENCED_TABLE_NAME' => 'moneda',
+          'REFERENCED_COLUMN_NAME' => 'codMoneda',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'entidad_financiera' => 
     array (
@@ -3464,7 +4373,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -3487,7 +4397,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -3547,7 +4458,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleado' => 
         array (
@@ -3566,11 +4478,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'controllerDondeOcurrio' => 
         array (
@@ -3593,7 +4506,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'funcionDondeOcurrio' => 
         array (
@@ -3616,7 +4530,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHora' => 
         array (
@@ -3639,7 +4554,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ipEmpleado' => 
         array (
@@ -3662,7 +4578,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'descripcionError' => 
         array (
@@ -3685,7 +4602,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'estadoError' => 
         array (
@@ -3708,7 +4626,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'razon' => 
         array (
@@ -3716,7 +4635,7 @@ return array (
           'TABLE_NAME' => 'error_historial',
           'COLUMN_NAME' => 'razon',
           'ORDINAL_POSITION' => '9',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '200',
@@ -3731,7 +4650,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'solucion' => 
         array (
@@ -3739,7 +4659,7 @@ return array (
           'TABLE_NAME' => 'error_historial',
           'COLUMN_NAME' => 'solucion',
           'ORDINAL_POSITION' => '10',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '500',
@@ -3754,7 +4674,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'formulario' => 
         array (
@@ -3777,7 +4698,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraSolucion' => 
         array (
@@ -3785,7 +4707,7 @@ return array (
           'TABLE_NAME' => 'error_historial',
           'COLUMN_NAME' => 'fechaHoraSolucion',
           'ORDINAL_POSITION' => '12',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -3800,7 +4722,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -3823,8 +4746,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_error_historial_and_empleado' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'error_historial',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_error_historial_and_empleado',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleado',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_error_historial_and_empleado' => 
+        array (
+          'TABLE_NAME' => 'error_historial',
+          'COLUMN_NAME' => 'codEmpleado',
+          'CONSTRAINT_NAME' => 'fk_relation_error_historial_and_empleado',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'estado_proyecto' => 
     array (
@@ -3860,7 +4813,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -3883,7 +4837,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -3943,7 +4898,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -3966,7 +4922,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ordenListadoEmpleado' => 
         array (
@@ -3989,7 +4946,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ordenListadoGerente' => 
         array (
@@ -4012,7 +4970,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ordenListadoAdministrador' => 
         array (
@@ -4035,7 +4994,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ordenListadoContador' => 
         array (
@@ -4058,7 +5018,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -4118,7 +5079,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -4141,7 +5103,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ordenListadoEmpleado' => 
         array (
@@ -4164,7 +5127,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ordenListadoGerente' => 
         array (
@@ -4187,7 +5151,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ordenListadoAdministrador' => 
         array (
@@ -4210,7 +5175,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ordenListadoContador' => 
         array (
@@ -4233,7 +5199,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -4293,7 +5260,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -4316,7 +5284,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ordenListadoEmpleado' => 
         array (
@@ -4339,7 +5308,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ordenListadoGerente' => 
         array (
@@ -4362,7 +5332,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ordenListadoAdministrador' => 
         array (
@@ -4385,7 +5356,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ordenListadoContador' => 
         array (
@@ -4408,7 +5380,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -4468,7 +5441,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codActividad' => 
         array (
@@ -4487,11 +5461,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'meta' => 
         array (
@@ -4514,7 +5489,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'unidadMedida' => 
         array (
@@ -4537,7 +5513,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'saldoPendiente' => 
         array (
@@ -4560,7 +5537,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -4583,8 +5561,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_indicador_actividad_and_actividad_res' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'indicador_actividad',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_indicador_actividad_and_actividad_res',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codActividad',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_indicador_actividad_and_actividad_res' => 
+        array (
+          'TABLE_NAME' => 'indicador_actividad',
+          'COLUMN_NAME' => 'codActividad',
+          'CONSTRAINT_NAME' => 'fk_relation_indicador_actividad_and_actividad_res',
+          'REFERENCED_TABLE_NAME' => 'actividad_res',
+          'REFERENCED_COLUMN_NAME' => 'codActividad',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'indicador_objespecifico' => 
     array (
@@ -4620,7 +5628,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'descripcion' => 
         array (
@@ -4643,7 +5652,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codObjEspecifico' => 
         array (
@@ -4662,11 +5672,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -4689,8 +5700,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_indicador_objespecifico_and_objetivo_especifico' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'indicador_objespecifico',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_indicador_objespecifico_and_objetivo_especifico',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codObjEspecifico',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_indicador_objespecifico_and_objetivo_especifico' => 
+        array (
+          'TABLE_NAME' => 'indicador_objespecifico',
+          'COLUMN_NAME' => 'codObjEspecifico',
+          'CONSTRAINT_NAME' => 'fk_relation_indicador_objespecifico_and_objetivo_especifico',
+          'REFERENCED_TABLE_NAME' => 'objetivo_especifico',
+          'REFERENCED_COLUMN_NAME' => 'codObjEspecifico',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'indicador_resultado' => 
     array (
@@ -4726,7 +5767,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'descripcion' => 
         array (
@@ -4749,7 +5791,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codResultadoEsperado' => 
         array (
@@ -4768,11 +5811,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -4795,8 +5839,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_indicador_resultado_and_resultado_esperado' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'indicador_resultado',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_indicador_resultado_and_resultado_esperado',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codResultadoEsperado',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_indicador_resultado_and_resultado_esperado' => 
+        array (
+          'TABLE_NAME' => 'indicador_resultado',
+          'COLUMN_NAME' => 'codResultadoEsperado',
+          'CONSTRAINT_NAME' => 'fk_relation_indicador_resultado_and_resultado_esperado',
+          'REFERENCED_TABLE_NAME' => 'resultado_esperado',
+          'REFERENCED_COLUMN_NAME' => 'codResultadoEsperado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'logeo_historial' => 
     array (
@@ -4832,7 +5906,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleado' => 
         array (
@@ -4851,11 +5926,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraLogeo' => 
         array (
@@ -4878,7 +5954,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ipLogeo' => 
         array (
@@ -4901,7 +5978,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -4924,8 +6002,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_logeo_historial_and_empleado' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'logeo_historial',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_logeo_historial_and_empleado',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleado',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_logeo_historial_and_empleado' => 
+        array (
+          'TABLE_NAME' => 'logeo_historial',
+          'COLUMN_NAME' => 'codEmpleado',
+          'CONSTRAINT_NAME' => 'fk_relation_logeo_historial_and_empleado',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'lugar_ejecucion' => 
     array (
@@ -4961,7 +6069,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codProyecto' => 
         array (
@@ -4980,11 +6089,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codDistrito' => 
         array (
@@ -5003,11 +6113,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'zona' => 
         array (
@@ -5030,7 +6141,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -5053,8 +6165,66 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_lugar_ejecucion_and_distrito' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'lugar_ejecucion',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_lugar_ejecucion_and_distrito',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codDistrito',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_lugar_ejecucion_and_proyecto' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'lugar_ejecucion',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_lugar_ejecucion_and_proyecto',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codProyecto',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_lugar_ejecucion_and_distrito' => 
+        array (
+          'TABLE_NAME' => 'lugar_ejecucion',
+          'COLUMN_NAME' => 'codDistrito',
+          'CONSTRAINT_NAME' => 'fk_relation_lugar_ejecucion_and_distrito',
+          'REFERENCED_TABLE_NAME' => 'distrito',
+          'REFERENCED_COLUMN_NAME' => 'codDistrito',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_lugar_ejecucion_and_proyecto' => 
+        array (
+          'TABLE_NAME' => 'lugar_ejecucion',
+          'COLUMN_NAME' => 'codProyecto',
+          'CONSTRAINT_NAME' => 'fk_relation_lugar_ejecucion_and_proyecto',
+          'REFERENCED_TABLE_NAME' => 'proyecto',
+          'REFERENCED_COLUMN_NAME' => 'codProyecto',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'medio_verificacion_meta' => 
     array (
@@ -5090,7 +6260,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreGuardado' => 
         array (
@@ -5113,7 +6284,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreAparente' => 
         array (
@@ -5136,7 +6308,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codMetaEjecutada' => 
         array (
@@ -5155,11 +6328,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -5182,8 +6356,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_medio_verificacion_meta_and_meta_ejecutada' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'medio_verificacion_meta',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_medio_verificacion_meta_and_meta_ejecutada',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codMetaEjecutada',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_medio_verificacion_meta_and_meta_ejecutada' => 
+        array (
+          'TABLE_NAME' => 'medio_verificacion_meta',
+          'COLUMN_NAME' => 'codMetaEjecutada',
+          'CONSTRAINT_NAME' => 'fk_relation_medio_verificacion_meta_and_meta_ejecutada',
+          'REFERENCED_TABLE_NAME' => 'meta_ejecutada',
+          'REFERENCED_COLUMN_NAME' => 'codMetaEjecutada',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'medio_verificacion_resultado' => 
     array (
@@ -5219,7 +6423,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'descripcion' => 
         array (
@@ -5242,7 +6447,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreGuardado' => 
         array (
@@ -5265,7 +6471,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreAparente' => 
         array (
@@ -5288,7 +6495,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codIndicadorResultado' => 
         array (
@@ -5307,11 +6515,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -5334,8 +6543,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_medio_verificacion_resultado_and_indicador_resultado' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'medio_verificacion_resultado',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_medio_verificacion_resultado_and_indicador_resultado',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codIndicadorResultado',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_medio_verificacion_resultado_and_indicador_resultado' => 
+        array (
+          'TABLE_NAME' => 'medio_verificacion_resultado',
+          'COLUMN_NAME' => 'codIndicadorResultado',
+          'CONSTRAINT_NAME' => 'fk_relation_medio_verificacion_resultado_and_indicador_resultado',
+          'REFERENCED_TABLE_NAME' => 'indicador_resultado',
+          'REFERENCED_COLUMN_NAME' => 'codIndicadorResultado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'mes' => 
     array (
@@ -5371,7 +6610,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -5394,7 +6634,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'abreviacion' => 
         array (
@@ -5417,7 +6658,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codDosDig' => 
         array (
@@ -5440,7 +6682,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -5500,7 +6743,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'cantidadProgramada' => 
         array (
@@ -5523,7 +6767,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'cantidadEjecutada' => 
         array (
@@ -5531,7 +6776,7 @@ return array (
           'TABLE_NAME' => 'meta_ejecutada',
           'COLUMN_NAME' => 'cantidadEjecutada',
           'ORDINAL_POSITION' => '3',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'float',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -5546,7 +6791,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleado' => 
         array (
@@ -5565,11 +6811,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaRegistroProgramacion' => 
         array (
@@ -5592,7 +6839,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'mesAñoObjetivo' => 
         array (
@@ -5615,7 +6863,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codIndicadorActividad' => 
         array (
@@ -5634,11 +6883,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'desviacion' => 
         array (
@@ -5646,7 +6896,7 @@ return array (
           'TABLE_NAME' => 'meta_ejecutada',
           'COLUMN_NAME' => 'desviacion',
           'ORDINAL_POSITION' => '8',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'float',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -5661,7 +6911,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'tasaEjecucion' => 
         array (
@@ -5669,7 +6920,7 @@ return array (
           'TABLE_NAME' => 'meta_ejecutada',
           'COLUMN_NAME' => 'tasaEjecucion',
           'ORDINAL_POSITION' => '9',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'float',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -5684,7 +6935,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaRegistroEjecucion' => 
         array (
@@ -5692,7 +6944,7 @@ return array (
           'TABLE_NAME' => 'meta_ejecutada',
           'COLUMN_NAME' => 'fechaRegistroEjecucion',
           'ORDINAL_POSITION' => '10',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -5707,7 +6959,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ejecutada' => 
         array (
@@ -5730,7 +6983,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'esReprogramada' => 
         array (
@@ -5753,7 +7007,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -5776,8 +7031,66 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_meta_ejecutada_and_empleado' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'meta_ejecutada',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_meta_ejecutada_and_empleado',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleado',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_meta_ejecutada_and_indicador_actividad' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'meta_ejecutada',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_meta_ejecutada_and_indicador_actividad',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codIndicadorActividad',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_meta_ejecutada_and_empleado' => 
+        array (
+          'TABLE_NAME' => 'meta_ejecutada',
+          'COLUMN_NAME' => 'codEmpleado',
+          'CONSTRAINT_NAME' => 'fk_relation_meta_ejecutada_and_empleado',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_meta_ejecutada_and_indicador_actividad' => 
+        array (
+          'TABLE_NAME' => 'meta_ejecutada',
+          'COLUMN_NAME' => 'codIndicadorActividad',
+          'CONSTRAINT_NAME' => 'fk_relation_meta_ejecutada_and_indicador_actividad',
+          'REFERENCED_TABLE_NAME' => 'indicador_actividad',
+          'REFERENCED_COLUMN_NAME' => 'codIndicadorActividad',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'moneda' => 
     array (
@@ -5813,7 +7126,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -5836,7 +7150,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'abreviatura' => 
         array (
@@ -5859,7 +7174,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'simbolo' => 
         array (
@@ -5882,7 +7198,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -5942,7 +7259,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -5965,7 +7283,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'pais' => 
         array (
@@ -5988,7 +7307,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'abreviacion' => 
         array (
@@ -6011,7 +7331,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -6071,7 +7392,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreDocumento' => 
         array (
@@ -6094,7 +7416,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'año' => 
         array (
@@ -6117,7 +7440,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'numeroLibreActual' => 
         array (
@@ -6140,7 +7464,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -6200,7 +7525,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'descripcion' => 
         array (
@@ -6223,7 +7549,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codProyecto' => 
         array (
@@ -6242,11 +7569,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -6269,8 +7597,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_objetivo_especifico_and_proyecto' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'objetivo_especifico',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_objetivo_especifico_and_proyecto',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codProyecto',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_objetivo_especifico_and_proyecto' => 
+        array (
+          'TABLE_NAME' => 'objetivo_especifico',
+          'COLUMN_NAME' => 'codProyecto',
+          'CONSTRAINT_NAME' => 'fk_relation_objetivo_especifico_and_proyecto',
+          'REFERENCED_TABLE_NAME' => 'proyecto',
+          'REFERENCED_COLUMN_NAME' => 'codProyecto',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'objetivo_estrategico_cedepas' => 
     array (
@@ -6306,7 +7664,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'descripcion' => 
         array (
@@ -6329,7 +7688,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codPEI' => 
         array (
@@ -6348,11 +7708,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'item' => 
         array (
@@ -6375,7 +7736,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -6398,7 +7760,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -6421,8 +7784,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_objetivo_estrategico_cedepas_and_plan_estrategico_in' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'objetivo_estrategico_cedepas',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_objetivo_estrategico_cedepas_and_plan_estrategico_in',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codPEI',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_objetivo_estrategico_cedepas_and_plan_estrategico_in' => 
+        array (
+          'TABLE_NAME' => 'objetivo_estrategico_cedepas',
+          'COLUMN_NAME' => 'codPEI',
+          'CONSTRAINT_NAME' => 'fk_relation_objetivo_estrategico_cedepas_and_plan_estrategico_in',
+          'REFERENCED_TABLE_NAME' => 'plan_estrategico_institucional',
+          'REFERENCED_COLUMN_NAME' => 'codPEI',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'objetivo_milenio' => 
     array (
@@ -6458,7 +7851,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'descripcion' => 
         array (
@@ -6481,7 +7875,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'item' => 
         array (
@@ -6504,7 +7899,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -6564,7 +7960,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'señores' => 
         array (
@@ -6587,7 +7984,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ruc' => 
         array (
@@ -6610,7 +8008,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'direccion' => 
         array (
@@ -6633,7 +8032,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'atencion' => 
         array (
@@ -6656,7 +8056,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'referencia' => 
         array (
@@ -6679,7 +8080,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'total' => 
         array (
@@ -6702,7 +8104,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'partidaPresupuestal' => 
         array (
@@ -6725,7 +8128,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'observacion' => 
         array (
@@ -6748,7 +8152,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codProyecto' => 
         array (
@@ -6767,11 +8172,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codMoneda' => 
         array (
@@ -6790,11 +8196,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoCreador' => 
         array (
@@ -6813,11 +8220,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraCreacion' => 
         array (
@@ -6840,7 +8248,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codigoCedepas' => 
         array (
@@ -6863,7 +8272,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codSede' => 
         array (
@@ -6882,11 +8292,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -6909,8 +8320,122 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_orden_compra_and_empleado' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'orden_compra',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_orden_compra_and_empleado',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoCreador',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_orden_compra_and_moneda' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'orden_compra',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_orden_compra_and_moneda',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codMoneda',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_orden_compra_and_proyecto' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'orden_compra',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_orden_compra_and_proyecto',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codProyecto',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_orden_compra_and_sede' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'orden_compra',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_orden_compra_and_sede',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codSede',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_orden_compra_and_empleado' => 
+        array (
+          'TABLE_NAME' => 'orden_compra',
+          'COLUMN_NAME' => 'codEmpleadoCreador',
+          'CONSTRAINT_NAME' => 'fk_relation_orden_compra_and_empleado',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_orden_compra_and_moneda' => 
+        array (
+          'TABLE_NAME' => 'orden_compra',
+          'COLUMN_NAME' => 'codMoneda',
+          'CONSTRAINT_NAME' => 'fk_relation_orden_compra_and_moneda',
+          'REFERENCED_TABLE_NAME' => 'moneda',
+          'REFERENCED_COLUMN_NAME' => 'codMoneda',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_orden_compra_and_proyecto' => 
+        array (
+          'TABLE_NAME' => 'orden_compra',
+          'COLUMN_NAME' => 'codProyecto',
+          'CONSTRAINT_NAME' => 'fk_relation_orden_compra_and_proyecto',
+          'REFERENCED_TABLE_NAME' => 'proyecto',
+          'REFERENCED_COLUMN_NAME' => 'codProyecto',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_orden_compra_and_sede' => 
+        array (
+          'TABLE_NAME' => 'orden_compra',
+          'COLUMN_NAME' => 'codSede',
+          'CONSTRAINT_NAME' => 'fk_relation_orden_compra_and_sede',
+          'REFERENCED_TABLE_NAME' => 'sede',
+          'REFERENCED_COLUMN_NAME' => 'codSede',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'persona_juridica_poblacion' => 
     array (
@@ -6946,7 +8471,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ruc' => 
         array (
@@ -6969,7 +8495,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'razonSocial' => 
         array (
@@ -6992,7 +8519,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'direccion' => 
         array (
@@ -7015,7 +8543,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'numeroSociosHombres' => 
         array (
@@ -7038,7 +8567,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'numeroSociosMujeres' => 
         array (
@@ -7061,7 +8591,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codTipoPersonaJuridica' => 
         array (
@@ -7080,11 +8611,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'representante' => 
         array (
@@ -7107,7 +8639,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -7130,8 +8663,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_persona_juridica_poblacion_and_tipo_persona_juridica' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'persona_juridica_poblacion',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_persona_juridica_poblacion_and_tipo_persona_juridica',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codTipoPersonaJuridica',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_persona_juridica_poblacion_and_tipo_persona_juridica' => 
+        array (
+          'TABLE_NAME' => 'persona_juridica_poblacion',
+          'COLUMN_NAME' => 'codTipoPersonaJuridica',
+          'CONSTRAINT_NAME' => 'fk_relation_persona_juridica_poblacion_and_tipo_persona_juridica',
+          'REFERENCED_TABLE_NAME' => 'tipo_persona_juridica',
+          'REFERENCED_COLUMN_NAME' => 'codTipoPersonaJuridica',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'persona_natural_poblacion' => 
     array (
@@ -7167,7 +8730,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'dni' => 
         array (
@@ -7190,7 +8754,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombres' => 
         array (
@@ -7213,7 +8778,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'apellidos' => 
         array (
@@ -7236,7 +8802,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaNacimiento' => 
         array (
@@ -7259,7 +8826,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'edadMomentanea' => 
         array (
@@ -7282,7 +8850,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'sexo' => 
         array (
@@ -7290,7 +8859,7 @@ return array (
           'TABLE_NAME' => 'persona_natural_poblacion',
           'COLUMN_NAME' => 'sexo',
           'ORDINAL_POSITION' => '7',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'char',
           'CHARACTER_MAXIMUM_LENGTH' => '1',
@@ -7305,7 +8874,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'direccion' => 
         array (
@@ -7313,7 +8883,7 @@ return array (
           'TABLE_NAME' => 'persona_natural_poblacion',
           'COLUMN_NAME' => 'direccion',
           'ORDINAL_POSITION' => '8',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '300',
@@ -7328,7 +8898,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nroTelefono' => 
         array (
@@ -7336,7 +8907,7 @@ return array (
           'TABLE_NAME' => 'persona_natural_poblacion',
           'COLUMN_NAME' => 'nroTelefono',
           'ORDINAL_POSITION' => '9',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '20',
@@ -7351,7 +8922,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codLugarEjecucion' => 
         array (
@@ -7370,11 +8942,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -7397,8 +8970,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_persona_natural_poblacion_and_lugar_ejecucion' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'persona_natural_poblacion',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_persona_natural_poblacion_and_lugar_ejecucion',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codLugarEjecucion',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_persona_natural_poblacion_and_lugar_ejecucion' => 
+        array (
+          'TABLE_NAME' => 'persona_natural_poblacion',
+          'COLUMN_NAME' => 'codLugarEjecucion',
+          'CONSTRAINT_NAME' => 'fk_relation_persona_natural_poblacion_and_lugar_ejecucion',
+          'REFERENCED_TABLE_NAME' => 'lugar_ejecucion',
+          'REFERENCED_COLUMN_NAME' => 'codLugarEjecucion',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'plan_estrategico_institucional' => 
     array (
@@ -7434,7 +9037,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'añoInicio' => 
         array (
@@ -7457,7 +9061,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'añoFin' => 
         array (
@@ -7480,7 +9085,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -7540,7 +9146,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'descripcion' => 
         array (
@@ -7563,7 +9170,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codProyecto' => 
         array (
@@ -7582,11 +9190,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -7609,8 +9218,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_poblacion_beneficiaria_and_proyecto' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'poblacion_beneficiaria',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_poblacion_beneficiaria_and_proyecto',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codProyecto',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_poblacion_beneficiaria_and_proyecto' => 
+        array (
+          'TABLE_NAME' => 'poblacion_beneficiaria',
+          'COLUMN_NAME' => 'codProyecto',
+          'CONSTRAINT_NAME' => 'fk_relation_poblacion_beneficiaria_and_proyecto',
+          'REFERENCED_TABLE_NAME' => 'proyecto',
+          'REFERENCED_COLUMN_NAME' => 'codProyecto',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'provincia' => 
     array (
@@ -7646,7 +9285,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -7669,7 +9309,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codDepartamento' => 
         array (
@@ -7688,11 +9329,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -7715,8 +9357,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_provincia_and_departamento' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'provincia',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_provincia_and_departamento',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codDepartamento',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_provincia_and_departamento' => 
+        array (
+          'TABLE_NAME' => 'provincia',
+          'COLUMN_NAME' => 'codDepartamento',
+          'CONSTRAINT_NAME' => 'fk_relation_provincia_and_departamento',
+          'REFERENCED_TABLE_NAME' => 'departamento',
+          'REFERENCED_COLUMN_NAME' => 'codDepartamento',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'proyecto_contador' => 
     array (
@@ -7752,7 +9424,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoContador' => 
         array (
@@ -7775,7 +9448,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codProyecto' => 
         array (
@@ -7794,11 +9468,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -7854,103 +9529,15 @@ return array (
             'Index_comment' => '',
           ),
         ),
-      ),
-      'foreign_keys' => NULL,
-    ),
-    'relacion_personajur_poblacion' => 
-    array (
-      'table' => 
-      array (
-        'table_name' => 'relacion_personajur_poblacion',
-        'engine' => 'InnoDB',
-        'table_comment' => '',
-        'table_collation' => 'latin1_swedish_ci',
-        'character_set_name' => 'latin1',
-        'row_format' => 'Dynamic',
-      ),
-      'columns' => 
-      array (
-        'codRelacionJur' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'relacion_personajur_poblacion',
-          'COLUMN_NAME' => 'codRelacionJur',
-          'ORDINAL_POSITION' => '1',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => 'PRI',
-          'EXTRA' => 'auto_increment',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codPoblacionBeneficiaria' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'relacion_personajur_poblacion',
-          'COLUMN_NAME' => 'codPoblacionBeneficiaria',
-          'ORDINAL_POSITION' => '2',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codPersonaJuridica' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'relacion_personajur_poblacion',
-          'COLUMN_NAME' => 'codPersonaJuridica',
-          'ORDINAL_POSITION' => '3',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-      ),
-      'indexes' => 
-      array (
-        'PRIMARY' => 
+        'fk_relation_proyecto_contador_and_proyecto' => 
         array (
           1 => 
           array (
-            'Table' => 'relacion_personajur_poblacion',
-            'Non_unique' => '0',
-            'Key_name' => 'PRIMARY',
+            'Table' => 'proyecto_contador',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_proyecto_contador_and_proyecto',
             'Seq_in_index' => '1',
-            'Column_name' => 'codRelacionJur',
+            'Column_name' => 'codProyecto',
             'Collation' => 'A',
             'Sub_part' => NULL,
             'Packed' => NULL,
@@ -7961,7 +9548,29 @@ return array (
           ),
         ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_proyecto_contador_and_empleado' => 
+        array (
+          'TABLE_NAME' => 'proyecto_contador',
+          'COLUMN_NAME' => 'codEmpleadoContador',
+          'CONSTRAINT_NAME' => 'fk_relation_proyecto_contador_and_empleado',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_proyecto_contador_and_proyecto' => 
+        array (
+          'TABLE_NAME' => 'proyecto_contador',
+          'COLUMN_NAME' => 'codProyecto',
+          'CONSTRAINT_NAME' => 'fk_relation_proyecto_contador_and_proyecto',
+          'REFERENCED_TABLE_NAME' => 'proyecto',
+          'REFERENCED_COLUMN_NAME' => 'codProyecto',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'relacion_personajuridica_actividad' => 
     array (
@@ -7997,7 +9606,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codActividadPrincipal' => 
         array (
@@ -8016,11 +9626,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codPersonaJuridica' => 
         array (
@@ -8039,11 +9650,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -8066,14 +9678,72 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'k_relation_relacion_personajuridica_actividad_and_actividad_prin' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'relacion_personajuridica_actividad',
+            'Non_unique' => '1',
+            'Key_name' => 'k_relation_relacion_personajuridica_actividad_and_actividad_prin',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codActividadPrincipal',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_relacion_personajuridica_actividad_and_persona_jurid' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'relacion_personajuridica_actividad',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_relacion_personajuridica_actividad_and_persona_jurid',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codPersonaJuridica',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_relacion_personajuridica_actividad_and_persona_jurid' => 
+        array (
+          'TABLE_NAME' => 'relacion_personajuridica_actividad',
+          'COLUMN_NAME' => 'codPersonaJuridica',
+          'CONSTRAINT_NAME' => 'fk_relation_relacion_personajuridica_actividad_and_persona_jurid',
+          'REFERENCED_TABLE_NAME' => 'persona_juridica_poblacion',
+          'REFERENCED_COLUMN_NAME' => 'codPersonaJuridica',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'k_relation_relacion_personajuridica_actividad_and_actividad_prin' => 
+        array (
+          'TABLE_NAME' => 'relacion_personajuridica_actividad',
+          'COLUMN_NAME' => 'codActividadPrincipal',
+          'CONSTRAINT_NAME' => 'k_relation_relacion_personajuridica_actividad_and_actividad_prin',
+          'REFERENCED_TABLE_NAME' => 'actividad_principal',
+          'REFERENCED_COLUMN_NAME' => 'codActividadPrincipal',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
-    'relacion_personanat_poblacion' => 
+    'relacion_personajur_poblacion' => 
     array (
       'table' => 
       array (
-        'table_name' => 'relacion_personanat_poblacion',
+        'table_name' => 'relacion_personajur_poblacion',
         'engine' => 'InnoDB',
         'table_comment' => '',
         'table_collation' => 'latin1_swedish_ci',
@@ -8082,11 +9752,11 @@ return array (
       ),
       'columns' => 
       array (
-        'codRelacionNat' => 
+        'codRelacionJur' => 
         array (
           'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'relacion_personanat_poblacion',
-          'COLUMN_NAME' => 'codRelacionNat',
+          'TABLE_NAME' => 'relacion_personajur_poblacion',
+          'COLUMN_NAME' => 'codRelacionJur',
           'ORDINAL_POSITION' => '1',
           'COLUMN_DEFAULT' => NULL,
           'IS_NULLABLE' => 'NO',
@@ -8103,13 +9773,14 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
-        'codPersonaNatural' => 
+        'codPoblacionBeneficiaria' => 
         array (
           'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'relacion_personanat_poblacion',
-          'COLUMN_NAME' => 'codPersonaNatural',
+          'TABLE_NAME' => 'relacion_personajur_poblacion',
+          'COLUMN_NAME' => 'codPoblacionBeneficiaria',
           'ORDINAL_POSITION' => '2',
           'COLUMN_DEFAULT' => NULL,
           'IS_NULLABLE' => 'NO',
@@ -8122,17 +9793,18 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
-        'codPoblacionBeneficiaria' => 
+        'codPersonaJuridica' => 
         array (
           'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'relacion_personanat_poblacion',
-          'COLUMN_NAME' => 'codPoblacionBeneficiaria',
+          'TABLE_NAME' => 'relacion_personajur_poblacion',
+          'COLUMN_NAME' => 'codPersonaJuridica',
           'ORDINAL_POSITION' => '3',
           'COLUMN_DEFAULT' => NULL,
           'IS_NULLABLE' => 'NO',
@@ -8145,11 +9817,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -8158,11 +9831,47 @@ return array (
         array (
           1 => 
           array (
-            'Table' => 'relacion_personanat_poblacion',
+            'Table' => 'relacion_personajur_poblacion',
             'Non_unique' => '0',
             'Key_name' => 'PRIMARY',
             'Seq_in_index' => '1',
-            'Column_name' => 'codRelacionNat',
+            'Column_name' => 'codRelacionJur',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_relacion_personajur_poblacion_and_persona_juridica_p' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'relacion_personajur_poblacion',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_relacion_personajur_poblacion_and_persona_juridica_p',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codPersonaJuridica',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_relacion_personajur_poblacion_and_poblacion_benefici' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'relacion_personajur_poblacion',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_relacion_personajur_poblacion_and_poblacion_benefici',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codPoblacionBeneficiaria',
             'Collation' => 'A',
             'Sub_part' => NULL,
             'Packed' => NULL,
@@ -8173,7 +9882,29 @@ return array (
           ),
         ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_relacion_personajur_poblacion_and_persona_juridica_p' => 
+        array (
+          'TABLE_NAME' => 'relacion_personajur_poblacion',
+          'COLUMN_NAME' => 'codPersonaJuridica',
+          'CONSTRAINT_NAME' => 'fk_relation_relacion_personajur_poblacion_and_persona_juridica_p',
+          'REFERENCED_TABLE_NAME' => 'persona_juridica_poblacion',
+          'REFERENCED_COLUMN_NAME' => 'codPersonaJuridica',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_relacion_personajur_poblacion_and_poblacion_benefici' => 
+        array (
+          'TABLE_NAME' => 'relacion_personajur_poblacion',
+          'COLUMN_NAME' => 'codPoblacionBeneficiaria',
+          'CONSTRAINT_NAME' => 'fk_relation_relacion_personajur_poblacion_and_poblacion_benefici',
+          'REFERENCED_TABLE_NAME' => 'poblacion_beneficiaria',
+          'REFERENCED_COLUMN_NAME' => 'codPoblacionBeneficiaria',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'relacion_personanatural_actividad' => 
     array (
@@ -8209,7 +9940,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codActividadPrincipal' => 
         array (
@@ -8228,11 +9960,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codPersonaNatural' => 
         array (
@@ -8251,11 +9984,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -8278,8 +10012,233 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_relacion_personanatural_actividad_and_actividad_prin' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'relacion_personanatural_actividad',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_relacion_personanatural_actividad_and_actividad_prin',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codActividadPrincipal',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_relacion_personanatural_actividad_and_persona_natura' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'relacion_personanatural_actividad',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_relacion_personanatural_actividad_and_persona_natura',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codPersonaNatural',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_relacion_personanatural_actividad_and_actividad_prin' => 
+        array (
+          'TABLE_NAME' => 'relacion_personanatural_actividad',
+          'COLUMN_NAME' => 'codActividadPrincipal',
+          'CONSTRAINT_NAME' => 'fk_relation_relacion_personanatural_actividad_and_actividad_prin',
+          'REFERENCED_TABLE_NAME' => 'actividad_principal',
+          'REFERENCED_COLUMN_NAME' => 'codActividadPrincipal',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_relacion_personanatural_actividad_and_persona_natura' => 
+        array (
+          'TABLE_NAME' => 'relacion_personanatural_actividad',
+          'COLUMN_NAME' => 'codPersonaNatural',
+          'CONSTRAINT_NAME' => 'fk_relation_relacion_personanatural_actividad_and_persona_natura',
+          'REFERENCED_TABLE_NAME' => 'persona_natural_poblacion',
+          'REFERENCED_COLUMN_NAME' => 'codPersonaNatural',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
+    ),
+    'relacion_personanat_poblacion' => 
+    array (
+      'table' => 
+      array (
+        'table_name' => 'relacion_personanat_poblacion',
+        'engine' => 'InnoDB',
+        'table_comment' => '',
+        'table_collation' => 'latin1_swedish_ci',
+        'character_set_name' => 'latin1',
+        'row_format' => 'Dynamic',
+      ),
+      'columns' => 
+      array (
+        'codRelacionNat' => 
+        array (
+          'TABLE_CATALOG' => 'def',
+          'TABLE_NAME' => 'relacion_personanat_poblacion',
+          'COLUMN_NAME' => 'codRelacionNat',
+          'ORDINAL_POSITION' => '1',
+          'COLUMN_DEFAULT' => NULL,
+          'IS_NULLABLE' => 'NO',
+          'DATA_TYPE' => 'int',
+          'CHARACTER_MAXIMUM_LENGTH' => NULL,
+          'CHARACTER_OCTET_LENGTH' => NULL,
+          'NUMERIC_PRECISION' => '10',
+          'NUMERIC_SCALE' => '0',
+          'DATETIME_PRECISION' => NULL,
+          'CHARACTER_SET_NAME' => NULL,
+          'COLLATION_NAME' => NULL,
+          'COLUMN_TYPE' => 'int(11)',
+          'COLUMN_KEY' => 'PRI',
+          'EXTRA' => 'auto_increment',
+          'PRIVILEGES' => 'select,insert,update,references',
+          'COLUMN_COMMENT' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
+        ),
+        'codPersonaNatural' => 
+        array (
+          'TABLE_CATALOG' => 'def',
+          'TABLE_NAME' => 'relacion_personanat_poblacion',
+          'COLUMN_NAME' => 'codPersonaNatural',
+          'ORDINAL_POSITION' => '2',
+          'COLUMN_DEFAULT' => NULL,
+          'IS_NULLABLE' => 'NO',
+          'DATA_TYPE' => 'int',
+          'CHARACTER_MAXIMUM_LENGTH' => NULL,
+          'CHARACTER_OCTET_LENGTH' => NULL,
+          'NUMERIC_PRECISION' => '10',
+          'NUMERIC_SCALE' => '0',
+          'DATETIME_PRECISION' => NULL,
+          'CHARACTER_SET_NAME' => NULL,
+          'COLLATION_NAME' => NULL,
+          'COLUMN_TYPE' => 'int(11)',
+          'COLUMN_KEY' => 'MUL',
+          'EXTRA' => '',
+          'PRIVILEGES' => 'select,insert,update,references',
+          'COLUMN_COMMENT' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
+        ),
+        'codPoblacionBeneficiaria' => 
+        array (
+          'TABLE_CATALOG' => 'def',
+          'TABLE_NAME' => 'relacion_personanat_poblacion',
+          'COLUMN_NAME' => 'codPoblacionBeneficiaria',
+          'ORDINAL_POSITION' => '3',
+          'COLUMN_DEFAULT' => NULL,
+          'IS_NULLABLE' => 'NO',
+          'DATA_TYPE' => 'int',
+          'CHARACTER_MAXIMUM_LENGTH' => NULL,
+          'CHARACTER_OCTET_LENGTH' => NULL,
+          'NUMERIC_PRECISION' => '10',
+          'NUMERIC_SCALE' => '0',
+          'DATETIME_PRECISION' => NULL,
+          'CHARACTER_SET_NAME' => NULL,
+          'COLLATION_NAME' => NULL,
+          'COLUMN_TYPE' => 'int(11)',
+          'COLUMN_KEY' => 'MUL',
+          'EXTRA' => '',
+          'PRIVILEGES' => 'select,insert,update,references',
+          'COLUMN_COMMENT' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
+        ),
+      ),
+      'indexes' => 
+      array (
+        'PRIMARY' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'relacion_personanat_poblacion',
+            'Non_unique' => '0',
+            'Key_name' => 'PRIMARY',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codRelacionNat',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_relacion_personanat_poblacion_and_persona_natural_po' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'relacion_personanat_poblacion',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_relacion_personanat_poblacion_and_persona_natural_po',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codPersonaNatural',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_relacion_personanat_poblacion_and_poblacion_benefici' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'relacion_personanat_poblacion',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_relacion_personanat_poblacion_and_poblacion_benefici',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codPoblacionBeneficiaria',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+      ),
+      'foreign_keys' => 
+      array (
+        'fk_relation_relacion_personanat_poblacion_and_persona_natural_po' => 
+        array (
+          'TABLE_NAME' => 'relacion_personanat_poblacion',
+          'COLUMN_NAME' => 'codPersonaNatural',
+          'CONSTRAINT_NAME' => 'fk_relation_relacion_personanat_poblacion_and_persona_natural_po',
+          'REFERENCED_TABLE_NAME' => 'persona_natural_poblacion',
+          'REFERENCED_COLUMN_NAME' => 'codPersonaNatural',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_relacion_personanat_poblacion_and_poblacion_benefici' => 
+        array (
+          'TABLE_NAME' => 'relacion_personanat_poblacion',
+          'COLUMN_NAME' => 'codPoblacionBeneficiaria',
+          'CONSTRAINT_NAME' => 'fk_relation_relacion_personanat_poblacion_and_poblacion_benefici',
+          'REFERENCED_TABLE_NAME' => 'poblacion_beneficiaria',
+          'REFERENCED_COLUMN_NAME' => 'codPoblacionBeneficiaria',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'relacion_proyecto_objestrategicos' => 
     array (
@@ -8315,7 +10274,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codObjetivoEstrategico' => 
         array (
@@ -8334,11 +10294,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codProyecto' => 
         array (
@@ -8357,11 +10318,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'porcentajeDeAporte' => 
         array (
@@ -8384,7 +10346,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -8407,8 +10370,66 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_relacion_proyecto_objestrategicos_and_objetivo_estra' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'relacion_proyecto_objestrategicos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_relacion_proyecto_objestrategicos_and_objetivo_estra',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codObjetivoEstrategico',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_relacion_proyecto_objestrategicos_and_proyecto' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'relacion_proyecto_objestrategicos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_relacion_proyecto_objestrategicos_and_proyecto',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codProyecto',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_relacion_proyecto_objestrategicos_and_objetivo_estra' => 
+        array (
+          'TABLE_NAME' => 'relacion_proyecto_objestrategicos',
+          'COLUMN_NAME' => 'codObjetivoEstrategico',
+          'CONSTRAINT_NAME' => 'fk_relation_relacion_proyecto_objestrategicos_and_objetivo_estra',
+          'REFERENCED_TABLE_NAME' => 'objetivo_estrategico_cedepas',
+          'REFERENCED_COLUMN_NAME' => 'codObjetivoEstrategico',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_relacion_proyecto_objestrategicos_and_proyecto' => 
+        array (
+          'TABLE_NAME' => 'relacion_proyecto_objestrategicos',
+          'COLUMN_NAME' => 'codProyecto',
+          'CONSTRAINT_NAME' => 'fk_relation_relacion_proyecto_objestrategicos_and_proyecto',
+          'REFERENCED_TABLE_NAME' => 'proyecto',
+          'REFERENCED_COLUMN_NAME' => 'codProyecto',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'relacion_proyecto_objmilenio' => 
     array (
@@ -8444,7 +10465,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'porcentaje' => 
         array (
@@ -8467,7 +10489,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codObjetivoMilenio' => 
         array (
@@ -8486,11 +10509,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codProyecto' => 
         array (
@@ -8509,11 +10533,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -8536,8 +10561,66 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_relacion_proyecto_objmilenio_and_objetivo_milenio' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'relacion_proyecto_objmilenio',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_relacion_proyecto_objmilenio_and_objetivo_milenio',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codObjetivoMilenio',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_relacion_proyecto_objmilenio_and_proyecto' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'relacion_proyecto_objmilenio',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_relacion_proyecto_objmilenio_and_proyecto',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codProyecto',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_relacion_proyecto_objmilenio_and_objetivo_milenio' => 
+        array (
+          'TABLE_NAME' => 'relacion_proyecto_objmilenio',
+          'COLUMN_NAME' => 'codObjetivoMilenio',
+          'CONSTRAINT_NAME' => 'fk_relation_relacion_proyecto_objmilenio_and_objetivo_milenio',
+          'REFERENCED_TABLE_NAME' => 'objetivo_milenio',
+          'REFERENCED_COLUMN_NAME' => 'codObjetivoMilenio',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_relacion_proyecto_objmilenio_and_proyecto' => 
+        array (
+          'TABLE_NAME' => 'relacion_proyecto_objmilenio',
+          'COLUMN_NAME' => 'codProyecto',
+          'CONSTRAINT_NAME' => 'fk_relation_relacion_proyecto_objmilenio_and_proyecto',
+          'REFERENCED_TABLE_NAME' => 'proyecto',
+          'REFERENCED_COLUMN_NAME' => 'codProyecto',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'reposicion_gastos' => 
     array (
@@ -8573,7 +10656,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEstadoReposicion' => 
         array (
@@ -8592,11 +10676,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'totalImporte' => 
         array (
@@ -8604,7 +10689,7 @@ return array (
           'TABLE_NAME' => 'reposicion_gastos',
           'COLUMN_NAME' => 'totalImporte',
           'ORDINAL_POSITION' => '3',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'float',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -8619,7 +10704,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codProyecto' => 
         array (
@@ -8638,11 +10724,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codMoneda' => 
         array (
@@ -8661,11 +10748,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codigoCedepas' => 
         array (
@@ -8688,7 +10776,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'girarAOrdenDe' => 
         array (
@@ -8711,7 +10800,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'numeroCuentaBanco' => 
         array (
@@ -8734,7 +10824,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codBanco' => 
         array (
@@ -8753,11 +10844,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'resumen' => 
         array (
@@ -8780,7 +10872,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraEmision' => 
         array (
@@ -8803,7 +10896,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoSolicitante' => 
         array (
@@ -8822,11 +10916,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoEvaluador' => 
         array (
@@ -8834,7 +10929,7 @@ return array (
           'TABLE_NAME' => 'reposicion_gastos',
           'COLUMN_NAME' => 'codEmpleadoEvaluador',
           'ORDINAL_POSITION' => '13',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'int',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -8845,11 +10940,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoAdmin' => 
         array (
@@ -8857,7 +10953,7 @@ return array (
           'TABLE_NAME' => 'reposicion_gastos',
           'COLUMN_NAME' => 'codEmpleadoAdmin',
           'ORDINAL_POSITION' => '14',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'int',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -8868,11 +10964,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoConta' => 
         array (
@@ -8880,7 +10977,7 @@ return array (
           'TABLE_NAME' => 'reposicion_gastos',
           'COLUMN_NAME' => 'codEmpleadoConta',
           'ORDINAL_POSITION' => '15',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'int',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -8891,11 +10988,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraRevisionGerente' => 
         array (
@@ -8903,7 +11001,7 @@ return array (
           'TABLE_NAME' => 'reposicion_gastos',
           'COLUMN_NAME' => 'fechaHoraRevisionGerente',
           'ORDINAL_POSITION' => '16',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -8918,7 +11016,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraRevisionAdmin' => 
         array (
@@ -8926,7 +11025,7 @@ return array (
           'TABLE_NAME' => 'reposicion_gastos',
           'COLUMN_NAME' => 'fechaHoraRevisionAdmin',
           'ORDINAL_POSITION' => '17',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -8941,7 +11040,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraRevisionConta' => 
         array (
@@ -8949,7 +11049,7 @@ return array (
           'TABLE_NAME' => 'reposicion_gastos',
           'COLUMN_NAME' => 'fechaHoraRevisionConta',
           'ORDINAL_POSITION' => '18',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -8964,7 +11064,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'observacion' => 
         array (
@@ -8972,7 +11073,7 @@ return array (
           'TABLE_NAME' => 'reposicion_gastos',
           'COLUMN_NAME' => 'observacion',
           'ORDINAL_POSITION' => '19',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '200',
@@ -8987,7 +11088,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'cantArchivos' => 
         array (
@@ -8995,7 +11097,7 @@ return array (
           'TABLE_NAME' => 'reposicion_gastos',
           'COLUMN_NAME' => 'cantArchivos',
           'ORDINAL_POSITION' => '20',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'tinyint',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -9010,7 +11112,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'terminacionesArchivos' => 
         array (
@@ -9018,7 +11121,7 @@ return array (
           'TABLE_NAME' => 'reposicion_gastos',
           'COLUMN_NAME' => 'terminacionesArchivos',
           'ORDINAL_POSITION' => '21',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '100',
@@ -9033,7 +11136,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraRenderizadoVistaCrear' => 
         array (
@@ -9041,7 +11145,7 @@ return array (
           'TABLE_NAME' => 'reposicion_gastos',
           'COLUMN_NAME' => 'fechaHoraRenderizadoVistaCrear',
           'ORDINAL_POSITION' => '22',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -9056,7 +11160,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codigoContrapartida' => 
         array (
@@ -9064,7 +11169,7 @@ return array (
           'TABLE_NAME' => 'reposicion_gastos',
           'COLUMN_NAME' => 'codigoContrapartida',
           'ORDINAL_POSITION' => '23',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '200',
@@ -9079,7 +11184,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -9102,8 +11208,234 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_reposicion_gastos_and_banco' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'reposicion_gastos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_reposicion_gastos_and_banco',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codBanco',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_reposicion_gastos_and_empleado_admin' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'reposicion_gastos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_reposicion_gastos_and_empleado_admin',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoAdmin',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => 'YES',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_reposicion_gastos_and_empleado_conta' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'reposicion_gastos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_reposicion_gastos_and_empleado_conta',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoConta',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => 'YES',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_reposicion_gastos_and_empleado_evaluador' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'reposicion_gastos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_reposicion_gastos_and_empleado_evaluador',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoEvaluador',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => 'YES',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_reposicion_gastos_and_empleado_solicitante' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'reposicion_gastos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_reposicion_gastos_and_empleado_solicitante',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoSolicitante',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_reposicion_gastos_and_estado_reposicion_gastos' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'reposicion_gastos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_reposicion_gastos_and_estado_reposicion_gastos',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEstadoReposicion',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_reposicion_gastos_and_moneda' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'reposicion_gastos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_reposicion_gastos_and_moneda',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codMoneda',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_reposicion_gastos_and_proyecto' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'reposicion_gastos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_reposicion_gastos_and_proyecto',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codProyecto',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_reposicion_gastos_and_banco' => 
+        array (
+          'TABLE_NAME' => 'reposicion_gastos',
+          'COLUMN_NAME' => 'codBanco',
+          'CONSTRAINT_NAME' => 'fk_relation_reposicion_gastos_and_banco',
+          'REFERENCED_TABLE_NAME' => 'banco',
+          'REFERENCED_COLUMN_NAME' => 'codBanco',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_reposicion_gastos_and_empleado_admin' => 
+        array (
+          'TABLE_NAME' => 'reposicion_gastos',
+          'COLUMN_NAME' => 'codEmpleadoAdmin',
+          'CONSTRAINT_NAME' => 'fk_relation_reposicion_gastos_and_empleado_admin',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_reposicion_gastos_and_empleado_conta' => 
+        array (
+          'TABLE_NAME' => 'reposicion_gastos',
+          'COLUMN_NAME' => 'codEmpleadoConta',
+          'CONSTRAINT_NAME' => 'fk_relation_reposicion_gastos_and_empleado_conta',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_reposicion_gastos_and_empleado_evaluador' => 
+        array (
+          'TABLE_NAME' => 'reposicion_gastos',
+          'COLUMN_NAME' => 'codEmpleadoEvaluador',
+          'CONSTRAINT_NAME' => 'fk_relation_reposicion_gastos_and_empleado_evaluador',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_reposicion_gastos_and_empleado_solicitante' => 
+        array (
+          'TABLE_NAME' => 'reposicion_gastos',
+          'COLUMN_NAME' => 'codEmpleadoSolicitante',
+          'CONSTRAINT_NAME' => 'fk_relation_reposicion_gastos_and_empleado_solicitante',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_reposicion_gastos_and_estado_reposicion_gastos' => 
+        array (
+          'TABLE_NAME' => 'reposicion_gastos',
+          'COLUMN_NAME' => 'codEstadoReposicion',
+          'CONSTRAINT_NAME' => 'fk_relation_reposicion_gastos_and_estado_reposicion_gastos',
+          'REFERENCED_TABLE_NAME' => 'estado_reposicion_gastos',
+          'REFERENCED_COLUMN_NAME' => 'codEstadoReposicion',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_reposicion_gastos_and_moneda' => 
+        array (
+          'TABLE_NAME' => 'reposicion_gastos',
+          'COLUMN_NAME' => 'codMoneda',
+          'CONSTRAINT_NAME' => 'fk_relation_reposicion_gastos_and_moneda',
+          'REFERENCED_TABLE_NAME' => 'moneda',
+          'REFERENCED_COLUMN_NAME' => 'codMoneda',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_reposicion_gastos_and_proyecto' => 
+        array (
+          'TABLE_NAME' => 'reposicion_gastos',
+          'COLUMN_NAME' => 'codProyecto',
+          'CONSTRAINT_NAME' => 'fk_relation_reposicion_gastos_and_proyecto',
+          'REFERENCED_TABLE_NAME' => 'proyecto',
+          'REFERENCED_COLUMN_NAME' => 'codProyecto',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'requerimiento_bs' => 
     array (
@@ -9139,7 +11471,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codigoCedepas' => 
         array (
@@ -9162,7 +11495,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraEmision' => 
         array (
@@ -9185,7 +11519,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraRevision' => 
         array (
@@ -9193,7 +11528,7 @@ return array (
           'TABLE_NAME' => 'requerimiento_bs',
           'COLUMN_NAME' => 'fechaHoraRevision',
           'ORDINAL_POSITION' => '4',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -9208,7 +11543,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraAtendido' => 
         array (
@@ -9216,7 +11552,7 @@ return array (
           'TABLE_NAME' => 'requerimiento_bs',
           'COLUMN_NAME' => 'fechaHoraAtendido',
           'ORDINAL_POSITION' => '5',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -9231,7 +11567,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraConta' => 
         array (
@@ -9239,7 +11576,7 @@ return array (
           'TABLE_NAME' => 'requerimiento_bs',
           'COLUMN_NAME' => 'fechaHoraConta',
           'ORDINAL_POSITION' => '6',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -9254,7 +11591,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoSolicitante' => 
         array (
@@ -9273,11 +11611,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoEvaluador' => 
         array (
@@ -9285,7 +11624,7 @@ return array (
           'TABLE_NAME' => 'requerimiento_bs',
           'COLUMN_NAME' => 'codEmpleadoEvaluador',
           'ORDINAL_POSITION' => '8',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'int',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -9296,11 +11635,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoAdministrador' => 
         array (
@@ -9308,7 +11648,7 @@ return array (
           'TABLE_NAME' => 'requerimiento_bs',
           'COLUMN_NAME' => 'codEmpleadoAdministrador',
           'ORDINAL_POSITION' => '9',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'int',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -9319,11 +11659,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoContador' => 
         array (
@@ -9331,7 +11672,7 @@ return array (
           'TABLE_NAME' => 'requerimiento_bs',
           'COLUMN_NAME' => 'codEmpleadoContador',
           'ORDINAL_POSITION' => '10',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'int',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -9342,11 +11683,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'justificacion' => 
         array (
@@ -9369,7 +11711,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEstadoRequerimiento' => 
         array (
@@ -9388,11 +11731,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'cantArchivosEmp' => 
         array (
@@ -9400,7 +11744,7 @@ return array (
           'TABLE_NAME' => 'requerimiento_bs',
           'COLUMN_NAME' => 'cantArchivosEmp',
           'ORDINAL_POSITION' => '13',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'tinyint',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -9415,7 +11759,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombresArchivosEmp' => 
         array (
@@ -9423,7 +11768,7 @@ return array (
           'TABLE_NAME' => 'requerimiento_bs',
           'COLUMN_NAME' => 'nombresArchivosEmp',
           'ORDINAL_POSITION' => '14',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '500',
@@ -9438,7 +11783,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'cantArchivosAdmin' => 
         array (
@@ -9446,7 +11792,7 @@ return array (
           'TABLE_NAME' => 'requerimiento_bs',
           'COLUMN_NAME' => 'cantArchivosAdmin',
           'ORDINAL_POSITION' => '15',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'tinyint',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -9461,7 +11807,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombresArchivosAdmin' => 
         array (
@@ -9469,7 +11816,7 @@ return array (
           'TABLE_NAME' => 'requerimiento_bs',
           'COLUMN_NAME' => 'nombresArchivosAdmin',
           'ORDINAL_POSITION' => '16',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '500',
@@ -9484,7 +11831,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codProyecto' => 
         array (
@@ -9503,11 +11851,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'observacion' => 
         array (
@@ -9515,7 +11864,7 @@ return array (
           'TABLE_NAME' => 'requerimiento_bs',
           'COLUMN_NAME' => 'observacion',
           'ORDINAL_POSITION' => '18',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '200',
@@ -9530,7 +11879,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'cuentaBancariaProveedor' => 
         array (
@@ -9538,7 +11888,7 @@ return array (
           'TABLE_NAME' => 'requerimiento_bs',
           'COLUMN_NAME' => 'cuentaBancariaProveedor',
           'ORDINAL_POSITION' => '19',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '100',
@@ -9553,7 +11903,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'tieneFactura' => 
         array (
@@ -9561,7 +11912,7 @@ return array (
           'TABLE_NAME' => 'requerimiento_bs',
           'COLUMN_NAME' => 'tieneFactura',
           'ORDINAL_POSITION' => '20',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'tinyint',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -9576,7 +11927,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'facturaContabilizada' => 
         array (
@@ -9599,7 +11951,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codigoContrapartida' => 
         array (
@@ -9607,7 +11960,7 @@ return array (
           'TABLE_NAME' => 'requerimiento_bs',
           'COLUMN_NAME' => 'codigoContrapartida',
           'ORDINAL_POSITION' => '22',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '200',
@@ -9622,7 +11975,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -9645,8 +11999,178 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_requerimiento_bs_and_empleado_administrador' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'requerimiento_bs',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_requerimiento_bs_and_empleado_administrador',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoAdministrador',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => 'YES',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_requerimiento_bs_and_empleado_contador' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'requerimiento_bs',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_requerimiento_bs_and_empleado_contador',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoContador',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => 'YES',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_requerimiento_bs_and_empleado_evaluador' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'requerimiento_bs',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_requerimiento_bs_and_empleado_evaluador',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoEvaluador',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => 'YES',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_requerimiento_bs_and_empleado_solicitante' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'requerimiento_bs',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_requerimiento_bs_and_empleado_solicitante',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoSolicitante',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_requerimiento_bs_and_estado_requerimiento_bs' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'requerimiento_bs',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_requerimiento_bs_and_estado_requerimiento_bs',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEstadoRequerimiento',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_requerimiento_bs_and_proyecto' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'requerimiento_bs',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_requerimiento_bs_and_proyecto',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codProyecto',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_requerimiento_bs_and_empleado_administrador' => 
+        array (
+          'TABLE_NAME' => 'requerimiento_bs',
+          'COLUMN_NAME' => 'codEmpleadoAdministrador',
+          'CONSTRAINT_NAME' => 'fk_relation_requerimiento_bs_and_empleado_administrador',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_requerimiento_bs_and_empleado_contador' => 
+        array (
+          'TABLE_NAME' => 'requerimiento_bs',
+          'COLUMN_NAME' => 'codEmpleadoContador',
+          'CONSTRAINT_NAME' => 'fk_relation_requerimiento_bs_and_empleado_contador',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_requerimiento_bs_and_empleado_evaluador' => 
+        array (
+          'TABLE_NAME' => 'requerimiento_bs',
+          'COLUMN_NAME' => 'codEmpleadoEvaluador',
+          'CONSTRAINT_NAME' => 'fk_relation_requerimiento_bs_and_empleado_evaluador',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_requerimiento_bs_and_empleado_solicitante' => 
+        array (
+          'TABLE_NAME' => 'requerimiento_bs',
+          'COLUMN_NAME' => 'codEmpleadoSolicitante',
+          'CONSTRAINT_NAME' => 'fk_relation_requerimiento_bs_and_empleado_solicitante',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_requerimiento_bs_and_estado_requerimiento_bs' => 
+        array (
+          'TABLE_NAME' => 'requerimiento_bs',
+          'COLUMN_NAME' => 'codEstadoRequerimiento',
+          'CONSTRAINT_NAME' => 'fk_relation_requerimiento_bs_and_estado_requerimiento_bs',
+          'REFERENCED_TABLE_NAME' => 'estado_requerimiento_bs',
+          'REFERENCED_COLUMN_NAME' => 'codEstadoRequerimiento',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_requerimiento_bs_and_proyecto' => 
+        array (
+          'TABLE_NAME' => 'requerimiento_bs',
+          'COLUMN_NAME' => 'codProyecto',
+          'CONSTRAINT_NAME' => 'fk_relation_requerimiento_bs_and_proyecto',
+          'REFERENCED_TABLE_NAME' => 'proyecto',
+          'REFERENCED_COLUMN_NAME' => 'codProyecto',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'resultado_esperado' => 
     array (
@@ -9682,7 +12206,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'descripcion' => 
         array (
@@ -9705,7 +12230,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codProyecto' => 
         array (
@@ -9724,11 +12250,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -9751,8 +12278,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_resultado_esperado_and_proyecto' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'resultado_esperado',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_resultado_esperado_and_proyecto',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codProyecto',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_resultado_esperado_and_proyecto' => 
+        array (
+          'TABLE_NAME' => 'resultado_esperado',
+          'COLUMN_NAME' => 'codProyecto',
+          'CONSTRAINT_NAME' => 'fk_relation_resultado_esperado_and_proyecto',
+          'REFERENCED_TABLE_NAME' => 'proyecto',
+          'REFERENCED_COLUMN_NAME' => 'codProyecto',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'tipo_archivo_proyecto' => 
     array (
@@ -9788,7 +12345,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -9811,7 +12369,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -9871,7 +12430,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -9894,7 +12454,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -9954,7 +12515,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -9977,7 +12539,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'siglas' => 
         array (
@@ -10000,7 +12563,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -10060,7 +12624,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -10083,7 +12648,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -10143,7 +12709,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreAparente' => 
         array (
@@ -10166,7 +12733,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreGuardado' => 
         array (
@@ -10189,7 +12757,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codTipoArchivo' => 
         array (
@@ -10208,11 +12777,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -10235,8 +12805,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_archivo_general_and_tipo_archivo_general' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'archivo_general',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_archivo_general_and_tipo_archivo_general',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codTipoArchivo',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_archivo_general_and_tipo_archivo_general' => 
+        array (
+          'TABLE_NAME' => 'archivo_general',
+          'COLUMN_NAME' => 'codTipoArchivo',
+          'CONSTRAINT_NAME' => 'fk_relation_archivo_general_and_tipo_archivo_general',
+          'REFERENCED_TABLE_NAME' => 'tipo_archivo_general',
+          'REFERENCED_COLUMN_NAME' => 'codTipoArchivo',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'avance_entregable' => 
     array (
@@ -10272,7 +12872,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'descripcion' => 
         array (
@@ -10295,7 +12896,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaEntrega' => 
         array (
@@ -10318,7 +12920,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'porcentaje' => 
         array (
@@ -10341,7 +12944,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'monto' => 
         array (
@@ -10364,7 +12968,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codContratoLocacion' => 
         array (
@@ -10383,11 +12988,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -10410,8 +13016,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_avance_entregable_and_contrato_locacion' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'avance_entregable',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_avance_entregable_and_contrato_locacion',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codContratoLocacion',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_avance_entregable_and_contrato_locacion' => 
+        array (
+          'TABLE_NAME' => 'avance_entregable',
+          'COLUMN_NAME' => 'codContratoLocacion',
+          'CONSTRAINT_NAME' => 'fk_relation_avance_entregable_and_contrato_locacion',
+          'REFERENCED_TABLE_NAME' => 'contrato_locacion',
+          'REFERENCED_COLUMN_NAME' => 'codContratoLocacion',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'banco' => 
     array (
@@ -10447,7 +13083,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreBanco' => 
         array (
@@ -10470,7 +13107,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -10530,7 +13168,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleado' => 
         array (
@@ -10549,11 +13188,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraInicioBuscar' => 
         array (
@@ -10576,7 +13216,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraVerPDF' => 
         array (
@@ -10584,7 +13225,7 @@ return array (
           'TABLE_NAME' => 'busqueda_repo',
           'COLUMN_NAME' => 'fechaHoraVerPDF',
           'ORDINAL_POSITION' => '4',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -10599,7 +13240,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -10622,8 +13264,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_busqueda_repo_and_empleado' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'busqueda_repo',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_busqueda_repo_and_empleado',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleado',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_busqueda_repo_and_empleado' => 
+        array (
+          'TABLE_NAME' => 'busqueda_repo',
+          'COLUMN_NAME' => 'codEmpleado',
+          'CONSTRAINT_NAME' => 'fk_relation_busqueda_repo_and_empleado',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'cdp' => 
     array (
@@ -10659,7 +13331,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreCDP' => 
         array (
@@ -10682,7 +13355,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codigoSUNAT' => 
         array (
@@ -10705,7 +13379,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -10719,2890 +13394,6 @@ return array (
             'Key_name' => 'PRIMARY',
             'Seq_in_index' => '1',
             'Column_name' => 'codTipoCDP',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-        ),
-      ),
-      'foreign_keys' => NULL,
-    ),
-    'cite-actividad' => 
-    array (
-      'table' => 
-      array (
-        'table_name' => 'cite-actividad',
-        'engine' => 'InnoDB',
-        'table_comment' => '',
-        'table_collation' => 'utf8mb4_general_ci',
-        'character_set_name' => 'utf8mb4',
-        'row_format' => 'Dynamic',
-      ),
-      'columns' => 
-      array (
-        'codActividad' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-actividad',
-          'COLUMN_NAME' => 'codActividad',
-          'ORDINAL_POSITION' => '1',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => 'PRI',
-          'EXTRA' => 'auto_increment',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'nombre' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-actividad',
-          'COLUMN_NAME' => 'nombre',
-          'ORDINAL_POSITION' => '2',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '200',
-          'CHARACTER_OCTET_LENGTH' => '800',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(200)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codTipoServicio' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-actividad',
-          'COLUMN_NAME' => 'codTipoServicio',
-          'ORDINAL_POSITION' => '3',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'descripcion' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-actividad',
-          'COLUMN_NAME' => 'descripcion',
-          'ORDINAL_POSITION' => '4',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '1000',
-          'CHARACTER_OCTET_LENGTH' => '4000',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(1000)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'indice' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-actividad',
-          'COLUMN_NAME' => 'indice',
-          'ORDINAL_POSITION' => '5',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '20',
-          'CHARACTER_OCTET_LENGTH' => '80',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(20)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-      ),
-      'indexes' => 
-      array (
-        'PRIMARY' => 
-        array (
-          1 => 
-          array (
-            'Table' => 'cite-actividad',
-            'Non_unique' => '0',
-            'Key_name' => 'PRIMARY',
-            'Seq_in_index' => '1',
-            'Column_name' => 'codActividad',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-        ),
-      ),
-      'foreign_keys' => NULL,
-    ),
-    'cite-archivo_servicio' => 
-    array (
-      'table' => 
-      array (
-        'table_name' => 'cite-archivo_servicio',
-        'engine' => 'InnoDB',
-        'table_comment' => '',
-        'table_collation' => 'utf8mb4_general_ci',
-        'character_set_name' => 'utf8mb4',
-        'row_format' => 'Dynamic',
-      ),
-      'columns' => 
-      array (
-        'codArchivoServicio' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-archivo_servicio',
-          'COLUMN_NAME' => 'codArchivoServicio',
-          'ORDINAL_POSITION' => '1',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => 'PRI',
-          'EXTRA' => 'auto_increment',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codArchivo' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-archivo_servicio',
-          'COLUMN_NAME' => 'codArchivo',
-          'ORDINAL_POSITION' => '2',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codServicio' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-archivo_servicio',
-          'COLUMN_NAME' => 'codServicio',
-          'ORDINAL_POSITION' => '3',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-      ),
-      'indexes' => 
-      array (
-        'PRIMARY' => 
-        array (
-          1 => 
-          array (
-            'Table' => 'cite-archivo_servicio',
-            'Non_unique' => '0',
-            'Key_name' => 'PRIMARY',
-            'Seq_in_index' => '1',
-            'Column_name' => 'codArchivoServicio',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-        ),
-      ),
-      'foreign_keys' => NULL,
-    ),
-    'cite-asistencia_servicio' => 
-    array (
-      'table' => 
-      array (
-        'table_name' => 'cite-asistencia_servicio',
-        'engine' => 'InnoDB',
-        'table_comment' => '',
-        'table_collation' => 'utf8mb4_general_ci',
-        'character_set_name' => 'utf8mb4',
-        'row_format' => 'Dynamic',
-      ),
-      'columns' => 
-      array (
-        'codAsistenciaServicio' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-asistencia_servicio',
-          'COLUMN_NAME' => 'codAsistenciaServicio',
-          'ORDINAL_POSITION' => '1',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => 'PRI',
-          'EXTRA' => 'auto_increment',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codUsuario' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-asistencia_servicio',
-          'COLUMN_NAME' => 'codUsuario',
-          'ORDINAL_POSITION' => '2',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => 'MUL',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codServicio' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-asistencia_servicio',
-          'COLUMN_NAME' => 'codServicio',
-          'ORDINAL_POSITION' => '3',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'externo' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-asistencia_servicio',
-          'COLUMN_NAME' => 'externo',
-          'ORDINAL_POSITION' => '4',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-      ),
-      'indexes' => 
-      array (
-        'PRIMARY' => 
-        array (
-          1 => 
-          array (
-            'Table' => 'cite-asistencia_servicio',
-            'Non_unique' => '0',
-            'Key_name' => 'PRIMARY',
-            'Seq_in_index' => '1',
-            'Column_name' => 'codAsistenciaServicio',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-        ),
-        'unique_asistencia_cite' => 
-        array (
-          1 => 
-          array (
-            'Table' => 'cite-asistencia_servicio',
-            'Non_unique' => '0',
-            'Key_name' => 'unique_asistencia_cite',
-            'Seq_in_index' => '1',
-            'Column_name' => 'codUsuario',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-          2 => 
-          array (
-            'Table' => 'cite-asistencia_servicio',
-            'Non_unique' => '0',
-            'Key_name' => 'unique_asistencia_cite',
-            'Seq_in_index' => '2',
-            'Column_name' => 'codServicio',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-        ),
-      ),
-      'foreign_keys' => NULL,
-    ),
-    'cite-cadena' => 
-    array (
-      'table' => 
-      array (
-        'table_name' => 'cite-cadena',
-        'engine' => 'InnoDB',
-        'table_comment' => '',
-        'table_collation' => 'utf8mb4_general_ci',
-        'character_set_name' => 'utf8mb4',
-        'row_format' => 'Dynamic',
-      ),
-      'columns' => 
-      array (
-        'codCadena' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-cadena',
-          'COLUMN_NAME' => 'codCadena',
-          'ORDINAL_POSITION' => '1',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => 'PRI',
-          'EXTRA' => 'auto_increment',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'nombre' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-cadena',
-          'COLUMN_NAME' => 'nombre',
-          'ORDINAL_POSITION' => '2',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '200',
-          'CHARACTER_OCTET_LENGTH' => '800',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(200)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-      ),
-      'indexes' => 
-      array (
-        'PRIMARY' => 
-        array (
-          1 => 
-          array (
-            'Table' => 'cite-cadena',
-            'Non_unique' => '0',
-            'Key_name' => 'PRIMARY',
-            'Seq_in_index' => '1',
-            'Column_name' => 'codCadena',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-        ),
-      ),
-      'foreign_keys' => NULL,
-    ),
-    'cite-clasificacion_rango_ventas' => 
-    array (
-      'table' => 
-      array (
-        'table_name' => 'cite-clasificacion_rango_ventas',
-        'engine' => 'InnoDB',
-        'table_comment' => '',
-        'table_collation' => 'utf8mb4_general_ci',
-        'character_set_name' => 'utf8mb4',
-        'row_format' => 'Dynamic',
-      ),
-      'columns' => 
-      array (
-        'codClasificacion' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-clasificacion_rango_ventas',
-          'COLUMN_NAME' => 'codClasificacion',
-          'ORDINAL_POSITION' => '1',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => 'PRI',
-          'EXTRA' => 'auto_increment',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'nombre' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-clasificacion_rango_ventas',
-          'COLUMN_NAME' => 'nombre',
-          'ORDINAL_POSITION' => '2',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '20',
-          'CHARACTER_OCTET_LENGTH' => '80',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(20)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'minimo' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-clasificacion_rango_ventas',
-          'COLUMN_NAME' => 'minimo',
-          'ORDINAL_POSITION' => '3',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'float',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '12',
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'float',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'maximo' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-clasificacion_rango_ventas',
-          'COLUMN_NAME' => 'maximo',
-          'ORDINAL_POSITION' => '4',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'float',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '12',
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'float',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-      ),
-      'indexes' => 
-      array (
-        'PRIMARY' => 
-        array (
-          1 => 
-          array (
-            'Table' => 'cite-clasificacion_rango_ventas',
-            'Non_unique' => '0',
-            'Key_name' => 'PRIMARY',
-            'Seq_in_index' => '1',
-            'Column_name' => 'codClasificacion',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-        ),
-      ),
-      'foreign_keys' => NULL,
-    ),
-    'cite-estado_documento' => 
-    array (
-      'table' => 
-      array (
-        'table_name' => 'cite-estado_documento',
-        'engine' => 'InnoDB',
-        'table_comment' => '',
-        'table_collation' => 'utf8mb4_general_ci',
-        'character_set_name' => 'utf8mb4',
-        'row_format' => 'Dynamic',
-      ),
-      'columns' => 
-      array (
-        'codEstadoDocumento' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-estado_documento',
-          'COLUMN_NAME' => 'codEstadoDocumento',
-          'ORDINAL_POSITION' => '1',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => 'PRI',
-          'EXTRA' => 'auto_increment',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'nombre' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-estado_documento',
-          'COLUMN_NAME' => 'nombre',
-          'ORDINAL_POSITION' => '2',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '200',
-          'CHARACTER_OCTET_LENGTH' => '800',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(200)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'descripcion' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-estado_documento',
-          'COLUMN_NAME' => 'descripcion',
-          'ORDINAL_POSITION' => '3',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '200',
-          'CHARACTER_OCTET_LENGTH' => '800',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(200)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-      ),
-      'indexes' => 
-      array (
-        'PRIMARY' => 
-        array (
-          1 => 
-          array (
-            'Table' => 'cite-estado_documento',
-            'Non_unique' => '0',
-            'Key_name' => 'PRIMARY',
-            'Seq_in_index' => '1',
-            'Column_name' => 'codEstadoDocumento',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-        ),
-      ),
-      'foreign_keys' => NULL,
-    ),
-    'cite-estado_reporte_mensual' => 
-    array (
-      'table' => 
-      array (
-        'table_name' => 'cite-estado_reporte_mensual',
-        'engine' => 'InnoDB',
-        'table_comment' => '',
-        'table_collation' => 'utf8mb4_general_ci',
-        'character_set_name' => 'utf8mb4',
-        'row_format' => 'Dynamic',
-      ),
-      'columns' => 
-      array (
-        'codEstado' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-estado_reporte_mensual',
-          'COLUMN_NAME' => 'codEstado',
-          'ORDINAL_POSITION' => '1',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => 'PRI',
-          'EXTRA' => 'auto_increment',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'nombre' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-estado_reporte_mensual',
-          'COLUMN_NAME' => 'nombre',
-          'ORDINAL_POSITION' => '2',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '100',
-          'CHARACTER_OCTET_LENGTH' => '400',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(100)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'explicacion' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-estado_reporte_mensual',
-          'COLUMN_NAME' => 'explicacion',
-          'ORDINAL_POSITION' => '3',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '200',
-          'CHARACTER_OCTET_LENGTH' => '800',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(200)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'icono' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-estado_reporte_mensual',
-          'COLUMN_NAME' => 'icono',
-          'ORDINAL_POSITION' => '4',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '50',
-          'CHARACTER_OCTET_LENGTH' => '200',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(50)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'claseBoton' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-estado_reporte_mensual',
-          'COLUMN_NAME' => 'claseBoton',
-          'ORDINAL_POSITION' => '5',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '50',
-          'CHARACTER_OCTET_LENGTH' => '200',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(50)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-      ),
-      'indexes' => 
-      array (
-        'PRIMARY' => 
-        array (
-          1 => 
-          array (
-            'Table' => 'cite-estado_reporte_mensual',
-            'Non_unique' => '0',
-            'Key_name' => 'PRIMARY',
-            'Seq_in_index' => '1',
-            'Column_name' => 'codEstado',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-        ),
-      ),
-      'foreign_keys' => NULL,
-    ),
-    'cite-modalidad_servicio' => 
-    array (
-      'table' => 
-      array (
-        'table_name' => 'cite-modalidad_servicio',
-        'engine' => 'InnoDB',
-        'table_comment' => '',
-        'table_collation' => 'utf8mb4_general_ci',
-        'character_set_name' => 'utf8mb4',
-        'row_format' => 'Dynamic',
-      ),
-      'columns' => 
-      array (
-        'codModalidad' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-modalidad_servicio',
-          'COLUMN_NAME' => 'codModalidad',
-          'ORDINAL_POSITION' => '1',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => 'PRI',
-          'EXTRA' => 'auto_increment',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'nombre' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-modalidad_servicio',
-          'COLUMN_NAME' => 'nombre',
-          'ORDINAL_POSITION' => '2',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '200',
-          'CHARACTER_OCTET_LENGTH' => '800',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(200)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-      ),
-      'indexes' => 
-      array (
-        'PRIMARY' => 
-        array (
-          1 => 
-          array (
-            'Table' => 'cite-modalidad_servicio',
-            'Non_unique' => '0',
-            'Key_name' => 'PRIMARY',
-            'Seq_in_index' => '1',
-            'Column_name' => 'codModalidad',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-        ),
-      ),
-      'foreign_keys' => NULL,
-    ),
-    'cite-relacion_usuario_unidad' => 
-    array (
-      'table' => 
-      array (
-        'table_name' => 'cite-relacion_usuario_unidad',
-        'engine' => 'InnoDB',
-        'table_comment' => '',
-        'table_collation' => 'utf8mb4_general_ci',
-        'character_set_name' => 'utf8mb4',
-        'row_format' => 'Dynamic',
-      ),
-      'columns' => 
-      array (
-        'codRelacionUsuarioUnidad' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-relacion_usuario_unidad',
-          'COLUMN_NAME' => 'codRelacionUsuarioUnidad',
-          'ORDINAL_POSITION' => '1',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => 'PRI',
-          'EXTRA' => 'auto_increment',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codUsuario' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-relacion_usuario_unidad',
-          'COLUMN_NAME' => 'codUsuario',
-          'ORDINAL_POSITION' => '2',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => 'MUL',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codUnidadProductiva' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-relacion_usuario_unidad',
-          'COLUMN_NAME' => 'codUnidadProductiva',
-          'ORDINAL_POSITION' => '3',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-      ),
-      'indexes' => 
-      array (
-        'PRIMARY' => 
-        array (
-          1 => 
-          array (
-            'Table' => 'cite-relacion_usuario_unidad',
-            'Non_unique' => '0',
-            'Key_name' => 'PRIMARY',
-            'Seq_in_index' => '1',
-            'Column_name' => 'codRelacionUsuarioUnidad',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-        ),
-        'unique_usuario_unidad_productiva_cite' => 
-        array (
-          1 => 
-          array (
-            'Table' => 'cite-relacion_usuario_unidad',
-            'Non_unique' => '0',
-            'Key_name' => 'unique_usuario_unidad_productiva_cite',
-            'Seq_in_index' => '1',
-            'Column_name' => 'codUsuario',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-          2 => 
-          array (
-            'Table' => 'cite-relacion_usuario_unidad',
-            'Non_unique' => '0',
-            'Key_name' => 'unique_usuario_unidad_productiva_cite',
-            'Seq_in_index' => '2',
-            'Column_name' => 'codUnidadProductiva',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-        ),
-      ),
-      'foreign_keys' => NULL,
-    ),
-    'cite-reporte_mensual' => 
-    array (
-      'table' => 
-      array (
-        'table_name' => 'cite-reporte_mensual',
-        'engine' => 'InnoDB',
-        'table_comment' => '',
-        'table_collation' => 'utf8mb4_general_ci',
-        'character_set_name' => 'utf8mb4',
-        'row_format' => 'Dynamic',
-      ),
-      'columns' => 
-      array (
-        'codReporte' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-reporte_mensual',
-          'COLUMN_NAME' => 'codReporte',
-          'ORDINAL_POSITION' => '1',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => 'PRI',
-          'EXTRA' => 'auto_increment',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'año' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-reporte_mensual',
-          'COLUMN_NAME' => 'año',
-          'ORDINAL_POSITION' => '2',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codMes' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-reporte_mensual',
-          'COLUMN_NAME' => 'codMes',
-          'ORDINAL_POSITION' => '3',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codEmpleado' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-reporte_mensual',
-          'COLUMN_NAME' => 'codEmpleado',
-          'ORDINAL_POSITION' => '4',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'comentario' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-reporte_mensual',
-          'COLUMN_NAME' => 'comentario',
-          'ORDINAL_POSITION' => '5',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '100',
-          'CHARACTER_OCTET_LENGTH' => '400',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(100)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'fechaHoraMarcacion' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-reporte_mensual',
-          'COLUMN_NAME' => 'fechaHoraMarcacion',
-          'ORDINAL_POSITION' => '6',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'datetime',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => '0',
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'datetime',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'debeReportar' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-reporte_mensual',
-          'COLUMN_NAME' => 'debeReportar',
-          'ORDINAL_POSITION' => '7',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codEstado' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-reporte_mensual',
-          'COLUMN_NAME' => 'codEstado',
-          'ORDINAL_POSITION' => '8',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'observacion' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-reporte_mensual',
-          'COLUMN_NAME' => 'observacion',
-          'ORDINAL_POSITION' => '9',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '500',
-          'CHARACTER_OCTET_LENGTH' => '2000',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(500)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-      ),
-      'indexes' => 
-      array (
-        'PRIMARY' => 
-        array (
-          1 => 
-          array (
-            'Table' => 'cite-reporte_mensual',
-            'Non_unique' => '0',
-            'Key_name' => 'PRIMARY',
-            'Seq_in_index' => '1',
-            'Column_name' => 'codReporte',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-        ),
-      ),
-      'foreign_keys' => NULL,
-    ),
-    'cite-servicio' => 
-    array (
-      'table' => 
-      array (
-        'table_name' => 'cite-servicio',
-        'engine' => 'InnoDB',
-        'table_comment' => '',
-        'table_collation' => 'utf8mb4_general_ci',
-        'character_set_name' => 'utf8mb4',
-        'row_format' => 'Dynamic',
-      ),
-      'columns' => 
-      array (
-        'codServicio' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-servicio',
-          'COLUMN_NAME' => 'codServicio',
-          'ORDINAL_POSITION' => '1',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => 'PRI',
-          'EXTRA' => 'auto_increment',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codUnidadProductiva' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-servicio',
-          'COLUMN_NAME' => 'codUnidadProductiva',
-          'ORDINAL_POSITION' => '2',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codTipoServicio' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-servicio',
-          'COLUMN_NAME' => 'codTipoServicio',
-          'ORDINAL_POSITION' => '3',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'descripcion' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-servicio',
-          'COLUMN_NAME' => 'descripcion',
-          'ORDINAL_POSITION' => '4',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '500',
-          'CHARACTER_OCTET_LENGTH' => '2000',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(500)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codMesAño' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-servicio',
-          'COLUMN_NAME' => 'codMesAño',
-          'ORDINAL_POSITION' => '5',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'cantidadServicio' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-servicio',
-          'COLUMN_NAME' => 'cantidadServicio',
-          'ORDINAL_POSITION' => '6',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'totalParticipantes' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-servicio',
-          'COLUMN_NAME' => 'totalParticipantes',
-          'ORDINAL_POSITION' => '7',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'nroHorasEfectivas' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-servicio',
-          'COLUMN_NAME' => 'nroHorasEfectivas',
-          'ORDINAL_POSITION' => '8',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'float',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '12',
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'float',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'fechaInicio' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-servicio',
-          'COLUMN_NAME' => 'fechaInicio',
-          'ORDINAL_POSITION' => '9',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'date',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'date',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'fechaTermino' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-servicio',
-          'COLUMN_NAME' => 'fechaTermino',
-          'ORDINAL_POSITION' => '10',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'date',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'date',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codTipoAcceso' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-servicio',
-          'COLUMN_NAME' => 'codTipoAcceso',
-          'ORDINAL_POSITION' => '11',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codDistrito' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-servicio',
-          'COLUMN_NAME' => 'codDistrito',
-          'ORDINAL_POSITION' => '12',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codModalidad' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-servicio',
-          'COLUMN_NAME' => 'codModalidad',
-          'ORDINAL_POSITION' => '13',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'fechaHoraCreacion' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-servicio',
-          'COLUMN_NAME' => 'fechaHoraCreacion',
-          'ORDINAL_POSITION' => '14',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '50',
-          'CHARACTER_OCTET_LENGTH' => '200',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(50)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codTipoCDP' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-servicio',
-          'COLUMN_NAME' => 'codTipoCDP',
-          'ORDINAL_POSITION' => '15',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'nroComprobante' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-servicio',
-          'COLUMN_NAME' => 'nroComprobante',
-          'ORDINAL_POSITION' => '16',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '100',
-          'CHARACTER_OCTET_LENGTH' => '400',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(100)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'baseImponible' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-servicio',
-          'COLUMN_NAME' => 'baseImponible',
-          'ORDINAL_POSITION' => '17',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'float',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '12',
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'float',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'igv' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-servicio',
-          'COLUMN_NAME' => 'igv',
-          'ORDINAL_POSITION' => '18',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'float',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '12',
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'float',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'total' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-servicio',
-          'COLUMN_NAME' => 'total',
-          'ORDINAL_POSITION' => '19',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'float',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '12',
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'float',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codEmpleadoCreador' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-servicio',
-          'COLUMN_NAME' => 'codEmpleadoCreador',
-          'ORDINAL_POSITION' => '20',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codActividad' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-servicio',
-          'COLUMN_NAME' => 'codActividad',
-          'ORDINAL_POSITION' => '21',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-      ),
-      'indexes' => 
-      array (
-        'PRIMARY' => 
-        array (
-          1 => 
-          array (
-            'Table' => 'cite-servicio',
-            'Non_unique' => '0',
-            'Key_name' => 'PRIMARY',
-            'Seq_in_index' => '1',
-            'Column_name' => 'codServicio',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-        ),
-      ),
-      'foreign_keys' => NULL,
-    ),
-    'cite-tipo_acceso' => 
-    array (
-      'table' => 
-      array (
-        'table_name' => 'cite-tipo_acceso',
-        'engine' => 'InnoDB',
-        'table_comment' => '',
-        'table_collation' => 'utf8mb4_general_ci',
-        'character_set_name' => 'utf8mb4',
-        'row_format' => 'Dynamic',
-      ),
-      'columns' => 
-      array (
-        'codTipoAcceso' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-tipo_acceso',
-          'COLUMN_NAME' => 'codTipoAcceso',
-          'ORDINAL_POSITION' => '1',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => 'PRI',
-          'EXTRA' => 'auto_increment',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'nombre' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-tipo_acceso',
-          'COLUMN_NAME' => 'nombre',
-          'ORDINAL_POSITION' => '2',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '200',
-          'CHARACTER_OCTET_LENGTH' => '800',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(200)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-      ),
-      'indexes' => 
-      array (
-        'PRIMARY' => 
-        array (
-          1 => 
-          array (
-            'Table' => 'cite-tipo_acceso',
-            'Non_unique' => '0',
-            'Key_name' => 'PRIMARY',
-            'Seq_in_index' => '1',
-            'Column_name' => 'codTipoAcceso',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-        ),
-      ),
-      'foreign_keys' => NULL,
-    ),
-    'cite-tipo_personeria' => 
-    array (
-      'table' => 
-      array (
-        'table_name' => 'cite-tipo_personeria',
-        'engine' => 'InnoDB',
-        'table_comment' => '',
-        'table_collation' => 'utf8mb4_general_ci',
-        'character_set_name' => 'utf8mb4',
-        'row_format' => 'Dynamic',
-      ),
-      'columns' => 
-      array (
-        'codTipoPersoneria' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-tipo_personeria',
-          'COLUMN_NAME' => 'codTipoPersoneria',
-          'ORDINAL_POSITION' => '1',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => 'PRI',
-          'EXTRA' => 'auto_increment',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'nombre' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-tipo_personeria',
-          'COLUMN_NAME' => 'nombre',
-          'ORDINAL_POSITION' => '2',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '200',
-          'CHARACTER_OCTET_LENGTH' => '800',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(200)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'letra' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-tipo_personeria',
-          'COLUMN_NAME' => 'letra',
-          'ORDINAL_POSITION' => '3',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '5',
-          'CHARACTER_OCTET_LENGTH' => '20',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(5)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-      ),
-      'indexes' => 
-      array (
-        'PRIMARY' => 
-        array (
-          1 => 
-          array (
-            'Table' => 'cite-tipo_personeria',
-            'Non_unique' => '0',
-            'Key_name' => 'PRIMARY',
-            'Seq_in_index' => '1',
-            'Column_name' => 'codTipoPersoneria',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-        ),
-      ),
-      'foreign_keys' => NULL,
-    ),
-    'cite-tipo_servicio' => 
-    array (
-      'table' => 
-      array (
-        'table_name' => 'cite-tipo_servicio',
-        'engine' => 'InnoDB',
-        'table_comment' => '',
-        'table_collation' => 'utf8mb4_general_ci',
-        'character_set_name' => 'utf8mb4',
-        'row_format' => 'Dynamic',
-      ),
-      'columns' => 
-      array (
-        'codTipoServicio' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-tipo_servicio',
-          'COLUMN_NAME' => 'codTipoServicio',
-          'ORDINAL_POSITION' => '1',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => 'PRI',
-          'EXTRA' => 'auto_increment',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'nombre' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-tipo_servicio',
-          'COLUMN_NAME' => 'nombre',
-          'ORDINAL_POSITION' => '2',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '100',
-          'CHARACTER_OCTET_LENGTH' => '400',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(100)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-      ),
-      'indexes' => 
-      array (
-        'PRIMARY' => 
-        array (
-          1 => 
-          array (
-            'Table' => 'cite-tipo_servicio',
-            'Non_unique' => '0',
-            'Key_name' => 'PRIMARY',
-            'Seq_in_index' => '1',
-            'Column_name' => 'codTipoServicio',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-        ),
-      ),
-      'foreign_keys' => NULL,
-    ),
-    'cite-unidad_productiva' => 
-    array (
-      'table' => 
-      array (
-        'table_name' => 'cite-unidad_productiva',
-        'engine' => 'InnoDB',
-        'table_comment' => '',
-        'table_collation' => 'utf8mb4_general_ci',
-        'character_set_name' => 'utf8mb4',
-        'row_format' => 'Dynamic',
-      ),
-      'columns' => 
-      array (
-        'codUnidadProductiva' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-unidad_productiva',
-          'COLUMN_NAME' => 'codUnidadProductiva',
-          'ORDINAL_POSITION' => '1',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => 'PRI',
-          'EXTRA' => 'auto_increment',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'ruc' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-unidad_productiva',
-          'COLUMN_NAME' => 'ruc',
-          'ORDINAL_POSITION' => '2',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '50',
-          'CHARACTER_OCTET_LENGTH' => '200',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(50)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'razonSocial' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-unidad_productiva',
-          'COLUMN_NAME' => 'razonSocial',
-          'ORDINAL_POSITION' => '3',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '300',
-          'CHARACTER_OCTET_LENGTH' => '1200',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(300)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'dni' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-unidad_productiva',
-          'COLUMN_NAME' => 'dni',
-          'ORDINAL_POSITION' => '4',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '20',
-          'CHARACTER_OCTET_LENGTH' => '80',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(20)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'nombrePersona' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-unidad_productiva',
-          'COLUMN_NAME' => 'nombrePersona',
-          'ORDINAL_POSITION' => '5',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '200',
-          'CHARACTER_OCTET_LENGTH' => '800',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(200)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codTipoPersoneria' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-unidad_productiva',
-          'COLUMN_NAME' => 'codTipoPersoneria',
-          'ORDINAL_POSITION' => '6',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '11',
-          'CHARACTER_OCTET_LENGTH' => '44',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'fechaHoraCreacion' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-unidad_productiva',
-          'COLUMN_NAME' => 'fechaHoraCreacion',
-          'ORDINAL_POSITION' => '7',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'datetime',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => '0',
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'datetime',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'direccion' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-unidad_productiva',
-          'COLUMN_NAME' => 'direccion',
-          'ORDINAL_POSITION' => '8',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '500',
-          'CHARACTER_OCTET_LENGTH' => '2000',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(500)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codDistrito' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-unidad_productiva',
-          'COLUMN_NAME' => 'codDistrito',
-          'ORDINAL_POSITION' => '9',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codClasificacion' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-unidad_productiva',
-          'COLUMN_NAME' => 'codClasificacion',
-          'ORDINAL_POSITION' => '10',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'nroServiciosHistorico' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-unidad_productiva',
-          'COLUMN_NAME' => 'nroServiciosHistorico',
-          'ORDINAL_POSITION' => '11',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codCadena' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-unidad_productiva',
-          'COLUMN_NAME' => 'codCadena',
-          'ORDINAL_POSITION' => '12',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codEstadoDocumento' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-unidad_productiva',
-          'COLUMN_NAME' => 'codEstadoDocumento',
-          'ORDINAL_POSITION' => '13',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'enTramite' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-unidad_productiva',
-          'COLUMN_NAME' => 'enTramite',
-          'ORDINAL_POSITION' => '14',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'tinyint',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '3',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'tinyint(4)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codEmpleadoCreador' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-unidad_productiva',
-          'COLUMN_NAME' => 'codEmpleadoCreador',
-          'ORDINAL_POSITION' => '15',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'tieneCadena' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-unidad_productiva',
-          'COLUMN_NAME' => 'tieneCadena',
-          'ORDINAL_POSITION' => '16',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codUsuarioGerente' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-unidad_productiva',
-          'COLUMN_NAME' => 'codUsuarioGerente',
-          'ORDINAL_POSITION' => '17',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codUsuarioPresidente' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-unidad_productiva',
-          'COLUMN_NAME' => 'codUsuarioPresidente',
-          'ORDINAL_POSITION' => '18',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-      ),
-      'indexes' => 
-      array (
-        'PRIMARY' => 
-        array (
-          1 => 
-          array (
-            'Table' => 'cite-unidad_productiva',
-            'Non_unique' => '0',
-            'Key_name' => 'PRIMARY',
-            'Seq_in_index' => '1',
-            'Column_name' => 'codUnidadProductiva',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-        ),
-      ),
-      'foreign_keys' => NULL,
-    ),
-    'cite-usuario' => 
-    array (
-      'table' => 
-      array (
-        'table_name' => 'cite-usuario',
-        'engine' => 'InnoDB',
-        'table_comment' => '',
-        'table_collation' => 'utf8mb4_general_ci',
-        'character_set_name' => 'utf8mb4',
-        'row_format' => 'Dynamic',
-      ),
-      'columns' => 
-      array (
-        'codUsuario' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-usuario',
-          'COLUMN_NAME' => 'codUsuario',
-          'ORDINAL_POSITION' => '1',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => 'PRI',
-          'EXTRA' => 'auto_increment',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'dni' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-usuario',
-          'COLUMN_NAME' => 'dni',
-          'ORDINAL_POSITION' => '2',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '20',
-          'CHARACTER_OCTET_LENGTH' => '80',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(20)',
-          'COLUMN_KEY' => 'UNI',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'nombres' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-usuario',
-          'COLUMN_NAME' => 'nombres',
-          'ORDINAL_POSITION' => '3',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '100',
-          'CHARACTER_OCTET_LENGTH' => '400',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(100)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'apellidoPaterno' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-usuario',
-          'COLUMN_NAME' => 'apellidoPaterno',
-          'ORDINAL_POSITION' => '4',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '100',
-          'CHARACTER_OCTET_LENGTH' => '400',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(100)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'apellidoMaterno' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-usuario',
-          'COLUMN_NAME' => 'apellidoMaterno',
-          'ORDINAL_POSITION' => '5',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '100',
-          'CHARACTER_OCTET_LENGTH' => '400',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(100)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'telefono' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-usuario',
-          'COLUMN_NAME' => 'telefono',
-          'ORDINAL_POSITION' => '6',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '100',
-          'CHARACTER_OCTET_LENGTH' => '400',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(100)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'correo' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-usuario',
-          'COLUMN_NAME' => 'correo',
-          'ORDINAL_POSITION' => '7',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'varchar',
-          'CHARACTER_MAXIMUM_LENGTH' => '100',
-          'CHARACTER_OCTET_LENGTH' => '400',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_general_ci',
-          'COLUMN_TYPE' => 'varchar(100)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'fechaHoraCreacion' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-usuario',
-          'COLUMN_NAME' => 'fechaHoraCreacion',
-          'ORDINAL_POSITION' => '8',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'datetime',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => '0',
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'datetime',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'fechaHoraActualizacion' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-usuario',
-          'COLUMN_NAME' => 'fechaHoraActualizacion',
-          'ORDINAL_POSITION' => '9',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'datetime',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => '0',
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'datetime',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'codEmpleadoCreador' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'cite-usuario',
-          'COLUMN_NAME' => 'codEmpleadoCreador',
-          'ORDINAL_POSITION' => '10',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-      ),
-      'indexes' => 
-      array (
-        'PRIMARY' => 
-        array (
-          1 => 
-          array (
-            'Table' => 'cite-usuario',
-            'Non_unique' => '0',
-            'Key_name' => 'PRIMARY',
-            'Seq_in_index' => '1',
-            'Column_name' => 'codUsuario',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-        ),
-        'unique_dni_cite_usuario' => 
-        array (
-          1 => 
-          array (
-            'Table' => 'cite-usuario',
-            'Non_unique' => '0',
-            'Key_name' => 'unique_dni_cite_usuario',
-            'Seq_in_index' => '1',
-            'Column_name' => 'dni',
             'Collation' => 'A',
             'Sub_part' => NULL,
             'Packed' => NULL,
@@ -13649,7 +13440,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codigoCedepas' => 
         array (
@@ -13672,7 +13464,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombres' => 
         array (
@@ -13695,7 +13488,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'apellidos' => 
         array (
@@ -13718,7 +13512,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'direccion' => 
         array (
@@ -13741,7 +13536,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'dni' => 
         array (
@@ -13764,7 +13560,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ruc' => 
         array (
@@ -13787,7 +13584,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'sexo' => 
         array (
@@ -13810,7 +13608,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraGeneracion' => 
         array (
@@ -13833,7 +13632,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaInicio' => 
         array (
@@ -13856,7 +13656,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaFin' => 
         array (
@@ -13879,7 +13680,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'retribucionTotal' => 
         array (
@@ -13902,7 +13704,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'motivoContrato' => 
         array (
@@ -13925,7 +13728,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoCreador' => 
         array (
@@ -13944,11 +13748,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codMoneda' => 
         array (
@@ -13967,11 +13772,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codSede' => 
         array (
@@ -13990,11 +13796,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'provinciaYDepartamento' => 
         array (
@@ -14017,7 +13824,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'esDeCedepas' => 
         array (
@@ -14040,7 +13848,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'esPersonaNatural' => 
         array (
@@ -14063,7 +13872,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'razonSocialPJ' => 
         array (
@@ -14071,7 +13881,7 @@ return array (
           'TABLE_NAME' => 'contrato_locacion',
           'COLUMN_NAME' => 'razonSocialPJ',
           'ORDINAL_POSITION' => '20',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '200',
@@ -14086,7 +13896,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreDelCargoPJ' => 
         array (
@@ -14094,7 +13905,7 @@ return array (
           'TABLE_NAME' => 'contrato_locacion',
           'COLUMN_NAME' => 'nombreDelCargoPJ',
           'ORDINAL_POSITION' => '21',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '200',
@@ -14109,7 +13920,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreProyecto' => 
         array (
@@ -14132,7 +13944,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreFinanciera' => 
         array (
@@ -14155,7 +13968,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraAnulacion' => 
         array (
@@ -14163,7 +13977,7 @@ return array (
           'TABLE_NAME' => 'contrato_locacion',
           'COLUMN_NAME' => 'fechaHoraAnulacion',
           'ORDINAL_POSITION' => '24',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -14178,7 +13992,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -14201,8 +14016,94 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_contrato_locacion_and_empleado' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'contrato_locacion',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_contrato_locacion_and_empleado',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoCreador',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_contrato_locacion_and_moneda' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'contrato_locacion',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_contrato_locacion_and_moneda',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codMoneda',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_contrato_locacion_and_sede' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'contrato_locacion',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_contrato_locacion_and_sede',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codSede',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_contrato_locacion_and_empleado' => 
+        array (
+          'TABLE_NAME' => 'contrato_locacion',
+          'COLUMN_NAME' => 'codEmpleadoCreador',
+          'CONSTRAINT_NAME' => 'fk_relation_contrato_locacion_and_empleado',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_contrato_locacion_and_moneda' => 
+        array (
+          'TABLE_NAME' => 'contrato_locacion',
+          'COLUMN_NAME' => 'codMoneda',
+          'CONSTRAINT_NAME' => 'fk_relation_contrato_locacion_and_moneda',
+          'REFERENCED_TABLE_NAME' => 'moneda',
+          'REFERENCED_COLUMN_NAME' => 'codMoneda',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_contrato_locacion_and_sede' => 
+        array (
+          'TABLE_NAME' => 'contrato_locacion',
+          'COLUMN_NAME' => 'codSede',
+          'CONSTRAINT_NAME' => 'fk_relation_contrato_locacion_and_sede',
+          'REFERENCED_TABLE_NAME' => 'sede',
+          'REFERENCED_COLUMN_NAME' => 'codSede',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'contrato_plazo' => 
     array (
@@ -14238,7 +14139,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codigoCedepas' => 
         array (
@@ -14261,7 +14163,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombres' => 
         array (
@@ -14284,7 +14187,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'apellidos' => 
         array (
@@ -14307,7 +14211,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'direccion' => 
         array (
@@ -14330,7 +14235,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'dni' => 
         array (
@@ -14353,7 +14259,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'sexo' => 
         array (
@@ -14376,7 +14283,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'asignacionFamiliar' => 
         array (
@@ -14399,7 +14307,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraGeneracion' => 
         array (
@@ -14422,7 +14331,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaInicio' => 
         array (
@@ -14445,7 +14355,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaFin' => 
         array (
@@ -14468,7 +14379,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'sueldoBruto' => 
         array (
@@ -14491,7 +14403,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombrePuesto' => 
         array (
@@ -14514,7 +14427,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codMoneda' => 
         array (
@@ -14533,11 +14447,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codSede' => 
         array (
@@ -14556,11 +14471,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codTipoContrato' => 
         array (
@@ -14579,11 +14495,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoCreador' => 
         array (
@@ -14602,11 +14519,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreFinanciera' => 
         array (
@@ -14629,7 +14547,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreProyecto' => 
         array (
@@ -14652,7 +14571,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'provinciaYDepartamento' => 
         array (
@@ -14675,7 +14595,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraAnulacion' => 
         array (
@@ -14683,7 +14604,7 @@ return array (
           'TABLE_NAME' => 'contrato_plazo',
           'COLUMN_NAME' => 'fechaHoraAnulacion',
           'ORDINAL_POSITION' => '21',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -14698,7 +14619,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -14721,8 +14643,122 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_contrato_plazo_and_empleado' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'contrato_plazo',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_contrato_plazo_and_empleado',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoCreador',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_contrato_plazo_and_moneda' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'contrato_plazo',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_contrato_plazo_and_moneda',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codMoneda',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_contrato_plazo_and_sede' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'contrato_plazo',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_contrato_plazo_and_sede',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codSede',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_contrato_plazo_and_tipo_contrato' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'contrato_plazo',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_contrato_plazo_and_tipo_contrato',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codTipoContrato',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_contrato_plazo_and_empleado' => 
+        array (
+          'TABLE_NAME' => 'contrato_plazo',
+          'COLUMN_NAME' => 'codEmpleadoCreador',
+          'CONSTRAINT_NAME' => 'fk_relation_contrato_plazo_and_empleado',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_contrato_plazo_and_moneda' => 
+        array (
+          'TABLE_NAME' => 'contrato_plazo',
+          'COLUMN_NAME' => 'codMoneda',
+          'CONSTRAINT_NAME' => 'fk_relation_contrato_plazo_and_moneda',
+          'REFERENCED_TABLE_NAME' => 'moneda',
+          'REFERENCED_COLUMN_NAME' => 'codMoneda',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_contrato_plazo_and_sede' => 
+        array (
+          'TABLE_NAME' => 'contrato_plazo',
+          'COLUMN_NAME' => 'codSede',
+          'CONSTRAINT_NAME' => 'fk_relation_contrato_plazo_and_sede',
+          'REFERENCED_TABLE_NAME' => 'sede',
+          'REFERENCED_COLUMN_NAME' => 'codSede',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_contrato_plazo_and_tipo_contrato' => 
+        array (
+          'TABLE_NAME' => 'contrato_plazo',
+          'COLUMN_NAME' => 'codTipoContrato',
+          'CONSTRAINT_NAME' => 'fk_relation_contrato_plazo_and_tipo_contrato',
+          'REFERENCED_TABLE_NAME' => 'tipo_contrato',
+          'REFERENCED_COLUMN_NAME' => 'codTipoContrato',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'detalle_rendicion_gastos' => 
     array (
@@ -14758,7 +14794,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codRendicionGastos' => 
         array (
@@ -14777,11 +14814,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fecha' => 
         array (
@@ -14804,7 +14842,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nroComprobante' => 
         array (
@@ -14827,7 +14866,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'concepto' => 
         array (
@@ -14850,7 +14890,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'importe' => 
         array (
@@ -14873,7 +14914,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codigoPresupuestal' => 
         array (
@@ -14896,7 +14938,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codTipoCDP' => 
         array (
@@ -14915,11 +14958,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'terminacionArchivo' => 
         array (
@@ -14927,7 +14971,7 @@ return array (
           'TABLE_NAME' => 'detalle_rendicion_gastos',
           'COLUMN_NAME' => 'terminacionArchivo',
           'ORDINAL_POSITION' => '9',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '10',
@@ -14942,7 +14986,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nroEnRendicion' => 
         array (
@@ -14965,7 +15010,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'contabilizado' => 
         array (
@@ -14988,7 +15034,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'pendienteDeVer' => 
         array (
@@ -15011,7 +15058,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -15034,8 +15082,66 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_detalle_rendicion_gastos_and_cdp' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'detalle_rendicion_gastos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_detalle_rendicion_gastos_and_cdp',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codTipoCDP',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_detalle_rendicion_gastos_and_rendicion_gastos' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'detalle_rendicion_gastos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_detalle_rendicion_gastos_and_rendicion_gastos',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codRendicionGastos',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_detalle_rendicion_gastos_and_cdp' => 
+        array (
+          'TABLE_NAME' => 'detalle_rendicion_gastos',
+          'COLUMN_NAME' => 'codTipoCDP',
+          'CONSTRAINT_NAME' => 'fk_relation_detalle_rendicion_gastos_and_cdp',
+          'REFERENCED_TABLE_NAME' => 'cdp',
+          'REFERENCED_COLUMN_NAME' => 'codTipoCDP',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_detalle_rendicion_gastos_and_rendicion_gastos' => 
+        array (
+          'TABLE_NAME' => 'detalle_rendicion_gastos',
+          'COLUMN_NAME' => 'codRendicionGastos',
+          'CONSTRAINT_NAME' => 'fk_relation_detalle_rendicion_gastos_and_rendicion_gastos',
+          'REFERENCED_TABLE_NAME' => 'rendicion_gastos',
+          'REFERENCED_COLUMN_NAME' => 'codRendicionGastos',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'detalle_solicitud_fondos' => 
     array (
@@ -15071,7 +15177,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codSolicitud' => 
         array (
@@ -15090,11 +15197,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nroItem' => 
         array (
@@ -15117,7 +15225,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'concepto' => 
         array (
@@ -15140,7 +15249,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'importe' => 
         array (
@@ -15163,7 +15273,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codigoPresupuestal' => 
         array (
@@ -15186,7 +15297,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -15209,8 +15321,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_detalle_solicitud_fondos_and_solicitud_fondos' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'detalle_solicitud_fondos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_detalle_solicitud_fondos_and_solicitud_fondos',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codSolicitud',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_detalle_solicitud_fondos_and_solicitud_fondos' => 
+        array (
+          'TABLE_NAME' => 'detalle_solicitud_fondos',
+          'COLUMN_NAME' => 'codSolicitud',
+          'CONSTRAINT_NAME' => 'fk_relation_detalle_solicitud_fondos_and_solicitud_fondos',
+          'REFERENCED_TABLE_NAME' => 'solicitud_fondos',
+          'REFERENCED_COLUMN_NAME' => 'codSolicitud',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'empleado' => 
     array (
@@ -15246,7 +15388,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codUsuario' => 
         array (
@@ -15265,11 +15408,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codigoCedepas' => 
         array (
@@ -15292,7 +15436,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombres' => 
         array (
@@ -15315,7 +15460,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'apellidos' => 
         array (
@@ -15338,7 +15484,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'correo' => 
         array (
@@ -15361,7 +15508,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'dni' => 
         array (
@@ -15384,7 +15532,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codPuesto' => 
         array (
@@ -15392,7 +15541,7 @@ return array (
           'TABLE_NAME' => 'empleado',
           'COLUMN_NAME' => 'codPuesto',
           'ORDINAL_POSITION' => '8',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'int',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -15403,11 +15552,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'activo' => 
         array (
@@ -15430,7 +15580,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaRegistro' => 
         array (
@@ -15453,7 +15604,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaDeBaja' => 
         array (
@@ -15461,7 +15613,7 @@ return array (
           'TABLE_NAME' => 'empleado',
           'COLUMN_NAME' => 'fechaDeBaja',
           'ORDINAL_POSITION' => '11',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'date',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -15476,7 +15628,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codSede' => 
         array (
@@ -15485,7 +15638,7 @@ return array (
           'COLUMN_NAME' => 'codSede',
           'ORDINAL_POSITION' => '12',
           'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
+          'IS_NULLABLE' => 'NO',
           'DATA_TYPE' => 'int',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
           'CHARACTER_OCTET_LENGTH' => NULL,
@@ -15495,11 +15648,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'sexo' => 
         array (
@@ -15522,7 +15676,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaNacimiento' => 
         array (
@@ -15545,7 +15700,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreCargo' => 
         array (
@@ -15568,7 +15724,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'direccion' => 
         array (
@@ -15591,7 +15748,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nroTelefono' => 
         array (
@@ -15614,7 +15772,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codSedeContador' => 
         array (
@@ -15633,11 +15792,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'mostrarEnListas' => 
         array (
@@ -15660,7 +15820,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -15683,8 +15844,122 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_empleado_and_puesto' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'empleado',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_empleado_and_puesto',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codPuesto',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => 'YES',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_empleado_and_sede' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'empleado',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_empleado_and_sede',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codSede',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_empleado_and_sede_contador' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'empleado',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_empleado_and_sede_contador',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codSedeContador',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_empleado_and_usuario' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'empleado',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_empleado_and_usuario',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codUsuario',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_empleado_and_puesto' => 
+        array (
+          'TABLE_NAME' => 'empleado',
+          'COLUMN_NAME' => 'codPuesto',
+          'CONSTRAINT_NAME' => 'fk_relation_empleado_and_puesto',
+          'REFERENCED_TABLE_NAME' => 'puesto',
+          'REFERENCED_COLUMN_NAME' => 'codPuesto',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_empleado_and_sede' => 
+        array (
+          'TABLE_NAME' => 'empleado',
+          'COLUMN_NAME' => 'codSede',
+          'CONSTRAINT_NAME' => 'fk_relation_empleado_and_sede',
+          'REFERENCED_TABLE_NAME' => 'sede',
+          'REFERENCED_COLUMN_NAME' => 'codSede',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_empleado_and_sede_contador' => 
+        array (
+          'TABLE_NAME' => 'empleado',
+          'COLUMN_NAME' => 'codSedeContador',
+          'CONSTRAINT_NAME' => 'fk_relation_empleado_and_sede_contador',
+          'REFERENCED_TABLE_NAME' => 'sede',
+          'REFERENCED_COLUMN_NAME' => 'codSede',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_empleado_and_usuario' => 
+        array (
+          'TABLE_NAME' => 'empleado',
+          'COLUMN_NAME' => 'codUsuario',
+          'CONSTRAINT_NAME' => 'fk_relation_empleado_and_usuario',
+          'REFERENCED_TABLE_NAME' => 'usuario',
+          'REFERENCED_COLUMN_NAME' => 'codUsuario',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'empleado_puesto' => 
     array (
@@ -15720,7 +15995,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleado' => 
         array (
@@ -15743,7 +16019,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codPuesto' => 
         array (
@@ -15766,7 +16043,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -15843,21 +16121,21 @@ return array (
       ),
       'foreign_keys' => 
       array (
-        'empleado_puesto-empleado' => 
+        'fk_relation_empleado_puesto_empleado' => 
         array (
           'TABLE_NAME' => 'empleado_puesto',
           'COLUMN_NAME' => 'codEmpleado',
-          'CONSTRAINT_NAME' => 'empleado_puesto-empleado',
+          'CONSTRAINT_NAME' => 'fk_relation_empleado_puesto_empleado',
           'REFERENCED_TABLE_NAME' => 'empleado',
           'REFERENCED_COLUMN_NAME' => 'codEmpleado',
           'UPDATE_RULE' => 'RESTRICT',
           'DELETE_RULE' => 'RESTRICT',
         ),
-        'empleado_puesto-puesto' => 
+        'fk_relation_empleado_puesto_puesto' => 
         array (
           'TABLE_NAME' => 'empleado_puesto',
           'COLUMN_NAME' => 'codPuesto',
-          'CONSTRAINT_NAME' => 'empleado_puesto-puesto',
+          'CONSTRAINT_NAME' => 'fk_relation_empleado_puesto_puesto',
           'REFERENCED_TABLE_NAME' => 'puesto',
           'REFERENCED_COLUMN_NAME' => 'codPuesto',
           'UPDATE_RULE' => 'RESTRICT',
@@ -15899,7 +16177,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -15922,7 +16201,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ordenListadoEmpleado' => 
         array (
@@ -15945,7 +16225,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ordenListadoGerente' => 
         array (
@@ -15968,7 +16249,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ordenListadoAdministrador' => 
         array (
@@ -15991,7 +16273,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ordenListadoContador' => 
         array (
@@ -16014,7 +16297,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -16074,7 +16358,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -16097,7 +16382,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'caracteristicas' => 
         array (
@@ -16120,7 +16406,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'placa' => 
         array (
@@ -16143,7 +16430,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codCategoriaActivo' => 
         array (
@@ -16162,11 +16450,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codProyecto' => 
         array (
@@ -16185,11 +16474,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEstado' => 
         array (
@@ -16208,11 +16498,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoResponsable' => 
         array (
@@ -16231,11 +16522,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codSede' => 
         array (
@@ -16254,11 +16546,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codRazonBaja' => 
         array (
@@ -16266,7 +16559,7 @@ return array (
           'TABLE_NAME' => 'inv-activo_inventario',
           'COLUMN_NAME' => 'codRazonBaja',
           'ORDINAL_POSITION' => '10',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'int',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -16277,11 +16570,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codigoAparente' => 
         array (
@@ -16304,7 +16598,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -16327,8 +16622,178 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_inv_activo_inventario_and_empleado' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'inv-activo_inventario',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_inv_activo_inventario_and_empleado',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoResponsable',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_inv_activo_inventario_and_inv_categoria_activo_inven' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'inv-activo_inventario',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_inv_activo_inventario_and_inv_categoria_activo_inven',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codCategoriaActivo',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_inv_activo_inventario_and_inv_estado_activo_inventar' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'inv-activo_inventario',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_inv_activo_inventario_and_inv_estado_activo_inventar',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEstado',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_inv_activo_inventario_and_inv_razon_baja_activo' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'inv-activo_inventario',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_inv_activo_inventario_and_inv_razon_baja_activo',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codRazonBaja',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => 'YES',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_inv_activo_inventario_and_proyecto' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'inv-activo_inventario',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_inv_activo_inventario_and_proyecto',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codProyecto',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_inv_activo_inventario_and_sede' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'inv-activo_inventario',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_inv_activo_inventario_and_sede',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codSede',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_inv_activo_inventario_and_empleado' => 
+        array (
+          'TABLE_NAME' => 'inv-activo_inventario',
+          'COLUMN_NAME' => 'codEmpleadoResponsable',
+          'CONSTRAINT_NAME' => 'fk_relation_inv_activo_inventario_and_empleado',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_inv_activo_inventario_and_inv_categoria_activo_inven' => 
+        array (
+          'TABLE_NAME' => 'inv-activo_inventario',
+          'COLUMN_NAME' => 'codCategoriaActivo',
+          'CONSTRAINT_NAME' => 'fk_relation_inv_activo_inventario_and_inv_categoria_activo_inven',
+          'REFERENCED_TABLE_NAME' => 'inv-categoria_activo_inventario',
+          'REFERENCED_COLUMN_NAME' => 'codCategoriaActivo',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_inv_activo_inventario_and_inv_estado_activo_inventar' => 
+        array (
+          'TABLE_NAME' => 'inv-activo_inventario',
+          'COLUMN_NAME' => 'codEstado',
+          'CONSTRAINT_NAME' => 'fk_relation_inv_activo_inventario_and_inv_estado_activo_inventar',
+          'REFERENCED_TABLE_NAME' => 'inv-estado_activo_inventario',
+          'REFERENCED_COLUMN_NAME' => 'codEstado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_inv_activo_inventario_and_inv_razon_baja_activo' => 
+        array (
+          'TABLE_NAME' => 'inv-activo_inventario',
+          'COLUMN_NAME' => 'codRazonBaja',
+          'CONSTRAINT_NAME' => 'fk_relation_inv_activo_inventario_and_inv_razon_baja_activo',
+          'REFERENCED_TABLE_NAME' => 'inv-razon_baja_activo',
+          'REFERENCED_COLUMN_NAME' => 'codRazonBaja',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_inv_activo_inventario_and_proyecto' => 
+        array (
+          'TABLE_NAME' => 'inv-activo_inventario',
+          'COLUMN_NAME' => 'codProyecto',
+          'CONSTRAINT_NAME' => 'fk_relation_inv_activo_inventario_and_proyecto',
+          'REFERENCED_TABLE_NAME' => 'proyecto',
+          'REFERENCED_COLUMN_NAME' => 'codProyecto',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_inv_activo_inventario_and_sede' => 
+        array (
+          'TABLE_NAME' => 'inv-activo_inventario',
+          'COLUMN_NAME' => 'codSede',
+          'CONSTRAINT_NAME' => 'fk_relation_inv_activo_inventario_and_sede',
+          'REFERENCED_TABLE_NAME' => 'sede',
+          'REFERENCED_COLUMN_NAME' => 'codSede',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'inv-categoria_activo_inventario' => 
     array (
@@ -16364,7 +16829,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -16387,7 +16853,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -16447,7 +16914,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codActivo' => 
         array (
@@ -16466,11 +16934,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codRevision' => 
         array (
@@ -16489,11 +16958,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEstado' => 
         array (
@@ -16512,11 +16982,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraUltimoCambio' => 
         array (
@@ -16524,7 +16995,7 @@ return array (
           'TABLE_NAME' => 'inv-detalle_revision',
           'COLUMN_NAME' => 'fechaHoraUltimoCambio',
           'ORDINAL_POSITION' => '5',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -16539,7 +17010,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoQueReviso' => 
         array (
@@ -16547,7 +17019,7 @@ return array (
           'TABLE_NAME' => 'inv-detalle_revision',
           'COLUMN_NAME' => 'codEmpleadoQueReviso',
           'ORDINAL_POSITION' => '6',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'int',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -16558,11 +17030,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codRazonBaja' => 
         array (
@@ -16570,7 +17043,7 @@ return array (
           'TABLE_NAME' => 'inv-detalle_revision',
           'COLUMN_NAME' => 'codRazonBaja',
           'ORDINAL_POSITION' => '7',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'int',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -16581,11 +17054,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -16608,8 +17082,150 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_inv_detalle_revision_and_inv_activo_inventario' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'inv-detalle_revision',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_inv_detalle_revision_and_inv_activo_inventario',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codActivo',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_inv_detalle_revision_and_inv_empleado_revisador' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'inv-detalle_revision',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_inv_detalle_revision_and_inv_empleado_revisador',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoQueReviso',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => 'YES',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_inv_detalle_revision_and_inv_estado_activo_inventari' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'inv-detalle_revision',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_inv_detalle_revision_and_inv_estado_activo_inventari',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEstado',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_inv_detalle_revision_and_inv_razon_baja_activo' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'inv-detalle_revision',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_inv_detalle_revision_and_inv_razon_baja_activo',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codRazonBaja',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => 'YES',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_inv_detalle_revision_and_inv_revision_inventario' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'inv-detalle_revision',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_inv_detalle_revision_and_inv_revision_inventario',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codRevision',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_inv_detalle_revision_and_inv_activo_inventario' => 
+        array (
+          'TABLE_NAME' => 'inv-detalle_revision',
+          'COLUMN_NAME' => 'codActivo',
+          'CONSTRAINT_NAME' => 'fk_relation_inv_detalle_revision_and_inv_activo_inventario',
+          'REFERENCED_TABLE_NAME' => 'inv-activo_inventario',
+          'REFERENCED_COLUMN_NAME' => 'codActivo',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_inv_detalle_revision_and_inv_empleado_revisador' => 
+        array (
+          'TABLE_NAME' => 'inv-detalle_revision',
+          'COLUMN_NAME' => 'codEmpleadoQueReviso',
+          'CONSTRAINT_NAME' => 'fk_relation_inv_detalle_revision_and_inv_empleado_revisador',
+          'REFERENCED_TABLE_NAME' => 'inv-empleado_revisador',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleadoRevisador',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_inv_detalle_revision_and_inv_estado_activo_inventari' => 
+        array (
+          'TABLE_NAME' => 'inv-detalle_revision',
+          'COLUMN_NAME' => 'codEstado',
+          'CONSTRAINT_NAME' => 'fk_relation_inv_detalle_revision_and_inv_estado_activo_inventari',
+          'REFERENCED_TABLE_NAME' => 'inv-estado_activo_inventario',
+          'REFERENCED_COLUMN_NAME' => 'codEstado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_inv_detalle_revision_and_inv_razon_baja_activo' => 
+        array (
+          'TABLE_NAME' => 'inv-detalle_revision',
+          'COLUMN_NAME' => 'codRazonBaja',
+          'CONSTRAINT_NAME' => 'fk_relation_inv_detalle_revision_and_inv_razon_baja_activo',
+          'REFERENCED_TABLE_NAME' => 'inv-razon_baja_activo',
+          'REFERENCED_COLUMN_NAME' => 'codRazonBaja',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_inv_detalle_revision_and_inv_revision_inventario' => 
+        array (
+          'TABLE_NAME' => 'inv-detalle_revision',
+          'COLUMN_NAME' => 'codRevision',
+          'CONSTRAINT_NAME' => 'fk_relation_inv_detalle_revision_and_inv_revision_inventario',
+          'REFERENCED_TABLE_NAME' => 'inv-revision_inventario',
+          'REFERENCED_COLUMN_NAME' => 'codRevision',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'inv-empleado_revisador' => 
     array (
@@ -16645,7 +17261,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codRevision' => 
         array (
@@ -16664,11 +17281,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleado' => 
         array (
@@ -16687,11 +17305,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codSede' => 
         array (
@@ -16710,11 +17329,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -16737,8 +17357,94 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_inv_empleado_revisador_and_empleado' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'inv-empleado_revisador',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_inv_empleado_revisador_and_empleado',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleado',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_inv_empleado_revisador_and_inv_revision_inventario' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'inv-empleado_revisador',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_inv_empleado_revisador_and_inv_revision_inventario',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codRevision',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_inv_empleado_revisador_and_sede' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'inv-empleado_revisador',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_inv_empleado_revisador_and_sede',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codSede',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_inv_empleado_revisador_and_empleado' => 
+        array (
+          'TABLE_NAME' => 'inv-empleado_revisador',
+          'COLUMN_NAME' => 'codEmpleado',
+          'CONSTRAINT_NAME' => 'fk_relation_inv_empleado_revisador_and_empleado',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_inv_empleado_revisador_and_inv_revision_inventario' => 
+        array (
+          'TABLE_NAME' => 'inv-empleado_revisador',
+          'COLUMN_NAME' => 'codRevision',
+          'CONSTRAINT_NAME' => 'fk_relation_inv_empleado_revisador_and_inv_revision_inventario',
+          'REFERENCED_TABLE_NAME' => 'inv-revision_inventario',
+          'REFERENCED_COLUMN_NAME' => 'codRevision',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_inv_empleado_revisador_and_sede' => 
+        array (
+          'TABLE_NAME' => 'inv-empleado_revisador',
+          'COLUMN_NAME' => 'codSede',
+          'CONSTRAINT_NAME' => 'fk_relation_inv_empleado_revisador_and_sede',
+          'REFERENCED_TABLE_NAME' => 'sede',
+          'REFERENCED_COLUMN_NAME' => 'codSede',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'inv-estado_activo_inventario' => 
     array (
@@ -16774,7 +17480,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -16797,7 +17504,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -16857,7 +17565,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -16880,7 +17589,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -16940,7 +17650,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraInicio' => 
         array (
@@ -16963,7 +17674,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraCierre' => 
         array (
@@ -16971,7 +17683,7 @@ return array (
           'TABLE_NAME' => 'inv-revision_inventario',
           'COLUMN_NAME' => 'fechaHoraCierre',
           'ORDINAL_POSITION' => '3',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -16986,7 +17698,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'descripcion' => 
         array (
@@ -17009,7 +17722,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoResponsable' => 
         array (
@@ -17028,11 +17742,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'año' => 
         array (
@@ -17055,7 +17770,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -17078,8 +17794,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_inv_revision_inventario_and_empleado' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'inv-revision_inventario',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_inv_revision_inventario_and_empleado',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoResponsable',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_inv_revision_inventario_and_empleado' => 
+        array (
+          'TABLE_NAME' => 'inv-revision_inventario',
+          'COLUMN_NAME' => 'codEmpleadoResponsable',
+          'CONSTRAINT_NAME' => 'fk_relation_inv_revision_inventario_and_empleado',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'job' => 
     array (
@@ -17115,7 +17861,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -17138,7 +17885,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'descripcion' => 
         array (
@@ -17161,7 +17909,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'functionName' => 
         array (
@@ -17184,7 +17933,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraCreacion' => 
         array (
@@ -17207,7 +17957,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraEjecucion' => 
         array (
@@ -17215,7 +17966,7 @@ return array (
           'TABLE_NAME' => 'job',
           'COLUMN_NAME' => 'fechaHoraEjecucion',
           'ORDINAL_POSITION' => '6',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -17230,7 +17981,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ejecutado' => 
         array (
@@ -17253,7 +18005,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -17331,7 +18084,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'año' => 
         array (
@@ -17354,7 +18108,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codMes' => 
         array (
@@ -17373,11 +18128,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -17400,8 +18156,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_mes_anio_and_mes' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'mes_anio',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_mes_anio_and_mes',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codMes',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_mes_anio_and_mes' => 
+        array (
+          'TABLE_NAME' => 'mes_anio',
+          'COLUMN_NAME' => 'codMes',
+          'CONSTRAINT_NAME' => 'fk_relation_mes_anio_and_mes',
+          'REFERENCED_TABLE_NAME' => 'mes',
+          'REFERENCED_COLUMN_NAME' => 'codMes',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'notificacion' => 
     array (
@@ -17437,7 +18223,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codTipoNotificacion' => 
         array (
@@ -17456,11 +18243,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'descripcion' => 
         array (
@@ -17483,7 +18271,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'visto' => 
         array (
@@ -17506,7 +18295,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'link' => 
         array (
@@ -17529,7 +18319,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'descripcionAbreviada' => 
         array (
@@ -17552,7 +18343,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleado' => 
         array (
@@ -17571,11 +18363,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraCreacion' => 
         array (
@@ -17598,7 +18391,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraVisto' => 
         array (
@@ -17606,7 +18400,7 @@ return array (
           'TABLE_NAME' => 'notificacion',
           'COLUMN_NAME' => 'fechaHoraVisto',
           'ORDINAL_POSITION' => '9',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -17621,7 +18415,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -17644,8 +18439,66 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_notificacion_and_empleado' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'notificacion',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_notificacion_and_empleado',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleado',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_notificacion_and_tipo_notificacion' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'notificacion',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_notificacion_and_tipo_notificacion',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codTipoNotificacion',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_notificacion_and_empleado' => 
+        array (
+          'TABLE_NAME' => 'notificacion',
+          'COLUMN_NAME' => 'codEmpleado',
+          'CONSTRAINT_NAME' => 'fk_relation_notificacion_and_empleado',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_notificacion_and_tipo_notificacion' => 
+        array (
+          'TABLE_NAME' => 'notificacion',
+          'COLUMN_NAME' => 'codTipoNotificacion',
+          'CONSTRAINT_NAME' => 'fk_relation_notificacion_and_tipo_notificacion',
+          'REFERENCED_TABLE_NAME' => 'tipo_notificacion',
+          'REFERENCED_COLUMN_NAME' => 'codTipoNotificacion',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'operacion_documento' => 
     array (
@@ -17681,7 +18534,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codTipoDocumento' => 
         array (
@@ -17700,11 +18554,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codTipoOperacion' => 
         array (
@@ -17723,11 +18578,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codDocumento' => 
         array (
@@ -17750,7 +18606,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHora' => 
         array (
@@ -17773,7 +18630,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'descripcionObservacion' => 
         array (
@@ -17781,7 +18639,7 @@ return array (
           'TABLE_NAME' => 'operacion_documento',
           'COLUMN_NAME' => 'descripcionObservacion',
           'ORDINAL_POSITION' => '6',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '500',
@@ -17796,7 +18654,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codPuesto' => 
         array (
@@ -17815,11 +18674,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleado' => 
         array (
@@ -17838,11 +18698,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -17865,8 +18726,122 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_operacion_documento_and_empleado' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'operacion_documento',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_operacion_documento_and_empleado',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleado',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_operacion_documento_and_tipo_documento' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'operacion_documento',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_operacion_documento_and_tipo_documento',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codTipoDocumento',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_operacion_documento_and_tipo_operacion' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'operacion_documento',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_operacion_documento_and_tipo_operacion',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codTipoOperacion',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_operación_documento_and_puesto' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'operacion_documento',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_operación_documento_and_puesto',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codPuesto',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_operacion_documento_and_empleado' => 
+        array (
+          'TABLE_NAME' => 'operacion_documento',
+          'COLUMN_NAME' => 'codEmpleado',
+          'CONSTRAINT_NAME' => 'fk_relation_operacion_documento_and_empleado',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_operacion_documento_and_tipo_documento' => 
+        array (
+          'TABLE_NAME' => 'operacion_documento',
+          'COLUMN_NAME' => 'codTipoDocumento',
+          'CONSTRAINT_NAME' => 'fk_relation_operacion_documento_and_tipo_documento',
+          'REFERENCED_TABLE_NAME' => 'tipo_documento',
+          'REFERENCED_COLUMN_NAME' => 'codTipoDocumento',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_operacion_documento_and_tipo_operacion' => 
+        array (
+          'TABLE_NAME' => 'operacion_documento',
+          'COLUMN_NAME' => 'codTipoOperacion',
+          'CONSTRAINT_NAME' => 'fk_relation_operacion_documento_and_tipo_operacion',
+          'REFERENCED_TABLE_NAME' => 'tipo_operacion',
+          'REFERENCED_COLUMN_NAME' => 'codTipoOperacion',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_operación_documento_and_puesto' => 
+        array (
+          'TABLE_NAME' => 'operacion_documento',
+          'COLUMN_NAME' => 'codPuesto',
+          'CONSTRAINT_NAME' => 'fk_relation_operación_documento_and_puesto',
+          'REFERENCED_TABLE_NAME' => 'puesto',
+          'REFERENCED_COLUMN_NAME' => 'codPuesto',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'parametro_sistema' => 
     array (
@@ -17902,7 +18877,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'descripcion' => 
         array (
@@ -17925,7 +18901,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -17948,7 +18925,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'valor' => 
         array (
@@ -17971,7 +18949,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraCreacion' => 
         array (
@@ -17994,7 +18973,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraBaja' => 
         array (
@@ -18002,7 +18982,7 @@ return array (
           'TABLE_NAME' => 'parametro_sistema',
           'COLUMN_NAME' => 'fechaHoraBaja',
           'ORDINAL_POSITION' => '6',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -18017,7 +18997,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraActualizacion' => 
         array (
@@ -18025,7 +19006,7 @@ return array (
           'TABLE_NAME' => 'parametro_sistema',
           'COLUMN_NAME' => 'fechaHoraActualizacion',
           'ORDINAL_POSITION' => '7',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -18040,7 +19021,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codTipoParametro' => 
         array (
@@ -18059,34 +19041,36 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
-        'test' => 
+        'modulo' => 
         array (
           'TABLE_CATALOG' => 'def',
           'TABLE_NAME' => 'parametro_sistema',
-          'COLUMN_NAME' => 'test',
+          'COLUMN_NAME' => 'modulo',
           'ORDINAL_POSITION' => '9',
           'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'YES',
-          'DATA_TYPE' => 'int',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '10',
-          'NUMERIC_SCALE' => '0',
+          'IS_NULLABLE' => 'NO',
+          'DATA_TYPE' => 'varchar',
+          'CHARACTER_MAXIMUM_LENGTH' => '100',
+          'CHARACTER_OCTET_LENGTH' => '400',
+          'NUMERIC_PRECISION' => NULL,
+          'NUMERIC_SCALE' => NULL,
           'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'int(11)',
+          'CHARACTER_SET_NAME' => 'utf8mb4',
+          'COLLATION_NAME' => 'utf8mb4_general_ci',
+          'COLUMN_TYPE' => 'varchar(100)',
           'COLUMN_KEY' => '',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -18109,8 +19093,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_parametro_sistema_and_tipo_parametro_sistema' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'parametro_sistema',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_parametro_sistema_and_tipo_parametro_sistema',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codTipoParametro',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_parametro_sistema_and_tipo_parametro_sistema' => 
+        array (
+          'TABLE_NAME' => 'parametro_sistema',
+          'COLUMN_NAME' => 'codTipoParametro',
+          'CONSTRAINT_NAME' => 'fk_relation_parametro_sistema_and_tipo_parametro_sistema',
+          'REFERENCED_TABLE_NAME' => 'tipo_parametro_sistema',
+          'REFERENCED_COLUMN_NAME' => 'codTipoParametro',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'proyecto' => 
     array (
@@ -18146,7 +19160,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codigoPresupuestal' => 
         array (
@@ -18169,7 +19184,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -18192,7 +19208,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoDirector' => 
         array (
@@ -18200,7 +19217,7 @@ return array (
           'TABLE_NAME' => 'proyecto',
           'COLUMN_NAME' => 'codEmpleadoDirector',
           'ORDINAL_POSITION' => '4',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'int',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -18211,11 +19228,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codSedePrincipal' => 
         array (
@@ -18223,7 +19241,7 @@ return array (
           'TABLE_NAME' => 'proyecto',
           'COLUMN_NAME' => 'codSedePrincipal',
           'ORDINAL_POSITION' => '5',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'int',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -18234,11 +19252,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreLargo' => 
         array (
@@ -18246,7 +19265,7 @@ return array (
           'TABLE_NAME' => 'proyecto',
           'COLUMN_NAME' => 'nombreLargo',
           'ORDINAL_POSITION' => '6',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '300',
@@ -18261,7 +19280,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEntidadFinanciera' => 
         array (
@@ -18280,11 +19300,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codPEI' => 
         array (
@@ -18303,11 +19324,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'objetivoGeneral' => 
         array (
@@ -18330,7 +19352,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaInicio' => 
         array (
@@ -18353,7 +19376,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'importePresupuestoTotal' => 
         array (
@@ -18376,7 +19400,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'importeContrapartidaCedepas' => 
         array (
@@ -18399,7 +19424,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'importeContrapartidaPoblacionBeneficiaria' => 
         array (
@@ -18422,7 +19448,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'importeContrapartidaOtros' => 
         array (
@@ -18445,7 +19472,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codMoneda' => 
         array (
@@ -18464,11 +19492,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codTipoFinanciamiento' => 
         array (
@@ -18487,11 +19516,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEstadoProyecto' => 
         array (
@@ -18510,11 +19540,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaFinalizacion' => 
         array (
@@ -18537,7 +19568,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'importeFinanciamiento' => 
         array (
@@ -18560,7 +19592,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'contacto_nombres' => 
         array (
@@ -18568,7 +19601,7 @@ return array (
           'TABLE_NAME' => 'proyecto',
           'COLUMN_NAME' => 'contacto_nombres',
           'ORDINAL_POSITION' => '20',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '200',
@@ -18583,7 +19616,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'contacto_telefono' => 
         array (
@@ -18591,7 +19625,7 @@ return array (
           'TABLE_NAME' => 'proyecto',
           'COLUMN_NAME' => 'contacto_telefono',
           'ORDINAL_POSITION' => '21',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '200',
@@ -18606,7 +19640,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'contacto_correo' => 
         array (
@@ -18614,7 +19649,7 @@ return array (
           'TABLE_NAME' => 'proyecto',
           'COLUMN_NAME' => 'contacto_correo',
           'ORDINAL_POSITION' => '22',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '200',
@@ -18629,7 +19664,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'contacto_cargo' => 
         array (
@@ -18637,7 +19673,7 @@ return array (
           'TABLE_NAME' => 'proyecto',
           'COLUMN_NAME' => 'contacto_cargo',
           'ORDINAL_POSITION' => '23',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '200',
@@ -18652,7 +19688,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -18675,8 +19712,206 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_proyecto_and_tipo_financiamiento' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'proyecto',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_proyecto_and_tipo_financiamiento',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codTipoFinanciamiento',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_proyecto_and_empleado' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'proyecto',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_proyecto_and_empleado',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoDirector',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => 'YES',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_proyecto_and_entidad_financiera' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'proyecto',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_proyecto_and_entidad_financiera',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEntidadFinanciera',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_proyecto_and_estado_proyecto' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'proyecto',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_proyecto_and_estado_proyecto',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEstadoProyecto',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_proyecto_and_moneda' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'proyecto',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_proyecto_and_moneda',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codMoneda',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_proyecto_and_plan_estrategico_institucional' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'proyecto',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_proyecto_and_plan_estrategico_institucional',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codPEI',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_proyecto_and_sede' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'proyecto',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_proyecto_and_sede',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codSedePrincipal',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => 'YES',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_proyecto_and_empleado' => 
+        array (
+          'TABLE_NAME' => 'proyecto',
+          'COLUMN_NAME' => 'codEmpleadoDirector',
+          'CONSTRAINT_NAME' => 'fk_relation_proyecto_and_empleado',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_proyecto_and_entidad_financiera' => 
+        array (
+          'TABLE_NAME' => 'proyecto',
+          'COLUMN_NAME' => 'codEntidadFinanciera',
+          'CONSTRAINT_NAME' => 'fk_relation_proyecto_and_entidad_financiera',
+          'REFERENCED_TABLE_NAME' => 'entidad_financiera',
+          'REFERENCED_COLUMN_NAME' => 'codEntidadFinanciera',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_proyecto_and_estado_proyecto' => 
+        array (
+          'TABLE_NAME' => 'proyecto',
+          'COLUMN_NAME' => 'codEstadoProyecto',
+          'CONSTRAINT_NAME' => 'fk_relation_proyecto_and_estado_proyecto',
+          'REFERENCED_TABLE_NAME' => 'estado_proyecto',
+          'REFERENCED_COLUMN_NAME' => 'codEstadoProyecto',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_proyecto_and_moneda' => 
+        array (
+          'TABLE_NAME' => 'proyecto',
+          'COLUMN_NAME' => 'codMoneda',
+          'CONSTRAINT_NAME' => 'fk_relation_proyecto_and_moneda',
+          'REFERENCED_TABLE_NAME' => 'moneda',
+          'REFERENCED_COLUMN_NAME' => 'codMoneda',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_proyecto_and_plan_estrategico_institucional' => 
+        array (
+          'TABLE_NAME' => 'proyecto',
+          'COLUMN_NAME' => 'codPEI',
+          'CONSTRAINT_NAME' => 'fk_relation_proyecto_and_plan_estrategico_institucional',
+          'REFERENCED_TABLE_NAME' => 'plan_estrategico_institucional',
+          'REFERENCED_COLUMN_NAME' => 'codPEI',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_proyecto_and_sede' => 
+        array (
+          'TABLE_NAME' => 'proyecto',
+          'COLUMN_NAME' => 'codSedePrincipal',
+          'CONSTRAINT_NAME' => 'fk_relation_proyecto_and_sede',
+          'REFERENCED_TABLE_NAME' => 'sede',
+          'REFERENCED_COLUMN_NAME' => 'codSede',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_proyecto_and_tipo_financiamiento' => 
+        array (
+          'TABLE_NAME' => 'proyecto',
+          'COLUMN_NAME' => 'codTipoFinanciamiento',
+          'CONSTRAINT_NAME' => 'fk_relation_proyecto_and_tipo_financiamiento',
+          'REFERENCED_TABLE_NAME' => 'tipo_financiamiento',
+          'REFERENCED_COLUMN_NAME' => 'codTipoFinanciamiento',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'proyecto_observador' => 
     array (
@@ -18712,7 +19947,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codProyecto' => 
         array (
@@ -18735,7 +19971,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoObservador' => 
         array (
@@ -18758,7 +19995,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -18835,21 +20073,21 @@ return array (
       ),
       'foreign_keys' => 
       array (
-        'empleado' => 
+        'fk_relation_proyecto_observador_and_empleado' => 
         array (
           'TABLE_NAME' => 'proyecto_observador',
           'COLUMN_NAME' => 'codEmpleadoObservador',
-          'CONSTRAINT_NAME' => 'empleado',
+          'CONSTRAINT_NAME' => 'fk_relation_proyecto_observador_and_empleado',
           'REFERENCED_TABLE_NAME' => 'empleado',
           'REFERENCED_COLUMN_NAME' => 'codEmpleado',
           'UPDATE_RULE' => 'RESTRICT',
           'DELETE_RULE' => 'RESTRICT',
         ),
-        'proyecto' => 
+        'fk_relation_proyecto_observador_and_proyecto' => 
         array (
           'TABLE_NAME' => 'proyecto_observador',
           'COLUMN_NAME' => 'codProyecto',
-          'CONSTRAINT_NAME' => 'proyecto',
+          'CONSTRAINT_NAME' => 'fk_relation_proyecto_observador_and_proyecto',
           'REFERENCED_TABLE_NAME' => 'proyecto',
           'REFERENCED_COLUMN_NAME' => 'codProyecto',
           'UPDATE_RULE' => 'RESTRICT',
@@ -18891,7 +20129,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -18914,7 +20153,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'estado' => 
         array (
@@ -18937,7 +20177,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombreAparente' => 
         array (
@@ -18960,7 +20201,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'descripcion' => 
         array (
@@ -18983,7 +20225,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'ordenListado' => 
         array (
@@ -19006,7 +20249,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -19066,7 +20310,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codSolicitud' => 
         array (
@@ -19085,11 +20330,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codMoneda' => 
         array (
@@ -19108,11 +20354,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codigoCedepas' => 
         array (
@@ -19135,7 +20382,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'totalImporteRecibido' => 
         array (
@@ -19143,7 +20391,7 @@ return array (
           'TABLE_NAME' => 'rendicion_gastos',
           'COLUMN_NAME' => 'totalImporteRecibido',
           'ORDINAL_POSITION' => '5',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'float',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -19158,7 +20406,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'totalImporteRendido' => 
         array (
@@ -19166,7 +20415,7 @@ return array (
           'TABLE_NAME' => 'rendicion_gastos',
           'COLUMN_NAME' => 'totalImporteRendido',
           'ORDINAL_POSITION' => '6',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'float',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -19181,7 +20430,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'saldoAFavorDeEmpleado' => 
         array (
@@ -19189,7 +20439,7 @@ return array (
           'TABLE_NAME' => 'rendicion_gastos',
           'COLUMN_NAME' => 'saldoAFavorDeEmpleado',
           'ORDINAL_POSITION' => '7',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'float',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -19204,7 +20454,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'resumenDeActividad' => 
         array (
@@ -19227,7 +20478,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEstadoRendicion' => 
         array (
@@ -19246,11 +20498,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraRendicion' => 
         array (
@@ -19258,7 +20511,7 @@ return array (
           'TABLE_NAME' => 'rendicion_gastos',
           'COLUMN_NAME' => 'fechaHoraRendicion',
           'ORDINAL_POSITION' => '10',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -19273,7 +20526,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraRevisado' => 
         array (
@@ -19281,7 +20535,7 @@ return array (
           'TABLE_NAME' => 'rendicion_gastos',
           'COLUMN_NAME' => 'fechaHoraRevisado',
           'ORDINAL_POSITION' => '11',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -19296,7 +20550,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'observacion' => 
         array (
@@ -19304,7 +20559,7 @@ return array (
           'TABLE_NAME' => 'rendicion_gastos',
           'COLUMN_NAME' => 'observacion',
           'ORDINAL_POSITION' => '12',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '500',
@@ -19319,7 +20574,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoSolicitante' => 
         array (
@@ -19338,11 +20594,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoEvaluador' => 
         array (
@@ -19350,7 +20607,7 @@ return array (
           'TABLE_NAME' => 'rendicion_gastos',
           'COLUMN_NAME' => 'codEmpleadoEvaluador',
           'ORDINAL_POSITION' => '14',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'int',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -19361,11 +20618,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoContador' => 
         array (
@@ -19373,7 +20631,7 @@ return array (
           'TABLE_NAME' => 'rendicion_gastos',
           'COLUMN_NAME' => 'codEmpleadoContador',
           'ORDINAL_POSITION' => '15',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'int',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -19384,11 +20642,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'cantArchivos' => 
         array (
@@ -19396,7 +20655,7 @@ return array (
           'TABLE_NAME' => 'rendicion_gastos',
           'COLUMN_NAME' => 'cantArchivos',
           'ORDINAL_POSITION' => '16',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'int',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -19411,7 +20670,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'terminacionesArchivos' => 
         array (
@@ -19419,7 +20679,7 @@ return array (
           'TABLE_NAME' => 'rendicion_gastos',
           'COLUMN_NAME' => 'terminacionesArchivos',
           'ORDINAL_POSITION' => '17',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '200',
@@ -19434,7 +20694,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codProyecto' => 
         array (
@@ -19453,11 +20714,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codigoContrapartida' => 
         array (
@@ -19465,7 +20727,7 @@ return array (
           'TABLE_NAME' => 'rendicion_gastos',
           'COLUMN_NAME' => 'codigoContrapartida',
           'ORDINAL_POSITION' => '19',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '200',
@@ -19480,7 +20742,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -19503,8 +20766,206 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_rendicion_gastos_and_empleado_contador' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'rendicion_gastos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_rendicion_gastos_and_empleado_contador',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoContador',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => 'YES',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_rendicion_gastos_and_empleado_evaluador' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'rendicion_gastos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_rendicion_gastos_and_empleado_evaluador',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoEvaluador',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => 'YES',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_rendicion_gastos_and_empleado_solicitante' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'rendicion_gastos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_rendicion_gastos_and_empleado_solicitante',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoSolicitante',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_rendicion_gastos_and_estado_rendicion_gastos' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'rendicion_gastos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_rendicion_gastos_and_estado_rendicion_gastos',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEstadoRendicion',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_rendicion_gastos_and_moneda' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'rendicion_gastos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_rendicion_gastos_and_moneda',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codMoneda',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_rendicion_gastos_and_proyecto' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'rendicion_gastos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_rendicion_gastos_and_proyecto',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codProyecto',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_rendicion_gastos_and_solicitud_fondos' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'rendicion_gastos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_rendicion_gastos_and_solicitud_fondos',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codSolicitud',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_rendicion_gastos_and_estado_rendicion_gastos' => 
+        array (
+          'TABLE_NAME' => 'rendicion_gastos',
+          'COLUMN_NAME' => 'codEstadoRendicion',
+          'CONSTRAINT_NAME' => 'fk_relation_rendicion_gastos_and_estado_rendicion_gastos',
+          'REFERENCED_TABLE_NAME' => 'estado_rendicion_gastos',
+          'REFERENCED_COLUMN_NAME' => 'codEstadoRendicion',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_rendicion_gastos_and_moneda' => 
+        array (
+          'TABLE_NAME' => 'rendicion_gastos',
+          'COLUMN_NAME' => 'codMoneda',
+          'CONSTRAINT_NAME' => 'fk_relation_rendicion_gastos_and_moneda',
+          'REFERENCED_TABLE_NAME' => 'moneda',
+          'REFERENCED_COLUMN_NAME' => 'codMoneda',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_rendicion_gastos_and_solicitud_fondos' => 
+        array (
+          'TABLE_NAME' => 'rendicion_gastos',
+          'COLUMN_NAME' => 'codSolicitud',
+          'CONSTRAINT_NAME' => 'fk_relation_rendicion_gastos_and_solicitud_fondos',
+          'REFERENCED_TABLE_NAME' => 'solicitud_fondos',
+          'REFERENCED_COLUMN_NAME' => 'codSolicitud',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_rendicion_gastos_and_empleado_contador' => 
+        array (
+          'TABLE_NAME' => 'rendicion_gastos',
+          'COLUMN_NAME' => 'codEmpleadoContador',
+          'CONSTRAINT_NAME' => 'fk_relation_rendicion_gastos_and_empleado_contador',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_rendicion_gastos_and_empleado_evaluador' => 
+        array (
+          'TABLE_NAME' => 'rendicion_gastos',
+          'COLUMN_NAME' => 'codEmpleadoEvaluador',
+          'CONSTRAINT_NAME' => 'fk_relation_rendicion_gastos_and_empleado_evaluador',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_rendicion_gastos_and_empleado_solicitante' => 
+        array (
+          'TABLE_NAME' => 'rendicion_gastos',
+          'COLUMN_NAME' => 'codEmpleadoSolicitante',
+          'CONSTRAINT_NAME' => 'fk_relation_rendicion_gastos_and_empleado_solicitante',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_rendicion_gastos_and_proyecto' => 
+        array (
+          'TABLE_NAME' => 'rendicion_gastos',
+          'COLUMN_NAME' => 'codProyecto',
+          'CONSTRAINT_NAME' => 'fk_relation_rendicion_gastos_and_proyecto',
+          'REFERENCED_TABLE_NAME' => 'proyecto',
+          'REFERENCED_COLUMN_NAME' => 'codProyecto',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'sede' => 
     array (
@@ -19540,7 +21001,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -19563,7 +21025,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'esSedePrincipal' => 
         array (
@@ -19586,7 +21049,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoAdministrador' => 
         array (
@@ -19605,11 +21069,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -19623,6 +21088,193 @@ return array (
             'Key_name' => 'PRIMARY',
             'Seq_in_index' => '1',
             'Column_name' => 'codSede',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_sede_and_empleado_administrador' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'sede',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_sede_and_empleado_administrador',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoAdministrador',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+      ),
+      'foreign_keys' => 
+      array (
+        'fk_relation_sede_and_empleado_administrador' => 
+        array (
+          'TABLE_NAME' => 'sede',
+          'COLUMN_NAME' => 'codEmpleadoAdministrador',
+          'CONSTRAINT_NAME' => 'fk_relation_sede_and_empleado_administrador',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
+    ),
+    'semestre' => 
+    array (
+      'table' => 
+      array (
+        'table_name' => 'semestre',
+        'engine' => 'InnoDB',
+        'table_comment' => '',
+        'table_collation' => 'utf8mb4_general_ci',
+        'character_set_name' => 'utf8mb4',
+        'row_format' => 'Dynamic',
+      ),
+      'columns' => 
+      array (
+        'codSemestre' => 
+        array (
+          'TABLE_CATALOG' => 'def',
+          'TABLE_NAME' => 'semestre',
+          'COLUMN_NAME' => 'codSemestre',
+          'ORDINAL_POSITION' => '1',
+          'COLUMN_DEFAULT' => NULL,
+          'IS_NULLABLE' => 'NO',
+          'DATA_TYPE' => 'int',
+          'CHARACTER_MAXIMUM_LENGTH' => NULL,
+          'CHARACTER_OCTET_LENGTH' => NULL,
+          'NUMERIC_PRECISION' => '10',
+          'NUMERIC_SCALE' => '0',
+          'DATETIME_PRECISION' => NULL,
+          'CHARACTER_SET_NAME' => NULL,
+          'COLLATION_NAME' => NULL,
+          'COLUMN_TYPE' => 'int(11)',
+          'COLUMN_KEY' => 'PRI',
+          'EXTRA' => 'auto_increment',
+          'PRIVILEGES' => 'select,insert,update,references',
+          'COLUMN_COMMENT' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
+        ),
+        'anio' => 
+        array (
+          'TABLE_CATALOG' => 'def',
+          'TABLE_NAME' => 'semestre',
+          'COLUMN_NAME' => 'anio',
+          'ORDINAL_POSITION' => '2',
+          'COLUMN_DEFAULT' => NULL,
+          'IS_NULLABLE' => 'NO',
+          'DATA_TYPE' => 'int',
+          'CHARACTER_MAXIMUM_LENGTH' => NULL,
+          'CHARACTER_OCTET_LENGTH' => NULL,
+          'NUMERIC_PRECISION' => '10',
+          'NUMERIC_SCALE' => '0',
+          'DATETIME_PRECISION' => NULL,
+          'CHARACTER_SET_NAME' => NULL,
+          'COLLATION_NAME' => NULL,
+          'COLUMN_TYPE' => 'int(11)',
+          'COLUMN_KEY' => '',
+          'EXTRA' => '',
+          'PRIVILEGES' => 'select,insert,update,references',
+          'COLUMN_COMMENT' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
+        ),
+        'numero' => 
+        array (
+          'TABLE_CATALOG' => 'def',
+          'TABLE_NAME' => 'semestre',
+          'COLUMN_NAME' => 'numero',
+          'ORDINAL_POSITION' => '3',
+          'COLUMN_DEFAULT' => NULL,
+          'IS_NULLABLE' => 'NO',
+          'DATA_TYPE' => 'int',
+          'CHARACTER_MAXIMUM_LENGTH' => NULL,
+          'CHARACTER_OCTET_LENGTH' => NULL,
+          'NUMERIC_PRECISION' => '10',
+          'NUMERIC_SCALE' => '0',
+          'DATETIME_PRECISION' => NULL,
+          'CHARACTER_SET_NAME' => NULL,
+          'COLLATION_NAME' => NULL,
+          'COLUMN_TYPE' => 'int(11)',
+          'COLUMN_KEY' => '',
+          'EXTRA' => '',
+          'PRIVILEGES' => 'select,insert,update,references',
+          'COLUMN_COMMENT' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
+        ),
+        'fecha_inicio' => 
+        array (
+          'TABLE_CATALOG' => 'def',
+          'TABLE_NAME' => 'semestre',
+          'COLUMN_NAME' => 'fecha_inicio',
+          'ORDINAL_POSITION' => '4',
+          'COLUMN_DEFAULT' => NULL,
+          'IS_NULLABLE' => 'NO',
+          'DATA_TYPE' => 'date',
+          'CHARACTER_MAXIMUM_LENGTH' => NULL,
+          'CHARACTER_OCTET_LENGTH' => NULL,
+          'NUMERIC_PRECISION' => NULL,
+          'NUMERIC_SCALE' => NULL,
+          'DATETIME_PRECISION' => NULL,
+          'CHARACTER_SET_NAME' => NULL,
+          'COLLATION_NAME' => NULL,
+          'COLUMN_TYPE' => 'date',
+          'COLUMN_KEY' => '',
+          'EXTRA' => '',
+          'PRIVILEGES' => 'select,insert,update,references',
+          'COLUMN_COMMENT' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
+        ),
+        'fecha_fin' => 
+        array (
+          'TABLE_CATALOG' => 'def',
+          'TABLE_NAME' => 'semestre',
+          'COLUMN_NAME' => 'fecha_fin',
+          'ORDINAL_POSITION' => '5',
+          'COLUMN_DEFAULT' => NULL,
+          'IS_NULLABLE' => 'NO',
+          'DATA_TYPE' => 'date',
+          'CHARACTER_MAXIMUM_LENGTH' => NULL,
+          'CHARACTER_OCTET_LENGTH' => NULL,
+          'NUMERIC_PRECISION' => NULL,
+          'NUMERIC_SCALE' => NULL,
+          'DATETIME_PRECISION' => NULL,
+          'CHARACTER_SET_NAME' => NULL,
+          'COLLATION_NAME' => NULL,
+          'COLUMN_TYPE' => 'date',
+          'COLUMN_KEY' => '',
+          'EXTRA' => '',
+          'PRIVILEGES' => 'select,insert,update,references',
+          'COLUMN_COMMENT' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
+        ),
+      ),
+      'indexes' => 
+      array (
+        'PRIMARY' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'semestre',
+            'Non_unique' => '0',
+            'Key_name' => 'PRIMARY',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codSemestre',
             'Collation' => 'A',
             'Sub_part' => NULL,
             'Packed' => NULL,
@@ -19669,7 +21321,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codProyecto' => 
         array (
@@ -19688,11 +21341,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codigoCedepas' => 
         array (
@@ -19715,7 +21369,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoSolicitante' => 
         array (
@@ -19734,11 +21389,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraEmision' => 
         array (
@@ -19761,7 +21417,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'totalSolicitado' => 
         array (
@@ -19769,7 +21426,7 @@ return array (
           'TABLE_NAME' => 'solicitud_fondos',
           'COLUMN_NAME' => 'totalSolicitado',
           'ORDINAL_POSITION' => '6',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'float',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -19784,7 +21441,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'girarAOrdenDe' => 
         array (
@@ -19807,7 +21465,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'numeroCuentaBanco' => 
         array (
@@ -19830,7 +21489,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codBanco' => 
         array (
@@ -19849,11 +21509,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'justificacion' => 
         array (
@@ -19861,7 +21522,7 @@ return array (
           'TABLE_NAME' => 'solicitud_fondos',
           'COLUMN_NAME' => 'justificacion',
           'ORDINAL_POSITION' => '10',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '350',
@@ -19876,7 +21537,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoEvaluador' => 
         array (
@@ -19884,7 +21546,7 @@ return array (
           'TABLE_NAME' => 'solicitud_fondos',
           'COLUMN_NAME' => 'codEmpleadoEvaluador',
           'ORDINAL_POSITION' => '11',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'int',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -19895,11 +21557,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraRevisado' => 
         array (
@@ -19907,7 +21570,7 @@ return array (
           'TABLE_NAME' => 'solicitud_fondos',
           'COLUMN_NAME' => 'fechaHoraRevisado',
           'ORDINAL_POSITION' => '12',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -19922,7 +21585,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEstadoSolicitud' => 
         array (
@@ -19941,11 +21605,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'fechaHoraAbonado' => 
         array (
@@ -19953,7 +21618,7 @@ return array (
           'TABLE_NAME' => 'solicitud_fondos',
           'COLUMN_NAME' => 'fechaHoraAbonado',
           'ORDINAL_POSITION' => '14',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -19968,7 +21633,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'observacion' => 
         array (
@@ -19976,7 +21642,7 @@ return array (
           'TABLE_NAME' => 'solicitud_fondos',
           'COLUMN_NAME' => 'observacion',
           'ORDINAL_POSITION' => '15',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '300',
@@ -19991,7 +21657,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'terminacionArchivo' => 
         array (
@@ -19999,7 +21666,7 @@ return array (
           'TABLE_NAME' => 'solicitud_fondos',
           'COLUMN_NAME' => 'terminacionArchivo',
           'ORDINAL_POSITION' => '16',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '10',
@@ -20014,7 +21681,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoAbonador' => 
         array (
@@ -20022,7 +21690,7 @@ return array (
           'TABLE_NAME' => 'solicitud_fondos',
           'COLUMN_NAME' => 'codEmpleadoAbonador',
           'ORDINAL_POSITION' => '17',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'int',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -20033,11 +21701,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'estaRendida' => 
         array (
@@ -20060,7 +21729,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codEmpleadoContador' => 
         array (
@@ -20068,7 +21738,7 @@ return array (
           'TABLE_NAME' => 'solicitud_fondos',
           'COLUMN_NAME' => 'codEmpleadoContador',
           'ORDINAL_POSITION' => '19',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'int',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -20079,11 +21749,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codMoneda' => 
         array (
@@ -20102,11 +21773,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codigoContrapartida' => 
         array (
@@ -20114,7 +21786,7 @@ return array (
           'TABLE_NAME' => 'solicitud_fondos',
           'COLUMN_NAME' => 'codigoContrapartida',
           'ORDINAL_POSITION' => '21',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '200',
@@ -20129,7 +21801,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -20152,8 +21825,234 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_solicitud_fondos_and_banco' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'solicitud_fondos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_solicitud_fondos_and_banco',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codBanco',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_solicitud_fondos_and_empleado_abonador' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'solicitud_fondos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_solicitud_fondos_and_empleado_abonador',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoAbonador',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => 'YES',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_solicitud_fondos_and_empleado_contador' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'solicitud_fondos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_solicitud_fondos_and_empleado_contador',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoContador',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => 'YES',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_solicitud_fondos_and_empleado_evaluador' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'solicitud_fondos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_solicitud_fondos_and_empleado_evaluador',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoEvaluador',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => 'YES',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_solicitud_fondos_and_empleado_solicitante' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'solicitud_fondos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_solicitud_fondos_and_empleado_solicitante',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEmpleadoSolicitante',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_solicitud_fondos_and_estado_solicitud_fondos' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'solicitud_fondos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_solicitud_fondos_and_estado_solicitud_fondos',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codEstadoSolicitud',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_solicitud_fondos_and_moneda' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'solicitud_fondos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_solicitud_fondos_and_moneda',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codMoneda',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'fk_relation_solicitud_fondos_and_proyecto' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'solicitud_fondos',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_solicitud_fondos_and_proyecto',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codProyecto',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_solicitud_fondos_and_banco' => 
+        array (
+          'TABLE_NAME' => 'solicitud_fondos',
+          'COLUMN_NAME' => 'codBanco',
+          'CONSTRAINT_NAME' => 'fk_relation_solicitud_fondos_and_banco',
+          'REFERENCED_TABLE_NAME' => 'banco',
+          'REFERENCED_COLUMN_NAME' => 'codBanco',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_solicitud_fondos_and_empleado_abonador' => 
+        array (
+          'TABLE_NAME' => 'solicitud_fondos',
+          'COLUMN_NAME' => 'codEmpleadoAbonador',
+          'CONSTRAINT_NAME' => 'fk_relation_solicitud_fondos_and_empleado_abonador',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_solicitud_fondos_and_empleado_contador' => 
+        array (
+          'TABLE_NAME' => 'solicitud_fondos',
+          'COLUMN_NAME' => 'codEmpleadoContador',
+          'CONSTRAINT_NAME' => 'fk_relation_solicitud_fondos_and_empleado_contador',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_solicitud_fondos_and_empleado_evaluador' => 
+        array (
+          'TABLE_NAME' => 'solicitud_fondos',
+          'COLUMN_NAME' => 'codEmpleadoEvaluador',
+          'CONSTRAINT_NAME' => 'fk_relation_solicitud_fondos_and_empleado_evaluador',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_solicitud_fondos_and_empleado_solicitante' => 
+        array (
+          'TABLE_NAME' => 'solicitud_fondos',
+          'COLUMN_NAME' => 'codEmpleadoSolicitante',
+          'CONSTRAINT_NAME' => 'fk_relation_solicitud_fondos_and_empleado_solicitante',
+          'REFERENCED_TABLE_NAME' => 'empleado',
+          'REFERENCED_COLUMN_NAME' => 'codEmpleado',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_solicitud_fondos_and_estado_solicitud_fondos' => 
+        array (
+          'TABLE_NAME' => 'solicitud_fondos',
+          'COLUMN_NAME' => 'codEstadoSolicitud',
+          'CONSTRAINT_NAME' => 'fk_relation_solicitud_fondos_and_estado_solicitud_fondos',
+          'REFERENCED_TABLE_NAME' => 'estado_solicitud_fondos',
+          'REFERENCED_COLUMN_NAME' => 'codEstadoSolicitud',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_solicitud_fondos_and_moneda' => 
+        array (
+          'TABLE_NAME' => 'solicitud_fondos',
+          'COLUMN_NAME' => 'codMoneda',
+          'CONSTRAINT_NAME' => 'fk_relation_solicitud_fondos_and_moneda',
+          'REFERENCED_TABLE_NAME' => 'moneda',
+          'REFERENCED_COLUMN_NAME' => 'codMoneda',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'fk_relation_solicitud_fondos_and_proyecto' => 
+        array (
+          'TABLE_NAME' => 'solicitud_fondos',
+          'COLUMN_NAME' => 'codProyecto',
+          'CONSTRAINT_NAME' => 'fk_relation_solicitud_fondos_and_proyecto',
+          'REFERENCED_TABLE_NAME' => 'proyecto',
+          'REFERENCED_COLUMN_NAME' => 'codProyecto',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'tipo_archivo_general' => 
     array (
@@ -20189,7 +22088,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -20212,7 +22112,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -20272,7 +22173,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -20295,7 +22197,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -20355,7 +22258,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -20378,7 +22282,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'abreviacion' => 
         array (
@@ -20401,7 +22306,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -20461,7 +22367,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -20484,7 +22391,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -20544,7 +22452,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'codTipoDocumento' => 
         array (
@@ -20563,11 +22472,12 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => '',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -20590,7 +22500,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -20613,8 +22524,38 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'fk_relation_tipo_operacion_and_tipo_documento' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'tipo_operacion',
+            'Non_unique' => '1',
+            'Key_name' => 'fk_relation_tipo_operacion_and_tipo_documento',
+            'Seq_in_index' => '1',
+            'Column_name' => 'codTipoDocumento',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'fk_relation_tipo_operacion_and_tipo_documento' => 
+        array (
+          'TABLE_NAME' => 'tipo_operacion',
+          'COLUMN_NAME' => 'codTipoDocumento',
+          'CONSTRAINT_NAME' => 'fk_relation_tipo_operacion_and_tipo_documento',
+          'REFERENCED_TABLE_NAME' => 'tipo_documento',
+          'REFERENCED_COLUMN_NAME' => 'codTipoDocumento',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'tipo_parametro_sistema' => 
     array (
@@ -20650,7 +22591,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'nombre' => 
         array (
@@ -20673,7 +22615,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'componente_frontend' => 
         array (
@@ -20696,7 +22639,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'comentario' => 
         array (
@@ -20719,7 +22663,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -20766,20 +22711,21 @@ return array (
           'ORDINAL_POSITION' => '1',
           'COLUMN_DEFAULT' => NULL,
           'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'bigint',
+          'DATA_TYPE' => 'int',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
           'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '19',
+          'NUMERIC_PRECISION' => '10',
           'NUMERIC_SCALE' => '0',
           'DATETIME_PRECISION' => NULL,
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'bigint(20)',
+          'COLUMN_TYPE' => 'int(11)',
           'COLUMN_KEY' => 'PRI',
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'usuario' => 
         array (
@@ -20802,7 +22748,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'password' => 
         array (
@@ -20825,7 +22772,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'isAdmin' => 
         array (
@@ -20848,7 +22796,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -20862,181 +22811,6 @@ return array (
             'Key_name' => 'PRIMARY',
             'Seq_in_index' => '1',
             'Column_name' => 'codUsuario',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-        ),
-      ),
-      'foreign_keys' => NULL,
-    ),
-    'failed_jobs' => 
-    array (
-      'table' => 
-      array (
-        'table_name' => 'failed_jobs',
-        'engine' => 'InnoDB',
-        'table_comment' => '',
-        'table_collation' => 'utf8mb4_unicode_ci',
-        'character_set_name' => 'utf8mb4',
-        'row_format' => 'Dynamic',
-      ),
-      'columns' => 
-      array (
-        'id' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'failed_jobs',
-          'COLUMN_NAME' => 'id',
-          'ORDINAL_POSITION' => '1',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'bigint',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => '20',
-          'NUMERIC_SCALE' => '0',
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'bigint(20) unsigned',
-          'COLUMN_KEY' => 'PRI',
-          'EXTRA' => 'auto_increment',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'connection' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'failed_jobs',
-          'COLUMN_NAME' => 'connection',
-          'ORDINAL_POSITION' => '2',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'text',
-          'CHARACTER_MAXIMUM_LENGTH' => '65535',
-          'CHARACTER_OCTET_LENGTH' => '65535',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_unicode_ci',
-          'COLUMN_TYPE' => 'text',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'queue' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'failed_jobs',
-          'COLUMN_NAME' => 'queue',
-          'ORDINAL_POSITION' => '3',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'text',
-          'CHARACTER_MAXIMUM_LENGTH' => '65535',
-          'CHARACTER_OCTET_LENGTH' => '65535',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_unicode_ci',
-          'COLUMN_TYPE' => 'text',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'payload' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'failed_jobs',
-          'COLUMN_NAME' => 'payload',
-          'ORDINAL_POSITION' => '4',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'longtext',
-          'CHARACTER_MAXIMUM_LENGTH' => '4294967295',
-          'CHARACTER_OCTET_LENGTH' => '4294967295',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_unicode_ci',
-          'COLUMN_TYPE' => 'longtext',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'exception' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'failed_jobs',
-          'COLUMN_NAME' => 'exception',
-          'ORDINAL_POSITION' => '5',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'longtext',
-          'CHARACTER_MAXIMUM_LENGTH' => '4294967295',
-          'CHARACTER_OCTET_LENGTH' => '4294967295',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_unicode_ci',
-          'COLUMN_TYPE' => 'longtext',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-        'failed_at' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'failed_jobs',
-          'COLUMN_NAME' => 'failed_at',
-          'ORDINAL_POSITION' => '6',
-          'COLUMN_DEFAULT' => 'CURRENT_TIMESTAMP',
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'timestamp',
-          'CHARACTER_MAXIMUM_LENGTH' => NULL,
-          'CHARACTER_OCTET_LENGTH' => NULL,
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => '0',
-          'CHARACTER_SET_NAME' => NULL,
-          'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'timestamp',
-          'COLUMN_KEY' => '',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
-        ),
-      ),
-      'indexes' => 
-      array (
-        'PRIMARY' => 
-        array (
-          1 => 
-          array (
-            'Table' => 'failed_jobs',
-            'Non_unique' => '0',
-            'Key_name' => 'PRIMARY',
-            'Seq_in_index' => '1',
-            'Column_name' => 'id',
             'Collation' => 'A',
             'Sub_part' => NULL,
             'Packed' => NULL,
@@ -21083,7 +22857,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'migration' => 
         array (
@@ -21106,7 +22881,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'batch' => 
         array (
@@ -21129,7 +22905,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -21189,7 +22966,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'user_id' => 
         array (
@@ -21197,7 +22975,7 @@ return array (
           'TABLE_NAME' => 'oauth_access_tokens',
           'COLUMN_NAME' => 'user_id',
           'ORDINAL_POSITION' => '2',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'bigint',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -21212,7 +22990,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'client_id' => 
         array (
@@ -21235,7 +23014,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'name' => 
         array (
@@ -21243,7 +23023,7 @@ return array (
           'TABLE_NAME' => 'oauth_access_tokens',
           'COLUMN_NAME' => 'name',
           'ORDINAL_POSITION' => '4',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '255',
@@ -21258,7 +23038,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'scopes' => 
         array (
@@ -21266,7 +23047,7 @@ return array (
           'TABLE_NAME' => 'oauth_access_tokens',
           'COLUMN_NAME' => 'scopes',
           'ORDINAL_POSITION' => '5',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'text',
           'CHARACTER_MAXIMUM_LENGTH' => '65535',
@@ -21281,7 +23062,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'revoked' => 
         array (
@@ -21304,7 +23086,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'created_at' => 
         array (
@@ -21312,7 +23095,7 @@ return array (
           'TABLE_NAME' => 'oauth_access_tokens',
           'COLUMN_NAME' => 'created_at',
           'ORDINAL_POSITION' => '7',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'timestamp',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -21327,7 +23110,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'updated_at' => 
         array (
@@ -21335,7 +23119,7 @@ return array (
           'TABLE_NAME' => 'oauth_access_tokens',
           'COLUMN_NAME' => 'updated_at',
           'ORDINAL_POSITION' => '8',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'timestamp',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -21350,7 +23134,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'expires_at' => 
         array (
@@ -21358,7 +23143,7 @@ return array (
           'TABLE_NAME' => 'oauth_access_tokens',
           'COLUMN_NAME' => 'expires_at',
           'ORDINAL_POSITION' => '9',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -21373,7 +23158,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -21451,7 +23237,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'user_id' => 
         array (
@@ -21474,7 +23261,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'client_id' => 
         array (
@@ -21497,7 +23285,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'scopes' => 
         array (
@@ -21505,7 +23294,7 @@ return array (
           'TABLE_NAME' => 'oauth_auth_codes',
           'COLUMN_NAME' => 'scopes',
           'ORDINAL_POSITION' => '4',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'text',
           'CHARACTER_MAXIMUM_LENGTH' => '65535',
@@ -21520,7 +23309,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'revoked' => 
         array (
@@ -21543,7 +23333,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'expires_at' => 
         array (
@@ -21551,7 +23342,7 @@ return array (
           'TABLE_NAME' => 'oauth_auth_codes',
           'COLUMN_NAME' => 'expires_at',
           'ORDINAL_POSITION' => '6',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -21566,7 +23357,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -21644,7 +23436,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'user_id' => 
         array (
@@ -21652,7 +23445,7 @@ return array (
           'TABLE_NAME' => 'oauth_clients',
           'COLUMN_NAME' => 'user_id',
           'ORDINAL_POSITION' => '2',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'bigint',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -21667,7 +23460,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'name' => 
         array (
@@ -21690,7 +23484,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'secret' => 
         array (
@@ -21698,7 +23493,7 @@ return array (
           'TABLE_NAME' => 'oauth_clients',
           'COLUMN_NAME' => 'secret',
           'ORDINAL_POSITION' => '4',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '100',
@@ -21713,7 +23508,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'provider' => 
         array (
@@ -21721,7 +23517,7 @@ return array (
           'TABLE_NAME' => 'oauth_clients',
           'COLUMN_NAME' => 'provider',
           'ORDINAL_POSITION' => '5',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '255',
@@ -21736,7 +23532,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'redirect' => 
         array (
@@ -21759,7 +23556,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'personal_access_client' => 
         array (
@@ -21782,7 +23580,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'password_client' => 
         array (
@@ -21805,7 +23604,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'revoked' => 
         array (
@@ -21828,7 +23628,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'created_at' => 
         array (
@@ -21836,7 +23637,7 @@ return array (
           'TABLE_NAME' => 'oauth_clients',
           'COLUMN_NAME' => 'created_at',
           'ORDINAL_POSITION' => '10',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'timestamp',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -21851,7 +23652,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'updated_at' => 
         array (
@@ -21859,7 +23661,7 @@ return array (
           'TABLE_NAME' => 'oauth_clients',
           'COLUMN_NAME' => 'updated_at',
           'ORDINAL_POSITION' => '11',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'timestamp',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -21874,7 +23676,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -21952,7 +23755,8 @@ return array (
           'EXTRA' => 'auto_increment',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'client_id' => 
         array (
@@ -21975,7 +23779,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'created_at' => 
         array (
@@ -21983,7 +23788,7 @@ return array (
           'TABLE_NAME' => 'oauth_personal_access_clients',
           'COLUMN_NAME' => 'created_at',
           'ORDINAL_POSITION' => '3',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'timestamp',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -21998,7 +23803,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'updated_at' => 
         array (
@@ -22006,7 +23812,7 @@ return array (
           'TABLE_NAME' => 'oauth_personal_access_clients',
           'COLUMN_NAME' => 'updated_at',
           'ORDINAL_POSITION' => '4',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'timestamp',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -22021,7 +23827,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -22081,7 +23888,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'access_token_id' => 
         array (
@@ -22104,7 +23912,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'revoked' => 
         array (
@@ -22127,7 +23936,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'expires_at' => 
         array (
@@ -22135,7 +23945,7 @@ return array (
           'TABLE_NAME' => 'oauth_refresh_tokens',
           'COLUMN_NAME' => 'expires_at',
           'ORDINAL_POSITION' => '4',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -22150,7 +23960,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 
@@ -22228,7 +24039,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'migration_name' => 
         array (
@@ -22236,7 +24048,7 @@ return array (
           'TABLE_NAME' => 'phinxlog',
           'COLUMN_NAME' => 'migration_name',
           'ORDINAL_POSITION' => '2',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'varchar',
           'CHARACTER_MAXIMUM_LENGTH' => '100',
@@ -22251,7 +24063,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'start_time' => 
         array (
@@ -22259,7 +24072,7 @@ return array (
           'TABLE_NAME' => 'phinxlog',
           'COLUMN_NAME' => 'start_time',
           'ORDINAL_POSITION' => '3',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'timestamp',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -22274,7 +24087,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'end_time' => 
         array (
@@ -22282,7 +24096,7 @@ return array (
           'TABLE_NAME' => 'phinxlog',
           'COLUMN_NAME' => 'end_time',
           'ORDINAL_POSITION' => '4',
-          'COLUMN_DEFAULT' => NULL,
+          'COLUMN_DEFAULT' => 'NULL',
           'IS_NULLABLE' => 'YES',
           'DATA_TYPE' => 'timestamp',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -22297,7 +24111,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
         'breakpoint' => 
         array (
@@ -22320,7 +24135,8 @@ return array (
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
-          'GENERATION_EXPRESSION' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
         ),
       ),
       'indexes' => 

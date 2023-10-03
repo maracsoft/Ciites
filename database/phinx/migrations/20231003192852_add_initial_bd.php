@@ -2,7 +2,7 @@
 
 use Phinx\Db\Adapter\MysqlAdapter;
 
-class CreateDbInitial extends Phinx\Migration\AbstractMigration
+class AddInitialBd extends Phinx\Migration\AbstractMigration
 {
     public function change()
     {
@@ -54,6 +54,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'descripcion',
             ])
+            ->addIndex(['codResultadoEsperado'], [
+                'name' => 'fk_relation_actividad_res_and_resultado_esperado',
+                'unique' => false,
+            ])
             ->create();
         $this->table('archivo_orden', [
                 'id' => false,
@@ -87,6 +91,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
                 'after' => 'codOrdenCompra',
+            ])
+            ->addIndex(['codOrdenCompra'], [
+                'name' => 'fk_relation_archivo_orden_and_orden_compra',
+                'unique' => false,
             ])
             ->create();
         $this->table('archivo_proyecto', [
@@ -131,6 +139,14 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'encoding' => 'utf8mb4',
                 'after' => 'codTipoArchivoProyecto',
             ])
+            ->addIndex(['codProyecto'], [
+                'name' => 'fk_relation_archivo_proyecto_and_proyecto',
+                'unique' => false,
+            ])
+            ->addIndex(['codTipoArchivoProyecto'], [
+                'name' => 'fk_relation_archivo_proyecto_and_tipo_archivo_proyecto',
+                'unique' => false,
+            ])
             ->create();
         $this->table('archivo_rend', [
                 'id' => false,
@@ -164,6 +180,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
                 'after' => 'codRendicionGastos',
+            ])
+            ->addIndex(['codRendicionGastos'], [
+                'name' => 'fk_relation_archivo_rend_and_rendicion_gastos',
+                'unique' => false,
             ])
             ->create();
         $this->table('archivo_repo', [
@@ -199,6 +219,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'encoding' => 'utf8mb4',
                 'after' => 'codReposicionGastos',
             ])
+            ->addIndex(['codReposicionGastos'], [
+                'name' => 'fk_relation_archivo_repo_and_reposicion_gastos',
+                'unique' => false,
+            ])
             ->create();
         $this->table('archivo_req_admin', [
                 'id' => false,
@@ -232,6 +256,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
                 'after' => 'codRequerimiento',
+            ])
+            ->addIndex(['codRequerimiento'], [
+                'name' => 'fk_relation_archivo_req_admin_and_requerimiento_bs',
+                'unique' => false,
             ])
             ->create();
         $this->table('archivo_req_emp', [
@@ -267,6 +295,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'encoding' => 'utf8mb4',
                 'after' => 'codRequerimiento',
             ])
+            ->addIndex(['codRequerimiento'], [
+                'name' => 'fk_relation_archivo_req_emp_and_requerimiento_bs',
+                'unique' => false,
+            ])
             ->create();
         $this->table('archivo_solicitud', [
                 'id' => false,
@@ -300,6 +332,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
                 'after' => 'codSolicitud',
+            ])
+            ->addIndex(['codSolicitud'], [
+                'name' => 'fk_relation_archivo_solicitud_and_solicitud_fondos',
+                'unique' => false,
             ])
             ->create();
         $this->table('contacto_financiera', [
@@ -363,7 +399,16 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('fechaDeBaja', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'codEntidadFinanciera',
+            ])
+            ->addIndex(['codEntidadFinanciera'], [
+                'name' => 'cite_contacto_financiera" y "entidad_financiera',
+                'unique' => false,
+            ])
+            ->addIndex(['codNacionalidad'], [
+                'name' => 'fk_relation_cite_contacto_financiera_and_nacionalidad',
+                'unique' => false,
             ])
             ->create();
         $this->table('departamento', [
@@ -429,6 +474,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'importe',
             ])
+            ->addIndex(['codDJGastosMovilidad'], [
+                'name' => 'fk_relation_detalle_dj_gastosmovilidad_and_dj_gastosmovilidad',
+                'unique' => false,
+            ])
             ->create();
         $this->table('detalle_dj_gastosvarios', [
                 'id' => false,
@@ -463,6 +512,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'null' => false,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'importe',
+            ])
+            ->addIndex(['codDJGastosVarios'], [
+                'name' => 'fk_relation_detalle_dj_gastosvarios_and_dj_gastosvarios',
+                'unique' => false,
             ])
             ->create();
         $this->table('detalle_dj_gastosviaticos', [
@@ -510,6 +563,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'null' => false,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'totalDia',
+            ])
+            ->addIndex(['codDJGastosViaticos'], [
+                'name' => 'fk_relation_detalle_dj_gastosviaticos_and_dj_gastosviaticos',
+                'unique' => false,
             ])
             ->create();
         $this->table('detalle_orden_compra', [
@@ -563,6 +620,14 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'null' => false,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'exoneradoIGV',
+            ])
+            ->addIndex(['codOrdenCompra'], [
+                'name' => 'fk_relation_detalle_orden_compra_and_orden_compra',
+                'unique' => false,
+            ])
+            ->addIndex(['codUnidadMedida'], [
+                'name' => 'fk_relation_detalle_orden_compra_and_unidad_medida',
+                'unique' => false,
             ])
             ->create();
         $this->table('detalle_reposicion_gastos', [
@@ -635,6 +700,14 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'contabilizado',
             ])
+            ->addIndex(['codTipoCDP'], [
+                'name' => 'fk_relation_detalle_reposicion_gastos_and_cdp',
+                'unique' => false,
+            ])
+            ->addIndex(['codReposicionGastos'], [
+                'name' => 'fk_relation_detalle_reposicion_gastos_and_reposicion_gastos',
+                'unique' => false,
+            ])
             ->create();
         $this->table('detalle_requerimiento_bs', [
                 'id' => false,
@@ -678,6 +751,14 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'encoding' => 'latin1',
                 'after' => 'descripcion',
             ])
+            ->addIndex(['codRequerimiento'], [
+                'name' => 'fk_relation_detalle_requerimiento_bs_and_requerimiento_bs',
+                'unique' => false,
+            ])
+            ->addIndex(['codUnidadMedida'], [
+                'name' => 'fk_relation_detalle_requerimiento_bs_and_unidad_medida',
+                'unique' => false,
+            ])
             ->create();
         $this->table('distrito', [
                 'id' => false,
@@ -703,6 +784,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'null' => false,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'nombre',
+            ])
+            ->addIndex(['codProvincia'], [
+                'name' => 'fk_relation_distrito_and_provincia',
+                'unique' => false,
             ])
             ->create();
         $this->table('dj_gastosmovilidad', [
@@ -751,6 +836,14 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'encoding' => 'latin1',
                 'after' => 'codDJGastosMovilidad',
             ])
+            ->addIndex(['codEmpleado'], [
+                'name' => 'fk_relation_dj_gastosmovilidad_and_empleado',
+                'unique' => false,
+            ])
+            ->addIndex(['codMoneda'], [
+                'name' => 'fk_relation_dj_gastosmovilidad_and_moneda',
+                'unique' => false,
+            ])
             ->create();
         $this->table('dj_gastosvarios', [
                 'id' => false,
@@ -798,6 +891,14 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'encoding' => 'latin1',
                 'after' => 'codEmpleado',
             ])
+            ->addIndex(['codEmpleado'], [
+                'name' => 'fk_relation_dj_gastosvarios_and_empleado',
+                'unique' => false,
+            ])
+            ->addIndex(['codMoneda'], [
+                'name' => 'fk_relation_dj_gastosvarios_and_moneda',
+                'unique' => false,
+            ])
             ->create();
         $this->table('dj_gastosviaticos', [
                 'id' => false,
@@ -844,6 +945,14 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'collation' => 'latin1_swedish_ci',
                 'encoding' => 'latin1',
                 'after' => 'codEmpleado',
+            ])
+            ->addIndex(['codEmpleado'], [
+                'name' => 'fk_relation_dj_gastosviaticos_and_empleado',
+                'unique' => false,
+            ])
+            ->addIndex(['codMoneda'], [
+                'name' => 'fk_relation_dj_gastosviaticos_and_moneda',
+                'unique' => false,
             ])
             ->create();
         $this->table('entidad_financiera', [
@@ -926,6 +1035,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('razon', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 200,
                 'collation' => 'latin1_swedish_ci',
                 'encoding' => 'latin1',
@@ -933,6 +1043,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('solucion', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 500,
                 'collation' => 'latin1_swedish_ci',
                 'encoding' => 'latin1',
@@ -947,7 +1058,12 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('fechaHoraSolucion', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'formulario',
+            ])
+            ->addIndex(['codEmpleado'], [
+                'name' => 'fk_relation_error_historial_and_empleado',
+                'unique' => false,
             ])
             ->create();
         $this->table('estado_proyecto', [
@@ -1132,6 +1248,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'null' => false,
                 'after' => 'unidadMedida',
             ])
+            ->addIndex(['codActividad'], [
+                'name' => 'fk_relation_indicador_actividad_and_actividad_res',
+                'unique' => false,
+            ])
             ->create();
         $this->table('indicador_objespecifico', [
                 'id' => false,
@@ -1159,6 +1279,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'descripcion',
             ])
+            ->addIndex(['codObjEspecifico'], [
+                'name' => 'fk_relation_indicador_objespecifico_and_objetivo_especifico',
+                'unique' => false,
+            ])
             ->create();
         $this->table('indicador_resultado', [
                 'id' => false,
@@ -1185,6 +1309,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'null' => false,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'descripcion',
+            ])
+            ->addIndex(['codResultadoEsperado'], [
+                'name' => 'fk_relation_indicador_resultado_and_resultado_esperado',
+                'unique' => false,
             ])
             ->create();
         $this->table('logeo_historial', [
@@ -1217,6 +1345,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'encoding' => 'latin1',
                 'after' => 'fechaHoraLogeo',
             ])
+            ->addIndex(['codEmpleado'], [
+                'name' => 'fk_relation_logeo_historial_and_empleado',
+                'unique' => false,
+            ])
             ->create();
         $this->table('lugar_ejecucion', [
                 'id' => false,
@@ -1248,6 +1380,14 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
                 'after' => 'codDistrito',
+            ])
+            ->addIndex(['codDistrito'], [
+                'name' => 'fk_relation_lugar_ejecucion_and_distrito',
+                'unique' => false,
+            ])
+            ->addIndex(['codProyecto'], [
+                'name' => 'fk_relation_lugar_ejecucion_and_proyecto',
+                'unique' => false,
             ])
             ->create();
         $this->table('medio_verificacion_meta', [
@@ -1282,6 +1422,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'null' => false,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'nombreAparente',
+            ])
+            ->addIndex(['codMetaEjecutada'], [
+                'name' => 'fk_relation_medio_verificacion_meta_and_meta_ejecutada',
+                'unique' => false,
             ])
             ->create();
         $this->table('medio_verificacion_resultado', [
@@ -1323,6 +1467,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'null' => false,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'nombreAparente',
+            ])
+            ->addIndex(['codIndicadorResultado'], [
+                'name' => 'fk_relation_medio_verificacion_resultado_and_indicador_resultado',
+                'unique' => false,
             ])
             ->create();
         $this->table('mes', [
@@ -1380,6 +1528,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('cantidadEjecutada', 'float', [
                 'null' => true,
+                'default' => null,
                 'after' => 'cantidadProgramada',
             ])
             ->addColumn('codEmpleado', 'integer', [
@@ -1402,14 +1551,17 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('desviacion', 'float', [
                 'null' => true,
+                'default' => null,
                 'after' => 'codIndicadorActividad',
             ])
             ->addColumn('tasaEjecucion', 'float', [
                 'null' => true,
+                'default' => null,
                 'after' => 'desviacion',
             ])
             ->addColumn('fechaRegistroEjecucion', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'tasaEjecucion',
             ])
             ->addColumn('ejecutada', 'integer', [
@@ -1422,6 +1574,14 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'default' => '0',
                 'limit' => MysqlAdapter::INT_TINY,
                 'after' => 'ejecutada',
+            ])
+            ->addIndex(['codEmpleado'], [
+                'name' => 'fk_relation_meta_ejecutada_and_empleado',
+                'unique' => false,
+            ])
+            ->addIndex(['codIndicadorActividad'], [
+                'name' => 'fk_relation_meta_ejecutada_and_indicador_actividad',
+                'unique' => false,
             ])
             ->create();
         $this->table('moneda', [
@@ -1554,6 +1714,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'descripcion',
             ])
+            ->addIndex(['codProyecto'], [
+                'name' => 'fk_relation_objetivo_especifico_and_proyecto',
+                'unique' => false,
+            ])
             ->create();
         $this->table('objetivo_estrategico_cedepas', [
                 'id' => false,
@@ -1592,6 +1756,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'collation' => 'latin1_swedish_ci',
                 'encoding' => 'latin1',
                 'after' => 'item',
+            ])
+            ->addIndex(['codPEI'], [
+                'name' => 'fk_relation_objetivo_estrategico_cedepas_and_plan_estrategico_in',
+                'unique' => false,
             ])
             ->create();
         $this->table('objetivo_milenio', [
@@ -1719,6 +1887,22 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'codigoCedepas',
             ])
+            ->addIndex(['codEmpleadoCreador'], [
+                'name' => 'fk_relation_orden_compra_and_empleado',
+                'unique' => false,
+            ])
+            ->addIndex(['codMoneda'], [
+                'name' => 'fk_relation_orden_compra_and_moneda',
+                'unique' => false,
+            ])
+            ->addIndex(['codProyecto'], [
+                'name' => 'fk_relation_orden_compra_and_proyecto',
+                'unique' => false,
+            ])
+            ->addIndex(['codSede'], [
+                'name' => 'fk_relation_orden_compra_and_sede',
+                'unique' => false,
+            ])
             ->create();
         $this->table('persona_juridica_poblacion', [
                 'id' => false,
@@ -1777,6 +1961,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'encoding' => 'latin1',
                 'after' => 'codTipoPersonaJuridica',
             ])
+            ->addIndex(['codTipoPersonaJuridica'], [
+                'name' => 'fk_relation_persona_juridica_poblacion_and_tipo_persona_juridica',
+                'unique' => false,
+            ])
             ->create();
         $this->table('persona_natural_poblacion', [
                 'id' => false,
@@ -1824,6 +2012,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('sexo', 'char', [
                 'null' => true,
+                'default' => null,
                 'limit' => 1,
                 'collation' => 'latin1_swedish_ci',
                 'encoding' => 'latin1',
@@ -1831,6 +2020,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('direccion', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 300,
                 'collation' => 'latin1_swedish_ci',
                 'encoding' => 'latin1',
@@ -1838,6 +2028,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('nroTelefono', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 20,
                 'collation' => 'latin1_swedish_ci',
                 'encoding' => 'latin1',
@@ -1847,6 +2038,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'null' => false,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'nroTelefono',
+            ])
+            ->addIndex(['codLugarEjecucion'], [
+                'name' => 'fk_relation_persona_natural_poblacion_and_lugar_ejecucion',
+                'unique' => false,
             ])
             ->create();
         $this->table('plan_estrategico_institucional', [
@@ -1900,6 +2095,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'descripcion',
             ])
+            ->addIndex(['codProyecto'], [
+                'name' => 'fk_relation_poblacion_beneficiaria_and_proyecto',
+                'unique' => false,
+            ])
             ->create();
         $this->table('provincia', [
                 'id' => false,
@@ -1926,6 +2125,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'null' => false,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'nombre',
+            ])
+            ->addIndex(['codDepartamento'], [
+                'name' => 'fk_relation_provincia_and_departamento',
+                'unique' => false,
             ])
             ->create();
         $this->table('proyecto_contador', [
@@ -1956,30 +2159,9 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'name' => 'proy_cont_restriccion_unica',
                 'unique' => true,
             ])
-            ->create();
-        $this->table('relacion_personajur_poblacion', [
-                'id' => false,
-                'primary_key' => ['codRelacionJur'],
-                'engine' => 'InnoDB',
-                'encoding' => 'latin1',
-                'collation' => 'latin1_swedish_ci',
-                'comment' => '',
-                'row_format' => 'DYNAMIC',
-            ])
-            ->addColumn('codRelacionJur', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'identity' => 'enable',
-            ])
-            ->addColumn('codPoblacionBeneficiaria', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codRelacionJur',
-            ])
-            ->addColumn('codPersonaJuridica', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codPoblacionBeneficiaria',
+            ->addIndex(['codProyecto'], [
+                'name' => 'fk_relation_proyecto_contador_and_proyecto',
+                'unique' => false,
             ])
             ->create();
         $this->table('relacion_personajuridica_actividad', [
@@ -2006,30 +2188,46 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'codActividadPrincipal',
             ])
+            ->addIndex(['codActividadPrincipal'], [
+                'name' => 'k_relation_relacion_personajuridica_actividad_and_actividad_prin',
+                'unique' => false,
+            ])
+            ->addIndex(['codPersonaJuridica'], [
+                'name' => 'fk_relation_relacion_personajuridica_actividad_and_persona_jurid',
+                'unique' => false,
+            ])
             ->create();
-        $this->table('relacion_personanat_poblacion', [
+        $this->table('relacion_personajur_poblacion', [
                 'id' => false,
-                'primary_key' => ['codRelacionNat'],
+                'primary_key' => ['codRelacionJur'],
                 'engine' => 'InnoDB',
                 'encoding' => 'latin1',
                 'collation' => 'latin1_swedish_ci',
                 'comment' => '',
                 'row_format' => 'DYNAMIC',
             ])
-            ->addColumn('codRelacionNat', 'integer', [
+            ->addColumn('codRelacionJur', 'integer', [
                 'null' => false,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'identity' => 'enable',
             ])
-            ->addColumn('codPersonaNatural', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codRelacionNat',
-            ])
             ->addColumn('codPoblacionBeneficiaria', 'integer', [
                 'null' => false,
                 'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codPersonaNatural',
+                'after' => 'codRelacionJur',
+            ])
+            ->addColumn('codPersonaJuridica', 'integer', [
+                'null' => false,
+                'limit' => MysqlAdapter::INT_REGULAR,
+                'after' => 'codPoblacionBeneficiaria',
+            ])
+            ->addIndex(['codPersonaJuridica'], [
+                'name' => 'fk_relation_relacion_personajur_poblacion_and_persona_juridica_p',
+                'unique' => false,
+            ])
+            ->addIndex(['codPoblacionBeneficiaria'], [
+                'name' => 'fk_relation_relacion_personajur_poblacion_and_poblacion_benefici',
+                'unique' => false,
             ])
             ->create();
         $this->table('relacion_personanatural_actividad', [
@@ -2055,6 +2253,47 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'null' => false,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'codActividadPrincipal',
+            ])
+            ->addIndex(['codActividadPrincipal'], [
+                'name' => 'fk_relation_relacion_personanatural_actividad_and_actividad_prin',
+                'unique' => false,
+            ])
+            ->addIndex(['codPersonaNatural'], [
+                'name' => 'fk_relation_relacion_personanatural_actividad_and_persona_natura',
+                'unique' => false,
+            ])
+            ->create();
+        $this->table('relacion_personanat_poblacion', [
+                'id' => false,
+                'primary_key' => ['codRelacionNat'],
+                'engine' => 'InnoDB',
+                'encoding' => 'latin1',
+                'collation' => 'latin1_swedish_ci',
+                'comment' => '',
+                'row_format' => 'DYNAMIC',
+            ])
+            ->addColumn('codRelacionNat', 'integer', [
+                'null' => false,
+                'limit' => MysqlAdapter::INT_REGULAR,
+                'identity' => 'enable',
+            ])
+            ->addColumn('codPersonaNatural', 'integer', [
+                'null' => false,
+                'limit' => MysqlAdapter::INT_REGULAR,
+                'after' => 'codRelacionNat',
+            ])
+            ->addColumn('codPoblacionBeneficiaria', 'integer', [
+                'null' => false,
+                'limit' => MysqlAdapter::INT_REGULAR,
+                'after' => 'codPersonaNatural',
+            ])
+            ->addIndex(['codPersonaNatural'], [
+                'name' => 'fk_relation_relacion_personanat_poblacion_and_persona_natural_po',
+                'unique' => false,
+            ])
+            ->addIndex(['codPoblacionBeneficiaria'], [
+                'name' => 'fk_relation_relacion_personanat_poblacion_and_poblacion_benefici',
+                'unique' => false,
             ])
             ->create();
         $this->table('relacion_proyecto_objestrategicos', [
@@ -2085,6 +2324,14 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'null' => false,
                 'after' => 'codProyecto',
             ])
+            ->addIndex(['codObjetivoEstrategico'], [
+                'name' => 'fk_relation_relacion_proyecto_objestrategicos_and_objetivo_estra',
+                'unique' => false,
+            ])
+            ->addIndex(['codProyecto'], [
+                'name' => 'fk_relation_relacion_proyecto_objestrategicos_and_proyecto',
+                'unique' => false,
+            ])
             ->create();
         $this->table('relacion_proyecto_objmilenio', [
                 'id' => false,
@@ -2114,6 +2361,14 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'codObjetivoMilenio',
             ])
+            ->addIndex(['codObjetivoMilenio'], [
+                'name' => 'fk_relation_relacion_proyecto_objmilenio_and_objetivo_milenio',
+                'unique' => false,
+            ])
+            ->addIndex(['codProyecto'], [
+                'name' => 'fk_relation_relacion_proyecto_objmilenio_and_proyecto',
+                'unique' => false,
+            ])
             ->create();
         $this->table('reposicion_gastos', [
                 'id' => false,
@@ -2136,6 +2391,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('totalImporte', 'float', [
                 'null' => true,
+                'default' => null,
                 'after' => 'codEstadoReposicion',
             ])
             ->addColumn('codProyecto', 'integer', [
@@ -2193,33 +2449,40 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('codEmpleadoEvaluador', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'codEmpleadoSolicitante',
             ])
             ->addColumn('codEmpleadoAdmin', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'codEmpleadoEvaluador',
             ])
             ->addColumn('codEmpleadoConta', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'codEmpleadoAdmin',
             ])
             ->addColumn('fechaHoraRevisionGerente', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'codEmpleadoConta',
             ])
             ->addColumn('fechaHoraRevisionAdmin', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'fechaHoraRevisionGerente',
             ])
             ->addColumn('fechaHoraRevisionConta', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'fechaHoraRevisionAdmin',
             ])
             ->addColumn('observacion', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 200,
                 'collation' => 'latin1_swedish_ci',
                 'encoding' => 'latin1',
@@ -2227,11 +2490,13 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('cantArchivos', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_TINY,
                 'after' => 'observacion',
             ])
             ->addColumn('terminacionesArchivos', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 100,
                 'collation' => 'latin1_swedish_ci',
                 'encoding' => 'latin1',
@@ -2239,15 +2504,49 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('fechaHoraRenderizadoVistaCrear', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'limit' => 3,
                 'after' => 'terminacionesArchivos',
             ])
             ->addColumn('codigoContrapartida', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 200,
                 'collation' => 'latin1_swedish_ci',
                 'encoding' => 'latin1',
                 'after' => 'fechaHoraRenderizadoVistaCrear',
+            ])
+            ->addIndex(['codBanco'], [
+                'name' => 'fk_relation_reposicion_gastos_and_banco',
+                'unique' => false,
+            ])
+            ->addIndex(['codEmpleadoAdmin'], [
+                'name' => 'fk_relation_reposicion_gastos_and_empleado_admin',
+                'unique' => false,
+            ])
+            ->addIndex(['codEmpleadoConta'], [
+                'name' => 'fk_relation_reposicion_gastos_and_empleado_conta',
+                'unique' => false,
+            ])
+            ->addIndex(['codEmpleadoEvaluador'], [
+                'name' => 'fk_relation_reposicion_gastos_and_empleado_evaluador',
+                'unique' => false,
+            ])
+            ->addIndex(['codEmpleadoSolicitante'], [
+                'name' => 'fk_relation_reposicion_gastos_and_empleado_solicitante',
+                'unique' => false,
+            ])
+            ->addIndex(['codEstadoReposicion'], [
+                'name' => 'fk_relation_reposicion_gastos_and_estado_reposicion_gastos',
+                'unique' => false,
+            ])
+            ->addIndex(['codMoneda'], [
+                'name' => 'fk_relation_reposicion_gastos_and_moneda',
+                'unique' => false,
+            ])
+            ->addIndex(['codProyecto'], [
+                'name' => 'fk_relation_reposicion_gastos_and_proyecto',
+                'unique' => false,
             ])
             ->create();
         $this->table('requerimiento_bs', [
@@ -2277,14 +2576,17 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('fechaHoraRevision', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'fechaHoraEmision',
             ])
             ->addColumn('fechaHoraAtendido', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'fechaHoraRevision',
             ])
             ->addColumn('fechaHoraConta', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'fechaHoraAtendido',
             ])
             ->addColumn('codEmpleadoSolicitante', 'integer', [
@@ -2294,16 +2596,19 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('codEmpleadoEvaluador', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'codEmpleadoSolicitante',
             ])
             ->addColumn('codEmpleadoAdministrador', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'codEmpleadoEvaluador',
             ])
             ->addColumn('codEmpleadoContador', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'codEmpleadoAdministrador',
             ])
@@ -2321,11 +2626,13 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('cantArchivosEmp', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_TINY,
                 'after' => 'codEstadoRequerimiento',
             ])
             ->addColumn('nombresArchivosEmp', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 500,
                 'collation' => 'latin1_swedish_ci',
                 'encoding' => 'latin1',
@@ -2333,11 +2640,13 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('cantArchivosAdmin', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_TINY,
                 'after' => 'nombresArchivosEmp',
             ])
             ->addColumn('nombresArchivosAdmin', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 500,
                 'collation' => 'latin1_swedish_ci',
                 'encoding' => 'latin1',
@@ -2350,6 +2659,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('observacion', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 200,
                 'collation' => 'latin1_swedish_ci',
                 'encoding' => 'latin1',
@@ -2357,6 +2667,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('cuentaBancariaProveedor', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 100,
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
@@ -2364,6 +2675,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('tieneFactura', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_TINY,
                 'after' => 'cuentaBancariaProveedor',
             ])
@@ -2375,10 +2687,35 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('codigoContrapartida', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 200,
                 'collation' => 'latin1_swedish_ci',
                 'encoding' => 'latin1',
                 'after' => 'facturaContabilizada',
+            ])
+            ->addIndex(['codEmpleadoAdministrador'], [
+                'name' => 'fk_relation_requerimiento_bs_and_empleado_administrador',
+                'unique' => false,
+            ])
+            ->addIndex(['codEmpleadoContador'], [
+                'name' => 'fk_relation_requerimiento_bs_and_empleado_contador',
+                'unique' => false,
+            ])
+            ->addIndex(['codEmpleadoEvaluador'], [
+                'name' => 'fk_relation_requerimiento_bs_and_empleado_evaluador',
+                'unique' => false,
+            ])
+            ->addIndex(['codEmpleadoSolicitante'], [
+                'name' => 'fk_relation_requerimiento_bs_and_empleado_solicitante',
+                'unique' => false,
+            ])
+            ->addIndex(['codEstadoRequerimiento'], [
+                'name' => 'fk_relation_requerimiento_bs_and_estado_requerimiento_bs',
+                'unique' => false,
+            ])
+            ->addIndex(['codProyecto'], [
+                'name' => 'fk_relation_requerimiento_bs_and_proyecto',
+                'unique' => false,
             ])
             ->create();
         $this->table('resultado_esperado', [
@@ -2406,6 +2743,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'null' => false,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'descripcion',
+            ])
+            ->addIndex(['codProyecto'], [
+                'name' => 'fk_relation_resultado_esperado_and_proyecto',
+                'unique' => false,
             ])
             ->create();
         $this->table('tipo_archivo_proyecto', [
@@ -2536,6 +2877,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'nombreGuardado',
             ])
+            ->addIndex(['codTipoArchivo'], [
+                'name' => 'fk_relation_archivo_general_and_tipo_archivo_general',
+                'unique' => false,
+            ])
             ->create();
         $this->table('avance_entregable', [
                 'id' => false,
@@ -2574,6 +2919,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'null' => false,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'monto',
+            ])
+            ->addIndex(['codContratoLocacion'], [
+                'name' => 'fk_relation_avance_entregable_and_contrato_locacion',
+                'unique' => false,
             ])
             ->create();
         $this->table('banco', [
@@ -2624,8 +2973,13 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('fechaHoraVerPDF', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'limit' => 3,
                 'after' => 'fechaHoraInicioBuscar',
+            ])
+            ->addIndex(['codEmpleado'], [
+                'name' => 'fk_relation_busqueda_repo_and_empleado',
+                'unique' => false,
             ])
             ->create();
         $this->table('cdp', [
@@ -2653,712 +3007,6 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'null' => false,
                 'limit' => MysqlAdapter::INT_TINY,
                 'after' => 'nombreCDP',
-            ])
-            ->create();
-        $this->table('cite-actividad', [
-                'id' => false,
-                'primary_key' => ['codActividad'],
-                'engine' => 'InnoDB',
-                'encoding' => 'utf8mb4',
-                'collation' => 'utf8mb4_general_ci',
-                'comment' => '',
-                'row_format' => 'DYNAMIC',
-            ])
-            ->addColumn('codActividad', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'identity' => 'enable',
-            ])
-            ->addColumn('nombre', 'string', [
-                'null' => false,
-                'limit' => 200,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'codActividad',
-            ])
-            ->addColumn('codTipoServicio', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'nombre',
-            ])
-            ->addColumn('descripcion', 'string', [
-                'null' => false,
-                'limit' => 1000,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'codTipoServicio',
-            ])
-            ->addColumn('indice', 'string', [
-                'null' => false,
-                'limit' => 20,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'descripcion',
-            ])
-            ->create();
-        $this->table('cite-archivo_servicio', [
-                'id' => false,
-                'primary_key' => ['codArchivoServicio'],
-                'engine' => 'InnoDB',
-                'encoding' => 'utf8mb4',
-                'collation' => 'utf8mb4_general_ci',
-                'comment' => '',
-                'row_format' => 'DYNAMIC',
-            ])
-            ->addColumn('codArchivoServicio', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'identity' => 'enable',
-            ])
-            ->addColumn('codArchivo', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codArchivoServicio',
-            ])
-            ->addColumn('codServicio', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codArchivo',
-            ])
-            ->create();
-        $this->table('cite-asistencia_servicio', [
-                'id' => false,
-                'primary_key' => ['codAsistenciaServicio'],
-                'engine' => 'InnoDB',
-                'encoding' => 'utf8mb4',
-                'collation' => 'utf8mb4_general_ci',
-                'comment' => '',
-                'row_format' => 'DYNAMIC',
-            ])
-            ->addColumn('codAsistenciaServicio', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'identity' => 'enable',
-            ])
-            ->addColumn('codUsuario', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codAsistenciaServicio',
-            ])
-            ->addColumn('codServicio', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codUsuario',
-            ])
-            ->addColumn('externo', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codServicio',
-            ])
-            ->addIndex(['codUsuario', 'codServicio'], [
-                'name' => 'unique_asistencia_cite',
-                'unique' => true,
-            ])
-            ->create();
-        $this->table('cite-cadena', [
-                'id' => false,
-                'primary_key' => ['codCadena'],
-                'engine' => 'InnoDB',
-                'encoding' => 'utf8mb4',
-                'collation' => 'utf8mb4_general_ci',
-                'comment' => '',
-                'row_format' => 'DYNAMIC',
-            ])
-            ->addColumn('codCadena', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'identity' => 'enable',
-            ])
-            ->addColumn('nombre', 'string', [
-                'null' => false,
-                'limit' => 200,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'codCadena',
-            ])
-            ->create();
-        $this->table('cite-clasificacion_rango_ventas', [
-                'id' => false,
-                'primary_key' => ['codClasificacion'],
-                'engine' => 'InnoDB',
-                'encoding' => 'utf8mb4',
-                'collation' => 'utf8mb4_general_ci',
-                'comment' => '',
-                'row_format' => 'DYNAMIC',
-            ])
-            ->addColumn('codClasificacion', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'identity' => 'enable',
-            ])
-            ->addColumn('nombre', 'string', [
-                'null' => false,
-                'limit' => 20,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'codClasificacion',
-            ])
-            ->addColumn('minimo', 'float', [
-                'null' => false,
-                'after' => 'nombre',
-            ])
-            ->addColumn('maximo', 'float', [
-                'null' => false,
-                'after' => 'minimo',
-            ])
-            ->create();
-        $this->table('cite-estado_documento', [
-                'id' => false,
-                'primary_key' => ['codEstadoDocumento'],
-                'engine' => 'InnoDB',
-                'encoding' => 'utf8mb4',
-                'collation' => 'utf8mb4_general_ci',
-                'comment' => '',
-                'row_format' => 'DYNAMIC',
-            ])
-            ->addColumn('codEstadoDocumento', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'identity' => 'enable',
-            ])
-            ->addColumn('nombre', 'string', [
-                'null' => false,
-                'limit' => 200,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'codEstadoDocumento',
-            ])
-            ->addColumn('descripcion', 'string', [
-                'null' => false,
-                'limit' => 200,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'nombre',
-            ])
-            ->create();
-        $this->table('cite-estado_reporte_mensual', [
-                'id' => false,
-                'primary_key' => ['codEstado'],
-                'engine' => 'InnoDB',
-                'encoding' => 'utf8mb4',
-                'collation' => 'utf8mb4_general_ci',
-                'comment' => '',
-                'row_format' => 'DYNAMIC',
-            ])
-            ->addColumn('codEstado', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'identity' => 'enable',
-            ])
-            ->addColumn('nombre', 'string', [
-                'null' => false,
-                'limit' => 100,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'codEstado',
-            ])
-            ->addColumn('explicacion', 'string', [
-                'null' => false,
-                'limit' => 200,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'nombre',
-            ])
-            ->addColumn('icono', 'string', [
-                'null' => false,
-                'limit' => 50,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'explicacion',
-            ])
-            ->addColumn('claseBoton', 'string', [
-                'null' => false,
-                'limit' => 50,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'icono',
-            ])
-            ->create();
-        $this->table('cite-modalidad_servicio', [
-                'id' => false,
-                'primary_key' => ['codModalidad'],
-                'engine' => 'InnoDB',
-                'encoding' => 'utf8mb4',
-                'collation' => 'utf8mb4_general_ci',
-                'comment' => '',
-                'row_format' => 'DYNAMIC',
-            ])
-            ->addColumn('codModalidad', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'identity' => 'enable',
-            ])
-            ->addColumn('nombre', 'string', [
-                'null' => false,
-                'limit' => 200,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'codModalidad',
-            ])
-            ->create();
-        $this->table('cite-relacion_usuario_unidad', [
-                'id' => false,
-                'primary_key' => ['codRelacionUsuarioUnidad'],
-                'engine' => 'InnoDB',
-                'encoding' => 'utf8mb4',
-                'collation' => 'utf8mb4_general_ci',
-                'comment' => '',
-                'row_format' => 'DYNAMIC',
-            ])
-            ->addColumn('codRelacionUsuarioUnidad', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'identity' => 'enable',
-            ])
-            ->addColumn('codUsuario', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codRelacionUsuarioUnidad',
-            ])
-            ->addColumn('codUnidadProductiva', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codUsuario',
-            ])
-            ->addIndex(['codUsuario', 'codUnidadProductiva'], [
-                'name' => 'unique_usuario_unidad_productiva_cite',
-                'unique' => true,
-            ])
-            ->create();
-        $this->table('cite-reporte_mensual', [
-                'id' => false,
-                'primary_key' => ['codReporte'],
-                'engine' => 'InnoDB',
-                'encoding' => 'utf8mb4',
-                'collation' => 'utf8mb4_general_ci',
-                'comment' => '',
-                'row_format' => 'DYNAMIC',
-            ])
-            ->addColumn('codReporte', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'identity' => 'enable',
-            ])
-            ->addColumn('año', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codReporte',
-            ])
-            ->addColumn('codMes', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'año',
-            ])
-            ->addColumn('codEmpleado', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codMes',
-            ])
-            ->addColumn('comentario', 'string', [
-                'null' => true,
-                'limit' => 100,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'codEmpleado',
-            ])
-            ->addColumn('fechaHoraMarcacion', 'datetime', [
-                'null' => true,
-                'after' => 'comentario',
-            ])
-            ->addColumn('debeReportar', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'fechaHoraMarcacion',
-            ])
-            ->addColumn('codEstado', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'debeReportar',
-            ])
-            ->addColumn('observacion', 'string', [
-                'null' => true,
-                'limit' => 500,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'codEstado',
-            ])
-            ->create();
-        $this->table('cite-servicio', [
-                'id' => false,
-                'primary_key' => ['codServicio'],
-                'engine' => 'InnoDB',
-                'encoding' => 'utf8mb4',
-                'collation' => 'utf8mb4_general_ci',
-                'comment' => '',
-                'row_format' => 'DYNAMIC',
-            ])
-            ->addColumn('codServicio', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'identity' => 'enable',
-            ])
-            ->addColumn('codUnidadProductiva', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codServicio',
-            ])
-            ->addColumn('codTipoServicio', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codUnidadProductiva',
-            ])
-            ->addColumn('descripcion', 'string', [
-                'null' => false,
-                'limit' => 500,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'codTipoServicio',
-            ])
-            ->addColumn('codMesAño', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'descripcion',
-            ])
-            ->addColumn('cantidadServicio', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codMesAño',
-            ])
-            ->addColumn('totalParticipantes', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'cantidadServicio',
-            ])
-            ->addColumn('nroHorasEfectivas', 'float', [
-                'null' => false,
-                'after' => 'totalParticipantes',
-            ])
-            ->addColumn('fechaInicio', 'date', [
-                'null' => false,
-                'after' => 'nroHorasEfectivas',
-            ])
-            ->addColumn('fechaTermino', 'date', [
-                'null' => false,
-                'after' => 'fechaInicio',
-            ])
-            ->addColumn('codTipoAcceso', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'fechaTermino',
-            ])
-            ->addColumn('codDistrito', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codTipoAcceso',
-            ])
-            ->addColumn('codModalidad', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codDistrito',
-            ])
-            ->addColumn('fechaHoraCreacion', 'string', [
-                'null' => false,
-                'limit' => 50,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'codModalidad',
-            ])
-            ->addColumn('codTipoCDP', 'integer', [
-                'null' => true,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'fechaHoraCreacion',
-            ])
-            ->addColumn('nroComprobante', 'string', [
-                'null' => true,
-                'limit' => 100,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'codTipoCDP',
-            ])
-            ->addColumn('baseImponible', 'float', [
-                'null' => true,
-                'after' => 'nroComprobante',
-            ])
-            ->addColumn('igv', 'float', [
-                'null' => true,
-                'after' => 'baseImponible',
-            ])
-            ->addColumn('total', 'float', [
-                'null' => true,
-                'after' => 'igv',
-            ])
-            ->addColumn('codEmpleadoCreador', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'total',
-            ])
-            ->addColumn('codActividad', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codEmpleadoCreador',
-            ])
-            ->create();
-        $this->table('cite-tipo_acceso', [
-                'id' => false,
-                'primary_key' => ['codTipoAcceso'],
-                'engine' => 'InnoDB',
-                'encoding' => 'utf8mb4',
-                'collation' => 'utf8mb4_general_ci',
-                'comment' => '',
-                'row_format' => 'DYNAMIC',
-            ])
-            ->addColumn('codTipoAcceso', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'identity' => 'enable',
-            ])
-            ->addColumn('nombre', 'string', [
-                'null' => false,
-                'limit' => 200,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'codTipoAcceso',
-            ])
-            ->create();
-        $this->table('cite-tipo_personeria', [
-                'id' => false,
-                'primary_key' => ['codTipoPersoneria'],
-                'engine' => 'InnoDB',
-                'encoding' => 'utf8mb4',
-                'collation' => 'utf8mb4_general_ci',
-                'comment' => '',
-                'row_format' => 'DYNAMIC',
-            ])
-            ->addColumn('codTipoPersoneria', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'identity' => 'enable',
-            ])
-            ->addColumn('nombre', 'string', [
-                'null' => false,
-                'limit' => 200,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'codTipoPersoneria',
-            ])
-            ->addColumn('letra', 'string', [
-                'null' => false,
-                'limit' => 5,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'nombre',
-            ])
-            ->create();
-        $this->table('cite-tipo_servicio', [
-                'id' => false,
-                'primary_key' => ['codTipoServicio'],
-                'engine' => 'InnoDB',
-                'encoding' => 'utf8mb4',
-                'collation' => 'utf8mb4_general_ci',
-                'comment' => '',
-                'row_format' => 'DYNAMIC',
-            ])
-            ->addColumn('codTipoServicio', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'identity' => 'enable',
-            ])
-            ->addColumn('nombre', 'string', [
-                'null' => false,
-                'limit' => 100,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'codTipoServicio',
-            ])
-            ->create();
-        $this->table('cite-unidad_productiva', [
-                'id' => false,
-                'primary_key' => ['codUnidadProductiva'],
-                'engine' => 'InnoDB',
-                'encoding' => 'utf8mb4',
-                'collation' => 'utf8mb4_general_ci',
-                'comment' => '',
-                'row_format' => 'DYNAMIC',
-            ])
-            ->addColumn('codUnidadProductiva', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'identity' => 'enable',
-            ])
-            ->addColumn('ruc', 'string', [
-                'null' => true,
-                'limit' => 50,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'codUnidadProductiva',
-            ])
-            ->addColumn('razonSocial', 'string', [
-                'null' => true,
-                'limit' => 300,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'ruc',
-            ])
-            ->addColumn('dni', 'string', [
-                'null' => true,
-                'limit' => 20,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'razonSocial',
-            ])
-            ->addColumn('nombrePersona', 'string', [
-                'null' => true,
-                'limit' => 200,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'dni',
-            ])
-            ->addColumn('codTipoPersoneria', 'string', [
-                'null' => false,
-                'limit' => 11,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'nombrePersona',
-            ])
-            ->addColumn('fechaHoraCreacion', 'datetime', [
-                'null' => true,
-                'after' => 'codTipoPersoneria',
-            ])
-            ->addColumn('direccion', 'string', [
-                'null' => true,
-                'limit' => 500,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'fechaHoraCreacion',
-            ])
-            ->addColumn('codDistrito', 'integer', [
-                'null' => true,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'direccion',
-            ])
-            ->addColumn('codClasificacion', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codDistrito',
-            ])
-            ->addColumn('nroServiciosHistorico', 'integer', [
-                'null' => true,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codClasificacion',
-            ])
-            ->addColumn('codCadena', 'integer', [
-                'null' => true,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'nroServiciosHistorico',
-            ])
-            ->addColumn('codEstadoDocumento', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codCadena',
-            ])
-            ->addColumn('enTramite', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_TINY,
-                'after' => 'codEstadoDocumento',
-            ])
-            ->addColumn('codEmpleadoCreador', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'enTramite',
-            ])
-            ->addColumn('tieneCadena', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codEmpleadoCreador',
-            ])
-            ->addColumn('codUsuarioGerente', 'integer', [
-                'null' => true,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'tieneCadena',
-            ])
-            ->addColumn('codUsuarioPresidente', 'integer', [
-                'null' => true,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'codUsuarioGerente',
-            ])
-            ->create();
-        $this->table('cite-usuario', [
-                'id' => false,
-                'primary_key' => ['codUsuario'],
-                'engine' => 'InnoDB',
-                'encoding' => 'utf8mb4',
-                'collation' => 'utf8mb4_general_ci',
-                'comment' => '',
-                'row_format' => 'DYNAMIC',
-            ])
-            ->addColumn('codUsuario', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'identity' => 'enable',
-            ])
-            ->addColumn('dni', 'string', [
-                'null' => false,
-                'limit' => 20,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'codUsuario',
-            ])
-            ->addColumn('nombres', 'string', [
-                'null' => false,
-                'limit' => 100,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'dni',
-            ])
-            ->addColumn('apellidoPaterno', 'string', [
-                'null' => false,
-                'limit' => 100,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'nombres',
-            ])
-            ->addColumn('apellidoMaterno', 'string', [
-                'null' => false,
-                'limit' => 100,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'apellidoPaterno',
-            ])
-            ->addColumn('telefono', 'string', [
-                'null' => true,
-                'limit' => 100,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'apellidoMaterno',
-            ])
-            ->addColumn('correo', 'string', [
-                'null' => true,
-                'limit' => 100,
-                'collation' => 'utf8mb4_general_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'telefono',
-            ])
-            ->addColumn('fechaHoraCreacion', 'datetime', [
-                'null' => true,
-                'after' => 'correo',
-            ])
-            ->addColumn('fechaHoraActualizacion', 'datetime', [
-                'null' => true,
-                'after' => 'fechaHoraCreacion',
-            ])
-            ->addColumn('codEmpleadoCreador', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_REGULAR,
-                'after' => 'fechaHoraActualizacion',
-            ])
-            ->addIndex(['dni'], [
-                'name' => 'unique_dni_cite_usuario',
-                'unique' => true,
             ])
             ->create();
         $this->table('contrato_locacion', [
@@ -3481,6 +3129,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('razonSocialPJ', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 200,
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
@@ -3488,6 +3137,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('nombreDelCargoPJ', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 200,
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
@@ -3509,7 +3159,20 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('fechaHoraAnulacion', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'nombreFinanciera',
+            ])
+            ->addIndex(['codEmpleadoCreador'], [
+                'name' => 'fk_relation_contrato_locacion_and_empleado',
+                'unique' => false,
+            ])
+            ->addIndex(['codMoneda'], [
+                'name' => 'fk_relation_contrato_locacion_and_moneda',
+                'unique' => false,
+            ])
+            ->addIndex(['codSede'], [
+                'name' => 'fk_relation_contrato_locacion_and_sede',
+                'unique' => false,
             ])
             ->create();
         $this->table('contrato_plazo', [
@@ -3639,7 +3302,24 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('fechaHoraAnulacion', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'provinciaYDepartamento',
+            ])
+            ->addIndex(['codEmpleadoCreador'], [
+                'name' => 'fk_relation_contrato_plazo_and_empleado',
+                'unique' => false,
+            ])
+            ->addIndex(['codMoneda'], [
+                'name' => 'fk_relation_contrato_plazo_and_moneda',
+                'unique' => false,
+            ])
+            ->addIndex(['codSede'], [
+                'name' => 'fk_relation_contrato_plazo_and_sede',
+                'unique' => false,
+            ])
+            ->addIndex(['codTipoContrato'], [
+                'name' => 'fk_relation_contrato_plazo_and_tipo_contrato',
+                'unique' => false,
             ])
             ->create();
         $this->table('detalle_rendicion_gastos', [
@@ -3697,6 +3377,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('terminacionArchivo', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 10,
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
@@ -3718,6 +3399,14 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'default' => '0',
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'contabilizado',
+            ])
+            ->addIndex(['codTipoCDP'], [
+                'name' => 'fk_relation_detalle_rendicion_gastos_and_cdp',
+                'unique' => false,
+            ])
+            ->addIndex(['codRendicionGastos'], [
+                'name' => 'fk_relation_detalle_rendicion_gastos_and_rendicion_gastos',
+                'unique' => false,
             ])
             ->create();
         $this->table('detalle_solicitud_fondos', [
@@ -3761,6 +3450,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
                 'after' => 'importe',
+            ])
+            ->addIndex(['codSolicitud'], [
+                'name' => 'fk_relation_detalle_solicitud_fondos_and_solicitud_fondos',
+                'unique' => false,
             ])
             ->create();
         $this->table('empleado', [
@@ -3819,6 +3512,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('codPuesto', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'dni',
             ])
@@ -3833,10 +3527,11 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('fechaDeBaja', 'date', [
                 'null' => true,
+                'default' => null,
                 'after' => 'fechaRegistro',
             ])
             ->addColumn('codSede', 'integer', [
-                'null' => true,
+                'null' => false,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'fechaDeBaja',
             ])
@@ -3883,6 +3578,22 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'default' => '1',
                 'limit' => MysqlAdapter::INT_TINY,
                 'after' => 'codSedeContador',
+            ])
+            ->addIndex(['codPuesto'], [
+                'name' => 'fk_relation_empleado_and_puesto',
+                'unique' => false,
+            ])
+            ->addIndex(['codSede'], [
+                'name' => 'fk_relation_empleado_and_sede',
+                'unique' => false,
+            ])
+            ->addIndex(['codSedeContador'], [
+                'name' => 'fk_relation_empleado_and_sede_contador',
+                'unique' => false,
+            ])
+            ->addIndex(['codUsuario'], [
+                'name' => 'fk_relation_empleado_and_usuario',
+                'unique' => false,
             ])
             ->create();
         $this->table('empleado_puesto', [
@@ -4022,6 +3733,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('codRazonBaja', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'codSede',
             ])
@@ -4031,6 +3743,30 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
                 'after' => 'codRazonBaja',
+            ])
+            ->addIndex(['codEmpleadoResponsable'], [
+                'name' => 'fk_relation_inv_activo_inventario_and_empleado',
+                'unique' => false,
+            ])
+            ->addIndex(['codCategoriaActivo'], [
+                'name' => 'fk_relation_inv_activo_inventario_and_inv_categoria_activo_inven',
+                'unique' => false,
+            ])
+            ->addIndex(['codEstado'], [
+                'name' => 'fk_relation_inv_activo_inventario_and_inv_estado_activo_inventar',
+                'unique' => false,
+            ])
+            ->addIndex(['codRazonBaja'], [
+                'name' => 'fk_relation_inv_activo_inventario_and_inv_razon_baja_activo',
+                'unique' => false,
+            ])
+            ->addIndex(['codProyecto'], [
+                'name' => 'fk_relation_inv_activo_inventario_and_proyecto',
+                'unique' => false,
+            ])
+            ->addIndex(['codSede'], [
+                'name' => 'fk_relation_inv_activo_inventario_and_sede',
+                'unique' => false,
             ])
             ->create();
         $this->table('inv-categoria_activo_inventario', [
@@ -4086,17 +3822,40 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('fechaHoraUltimoCambio', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'codEstado',
             ])
             ->addColumn('codEmpleadoQueReviso', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'fechaHoraUltimoCambio',
             ])
             ->addColumn('codRazonBaja', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'codEmpleadoQueReviso',
+            ])
+            ->addIndex(['codActivo'], [
+                'name' => 'fk_relation_inv_detalle_revision_and_inv_activo_inventario',
+                'unique' => false,
+            ])
+            ->addIndex(['codEmpleadoQueReviso'], [
+                'name' => 'fk_relation_inv_detalle_revision_and_inv_empleado_revisador',
+                'unique' => false,
+            ])
+            ->addIndex(['codEstado'], [
+                'name' => 'fk_relation_inv_detalle_revision_and_inv_estado_activo_inventari',
+                'unique' => false,
+            ])
+            ->addIndex(['codRazonBaja'], [
+                'name' => 'fk_relation_inv_detalle_revision_and_inv_razon_baja_activo',
+                'unique' => false,
+            ])
+            ->addIndex(['codRevision'], [
+                'name' => 'fk_relation_inv_detalle_revision_and_inv_revision_inventario',
+                'unique' => false,
             ])
             ->create();
         $this->table('inv-empleado_revisador', [
@@ -4127,6 +3886,18 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'null' => false,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'codEmpleado',
+            ])
+            ->addIndex(['codEmpleado'], [
+                'name' => 'fk_relation_inv_empleado_revisador_and_empleado',
+                'unique' => false,
+            ])
+            ->addIndex(['codRevision'], [
+                'name' => 'fk_relation_inv_empleado_revisador_and_inv_revision_inventario',
+                'unique' => false,
+            ])
+            ->addIndex(['codSede'], [
+                'name' => 'fk_relation_inv_empleado_revisador_and_sede',
+                'unique' => false,
             ])
             ->create();
         $this->table('inv-estado_activo_inventario', [
@@ -4193,6 +3964,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('fechaHoraCierre', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'fechaHoraInicio',
             ])
             ->addColumn('descripcion', 'string', [
@@ -4211,6 +3983,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'null' => false,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'codEmpleadoResponsable',
+            ])
+            ->addIndex(['codEmpleadoResponsable'], [
+                'name' => 'fk_relation_inv_revision_inventario_and_empleado',
+                'unique' => false,
             ])
             ->create();
         $this->table('job', [
@@ -4254,6 +4030,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('fechaHoraEjecucion', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'fechaHoraCreacion',
             ])
             ->addColumn('ejecutado', 'integer', [
@@ -4266,7 +4043,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'unique' => true,
             ])
             ->create();
-        $this->table('mes_a??o', [
+        $this->table('mes_anio', [
                 'id' => false,
                 'primary_key' => ['codMesAño'],
                 'engine' => 'InnoDB',
@@ -4289,6 +4066,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'null' => false,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'año',
+            ])
+            ->addIndex(['codMes'], [
+                'name' => 'fk_relation_mes_anio_and_mes',
+                'unique' => false,
             ])
             ->create();
         $this->table('notificacion', [
@@ -4347,7 +4128,16 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('fechaHoraVisto', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'fechaHoraCreacion',
+            ])
+            ->addIndex(['codEmpleado'], [
+                'name' => 'fk_relation_notificacion_and_empleado',
+                'unique' => false,
+            ])
+            ->addIndex(['codTipoNotificacion'], [
+                'name' => 'fk_relation_notificacion_and_tipo_notificacion',
+                'unique' => false,
             ])
             ->create();
         $this->table('operacion_documento', [
@@ -4385,6 +4175,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('descripcionObservacion', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 500,
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
@@ -4399,6 +4190,22 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'null' => false,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'codPuesto',
+            ])
+            ->addIndex(['codEmpleado'], [
+                'name' => 'fk_relation_operacion_documento_and_empleado',
+                'unique' => false,
+            ])
+            ->addIndex(['codTipoDocumento'], [
+                'name' => 'fk_relation_operacion_documento_and_tipo_documento',
+                'unique' => false,
+            ])
+            ->addIndex(['codTipoOperacion'], [
+                'name' => 'fk_relation_operacion_documento_and_tipo_operacion',
+                'unique' => false,
+            ])
+            ->addIndex(['codPuesto'], [
+                'name' => 'fk_relation_operación_documento_and_puesto',
+                'unique' => false,
             ])
             ->create();
         $this->table('parametro_sistema', [
@@ -4442,16 +4249,29 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('fechaHoraBaja', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'fechaHoraCreacion',
             ])
             ->addColumn('fechaHoraActualizacion', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'fechaHoraBaja',
             ])
             ->addColumn('codTipoParametro', 'integer', [
                 'null' => false,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'fechaHoraActualizacion',
+            ])
+            ->addColumn('modulo', 'string', [
+                'null' => false,
+                'limit' => 100,
+                'collation' => 'utf8mb4_general_ci',
+                'encoding' => 'utf8mb4',
+                'after' => 'codTipoParametro',
+            ])
+            ->addIndex(['codTipoParametro'], [
+                'name' => 'fk_relation_parametro_sistema_and_tipo_parametro_sistema',
+                'unique' => false,
             ])
             ->create();
         $this->table('proyecto', [
@@ -4484,16 +4304,19 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('codEmpleadoDirector', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'nombre',
             ])
             ->addColumn('codSedePrincipal', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'codEmpleadoDirector',
             ])
             ->addColumn('nombreLargo', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 300,
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
@@ -4561,6 +4384,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('contacto_nombres', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 200,
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
@@ -4568,6 +4392,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('contacto_telefono', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 200,
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
@@ -4575,6 +4400,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('contacto_correo', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 200,
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
@@ -4582,10 +4408,39 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('contacto_cargo', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 200,
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
                 'after' => 'contacto_correo',
+            ])
+            ->addIndex(['codTipoFinanciamiento'], [
+                'name' => 'fk_relation_proyecto_and_tipo_financiamiento',
+                'unique' => false,
+            ])
+            ->addIndex(['codEmpleadoDirector'], [
+                'name' => 'fk_relation_proyecto_and_empleado',
+                'unique' => false,
+            ])
+            ->addIndex(['codEntidadFinanciera'], [
+                'name' => 'fk_relation_proyecto_and_entidad_financiera',
+                'unique' => false,
+            ])
+            ->addIndex(['codEstadoProyecto'], [
+                'name' => 'fk_relation_proyecto_and_estado_proyecto',
+                'unique' => false,
+            ])
+            ->addIndex(['codMoneda'], [
+                'name' => 'fk_relation_proyecto_and_moneda',
+                'unique' => false,
+            ])
+            ->addIndex(['codPEI'], [
+                'name' => 'fk_relation_proyecto_and_plan_estrategico_institucional',
+                'unique' => false,
+            ])
+            ->addIndex(['codSedePrincipal'], [
+                'name' => 'fk_relation_proyecto_and_sede',
+                'unique' => false,
             ])
             ->create();
         $this->table('proyecto_observador', [
@@ -4700,14 +4555,17 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('totalImporteRecibido', 'float', [
                 'null' => true,
+                'default' => null,
                 'after' => 'codigoCedepas',
             ])
             ->addColumn('totalImporteRendido', 'float', [
                 'null' => true,
+                'default' => null,
                 'after' => 'totalImporteRecibido',
             ])
             ->addColumn('saldoAFavorDeEmpleado', 'float', [
                 'null' => true,
+                'default' => null,
                 'after' => 'totalImporteRendido',
             ])
             ->addColumn('resumenDeActividad', 'string', [
@@ -4724,14 +4582,17 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('fechaHoraRendicion', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'codEstadoRendicion',
             ])
             ->addColumn('fechaHoraRevisado', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'fechaHoraRendicion',
             ])
             ->addColumn('observacion', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 500,
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
@@ -4744,21 +4605,25 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('codEmpleadoEvaluador', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'codEmpleadoSolicitante',
             ])
             ->addColumn('codEmpleadoContador', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'codEmpleadoEvaluador',
             ])
             ->addColumn('cantArchivos', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'codEmpleadoContador',
             ])
             ->addColumn('terminacionesArchivos', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 200,
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
@@ -4771,10 +4636,39 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('codigoContrapartida', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 200,
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
                 'after' => 'codProyecto',
+            ])
+            ->addIndex(['codEmpleadoContador'], [
+                'name' => 'fk_relation_rendicion_gastos_and_empleado_contador',
+                'unique' => false,
+            ])
+            ->addIndex(['codEmpleadoEvaluador'], [
+                'name' => 'fk_relation_rendicion_gastos_and_empleado_evaluador',
+                'unique' => false,
+            ])
+            ->addIndex(['codEmpleadoSolicitante'], [
+                'name' => 'fk_relation_rendicion_gastos_and_empleado_solicitante',
+                'unique' => false,
+            ])
+            ->addIndex(['codEstadoRendicion'], [
+                'name' => 'fk_relation_rendicion_gastos_and_estado_rendicion_gastos',
+                'unique' => false,
+            ])
+            ->addIndex(['codMoneda'], [
+                'name' => 'fk_relation_rendicion_gastos_and_moneda',
+                'unique' => false,
+            ])
+            ->addIndex(['codProyecto'], [
+                'name' => 'fk_relation_rendicion_gastos_and_proyecto',
+                'unique' => false,
+            ])
+            ->addIndex(['codSolicitud'], [
+                'name' => 'fk_relation_rendicion_gastos_and_solicitud_fondos',
+                'unique' => false,
             ])
             ->create();
         $this->table('sede', [
@@ -4807,6 +4701,43 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'null' => false,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'esSedePrincipal',
+            ])
+            ->addIndex(['codEmpleadoAdministrador'], [
+                'name' => 'fk_relation_sede_and_empleado_administrador',
+                'unique' => false,
+            ])
+            ->create();
+        $this->table('semestre', [
+                'id' => false,
+                'primary_key' => ['codSemestre'],
+                'engine' => 'InnoDB',
+                'encoding' => 'utf8mb4',
+                'collation' => 'utf8mb4_general_ci',
+                'comment' => '',
+                'row_format' => 'DYNAMIC',
+            ])
+            ->addColumn('codSemestre', 'integer', [
+                'null' => false,
+                'limit' => MysqlAdapter::INT_REGULAR,
+                'identity' => 'enable',
+            ])
+            ->addColumn('anio', 'integer', [
+                'null' => false,
+                'limit' => MysqlAdapter::INT_REGULAR,
+                'after' => 'codSemestre',
+            ])
+            ->addColumn('numero', 'integer', [
+                'null' => false,
+                'limit' => MysqlAdapter::INT_REGULAR,
+                'after' => 'anio',
+            ])
+            ->addColumn('fecha_inicio', 'date', [
+                'null' => false,
+                'after' => 'numero',
+            ])
+            ->addColumn('fecha_fin', 'date', [
+                'null' => false,
+                'after' => 'fecha_inicio',
             ])
             ->create();
         $this->table('solicitud_fondos', [
@@ -4846,6 +4777,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('totalSolicitado', 'float', [
                 'null' => true,
+                'default' => null,
                 'after' => 'fechaHoraEmision',
             ])
             ->addColumn('girarAOrdenDe', 'string', [
@@ -4869,6 +4801,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('justificacion', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 350,
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
@@ -4876,11 +4809,13 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('codEmpleadoEvaluador', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'justificacion',
             ])
             ->addColumn('fechaHoraRevisado', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'codEmpleadoEvaluador',
             ])
             ->addColumn('codEstadoSolicitud', 'integer', [
@@ -4890,10 +4825,12 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('fechaHoraAbonado', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'codEstadoSolicitud',
             ])
             ->addColumn('observacion', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 300,
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
@@ -4901,6 +4838,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('terminacionArchivo', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 10,
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
@@ -4908,6 +4846,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('codEmpleadoAbonador', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'terminacionArchivo',
             ])
@@ -4919,6 +4858,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('codEmpleadoContador', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'estaRendida',
             ])
@@ -4929,10 +4869,43 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('codigoContrapartida', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 200,
                 'collation' => 'utf8mb4_general_ci',
                 'encoding' => 'utf8mb4',
                 'after' => 'codMoneda',
+            ])
+            ->addIndex(['codBanco'], [
+                'name' => 'fk_relation_solicitud_fondos_and_banco',
+                'unique' => false,
+            ])
+            ->addIndex(['codEmpleadoAbonador'], [
+                'name' => 'fk_relation_solicitud_fondos_and_empleado_abonador',
+                'unique' => false,
+            ])
+            ->addIndex(['codEmpleadoContador'], [
+                'name' => 'fk_relation_solicitud_fondos_and_empleado_contador',
+                'unique' => false,
+            ])
+            ->addIndex(['codEmpleadoEvaluador'], [
+                'name' => 'fk_relation_solicitud_fondos_and_empleado_evaluador',
+                'unique' => false,
+            ])
+            ->addIndex(['codEmpleadoSolicitante'], [
+                'name' => 'fk_relation_solicitud_fondos_and_empleado_solicitante',
+                'unique' => false,
+            ])
+            ->addIndex(['codEstadoSolicitud'], [
+                'name' => 'fk_relation_solicitud_fondos_and_estado_solicitud_fondos',
+                'unique' => false,
+            ])
+            ->addIndex(['codMoneda'], [
+                'name' => 'fk_relation_solicitud_fondos_and_moneda',
+                'unique' => false,
+            ])
+            ->addIndex(['codProyecto'], [
+                'name' => 'fk_relation_solicitud_fondos_and_proyecto',
+                'unique' => false,
             ])
             ->create();
         $this->table('tipo_archivo_general', [
@@ -5056,6 +5029,10 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'encoding' => 'utf8mb4',
                 'after' => 'codTipoDocumento',
             ])
+            ->addIndex(['codTipoDocumento'], [
+                'name' => 'fk_relation_tipo_operacion_and_tipo_documento',
+                'unique' => false,
+            ])
             ->create();
         $this->table('tipo_parametro_sistema', [
                 'id' => false,
@@ -5104,7 +5081,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('codUsuario', 'integer', [
                 'null' => false,
-                'limit' => MysqlAdapter::INT_BIG,
+                'limit' => MysqlAdapter::INT_REGULAR,
                 'identity' => 'enable',
             ])
             ->addColumn('usuario', 'string', [
@@ -5125,55 +5102,6 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
                 'null' => false,
                 'limit' => MysqlAdapter::INT_REGULAR,
                 'after' => 'password',
-            ])
-            ->create();
-        $this->table('failed_jobs', [
-                'id' => false,
-                'primary_key' => ['id'],
-                'engine' => 'InnoDB',
-                'encoding' => 'utf8mb4',
-                'collation' => 'utf8mb4_unicode_ci',
-                'comment' => '',
-                'row_format' => 'DYNAMIC',
-            ])
-            ->addColumn('id', 'integer', [
-                'null' => false,
-                'limit' => MysqlAdapter::INT_BIG,
-                'signed' => false,
-                'identity' => 'enable',
-            ])
-            ->addColumn('connection', 'text', [
-                'null' => false,
-                'limit' => 65535,
-                'collation' => 'utf8mb4_unicode_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'id',
-            ])
-            ->addColumn('queue', 'text', [
-                'null' => false,
-                'limit' => 65535,
-                'collation' => 'utf8mb4_unicode_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'connection',
-            ])
-            ->addColumn('payload', 'text', [
-                'null' => false,
-                'limit' => MysqlAdapter::TEXT_LONG,
-                'collation' => 'utf8mb4_unicode_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'queue',
-            ])
-            ->addColumn('exception', 'text', [
-                'null' => false,
-                'limit' => MysqlAdapter::TEXT_LONG,
-                'collation' => 'utf8mb4_unicode_ci',
-                'encoding' => 'utf8mb4',
-                'after' => 'payload',
-            ])
-            ->addColumn('failed_at', 'timestamp', [
-                'null' => false,
-                'default' => 'CURRENT_TIMESTAMP',
-                'after' => 'exception',
             ])
             ->create();
         $this->table('migrations', [
@@ -5221,6 +5149,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('user_id', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_BIG,
                 'signed' => false,
                 'after' => 'id',
@@ -5233,6 +5162,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('name', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 255,
                 'collation' => 'utf8mb4_unicode_ci',
                 'encoding' => 'utf8mb4',
@@ -5240,6 +5170,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('scopes', 'text', [
                 'null' => true,
+                'default' => null,
                 'limit' => 65535,
                 'collation' => 'utf8mb4_unicode_ci',
                 'encoding' => 'utf8mb4',
@@ -5252,14 +5183,17 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('created_at', 'timestamp', [
                 'null' => true,
+                'default' => null,
                 'after' => 'revoked',
             ])
             ->addColumn('updated_at', 'timestamp', [
                 'null' => true,
+                'default' => null,
                 'after' => 'created_at',
             ])
             ->addColumn('expires_at', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'updated_at',
             ])
             ->addIndex(['user_id'], [
@@ -5296,6 +5230,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('scopes', 'text', [
                 'null' => true,
+                'default' => null,
                 'limit' => 65535,
                 'collation' => 'utf8mb4_unicode_ci',
                 'encoding' => 'utf8mb4',
@@ -5308,6 +5243,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('expires_at', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'revoked',
             ])
             ->addIndex(['user_id'], [
@@ -5332,6 +5268,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('user_id', 'integer', [
                 'null' => true,
+                'default' => null,
                 'limit' => MysqlAdapter::INT_BIG,
                 'signed' => false,
                 'after' => 'id',
@@ -5345,6 +5282,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('secret', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 100,
                 'collation' => 'utf8mb4_unicode_ci',
                 'encoding' => 'utf8mb4',
@@ -5352,6 +5290,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('provider', 'string', [
                 'null' => true,
+                'default' => null,
                 'limit' => 255,
                 'collation' => 'utf8mb4_unicode_ci',
                 'encoding' => 'utf8mb4',
@@ -5381,10 +5320,12 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('created_at', 'timestamp', [
                 'null' => true,
+                'default' => null,
                 'after' => 'revoked',
             ])
             ->addColumn('updated_at', 'timestamp', [
                 'null' => true,
+                'default' => null,
                 'after' => 'created_at',
             ])
             ->addIndex(['user_id'], [
@@ -5415,10 +5356,12 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('created_at', 'timestamp', [
                 'null' => true,
+                'default' => null,
                 'after' => 'client_id',
             ])
             ->addColumn('updated_at', 'timestamp', [
                 'null' => true,
+                'default' => null,
                 'after' => 'created_at',
             ])
             ->create();
@@ -5451,6 +5394,7 @@ class CreateDbInitial extends Phinx\Migration\AbstractMigration
             ])
             ->addColumn('expires_at', 'datetime', [
                 'null' => true,
+                'default' => null,
                 'after' => 'revoked',
             ])
             ->addIndex(['access_token_id'], [

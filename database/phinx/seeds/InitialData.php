@@ -23,7 +23,7 @@ class InitialData extends AbstractSeed
       $sql_array = explode($separator,$file_string);
       error_log(count($sql_array) ." rows to iterate");
       /* El ultimo elemento siempre está vacío por la coma ultima */
-      for ($i=0; $i < count($sql_array) - 1; $i++) { 
+      for ($i=0; $i < count($sql_array) - 1; $i++) {
         $sql = $sql_array[$i].";";
         error_log("$i Executing $sql");
         $result = $this->execute($sql);
@@ -31,15 +31,15 @@ class InitialData extends AbstractSeed
         error_log("-----------");
       }
 
-      
-      
+
+
     }
 
 
     function readFile($ubication){
       $fileString="";
       $fp = fopen($ubication, "r");
-      
+
       while (!feof($fp)){
           $linea = fgets($fp);
           $fileString .= $linea;
