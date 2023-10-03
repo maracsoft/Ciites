@@ -15,15 +15,15 @@ class ParametroSistema extends Model
     public $timestamps = false;  //para que no trabaje con los campos fecha
 
     const Parametros = [
-
+      "nombreDirectorActual",
       "activarAyuda",
       "activarReportesAExcel",
       "activar_subida_admin_REQ",
       "id_subida_admin_REQ",
-      "relacion_codEmpleados_remplazar",
+
       "MOSTRAR_INPUTS_ESCONDIDOS",
       "codEmpleadoAdministradorLibreSubidaArchivos",
-        "telegram_errorchannel_id",
+      "telegram_errorchannel_id",
       "env",
       "proyect_folder_path",
       "ruta_migraciones"

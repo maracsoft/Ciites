@@ -31,190 +31,7 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-
-  <style>
-    .fondoPlomoCircular{
-            border-radius: 10px;
-            background-color:rgb(190, 190, 190)
-      }
-
-
-    .fontSize6{
-      font-size: 6pt;
-    }
-    .fontSize7{
-      font-size: 7pt;
-    }
-    .fontSize8{
-      font-size: 8pt;
-    }
-    .fontSize9{
-      font-size: 9pt;
-    }
-    .fontSize10{
-      font-size: 10pt;
-    }
-
-    .fontSize11{
-      font-size: 11pt;
-    }
-    .fontSize12{
-      font-size: 12pt;
-    }
-    .fontSize13{
-      font-size: 13pt;
-    }
-    .fontSize14{
-      font-size: 14pt;
-    }
-    .fontSize15{
-      font-size: 15pt;
-    }
-    .fontSize16{
-      font-size: 16pt;
-    }
-    .fontSize17{
-      font-size: 17pt;
-    }
-    .fontSize18{
-      font-size: 18pt;
-    }
-    .fontSize19{
-      font-size: 19pt;
-    }
-
-
-
-    .tabla-detalles{
-      min-width: 800px;
-    }
-    .tabla-detalles th{
-      padding: 5px;
-    }
-
-    .notificacionXRendir{
-      background-color: rgb(87, 180, 44);
-
-    }
-
-    .notificacionObservada{
-      background-color: rgb(209, 101, 101);
-
-    }
-    .form-control-undefined {
-        display: block;
-        width: 100%;
-        height: calc(2.25rem + 2px);
-        padding: .375rem .75rem;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.5;
-        color: #495057;
-        background-color: #fff;
-        background-clip: padding-box;
-        border: 1px solid #ced4da;
-        border-radius: .25rem;
-        box-shadow: 0 0 5px 3px #dc354599;
-        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    }
-
-    .loader {
-      position: fixed;
-      left: 0px;
-      top: 0px;
-      width: 100%;
-      height: 100%;
-      z-index: 9999;
-      background: url('/img/espera.gif') 50% 50% no-repeat rgb(249,249,249);
-      background-size: 10%;
-      opacity: .8;
-    }
-
-
-    .hovered:hover{
-        background-color:rgb(97, 170, 170);
-        border-radius: 3px;
-    }
-
-    .naranjaPrueba{
-
-      background-color: orange;
-    }
-    .verdePrueba{
-
-      background-color: rgb(0, 255, 55);
-    }
-
-    .letraRoja{
-      color:#ff4444;
-    }
-
-    .letraVerde{
-      color: rgb(58, 255, 58);
-    }
-
-    .letraAmarilla{
-      color:rgb(255, 255, 96);
-    }
-
-    .internalPadding-1 > *{
-        padding: 0.15rem;
-    }
-    .hidden{
-        display:none;
-    }
-
-    .fondoBlanco{
-        background-color: white !important;
-    }
-
-    tr.FilaPaddingReducido td{
-        padding:0.3rem
-    }
-
-    .rows_count{
-      color: #495057;
-      background-color: #ced4da;
-      border-radius: 7px;
-
-      padding-left: 10px;
-      padding-right: 10px;
-      padding-top: 7px;
-      padding-bottom: 5px;
-
-    }
-
-    .table-container{
-      overflow-x: auto;
-      padding-bottom: 20px;
-    }
-    .rows_count span{
-      font-weight: 800;
-    }
-
-    .label_puestos{
-      color: #b9c0cb;
-      margin: -2px;
-      padding: 0px;
-      font-size: 10pt;
-      font-weight: 500 !important;
-    }
-
-    .nombrecompleto-usuario{
-      font-size: smaller;
-      font-weight: 800;
-      color: white !important;
-
-    }
-    .image-logo-container{
-      background-color: white;
-      margin-right: -8px;
-      margin-left: -8px;
-
-    }
-
-
-  </style>
+  @include('RenderedCss')
 
 
   @yield('estilos')
@@ -283,7 +100,7 @@
   <!-- /.navbar -->
   {{--  {{route('bienvenido')}} --}}
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar elevation-4">
 
 
 
@@ -313,10 +130,12 @@
 
         <div class="info">
           <a href="{{route('GestionUsuarios.verMisDatos')}}" class="d-block nombrecompleto-usuario">
-            {{ $empLogeadoPlantilla->getNombreCompleto() }}
+            {{ $empLogeadoPlantilla->nombres }}
+            <br>
+            {{ $empLogeadoPlantilla->apellidos }}
           </a>
 
-          <div class="d-flex flex-column mt-2" >
+          <div class="d-flex flex-column " >
 
             @foreach ($empLogeadoPlantilla->getPuestos() as $puesto)
               <label class="label_puestos" style="" title="{{$puesto->descripcion}}">
@@ -328,6 +147,26 @@
         </div>
 
       </div>
+
+
+      @if($empLogeadoPlantilla->esAdminSistema())
+
+        @if(App\ParametroSistema::mostrarMsj())
+          <div class="msj_parametros_faltantes">
+            {{App\ParametroSistema::getMsjFaltantes()}}
+          </div>
+        @endif
+      @endif
+
+      @php
+        $entorno = App\ParametroSistema::getEntorno();
+      @endphp
+      @if($entorno!="produccion")
+        <div class="nombre-entorno">
+          Entorno: {{$entorno}}
+        </div>
+      @endif
+
 
 
       <!-- Sidebar Menu -->
