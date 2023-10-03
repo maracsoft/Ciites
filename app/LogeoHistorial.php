@@ -12,7 +12,7 @@ class LogeoHistorial extends Model
     public $table = "logeo_historial";
     protected $primaryKey ="codLogeoHistorial";
 
-    public $timestamps = false;   
+    public $timestamps = false;
     protected $fillable = ['codEmpleado','fechaHoraLogeo','ipLogeo'];
 
     public function getEmpleado(){
@@ -36,35 +36,15 @@ class LogeoHistorial extends Model
         else if(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
             $logeo->ipLogeo=$_SERVER['HTTP_X_FORWARDED_FOR'];
         }
-        else 
+        else
             $logeo->ipLogeo=$_SERVER['REMOTE_ADDR'];
 
-    
+
         $ipPrincipal = $empleado->getIPPrincipal();
         $listaIPs = $empleado->getListaIPs();
         $ipLogeo = $logeo->ipLogeo;
-        
-        /*
-        if(!in_array($ipLogeo,$listaIPs)){// DETECTÓ IRREGULARIDAD
-            MaracsoftBot::enviarMensaje(
-                "ALERTA. Inicio de sesión nuevo de '".$empleado->getNombreCompleto()."'. Acaba de ingresar con la IP ".$ipLogeo.
-                " que no corresponde con su inicio de sesión normal de IP ".$ipPrincipal. " y no está en la lista de IPs anteriores: ".json_encode($listaIPs). "            Información de logeo: ".json_encode($logeo));
-            
 
-            if(Configuracion::activarSeguridadIPs()){
-                //cerramos la sesion del usuario manualmente
-                Auth::logout();
-                //redirigimos al login para que muestre el msj
-                return redirect()->route('user.verLogin')
-                    ->with('datos','Se le ha negado el acceso al sistema debido a actividad sospechosa, contacte con un administrador del sistema para recuperar el acceso.');
-            }else{ //Solo guardamos la IP si se le dejó entrar al sistema
-                $logeo->save();
-            }
-            
-        }else{//Si no detectó irregularidad, guarda normal
-            $logeo->save(); 
-        }
-         */
+
 
 
         $logeo->save();
@@ -80,9 +60,9 @@ class LogeoHistorial extends Model
     }
 
     public function getFechaHora(){
-        
+
         return date('d/m/Y H:i:s', strtotime($this->fechaHoraLogeo));
-        
+
 
     }
 
@@ -107,14 +87,14 @@ class LogeoHistorial extends Model
             ->get();
 
         if(count($listaSiguientesLogeos) == 0){ //si este es el ultimo logeo de una persona
-            $fechaLimite = Carbon::now(); 
+            $fechaLimite = Carbon::now();
         }else{
             $thisSiguiente = $listaSiguientesLogeos[0];
             $fechaLimite = $thisSiguiente->fechaHoraLogeo;
         }
 
         $fechaInicial = $this->fechaHoraLogeo;
-         
+
         $listaOperacionesDuranteSesion = OperacionDocumento::where('codEmpleado',$codEmpleado)
             ->where('fechaHora','>',$fechaInicial)
             ->where('fechaHora','<',$fechaLimite)

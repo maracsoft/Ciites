@@ -71,7 +71,6 @@ class Kernel extends HttpKernel
         'ValidarSesionAdminSistema' =>\App\Http\Middleware\ValidarSesionGerente::class,
         'ValidarSesionUGE' =>\App\Http\Middleware\ValidarSesionUGE::class,
         'ValidarSesionAdministracionOContador' =>\App\Http\Middleware\ValidarSesionAdministracionOContador::class,
-        'ValidarSesionCITE' =>\App\Http\Middleware\ValidarSesionCITE::class,
 
         'ValidarSesionObservador' =>\App\Http\Middleware\ValidarSesionObservador::class,
 

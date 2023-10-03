@@ -2,8 +2,7 @@
 
 namespace App;
 
-use App\Models\CITE\ReporteMensualCite;
-use App\Models\CITE\Servicio;
+
 use App\Models\MaracModel;
 use App\Models\MaracModelInterface;
 use App\Models\Notificaciones\Notificacion;

@@ -8,11 +8,11 @@ use League\CommonMark\Util\Configuration;
 class Configuracion extends Model
 {
     const estamosEnMantenimiento = false;
-    
+
 
     const pesoMaximoArchivoMB = 10;
-   
-    
+
+
 
     //FORMULARIO EMPLEADO
     const tamañoMaximoUsuario= 100;
@@ -50,11 +50,11 @@ class Configuracion extends Model
 
 
     const tamañoMaximoNroComprobante= 20;
-    
+
     const tamañoMaximoResumenDeActividad= 300;//rendicion
     const tamañoMaximoResumen= 300;//rendicion
     const tamañoMaximoJustificacion= 300;//solicitud
-    
+
     const tamañoMaximoObservacion= 200;
     const valorMaximoCantArchivos= 100;//(tiny Int)
 
@@ -63,10 +63,10 @@ class Configuracion extends Model
     const tamañoMaximoGiraraAOrdenDe= 50;//solicitud
     const tamañoMaximoNroCuentaBanco= 50;//solicitud-reposicion
     const tamañoMaximoCodigoContrapartida= 11;//SOL REN REP REQ
-    
+
     const tamañoMaximoDomicilio= 200;//
 
-    
+
 
 
 
@@ -74,7 +74,7 @@ class Configuracion extends Model
     const tamañoMaximoDescripcionesLargasProyecto = 600;
 
     const tamañoMaximoDescripcionesMedianas = 200;/* descripciones de Actividades e indicadores */
-  
+
 
     /* El tamaño limite en la bd es 600, pongo 20 menos por si ponen saltos de linea */
     const tamañoMaximoResultadoEsperado = 580;
@@ -134,37 +134,37 @@ class Configuracion extends Model
     php artisan config:clear */
 
     public static function enProduccion(){
-     
+
         return env('EN_PRODUCCION') == 'true';
-    } 
+    }
 
 
     //campo necesario en true para correr tests
     //define si se muestran o no algunos inputs que usamos como Hidden para almacenar variables
-    
+
     public static function mostrarInputsEscondidos(){
       $valor = ParametroSistema::getParametroSistema("MOSTRAR_INPUTS_ESCONDIDOS")->valor;
       return $valor == 'true';
-    } 
+    }
 
 
-     
+
     /* Define a donde se enviará el mensaje de error generado SÉ
-        TRUE : se envia al grupo de produccion 
+        TRUE : se envia al grupo de produccion
         false: se envia al grupo de pruebas
     */
     public static function direccionDelMensaje(){
         return env('DIRECCION_DEL_MENSAJE') == true;
-    } 
+    }
 
     //https://dniruc.apisperu.com/api/v1/ruc/
     public static function getTokenParaAPISunat(){
 
         return env('TOKEN_API_SUNAT');
-    }  
+    }
 
 
-    
+
 
 
     public static function estaEnProduccionTexto(){
@@ -173,7 +173,7 @@ class Configuracion extends Model
 
     }
 
-    
+
 
 
     //para que solo se inyecte si estamos en local
@@ -184,27 +184,27 @@ class Configuracion extends Model
     public static function getInputTextOHidden(){
         if(!Configuracion::mostrarInputsEscondidos())
             return "hidden";
-    
+
         return "text";
 
-    } 
+    }
 
     public static function getDisplayNone(){
         if(!Configuracion::mostrarInputsEscondidos())
             return "display: none;";
 
     }
-    
+
 
     public static function getRutaImagenCedepasPNG(){
         if(Configuracion::enProduccion())
             return "https://gestion.cedepas.org/img/LogoCedepas.png";
-       
+
         return "/../../../img/LogoCedepas.png";
     }
-    
-    
-    
+
+
+
     const mensajeErrorEstandar = "Ha ocurrido un error inesperado. Contacte con el administrador del sistema brindándole el Código de error ";
     public static function getMensajeError($codError){
 
@@ -215,13 +215,7 @@ class Configuracion extends Model
     }
 
 
-    //CUANDO ESTÁ EN TRUE y alguien ingresa con una IP extraña o no registrada, se le niega el acceso
-    public static function activarSeguridadIPs(){
 
-        /* Aquí debería jalar de Parametros */
-        return ParametroSistema::getParametroSistema('activarSeguridadExtraIPs')->valor=="true";
-        
-    }
 
     public static function activarAyuda(){
 
@@ -231,7 +225,7 @@ class Configuracion extends Model
         }
         return $par->valor == "true";
     }
-    
+
 
 
     public static function getUrlManual(){
@@ -239,7 +233,7 @@ class Configuracion extends Model
             return "https://manual.cedepas.org/";
 
         return "http://localhost:8081/Manual/";
-        
+
     }
 
 }

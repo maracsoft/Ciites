@@ -9,7 +9,7 @@ class TipoDocumento extends Model
     public $table = "tipo_documento";
     protected $primaryKey ="codTipoDocumento";
 
-    public $timestamps = false;  //para que no trabaje con los campos fecha 
+    public $timestamps = false;  //para que no trabaje con los campos fecha
 
     public function getColor(){
         switch ($this->abreviacion) {
@@ -25,10 +25,8 @@ class TipoDocumento extends Model
             case 'REQ':
                 $color = "rgb(155, 255, 146)";
                 break;
-            case 'RCITE':
-                $color = "rgb(55, 55, 246)";
-                break;
-                                
+
+
         }
         return $color;
     }

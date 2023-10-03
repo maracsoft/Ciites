@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Models\CITE\ReporteMensualCite;
+
 use Illuminate\Database\Eloquent\Model;
 
 class OperacionDocumento extends Model
@@ -10,23 +10,23 @@ class OperacionDocumento extends Model
     public $table = "operacion_documento";
     protected $primaryKey ="codOperacionDocumento";
 
-    public $timestamps = false;  //para que no trabaje con los campos fecha 
+    public $timestamps = false;  //para que no trabaje con los campos fecha
 
 
-    /* Esto es solo para el listar operaciones, para que se diferencien cuales son del mismo 
+    /* Esto es solo para el listar operaciones, para que se diferencien cuales son del mismo
     Elegiré colores claros (cercanos al 255,255,255 )
     el color se basará en el codTipoDocumento y el codDocumento
     */
     public function getColorFondo(){
         $codTipoDocumento = $this->codTipoDocumento;
         $codDocumento = $this->codDocumento;
-        
+
 
         $valorR = pow($codDocumento +1,$codTipoDocumento) + 3*$codTipoDocumento - $codDocumento;
         $valorG = pow($codDocumento +3,$codTipoDocumento) + 4*$codDocumento + 2*$codTipoDocumento;
         $valorB = pow($codDocumento + 5,$codTipoDocumento +1 ) + 5*$codTipoDocumento - 2*$codDocumento;
-        
-        
+
+
         /* Normalizamos los valores para que sean menores a 128 */
         $R = 125 + fmod($valorR,128);
         $G = 125 + fmod($valorG,128);
@@ -52,7 +52,7 @@ class OperacionDocumento extends Model
     public function getEmpleado(){
         return Empleado::findOrFail($this->codEmpleado);
     }
-    
+
     public function getDocumento(){
 
         $id = $this->codDocumento;
@@ -69,9 +69,7 @@ class OperacionDocumento extends Model
             case 4:
                 $doc = RequerimientoBS::findOrFail($id);
                 break;
-            case 5:
-                $doc = ReporteMensualCite::findOrFail($id);
-                break;
+
         }
 
         return $doc;
