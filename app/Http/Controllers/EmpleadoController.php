@@ -103,7 +103,7 @@ class EmpleadoController extends Controller
             $empleado->nombreCargo=$request->cargo;
             $empleado->direccion=$request->direccion;
             $empleado->nroTelefono=$request->telefono;
-
+            $empleado->codSedeContador = null;
             $empleado->save();
 
 
@@ -448,7 +448,7 @@ class EmpleadoController extends Controller
       try{
           db::beginTransaction();
           $codEmpleado = $request->codEmpleado;
-          $empleado = new Empleado();
+
           $array_cods_proyectos = explode(',',$request->array_cods_proyectos);
           foreach ($array_cods_proyectos as $codigo_presupuestal) {
             $proyecto = Proyecto::findByCodigoPresupuestal($codigo_presupuestal);
@@ -463,7 +463,7 @@ class EmpleadoController extends Controller
 
           }
           $nombres = implode(",",$nombres);
-          $msj = "Se ha asociado al contador ".$empleado->getNombreCompleto(). " a los proyectos $nombres";
+          $msj = "Se ha asociado al contador a los proyectos $nombres";
 
           db::commit();
           return redirect()->route('GestionUsuarios.verProyectosContador',$codEmpleado)->with('datos',$msj);
@@ -484,7 +484,7 @@ class EmpleadoController extends Controller
       try{
           db::beginTransaction();
           $codEmpleado = $request->codEmpleado;
-          $empleado = new Empleado();
+
           $array_cods_proyectos = explode(',',$request->array_cods_proyectos);
           foreach ($array_cods_proyectos as $codigo_presupuestal) {
             $proyecto = Proyecto::findByCodigoPresupuestal($codigo_presupuestal);
@@ -496,7 +496,7 @@ class EmpleadoController extends Controller
 
           }
           $nombres = implode(",",$nombres);
-          $msj = "Se ha eliminado al contador ".$empleado->getNombreCompleto(). " de los proyectos $nombres";
+          $msj = "Se ha eliminado al contador de los proyectos $nombres";
 
           db::commit();
           return redirect()->route('GestionUsuarios.verProyectosContador',$codEmpleado)->with('datos',$msj);
@@ -517,7 +517,7 @@ class EmpleadoController extends Controller
       try{
           db::beginTransaction();
           $codEmpleado = $request->codEmpleado;
-          $empleado = new Empleado();
+
           $array_cods_proyectos = explode(',',$request->array_cods_proyectos);
           foreach ($array_cods_proyectos as $codigo_presupuestal) {
             $proyecto = Proyecto::findByCodigoPresupuestal($codigo_presupuestal);
@@ -532,7 +532,7 @@ class EmpleadoController extends Controller
 
           }
           $nombres = implode(",",$nombres);
-          $msj = "Se ha asociado al observador ".$empleado->getNombreCompleto(). " a los proyectos $nombres";
+          $msj = "Se ha asociado al observador a los proyectos $nombres";
 
           db::commit();
           return redirect()->route('GestionUsuarios.verProyectosObservador',$codEmpleado)->with('datos',$msj);
@@ -553,7 +553,7 @@ class EmpleadoController extends Controller
       try{
           db::beginTransaction();
           $codEmpleado = $request->codEmpleado;
-          $empleado = new Empleado();
+
           $array_cods_proyectos = explode(',',$request->array_cods_proyectos);
           foreach ($array_cods_proyectos as $codigo_presupuestal) {
             $proyecto = Proyecto::findByCodigoPresupuestal($codigo_presupuestal);
@@ -565,7 +565,7 @@ class EmpleadoController extends Controller
 
           }
           $nombres = implode(",",$nombres);
-          $msj = "Se ha eliminado al observador ".$empleado->getNombreCompleto(). " de los proyectos $nombres";
+          $msj = "Se ha eliminado al observador de los proyectos $nombres";
 
           db::commit();
           return redirect()->route('GestionUsuarios.verProyectosObservador',$codEmpleado)->with('datos',$msj);
