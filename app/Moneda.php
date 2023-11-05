@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Moneda extends Model
+class Moneda extends MaracModel
 {
     public $timestamps = false;
 

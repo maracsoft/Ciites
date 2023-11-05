@@ -60,10 +60,23 @@ class Debug extends Model
     }
 
 
-    public static function LogMessage($msg){
+    public static function LogMessage($msg,$msj2 = null){
 
-      Log::channel('maraclog')->info($msg);
+      if(gettype($msg) == 'array'){
+        $msg = json_encode($msg, JSON_PRETTY_PRINT);
+      }
 
+      if($msj2){
+        if(gettype($msj2) == 'array'){
+          $msj2 = json_encode($msj2, JSON_PRETTY_PRINT);
+        }
+      }
+
+      $segundo_msj = "";
+      if($msj2)
+        $segundo_msj = ": ".$msj2;
+
+      Log::channel('maraclog')->info($msg.$segundo_msj);
     }
 
 

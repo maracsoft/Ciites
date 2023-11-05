@@ -8,29 +8,31 @@ use App\Fecha;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Http\Request;
 
 class UIFiltros implements NotFillableInterface {
-    
+
     private $filtros = []; //array que configura los filtros
     private $filtros_usados; //filtros usados en la query actual
     private $hacerDesplegable ; //
     private $randomNumber;
 
-    /* 
+    /*
     Filtros es un arreglo de objectos, cada objeto es así:
     {
       'name'=>'codDepartamento', //nombre con el que llegará al backend y nombre de la columna en la bd
       'label'=>'Departamento:' //contenido del label que aparecerá al ladito
-      'show_label'=>true/false 
-      'placeholder'=>'placeholder', //placeholder del input text o contenido por defecto del select 
+      'show_label'=>true/false
+      'placeholder'=>'placeholder', //placeholder del input text o contenido por defecto del select
       'type'=>'text/select/select2/date_start/date_end/date_interval/checkbox/multiple_select', //tipo de filtro que se mandará
       'function'=>'equals/contains/different/minor/mayor/between/between_dates/in',
       'options'=>[modelos] //array de modelos que se listarán en el select(si fuera un select)
       'options_label_field'=> 'nombre' //campo que se jalará de cada modelo de options (por ejemplo nombre o descripcion)
       'size'=>'xs/sm/md/', //tamaño que tendrá el input
       'max_width'=>'', //maximo tamaño que tendrá el input
-      'value'=>''
+      'value'=>'',
+      'direct_search => false // permite añadir campos a la busqueda que no serán procesados directamente hacia SQL, y los podemos recuperar en el controller con UIFiltros::getValorRequestDirectSearch($request,"telefono_sucio");
+
     }
     */
     const camposObligatorios = [
@@ -55,19 +57,20 @@ class UIFiltros implements NotFillableInterface {
       'date_interval',
       'checkbox',
       'multiple_select',
+      'direct_search'
     ];
 
     public function __construct(bool $hacerDesplegable, array $filtros_usados){
       $this->randomNumber = rand(1,9999);
-       
+
       $this->hacerDesplegable = $hacerDesplegable;
       $this->filtros_usados = $filtros_usados;
-      
-      
+
+
     }
 
 
-    /* 
+    /*
     $filtro = [
       'name'=>'codEmpleadoCreador',
       'label'=>':',
@@ -89,13 +92,18 @@ class UIFiltros implements NotFillableInterface {
         throw new Exception($msj, 1);
       }
 
+      /* VALORES POR DEFECTO */
+      if(!array_key_exists("direct_search",$filtro)){
+        $filtro['direct_search'] = false;
+      }
+
       array_push($this->filtros,$filtro);
 
     }
     /* Misma que arriba */
 
     function validarFiltro(array $filtro){
-      
+
       /* Validamos que tenga todos los campos obligatorios */
       foreach (UIFiltros::camposObligatorios as $campo) {
         if(!array_key_exists($campo,$filtro))
@@ -108,24 +116,24 @@ class UIFiltros implements NotFillableInterface {
       return "";
     }
 
-    
+
     // El random number se genera aqui al ser inicializado el objeto (como esta funcion es llamada 2 veces, no puede generarse aquí)
-    
+
     public function render(){
       $r = $this->randomNumber;
       $filtros = $this->filtros;
       $filtros_usados = $this->filtros_usados;
-      
+
       $hacerDesplegable = $this->hacerDesplegable;
 
       return view('ComponentesUI.Filtros',compact('r','filtros','hacerDesplegable','filtros_usados'));
     }
 
-     
-    
 
 
-    /* 
+
+
+    /*
     En esta funcion entra una pre query de un Model y esta le aplica los filtros que vengan en el urlQuery
     ejemplo de urlQuery
       nombre.contains=diego ernesto&codCadena.equals=6&ruc.in=20,13
@@ -137,9 +145,9 @@ class UIFiltros implements NotFillableInterface {
       if($urlQuery==""){
         return $query_orm;
       }
-       
-            
-      
+
+
+
       $filters = static::getValidatedFilters($query_orm,$urlQuery);
 
       foreach ($filters as $filter) {
@@ -148,7 +156,7 @@ class UIFiltros implements NotFillableInterface {
         $value = $filter['value'];
         $name = $filter['name'];
         $function = $filter['function'];
-        
+
         $operator = "";
         switch ($function) {
           case 'equals':
@@ -175,7 +183,7 @@ class UIFiltros implements NotFillableInterface {
           case 'between_dates':
 
             //$value = urldecode($value);
-             
+
             $date_start = explode(',',$value)[0];
             $date_end = explode(',',$value)[1];
 
@@ -194,27 +202,28 @@ class UIFiltros implements NotFillableInterface {
             $value = $codDistritos;
             $query_orm = $query_orm->whereIn($name,$value);
             break;
-                
+
+          case 'direct_search':
+            break;
           default:
             throw new Exception("(UIFiltros) buildQuery la function $function no tiene un case asignado.", 1);
             break;
         }
 
 
-       
-         
-    
+
+
+
 
       }
       $queryWithParam = UIFiltros::str_ireplace_array('?',$query_orm->getBindings(),$query_orm->toSql());
 
-      error_log("(UIFiltros) buildQuery: ".$queryWithParam);
       return $query_orm;
     }
 
-    /* 
+    /*
     Entra urlQuery y query_orm
-    sale un arreglo de filtros de tipo name=>value 
+    sale un arreglo de filtros de tipo name=>value
       "codCadena"=> 5
       "codDepartamento"=>1
 
@@ -223,24 +232,24 @@ class UIFiltros implements NotFillableInterface {
       if($urlQuery==""){
         return [];
       }
-      
+
 
 
       $filters = static::getValidatedFilters($query_orm,$urlQuery);
       $array = [];
       foreach ($filters as $filter) {
         //Primero extraemos cada uno de los filtros
-        $array[$filter['name']] = $filter['value']; 
+        $array[$filter['name']] = $filter['value'];
       }
 
-      
+
       return $array;
     }
 
 
-    /* 
+    /*
     Entra urlQuery y query_orm
-    sale un arreglo de filtros de tipo name.function=>value 
+    sale un arreglo de filtros de tipo name.function=>value
       "codDistrito.in_departamento"=> 5
       "fechaHoraCreacion.between_dates"=>"31/08/2022,04/09/2022"
 
@@ -256,16 +265,16 @@ class UIFiltros implements NotFillableInterface {
       $array = [];
       foreach ($filters as $filter) {
         //Primero extraemos cada uno de los filtros
-        $array[$filter['name'].".".$filter['function']] = $filter['value']; 
+        $array[$filter['name'].".".$filter['function']] = $filter['value'];
       }
 
-      
+
       return $array;
     }
 
 
 
-    /* 
+    /*
       le entra el query_orm y el urlQuery
       le sale un array donde cada elemento es un filtro con los datos value,name,function
 
@@ -280,8 +289,8 @@ class UIFiltros implements NotFillableInterface {
         return [];
 
       $urlQuery = urldecode($urlQuery);
-      
-      
+
+
       $filters = explode('&',$urlQuery);
       $array = [];
       foreach ($filters as $filter) {
@@ -290,26 +299,35 @@ class UIFiltros implements NotFillableInterface {
         try {
           $name_and_function = explode('=',$filter)[0];
           $value = explode('=',$filter)[1];
-           
+
           $name = explode('.',$name_and_function)[0];
           $function = explode('.',$name_and_function)[1];
         } catch (\Throwable $th) {
           continue;
         }
 
-         
-        
-        if($query_orm->isThisAColumn($name)){
+
+        if($query_orm->isThisAColumn($name) || $function == 'direct_search'){
           $array[$name] = [
             'value'=>$value,
             'name'=>$name,
             'function'=>$function,
-          ]; 
+          ];
         }
       }
 
       return $array;
     }
+
+    /*
+    Esta función nos permite obtener la query SQL que se ejecutará
+    $replace =  array (
+      0 => 7,
+      1 => '4',
+    )
+    $subject = "select * from `contacto` where `codCuenta` = ? and `codProgramacion` = ?
+    OUTPUT: select * from `contacto` where `codCuenta` = 7 and `codProgramacion` = 4
+    */
 
     static function str_ireplace_array($search, array $replace, $subject){
       if (0 === $tokenc = substr_count(strtolower($subject), strtolower($search))) {
@@ -319,7 +337,7 @@ class UIFiltros implements NotFillableInterface {
       $string  = '';
       if (count($replace) >= $tokenc) {
           $replace = array_slice($replace, 0, $tokenc);
-          $tokenc += 1; 
+          $tokenc += 1;
       } else {
           $tokenc = count($replace) + 1;
       }
@@ -328,5 +346,12 @@ class UIFiltros implements NotFillableInterface {
       }
 
       return $string;
+    }
+
+    public static function getValorRequestDirectSearch(Request $request,$field){
+
+      $name = $field.'_direct_search';
+      $value = $request->$name;
+      return $value;
     }
 }

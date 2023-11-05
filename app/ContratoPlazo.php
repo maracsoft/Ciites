@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class ContratoPlazo extends Contrato
 {
@@ -14,14 +15,14 @@ class ContratoPlazo extends Contrato
 
     const RaizCodigoCedepas = "CP";
 
-    /* 
+    /*
 
-    CONTRATO PLAZO 
+    CONTRATO PLAZO
         fechaInicio
         fechaFin (si es null, es pq es indefinido)
         fechaActual
 
-        
+
         tieneHijos
         nombres
         apellidos
@@ -32,38 +33,38 @@ class ContratoPlazo extends Contrato
         codEntidadFinanciera
         codProyecto
         nombrePuesto
-        
+
         sueldoFijo
-        horasSemanales ¿no recuerdo si este estaba? 
+        horasSemanales ¿no recuerdo si este estaba?
 
     */
 
-    
+
 
     /* si es hombre retorna EL TRABAJADOR
     si es mujer, retorna LA TRABAJADORA */
     public function getTrabajadore(){
         if($this->sexo=='M')
             return "EL TRABAJADOR";
-        else    
+        else
             return "LA TRABAJADORA";
 
     }
 
-    
-    
+
+
     public function getPDF(){
-       
+
         $contrato = $this;
-        
-        /* 
+
+        /*
         return view('Contratos.contratoLocacionPDF',compact('contrato','listaItems'));
-        */ 
+        */
 
         $pdf = \PDF::loadview('Contratos.contratoPlazoPDF',
             array('contrato'=>$this)
                             )->setPaper('a4', 'portrait');
-        
+
         return $pdf;
     }
 
@@ -79,15 +80,15 @@ class ContratoPlazo extends Contrato
 
     public static function rellernarCerosIzq($numero, $nDigitos){
         return str_pad($numero, $nDigitos, "0", STR_PAD_LEFT);
-        
+
     }
 
-  
- 
- 
 
-     
-    
+
+
+
+
+
     function tieneAsignacionFamiliar(){
         return $this->asignacionFamiliar=='1';
     }
@@ -105,14 +106,14 @@ class ContratoPlazo extends Contrato
         return TipoContrato::findOrFail($this->codTipoContrato);
 
     }
-    
+
     function esContratoNormal(){
         return $this->codTipoContrato == '1' || $this->codTipoContrato == '3'; //normal o GPC
 
     }
 
 
-    
+
 
 
     function getSueldoBrutoEscrito(){
@@ -125,7 +126,7 @@ class ContratoPlazo extends Contrato
         return Sede::findOrFail($this->codSede);
     }
 
-     
+
 
 
 
@@ -137,20 +138,26 @@ class ContratoPlazo extends Contrato
         return Empleado::whereIn('codEmpleado',$arrayDeCodEmpleadosGeneradores)->get();
 
     }
-    
-    
-    static function listaNombresDeContratados(){
-        $listaContratos = ContratoPlazo::orderBy('apellidos','ASC')->get();
 
-        $listaNombres = [];
-        foreach ($listaContratos as $contrato) {
-            $nombreComp = $contrato->apellidos." ".$contrato->nombres;
-            if(!in_array($nombreComp,$listaNombres))
-                $listaNombres[] = $nombreComp; 
+
+    static function listaNombresDeContratados(){
+      $listaContratos = DB::select("select dni,nombres,apellidos from contrato_plazo group by dni,nombres,apellidos");
+
+      $listaNombres = [];
+      foreach ($listaContratos as $contrato) {
+        $nombreComp = $contrato->apellidos." ".$contrato->nombres;
+        if(!in_array($nombreComp,$listaNombres)){
+          $listaNombres[] =[
+            'nombre' =>$nombreComp,
+            "nombre_dni" => $nombreComp." - ".$contrato->dni,
+            "dni" => $contrato->dni
+          ];
         }
 
+      }
 
-        return $listaNombres;
+
+      return $listaNombres;
     }
 
 }

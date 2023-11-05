@@ -2,8 +2,6 @@
 
 namespace App;
 
-
-use App\Models\MaracModel;
 use App\Models\MaracModelInterface;
 use App\Models\Notificaciones\Notificacion;
 use App\Models\Notificaciones\TipoNotificacion;
@@ -16,7 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
 use App\User;
 use Exception;
 
-class Empleado extends Model implements MaracModelInterface
+class Empleado extends MaracModel implements MaracModelInterface
 {
     public $table = "empleado";
     protected $primaryKey ="codEmpleado";

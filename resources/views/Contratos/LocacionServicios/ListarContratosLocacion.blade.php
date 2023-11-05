@@ -6,6 +6,129 @@
 
 @section('contenido')
 
+
+@php
+
+
+$tipos_contrato = [
+  [
+    "id" => 1,
+    "nombre" => "CEDEPAS",
+  ],
+  [
+    "id" => 0,
+    "nombre" => "GPC",
+  ]
+];
+
+
+$tipos_personas = [
+  [
+    "id" => 1,
+    "nombre" => "Persona Natural",
+  ],
+  [
+    "id" => 0,
+    "nombre" => "Persona Jurídica",
+  ]
+];
+
+
+
+$comp_filtros = new App\UI\UIFiltros(false,$filtros_usados);
+
+
+$comp_filtros->añadirFiltro([
+  'name'=>'codEmpleadoCreador',
+  'label'=>'Creador:',
+  'show_label'=>true,
+  'placeholder'=>'- Creador -',
+  'type'=>'select2',
+  'function'=>'equals',
+  'options'=>$listaEmpleadosQueGeneraronContratosLocacion,
+  'options_label_field'=>'getNombreCompleto',
+  'options_id_field'=>null,
+  'size'=>'',
+  'max_width'=>'450px',
+]);
+
+$comp_filtros->añadirFiltro([
+  'name'=>'esDeCedepas',
+  'label'=>'Tipo:',
+  'show_label'=>true,
+  'placeholder'=>'- Tipo Contrato -',
+  'type'=>'select',
+  'function'=>'equals',
+  'options'=>$tipos_contrato,
+  'options_label_field'=>'nombre',
+  'options_id_field'=>'id',
+  'size'=>'',
+  'max_width'=>'450px',
+]);
+
+
+$comp_filtros->añadirFiltro([
+  'name'=>'esPersonaNatural',
+  'label'=>'Tipo Persona:',
+  'show_label'=>true,
+  'placeholder'=>'- Tipo Persona -',
+  'type'=>'select',
+  'function'=>'equals',
+  'options'=>$tipos_personas,
+  'options_label_field'=>'nombre',
+  'options_id_field'=>'id',
+  'size'=>'',
+  'max_width'=>'450px',
+]);
+
+
+$comp_filtros->añadirFiltro([
+  'name'=>'dni',
+  'label'=>'Contratado:',
+  'show_label'=>true,
+  'placeholder'=>'- Nombre y DNI -',
+  'type'=>'select2',
+  'function'=>'equals',
+  'options'=>$listaNombresDeContratados,
+  'options_label_field'=>'nombre_dni',
+  'options_id_field'=>'dni',
+  'size'=>'',
+  'max_width'=>'450px',
+]);
+
+$comp_filtros->añadirFiltro([
+  'name'=>'ruc',
+  'label'=>'Razón Social:',
+  'show_label'=>true,
+  'placeholder'=>'- Razón Social y RUC -',
+  'type'=>'select2',
+  'function'=>'equals',
+  'options'=>$listaRazonesSociales,
+  'options_label_field'=>'nombre_ruc',
+  'options_id_field'=>'ruc',
+  'size'=>'',
+  'max_width'=>'450px',
+]);
+
+
+
+
+$comp_filtros->añadirFiltro([
+  'name'=>'codMoneda',
+  'label'=>'Moneda:',
+  'show_label'=>true,
+  'placeholder'=>'- Moneda -',
+  'type'=>'select',
+  'function'=>'equals',
+  'options'=>$listaMonedas,
+  'options_label_field'=>'nombre',
+  'options_id_field'=>null,
+  'size'=>'',
+  'max_width'=>'450px',
+]);
+
+@endphp
+
 <div class="card-body">
   <div class="well">
         <H3 style="text-align: center;">
@@ -15,88 +138,23 @@
         </H3>
   </div>
   <div class="row">
-   
+
     <div class="col">
       <a href="{{route('ContratosLocacion.Crear')}}" class="btn btn-primary">
         <i class="fas fa-plus"></i>
         Nuevo Registro
       </a>
     </div>
-     
+
   </div>
-
-  <form action="">
-
-    <div class="row m-1">
-
-
-      <div class="col">
-        
-        <select class="form-control" name="codEmpleadoCreador" id="codEmpleadoCreador">
-          <option value="-1">- Creador -</option>
-
-          @foreach ($listaEmpleadosQueGeneraronContratosLocacion as $emp)
-            <option value="{{$emp->getId()}}"
-              @if($codEmpleadoCreador==$emp->getId())
-                  selected
-              @endif
-              >
-              {{$emp->getNombreCompleto()}}
-            </option>
-            
-          @endforeach
-
-        </select>
-      </div>
-
-      <div class="col">
-        
-        <input class="form-control" type="text" id="dni" name="dni" placeholder="DNI contratado" value="{{$dni}}">  
-      </div>
-
-      <div class="col">
-        
-
-        <input class="form-control" type="text" id="ruc" name="ruc" placeholder="RUC contratado" value="{{$ruc}}"> 
-      </div>
-
-      <div class="col">
-        <select class="form-control" name="esDeCedepas" id="esDeCedepas">
-          <option value="">- Tipo Contrato -</option>
-          <option value="1" @if($esDeCedepas=="1") selected @endif>CEDEPAS</option>
-          <option value="0" @if($esDeCedepas=="0") selected @endif>GPC</option>
-        </select>
-  
-      
-      </div>
-
-      <div class="col">
-        
-        <select class="form-control" name="esPersonaNatural" id="esPersonaNatural">
-          <option value="">- Tipo Persona -</option>
-          <option value="1" @if($esPersonaNatural=="1") selected @endif>P.Natural</option>
-          <option value="0" @if($esPersonaNatural=="0") selected @endif>P.Juridica</option>
-        </select>
-  
-
-      </div>
-
-      <div class="col">
-        <button class="btn btn-success " type="submit">
-          <i class="fas fa-search"></i>
-          Buscar
-        </button>
-
-      </div>
-        
-    </div>
-
-  </form>
+  <div class="row">
+    {{$comp_filtros->render()}}
+  </div>
 
     @include('Layout.MensajeEmergenteDatos')
 
     <table class="table table-bordered table-hover datatable table-sm" id="table-3">
-      <thead>                  
+      <thead>
         <tr>
           <th>Cod</th>
           <th>Creador</th>
@@ -120,7 +178,7 @@
                   <span class="fontSize10">
                     {{$contrato->codigoCedepas}}
                   </span>
-                   
+
                     @if($contrato->estaAnulado())
                       <span class="fontSize8">
                         ANULADO
@@ -128,10 +186,10 @@
                     @endif
                 </td>
                 <td>
-                    
+
                     {{$contrato->getEmpleadoCreador()->getNombreCompleto()}}
                 </td>
-                
+
                 <td>
                     @if($contrato->esDeNatural())
                       {{$contrato->getNombreCompleto()}}
@@ -140,17 +198,17 @@
                           DNI[{{$contrato->dni}}]
                           (P.Nat)
                       </span>
-                      
-                    @else 
+
+                    @else
                       {{$contrato->razonSocialPJ}}
                       <span class="fontSize10">
                         RUC[{{$contrato->ruc}}]
                         (P.Jur)
                       </span>
-                      
+
                     @endif
 
-                    
+
                 </td>
                 <td>
                     {{$contrato->getFechaHoraEmision()}}
@@ -180,25 +238,28 @@
                      class='btn btn-info btn-sm'  title="Ver PDF">
                     <i class="fas fa-file-pdf"></i>
                   </a>
- 
+
 
                   @if($contrato->sePuedeAnular())
-                      
-                    <button type="button" onclick="clickEliminar({{$contrato->getId()}})" 
+
+                    <button type="button" onclick="clickEliminar({{$contrato->getId()}})"
                         class='btn btn-danger btn-xs' title="Anular">
                         <i class="fas fa-trash"></i>
                     </button>
                   @endif
-                
+
                 </td>
 
             </tr>
         @endforeach
-        
+
       </tbody>
     </table>
-    
-  
+
+    <div class="mt-4">
+      {{$listaContratos->appends($filtros_usados_paginacion)->links()}}
+    </div>
+
 
   </div>
 
@@ -206,7 +267,7 @@
 @endsection
 @section('script')
     <script>
-        
+
 
         idAnular = 0;
         function clickEliminar(id){
