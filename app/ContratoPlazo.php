@@ -69,6 +69,15 @@ class ContratoPlazo extends Contrato
     }
 
 
+    public function getPDFServicio(){
+      $data =array('contrato'=>$this);
+      $pdf = \PDF::loadview('Contratos.contratoPlazoServicioEspecificoPDF',$data)->setPaper('a4', 'portrait');
+      return $pdf;
+    }
+
+
+
+
 
     //le pasamos un modelo numeracion y calcula la nomeclatura del cod cedepas SOF21-000001
     public static function calcularCodigoCedepas($objNumeracion){

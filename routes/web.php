@@ -98,9 +98,9 @@ Route::group(['middleware'=>"Mantenimiento"],function()
 
 
     Route::get('/probandoCosas',function(){
-
-
-
+      $contrato = ContratoPlazo::findOrFail(247);
+      $pdf = $contrato->getPDFServicio();
+      return $pdf->stream('Contrato ' . $contrato->getTituloContrato() . '.Pdf');
     });
 
     Route::get('/serviciosDistritosRepetidos',function(){
