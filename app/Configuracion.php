@@ -197,10 +197,7 @@ class Configuracion extends Model
 
 
     public static function getRutaImagenCedepasPNG(){
-        if(Configuracion::enProduccion())
-            return "https://gestion.cedepas.org/img/LogoCedepas.png";
-
-        return "/../../../img/LogoCedepas.png";
+      return "https://gestion.ciites.com/img/logo-ciites.png";
     }
 
 
