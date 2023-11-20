@@ -579,7 +579,6 @@
     <div class="page_break"></div>
 
 
-
   </body>
   <style>
 
@@ -621,8 +620,11 @@
       border: solid 1px red;
     }
 
-
+    footer .pagenum:before {
+      content: counter(page);
+    }
   </style>
+
 
 
 

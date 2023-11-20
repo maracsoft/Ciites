@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Dompdf\Dompdf;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -70,9 +71,21 @@ class ContratoPlazo extends Contrato
 
 
     public function getPDFServicio(){
-      $data =array('contrato'=>$this);
-      $pdf = \PDF::loadview('Contratos.contratoPlazoServicioEspecificoPDF',$data)->setPaper('a4', 'portrait');
-      return $pdf;
+      $data = array('contrato'=>$this);
+
+      $html_view = view('Contratos.contratoPlazoServicioEspecificoPDF',$data)->render();
+
+      $dompdf = new Dompdf();
+      $font = $dompdf->getFontMetrics()->get_font("helvetica", "normal");
+      $dompdf->loadHtml($html_view);
+      $dompdf->setPaper('A4');
+      $dompdf->render();
+      $dompdf->getCanvas()->page_text(478, 805, "Página {PAGE_NUM} de {PAGE_COUNT}", $font, 8, array(0,0,0));
+      $dompdf->stream("dompdf_out.pdf", array("Attachment" => false));
+
+
+
+      return $dompdf;
     }
 
 
