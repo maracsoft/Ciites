@@ -70,28 +70,8 @@ Route::group(['middleware'=>"Mantenimiento"],function()
 
     Route::get('/encriptarContraseñas', function(){
 
-        // return redirect()->route('error')->with('datos','Parece que te has perdido...');
-
-        //$contraseñas = "40556946;46636006;47541289;26682689;41943357;43485279;42090409;44847934;26682687;17914644;70355561;70585629;44685699;19327774;40360154;45740336;15738099;19330869;74240802;70386230;42927000;42305800;15766143;45540460;45372425;03120627;45576187;17877014;02897932;44155217;18175358;40068481;18126610;43162714;40392458;40242073;40994213;42122048;44896824;46352412;43953715;99999999;99999999";
-
-        //$contraseñas = '24462108;47449263;09962981;44284513;15738099;09858655;07238664;45434776;73636764;74324466;75513292';
-        $contraseñas="45540460";
-        $vectorContraseñas = explode(';',$contraseñas);
-
-        $vectorContraseñasEncriptadas = [];
-        foreach ($vectorContraseñas as $item){
-            array_push($vectorContraseñasEncriptadas,Hash::make($item));
-        }
-
-        $listaEncriptadasSeparadasComas= implode(';',$vectorContraseñasEncriptadas);
-
-
-        return $listaEncriptadasSeparadasComas;
 
     });
-
-    // RUTA -> CONTROLADOR -> VISTA
-    // /home
 
 
     Route::get('/probandoProy','ProyectoController@probandoMeses');
@@ -104,48 +84,21 @@ Route::group(['middleware'=>"Mantenimiento"],function()
     });
 
     Route::get('/serviciosDistritosRepetidos',function(){
-        $arr = Distrito::getArrayCodsDistritosNombresRepetidos();
-
-        $servPeligros = Servicio::whereIn('codDistrito',$arr)->get();
-        foreach ($servPeligros as $ser) {
-
-            echo "id=".$ser->getId()." codDistrito=".$ser->codDistrito."<br>";
-        }
 
 
     });
 
     Route::get('/unidadesDistritosRepetidos',function(){
-        $arr = Distrito::getArrayCodsDistritosNombresRepetidos();
 
-        $unidades = UnidadProductiva::whereIn('codDistrito',$arr)->get();
-        foreach ($unidades as $unid) {
-
-            echo "id=".$unid->getId()." codDistrito=".$unid->codDistrito . "  lugar=".$unid->getTextoLugar()."<br>";
-        }
 
     });
     Route::get('/serviciosDistritoUno',function(){
-        $arr = Distrito::getArrayCodsDistritosNombresRepetidos();
-        echo "UNIDADES:<br>";
-        $unidades = UnidadProductiva::where('codDistrito',1)->get();
-        foreach ($unidades as $unid) {
 
-            echo "id=".$unid->getId()." codDistrito=".$unid->codDistrito . "  lugar=".$unid->getTextoLugar()."<br>";
-        }
-
-        echo "SERVICIOS:<br>";
-        $servicios = Servicio::where('codDistrito',1)->get();
-        foreach ($servicios as $ser) {
-            echo "id=".$ser->getId()." codDistrito=".$ser->codDistrito."<br>";
-        }
     });
 
 
 
     Route::get('/distritosRepetidos',function(){
-        $arr = Distrito::getDistritosNombresRepetidos();
-        return $arr;
 
     });
 
