@@ -80,7 +80,7 @@ class ContratoPlazo extends Contrato
       $dompdf->loadHtml($html_view);
       $dompdf->setPaper('A4');
       $dompdf->render();
-      $dompdf->getCanvas()->page_text(478, 805, "Página {PAGE_NUM} de {PAGE_COUNT}", $font, 8, array(0,0,0));
+      $dompdf->getCanvas();//->page_text(478, 805, "Página {PAGE_NUM} de {PAGE_COUNT}", $font, 8, array(0,0,0));
       $dompdf->stream("dompdf_out.pdf", array("Attachment" => false));
 
 

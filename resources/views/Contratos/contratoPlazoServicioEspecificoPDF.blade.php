@@ -122,7 +122,7 @@
         contrata temporalmente los servicios personales de
         <b>EL TRABAJADOR</b>
         , quien declara estar capacitado y conocer la actividad que desarrollará y se obliga a desempeñar sus labores como
-        <b>LABORES_AQUI</b>
+        <b>NOMBRE_PUESTO</b>
         , para que ejerza las distintas funciones relativas a su puesto, descritas en los Términos de Referencia adjuntos que son parte del presente contrato; comprometiéndose a desarrollarlas con la mayor eficiencia y espíritu de colaboración, actuando con lealtad, responsabilidad,  honestidad, dedicación y diligencia, observando fidelidad hacia
         <b>CIITES</b>
         y de acuerdo con las instrucciones que le imparta el Empleador, en función a sus necesidades y requerimientos, los mismos que
@@ -156,8 +156,8 @@
           período de prueba de tres (3) meses
         </b>
         , el cual se computará desde el
-        <b>FECHA_INICIO</b> concluyendo
-        <b>FECHA_FIN</b>
+        <b>FECHA_INICIO_PRUEBA</b> concluyendo
+        <b>FECHA_FIN_PRUEBA<b>
 
 
         <br>
@@ -191,8 +191,10 @@
         se compromete a observar la jornada y el horario de trabajo que se le señale de acuerdo a las necesidades de la labor a realizar. Así, conforme a lo establecido en el artículo 4° del DS007-2022-TR (TUO de la Ley de jornada de trabajo, horario y trabajo en sobretiempo),
         <b>EL TRABAJADOR</b>
         tendrá una jornada acumulativa de
-        <b>JORNADA_ACUMULATIVA</b>
-        . Queda perfectamente entendido entre las partes que las horas en sobretiempo que
+        <b>DIAS_LABOR</b>
+        días de labor por
+        <b>DIAS_DESCANSO</b>
+        dias de descanso con 10 horas de labor diaria. Queda perfectamente entendido entre las partes que las horas en sobretiempo que
         <b>EL TRABAJADOR</b>
         acepte laborar, conforme a las necesidades de
         <b>CIITES</b>,
@@ -544,8 +546,9 @@
         <b>CIITES</b>
         para que surta efectos.
         Las partes contratantes se someten expresamente a la jurisdicción de las autoridades judiciales y administrativas de la ciudad de Trujillo.
-        Ambas partes enteradas del contenido de todas y cada una de las cláusulas del presente documento proceden a firmar por duplicado, en señal de conformidad, en la ciudad de Trujillo, a los trienta y uno  días del mes de octubre del año dos mil veintitres.
-
+        Ambas partes enteradas del contenido de todas y cada una de las cláusulas del presente documento proceden a firmar por duplicado, en señal de conformidad, en la ciudad de Trujillo, +
+        a
+        <b>FECHA_ESCRITA_VERBOSAMENTE_CONTRATO</b>
       </p>
 
 
