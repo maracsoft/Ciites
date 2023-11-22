@@ -7,95 +7,119 @@ use Illuminate\Database\Eloquent\Model;
 class Contrato extends MaracModel
 {
 
+  const ColumnasContratoBase = [
+    "nombres",
+    "apellidos",
+    "dni",
+
+    "codigoCedepas",
+    "codEmpleadoCreador",
+    "fechaHoraGeneracion",
+    "es_borrador",
+  ];
 
 
-    //con este titulo se descargará y guardará
-    public function getTituloContrato(){
-        $msjAnulado = '';
-        if($this->estaAnulado())
-            $msjAnulado = ' ANULADO';
+  //con este titulo se descargará y guardará
+  public function getTituloContrato()
+  {
+    $msjAnulado = '';
+    if ($this->estaAnulado())
+      $msjAnulado = ' ANULADO';
 
 
-        //el mb es pq por alguna razón si lo quito, las tildes se paltean en el PDF xd
-        return mb_strtoupper($this->codigoCedepas.$msjAnulado.' - '.$this->apellidos);
-    }
+    //el mb es pq por alguna razón si lo quito, las tildes se paltean en el PDF xd
+    return mb_strtoupper($this->codigoCedepas . $msjAnulado . ' - ' . $this->apellidos);
+  }
 
 
-    public function getEmpleadoCreador() : Empleado {
-        return Empleado::findOrFail($this->codEmpleadoCreador);
+  public function getEmpleadoCreador(): Empleado
+  {
+    return Empleado::findOrFail($this->codEmpleadoCreador);
+  }
 
-    }
+  public function getNombreCompleto()
+  {
 
-    public function getNombreCompleto(){
+    return $this->nombres . " " . $this->apellidos;
+  }
 
-        return $this->nombres." ".$this->apellidos;
+  //APELLIDOS_NOMBRES
+  public function getNombreCompletoAN()
+  {
+    return $this->apellidos . " " . $this->nombres;
+  }
 
-    }
-
-    //APELLIDOS_NOMBRES
-    public function getNombreCompletoAN(){
-        return $this->apellidos." ".$this->nombres;
-
-    }
-
-    function getFechaHoraEmision(){
-        return Fecha::formatoFechaHoraParaVistas($this->fechaHoraGeneracion);
-
-    }
-
-
-    function getFechaInicio(){
-        return Fecha::formatoParaVistas($this->fechaInicio);
-    }
-
-    function getFechaFin(){
-        return Fecha::formatoParaVistas($this->fechaFin);
-    }
-    function getMoneda(){
-        return Moneda::findOrFail($this->codMoneda);
-    }
+  function getFechaHoraEmision()
+  {
+    return Fecha::formatoFechaHoraParaVistas($this->fechaHoraGeneracion);
+  }
 
 
+  function getFechaInicio()
+  {
+    return Fecha::formatoParaVistas($this->fecha_inicio_contrato);
+  }
 
-    public function getSexo(){
-        if($this->sexo=='M')
-            return "MASCULINO";
-        else
-            return "FEMENINO";
-
-    }
-
-    function getFechaInicioEscrita(){
-
-        return Fecha::escribirEnTexto($this->fechaInicio);
-    }
-    function getFechaFinEscrita(){
-
-        return Fecha::escribirEnTexto($this->fechaFin);
-    }
-
-    function getFechaGeneracionEscrita(){
-
-        return Fecha::escribirEnTexto($this->fechaHoraGeneracion);
-    }
+  function getFechaFin()
+  {
+    return Fecha::formatoParaVistas($this->fecha_fin_contrato);
+  }
+  function getMoneda()
+  {
+    return Moneda::findOrFail($this->codMoneda);
+  }
 
 
 
-    public function sePuedeAnular(){
-        if($this->estaAnulado()) //si ya se anuló, entonces no
-            return false;
+  public function getSexo()
+  {
+    if ($this->sexo == 'M')
+      return "MASCULINO";
+    else
+      return "FEMENINO";
+  }
 
-        $emp = Empleado::getEmpleadoLogeado();
-        return $this->codEmpleadoCreador == $emp->codEmpleado; //si no se anuló y el eemp logeado es el que lo creó
+  function getFechaInicioEscrita()
+  {
 
-    }
+    return Fecha::escribirEnTexto($this->fechaInicio);
+  }
+  function getFechaFinEscrita()
+  {
+
+    return Fecha::escribirEnTexto($this->fechaFin);
+  }
+
+  function getFechaGeneracionEscrita()
+  {
+
+    return Fecha::escribirEnTexto($this->fechaHoraGeneracion);
+  }
 
 
-    public function estaAnulado(){
-        return !is_null($this->fechaHoraAnulacion);
-    }
 
-    function getFechaAnulacion(){
-        return Fecha::escribirEnTexto($this->fechaHoraAnulacion);
-    }
+  public function sePuedeAnular()
+  {
+    if ($this->estaAnulado()) //si ya se anuló, entonces no
+      return false;
+
+    $emp = Empleado::getEmpleadoLogeado();
+    return $this->codEmpleadoCreador == $emp->codEmpleado; //si no se anuló y el eemp logeado es el que lo creó
+
+  }
+
+
+  public function estaAnulado() : bool
+  {
+    return !is_null($this->fechaHoraAnulacion);
+  }
+
+  function getFechaAnulacion()
+  {
+    return Fecha::escribirEnTexto($this->fechaHoraAnulacion);
+  }
+
+  public function esBorrador() : bool {
+    return $this->es_borrador == 1;
+  }
 }

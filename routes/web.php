@@ -78,8 +78,8 @@ Route::group(['middleware'=>"Mantenimiento"],function()
 
 
     Route::get('/probandoCosas',function(){
-      $contrato = ContratoPlazo::findOrFail(247);
-      $pdf = $contrato->getPDFServicio();
+      $contrato = ContratoPlazo::findOrFail(248);
+      $pdf = $contrato->getPDF();
       return $pdf->stream('Contrato ' . $contrato->getTituloContrato() . '.Pdf');
     });
 

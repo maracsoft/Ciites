@@ -80,7 +80,7 @@
         INVESTIGACIÓN, INNOVACIÓN Y DESARROLLO TERRITORIAL SOSTENIBLE - CIITES, con domicilio legal en Nestor Batanero
         137 Dpto. 101, distrito de Santiago de Surco, provincia y departamento de Lima,
 
-        con RUC N° 20600973001, debidamente representada por el señor Federico Bernardo Tenorio Calderón, identificado
+        con RUC N° 20610973001, debidamente representada por el señor Federico Bernardo Tenorio Calderón, identificado
         con DNI. N° 26716577, a quien en adelante se le denominará
         CIITES;
 
