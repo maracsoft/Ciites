@@ -24,48 +24,53 @@
       <div class="card-body">
         <div class="row">
 
-          <div class="col-12 col-md-3 p-1">
+          <div class="col-12 col-md-3">
 
-            <input type="number" class="form-control" name="dni" id="dni" value="" placeholder="">
-            <label for="dni" class="marac_label">dni</label>
-
-          </div>
-
-          <div class="col-12 col-md-3 p-1">
-
-            <input type="text" class="form-control" name="nombres" id="nombres" value=""  placeholder="">
-            <label for="nombres" class="marac_label">nombres</label>
+            <div class="label_movil_container">
+              <input type="number" class="form-control" name="dni" id="dni" value="" placeholder="">
+              <label for="dni" class="label_movil">dni</label>
+            </div>
 
           </div>
 
-
-          <div class="col-12 col-md-3 p-1">
-
-            <input type="text" class="form-control" name="apellidos" id="apellidos" value=""  placeholder="">
-            <label for="apellidos" class="marac_label">apellidos</label>
-
-          </div>
-          <div class="col-12 col-md-3 p-1">
-            <select class="form-control" name="sexo" id="sexo">
-              <option value="-1">- Seleccionar - </option>
-              <option value="M">Masculino</option>
-              <option value="F">Femenino</option>
-            </select>
-            <label for="sexo" class="marac_label">sexo</label>
-
+          <div class="col-12 col-md-3">
+            <div class="label_movil_container">
+              <input type="text" class="form-control" name="nombres" id="nombres" value=""  placeholder="">
+              <label for="nombres" class="label_movil">nombres</label>
+            </div>
           </div>
 
-          <div class="w-100"></div>
-          <div class="col-12 col-md-4 p-1">
 
-            <input type="text" class="form-control" name="direccion" id="direccion" value=""  placeholder="">
-            <label for="direccion" class="marac_label">direccion</label>
+          <div class="col-12 col-md-3">
+            <div class="label_movil_container">
+              <input type="text" class="form-control" name="apellidos" id="apellidos" value=""  placeholder="">
+              <label for="apellidos" class="label_movil">apellidos</label>
+            </div>
+          </div>
+          <div class="col-12 col-md-3">
+            <div class="label_movil_container">
+              <select class="form-control" name="sexo" id="sexo">
+                <option value="-1">- Seleccionar - </option>
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+              </select>
+              <label for="sexo" class="label_movil">sexo</label>
+            </div>
           </div>
 
-          <div class="col-12 col-md-4 p-1">
 
-            <input type="text" class="form-control " name="provinciaYDepartamento" id="provinciaYDepartamento" value="a" placeholder="">
-            <label for="provinciaYDepartamento" class="marac_label">Provincia y Departamento</label>
+          <div class="col-12 col-md-4">
+            <div class="label_movil_container">
+              <input type="text" class="form-control" name="direccion" id="direccion" value=""  placeholder="">
+              <label for="direccion" class="label_movil">direccion</label>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="label_movil_container">
+              <input type="text" class="form-control " name="provinciaYDepartamento" id="provinciaYDepartamento" value="a" placeholder="">
+              <label for="provinciaYDepartamento" class="label_movil">Provincia y Departamento</label>
+            </div>
           </div>
 
         </div>
@@ -82,80 +87,99 @@
 
         <div class="row">
 
-          <div class="col-12 p-1">
-            <input type="text" class="form-control" name="nombrePuesto" id="nombrePuesto" placeholder="">
+          <div class="col-12">
+            <div class="label_movil_container">
+              <input type="text" class="form-control" name="nombrePuesto" id="nombrePuesto" placeholder="">
+              <label for="nombrePuesto" class="label_movil">Puesto</label>
+            </div>
 
-            <label for="nombrePuesto" class="marac_label">Puesto</label>
           </div>
 
           <div class="col-12 col-md-3">
-            <div class="input-group date form_date " data-date-format="dd/mm/yyyy" data-provide="datepicker"
-              style=" ">
-              <input type="text" class="form-control text-center" name="fechaInicio" id="fechaInicio"
-                placeholder="Fecha Inicio">
-              <div class="input-group-btn">
-                <button class="btn btn-primary date-set" type="button">
-                  <i class="fa fa-calendar"></i>
-                </button>
+            <div class="label_movil_container">
+              <div class="input-group date form_date " data-date-format="dd/mm/yyyy" data-provide="datepicker">
+                <input type="text" class="form-control text-center" autocomplete="off" name="fechaInicio" id="fechaInicio" placeholder="">
+                <label for="fechaInicio" class="label_movil">Fecha Inicio</label>
+                <div class="input-group-btn">
+                  <button class="btn btn-primary date-set d-none" type="button">
+                    <i class="fa fa-calendar"></i>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+          <div class="col-12 col-md-3">
+            <div class="label_movil_container">
+              <div class="input-group date form_date " data-date-format="dd/mm/yyyy" data-provide="datepicker">
+                <input type="text" class="form-control text-center" autocomplete="off" name="fechaFin" id="fechaFin" placeholder="">
+                <label for="fechaFin" class="label_movil">Fecha Fin</label>
+                <div class="input-group-btn">
+                  <button class="btn btn-primary date-set d-none" type="button">
+                    <i class="fa fa-calendar"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-3">
 
-            <div class="input-group date form_date " data-date-format="dd/mm/yyyy" data-provide="datepicker">
-              <input type="text" class="form-control text-center" name="fechaFin" id="fechaFin"
-                placeholder="Fecha Fin">
-              <div class="input-group-btn">
-                <button class="btn btn-primary date-set" type="button">
-                  <i class="fa fa-calendar"></i>
-                </button>
-              </div>
+          <div class="col-12 col-md-3">
+            <div class="label_movil_container">
+              <input type="number" min="0" class="form-control" name="sueldoBruto" id="sueldoBruto" value="" placeholder="">
+              <label for="sueldoBruto" class="label_movil">Sueldo</label>
             </div>
           </div>
 
-          <div class="col-12 col-md-3">
-            <input type="number" min="0" class="form-control" name="sueldoBruto" id="sueldoBruto"
-              value="" placeholder="Sueldo Bruto">
-          </div>
-
 
 
 
 
           <div class="col-12 col-md-3">
-            <select class="form-control" name="codMoneda" id="codMoneda">
-              <option value="-1">- Moneda - </option>
-              @foreach ($listaMonedas as $moneda)
-                <option value="{{ $moneda->codMoneda }}">
-                  {{ $moneda->nombre }}
-                </option>
-              @endforeach
-            </select>
-
+            <div class="label_movil_container">
+              <select class="form-control" name="codMoneda" id="codMoneda">
+                <option value="-1">- Moneda - </option>
+                @foreach ($listaMonedas as $moneda)
+                  <option value="{{ $moneda->codMoneda }}">
+                    {{ $moneda->nombre }}
+                  </option>
+                @endforeach
+              </select>
+              <label for="codMoneda" class="label_movil">Moneda</label>
+            </div>
 
           </div>
 
           <div class="col-12 col-md-3">
-            <select class="form-control" name="codSede" id="codSede">
-              <option value="-1">- Sede - </option>
-              @foreach ($listaSedes as $sede)
-                <option value="{{ $sede->codSede }}">
-                  {{ $sede->nombre }}
-                </option>
-              @endforeach
-            </select>
+            <div class="label_movil_container">
 
+
+              <select class="form-control" name="codSede" id="codSede">
+                <option value="-1">- Sede - </option>
+                @foreach ($listaSedes as $sede)
+                  <option value="{{ $sede->codSede }}">
+                    {{ $sede->nombre }}
+                  </option>
+                @endforeach
+              </select>
+              <label for="codSede" class="label_movil">Sede</label>
+            </div>
 
           </div>
           <div class="col-12 col-md-3">
-            <input type="text" class="form-control" name="nombreProyecto" id="nombreProyecto"
-              placeholder="Proyecto">
+            <div class="label_movil_container">
+              <input type="text" class="form-control" name="nombreProyecto" id="nombreProyecto" placeholder="">
+              <label for="codSede" class="label_movil">Sede</label>
+            </div>
 
           </div>
-          <div class="col-12 col-md-3">
-            <input type="text" class="form-control" name="nombreFinanciera" id="nombreFinanciera"
-              placeholder="Entidad Financiera">
 
+          <div class="col-12 col-md-3">
+            <div class="label_movil_container">
+              <input type="text" class="form-control" name="nombreFinanciera" id="nombreFinanciera" placeholder="">
+              <label for="nombreFinanciera" class="label_movil">Financiera</label>
+            </div>
           </div>
 
 
