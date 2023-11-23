@@ -125,7 +125,7 @@
                     <label for="">
                         Fecha de inicio
                     </label>
-                    <input class="form-control" value="{{$contrato->getFechaInicio()}}" readonly>
+                    <input class="form-control" value="{{$contrato->getFechaInicioEscrita()}}" readonly>
 
                 </div>
                 <div class="col-12 col-md-3 p-1">

@@ -148,9 +148,9 @@ $comp_filtros->añadirFiltro([
                 </td>
 
                 <td>
-                    {{$contrato->getFechaInicio()}}
+                    {{$contrato->getFechaInicioEscrita()}}
                     al
-                    {{$contrato->getFechaFin()}}
+                    {{$contrato->getFechaFinEscrita()}}
                 </td>
                 <td>
                     {{$contrato->puesto}}
@@ -159,6 +159,10 @@ $comp_filtros->añadirFiltro([
                   {{$contrato->getMoneda()->simbolo}} {{$contrato->remuneracion_mensual}}
                 </td>
                 <td>
+
+                  <a class="btn btn-warning btn-sm" href="{{route('ContratosPlazo.Editar',$contrato->getId())}}">
+                    <i class="fas fa-pen"></i>
+                  </a>
 
                   <a class="btn btn-primary btn-sm" href="{{route('ContratosPlazo.Ver',$contrato->getId())}}">
                     <i class="fas fa-eye"></i>

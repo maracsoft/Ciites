@@ -109,15 +109,15 @@
           {{$contrato->getMensajeAdendaConvenioContrato()}}
         </span>
 
-        <b class="{{$campo_editable}}">{{$contrato->nombre_financiera}}</b>
-        , por el plazo de
+        <b class="{{$campo_editable}}">{{$contrato->nombre_financiera}}</b>,
+        por el plazo de
 
-        <b class="{{$campo_editable}}">{{$contrato->getTextoDuracionConvenio()}}</b>
-        , con el objeto de ejecutar el Contrato de Locación de servicios:
+        <b class="{{$campo_editable}}">{{$contrato->getTextoDuracionConvenio()}}</b>,
+        con el objeto de ejecutar el Contrato de Locación de servicios:
         <b class="{{$campo_editable}}">{{$contrato->nombre_contrato_locacion}}</b>
         En ese sentido, ante la suscripción de este convenio, no debe caber lugar a duda que, el puesto de
-        <b class="{{$campo_editable}}">{{$contrato->puesto}}</b>
-        , no es un puesto permanente, sino que está sujeto a la labor a desarrollar en el presente proyecto aunado a la duración del convenio antes mencionado; siendo esta la causa objetiva de la presente contratación. El carácter temporal del contrato de trabajo se funda en lo dispuesto en el artículo 63º del TUO del Decreto Legislativo 728, aprobado por Decreto Supremo 003-97-TR, de acuerdo al cual pueden celebrarse contratos de naturaleza temporal en el caso de un servicio específico. En ese contexto,
+        <b class="{{$campo_editable}}">{{$contrato->puesto}}</b>,
+        no es un puesto permanente, sino que está sujeto a la labor a desarrollar en el presente proyecto aunado a la duración del convenio antes mencionado; siendo esta la causa objetiva de la presente contratación. El carácter temporal del contrato de trabajo se funda en lo dispuesto en el artículo 63º del TUO del Decreto Legislativo 728, aprobado por Decreto Supremo 003-97-TR, de acuerdo al cual pueden celebrarse contratos de naturaleza temporal en el caso de un servicio específico. En ese contexto,
         <b>CIITES</b>
 
         requiere de las labores de
@@ -180,8 +180,8 @@
           período de prueba de tres (3) meses
         </b>
         , el cual se computará desde el
-        <b class="{{$campo_editable}}">{{$contrato->getFechaInicioPrueba()}}</b> concluyendo
-        <b class="{{$campo_editable}}">{{$contrato->getFechaFinPrueba()}}</b>
+        <b class="{{$campo_editable}}">{{$contrato->getFechaInicioPruebaEscrita()}}</b> concluyendo
+        <b class="{{$campo_editable}}">{{$contrato->getFechaFinPruebaEscrita()}}</b>
 
 
         <br>
@@ -195,10 +195,10 @@
 
 
         El plazo del presente contrato comenzará a regir desde el
-        <b class="{{$campo_editable}}">{{$contrato->getFechaInicio()}}</b>
-        , concluyendo el
-        <b class="{{$campo_editable}}">{{$contrato->getFechaFin()}}</b>
-        , sin necesidad de comunicación previa por parte de
+        <b class="{{$campo_editable}}">{{$contrato->getFechaInicioEscrita()}}</b>,
+        concluyendo el
+        <b class="{{$campo_editable}}">{{$contrato->getFechaFinEscrita()}}</b>,
+        sin necesidad de comunicación previa por parte de
         <b>CIITES</b>;
         salvo acuerdo escrito de las partes para la suscripción de la correspondiente prórroga, dentro de los alcances y plazos establecidos por las normas laborales vigentes, en relación con las contrataciones sujetas a modalidad.
 
@@ -260,8 +260,8 @@
           .- DEBERES DEL TRABAJADOR.-
         </b>
         Durante el desarrollo de las labores que le competen a
-        <b>{{$contrato->getTrabajadore()}}</b>
-        , éste se sujetará a las disposiciones de dirección y administración de
+        <b>{{$contrato->getTrabajadore()}}</b>,
+        éste se sujetará a las disposiciones de dirección y administración de
         <b>CIITES.</b>
 
         Asimismo, deberá cumplir con las normas propias de trabajo, las contenidas en el Reglamento Interno de Trabajo, de Seguridad y Salud en el Trabajo, de Seguridad y demás normas laborales; y las que se impartan por necesidades del servicio en ejercicio de las facultades de administración de
@@ -394,6 +394,8 @@
         para lo cual autoriza igualmente el respectivo descuento por planillas, o con cargo a su liquidación de beneficios sociales en caso de cese de la relación laboral.
 
         <br>
+        <br>
+        <br>
 
         <b>
           <span class="subrayado">DÉCIMO CUARTA</span>
@@ -402,48 +404,48 @@
         declara:
 
 
-          <ol type="1">
-            <li>
-              Declaro expresamente, que para efectos de la suscripción del presente contrato, he suministrado mis datos personales. Asimismo, durante la ejecución del servicio
-              <b>CIITES</b>
-              podrá tener acceso a otros datos personales míos, suministrados o no por mí, o de ser el caso de cualquier otro persona.
+        <ol type="1">
+          <li>
+            Declaro expresamente, que para efectos de la suscripción del presente contrato, he suministrado mis datos personales. Asimismo, durante la ejecución del servicio
+            <b>CIITES</b>
+            podrá tener acceso a otros datos personales míos, suministrados o no por mí, o de ser el caso de cualquier otra persona.
 
-            </li>
-            <li>
-              Declaro que
-              <b>CIITES</b>
-              me ha informado de manera expresa que la información que he proporcionado, como son: nombre, apellido, nacionalidad, estado civil, documento de identidad, ocupación, estudios, domicilio, correo electrónico, teléfono, estado de salud, actividades que realiza, ingresos económicos, patrimonio, gastos, entre otros, así como la referida a los rasgos físicos y/o de conducta que lo identifican o lo hacen identificable como es su huella dactilar, firma, voz, etc. (datos biométricos), conforme a Ley es considerada como Datos Personales.
+          </li>
 
+          <li>
+            Declaro que
+            <b>CIITES</b>
+            me ha informado de manera expresa que la información que he proporcionado, como son: nombre, apellido, nacionalidad, estado civil, documento de identidad, ocupación, estudios, domicilio, correo electrónico, teléfono, estado de salud, actividades que realiza, ingresos económicos, patrimonio, gastos, entre otros, así como la referida a los rasgos físicos y/o de conducta que lo identifican o lo hacen identificable como es su huella dactilar, firma, voz, etc. (datos biométricos), conforme a Ley es considerada como Datos Personales.
 
-            </li>
-            <li>
-              Doy mi consentimiento libre, previo, expreso e informado para que mis Datos Personales sean tratados por
-              <b>CIITES</b>,
-              es decir, que puedan ser: recopilados, registrados, organizados, almacenados, conservados, elaborados, modificados, bloqueados, suprimidos, extraídos, consultados, utilizados, transferidos o procesados de cualquier otra forma prevista por Ley. Esta autorización es indefinida y se mantendrá inclusive después de terminado el servicio y/o el presente Contrato.
-
-
-            </li>
-            <li>
-              Autorizo que mis datos sean compartidos, transmitidos, entregados, transferidos o divulgados para las finalidades mencionadas a:
-
-              i) Personas jurídicas que tienen la calidad de filiales, subsidiarias, contratistas o vinculadas, o de matriz de <b>CIITES,</b>
-              ii) Los operadores necesarios para el cumplimiento de los servicios que presta <b>CIITES,</b>
-              tales como: call centers, investigadores, compañías de asistencia, contratistas, y empresas interesadas en las labores de consultoría sobre el perfil de calidades y competencia de personal para llenar sus vacantes de trabajo, entre otros.
-
-            </li>
-            <li>
-              Declaro que me han informado que tengo derecho a no proporcionar mis Datos Personales y que si no los proporciona no podrán tratar mis Datos Personales en la forma explicada en la presente cláusula, lo que no impide su uso para la ejecución y cumplimiento del Contrato.
-              <br>
+          </li>
+          <li>
+            Doy mi consentimiento libre, previo, expreso e informado para que mis Datos Personales sean tratados por
+            <b>CIITES</b>,
+            es decir, que puedan ser: recopilados, registrados, organizados, almacenados, conservados, elaborados, modificados, bloqueados, suprimidos, extraídos, consultados, utilizados, transferidos o procesados de cualquier otra forma prevista por Ley. Esta autorización es indefinida y se mantendrá inclusive después de terminado el servicio y/o el presente Contrato.
 
 
-            </li>
+          </li>
+          <li>
+            Autorizo que mis datos sean compartidos, transmitidos, entregados, transferidos o divulgados para las finalidades mencionadas a:
 
-            <li>
-              Asimismo, declaro conocer que puedo revocar el consentimiento para tratar mis Datos Personales en cualquier momento. Para ejercer este derecho o cualquier otro que la Ley establece con relación a sus Datos Personales deberá presentar una solicitud escrita a mi empleador.
+            i) Personas jurídicas que tienen la calidad de filiales, subsidiarias, contratistas o vinculadas, o de matriz de <b>CIITES,</b>
+            ii) Los operadores necesarios para el cumplimiento de los servicios que presta <b>CIITES,</b>
+            tales como: call centers, investigadores, compañías de asistencia, contratistas, y empresas interesadas en las labores de consultoría sobre el perfil de calidades y competencia de personal para llenar sus vacantes de trabajo, entre otros.
 
-            </li>
+          </li>
+          <li>
+            Declaro que me han informado que tengo derecho a no proporcionar mis Datos Personales y que si no los proporciona no podrán tratar mis Datos Personales en la forma explicada en la presente cláusula, lo que no impide su uso para la ejecución y cumplimiento del Contrato.
+            <br>
 
-          </ol>
+
+          </li>
+
+          <li>
+            Asimismo, declaro conocer que puedo revocar el consentimiento para tratar mis Datos Personales en cualquier momento. Para ejercer este derecho o cualquier otro que la Ley establece con relación a sus Datos Personales deberá presentar una solicitud escrita a mi empleador.
+
+          </li>
+
+        </ol>
 
 
 
@@ -590,7 +592,7 @@
               <b>
                 _______________________________<br>
                 <span class="{{$campo_editable}}">
-                  {{ strtoupper($contrato->getNombreCompleto()) }}
+                  {{ $contrato->getNombreCompleto() }}
                 </span>
                 <br>
                 DNI:

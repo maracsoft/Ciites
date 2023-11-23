@@ -6,6 +6,7 @@ use Dompdf\Dompdf;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class ContratoPlazo extends Contrato
 {
@@ -60,22 +61,28 @@ class ContratoPlazo extends Contrato
   }
 
   public function getTextoDuracionConvenio(){
+    $num = $this->duracion_convenio_numero;
 
     switch ($this->duracion_convenio_unidad_temporal) {
       case 'dia':
+        $texto = "dias";
 
         break;
       case 'mes':
+        $texto = "meses";
 
         break;
       case 'año':
+        $texto = "años";
 
         break;
 
       default:
-        # code...
+
         break;
     }
+
+    return $num." ".$texto;
   }
 
   public function getMensajeAdendaConvenioContrato(){
@@ -129,10 +136,6 @@ class ContratoPlazo extends Contrato
       $dompdf->getCanvas()->page_text(400, 800, "Documento borrador, no tiene valor", $font, 8, array(200,0,0));
     }
 
-    $nombre_archivo_descarga = $this->getTituloContrato();
-    $descargarlo = false;
-    //$dompdf->stream($nombre_archivo_descarga.".pdf", array("Attachment" => $descargarlo));
-
     return $dompdf;
   }
 
@@ -163,14 +166,21 @@ class ContratoPlazo extends Contrato
 
 
 
-  public function getFechaInicioPrueba(){
+  public function getFechaInicioPruebaEscrita(){
     return Fecha::escribirEnTexto($this->fecha_inicio_prueba);
   }
 
-  public function getFechaFinPrueba(){
+  public function getFechaFinPruebaEscrita(){
     return Fecha::escribirEnTexto($this->fecha_fin_prueba);
   }
 
+  public function getFechaInicioPrueba(){
+    return Fecha::formatoParaVistas($this->fecha_inicio_prueba);
+  }
+
+  public function getFechaFinPrueba(){
+    return Fecha::formatoParaVistas($this->fecha_fin_prueba);
+  }
 
 
 
@@ -202,5 +212,33 @@ class ContratoPlazo extends Contrato
 
 
     return $listaNombres;
+  }
+
+  public function setDataFromRequest(Request $request){
+
+    $this->nombres = $request->nombres;
+    $this->apellidos = $request->apellidos;
+    $this->dni = $request->dni;
+    $this->sexo = $request->sexo;
+
+    $this->domicilio = $request->domicilio;
+    $this->provincia = $request->provincia;
+    $this->departamento = $request->departamento;
+
+    $this->puesto = $request->puesto;
+    $this->tipo_adenda_financiera = $request->tipo_adenda_financiera;
+    $this->nombre_financiera = $request->nombre_financiera;
+    $this->duracion_convenio_numero = $request->duracion_convenio_numero;
+    $this->duracion_convenio_unidad_temporal = $request->duracion_convenio_unidad_temporal;
+    $this->nombre_contrato_locacion = $request->nombre_contrato_locacion;
+    $this->fecha_inicio_prueba = Fecha::formatoParaSQL($request->fecha_inicio_prueba);
+    $this->fecha_fin_prueba = Fecha::formatoParaSQL($request->fecha_fin_prueba);
+    $this->fecha_inicio_contrato = Fecha::formatoParaSQL($request->fecha_inicio_contrato);
+    $this->fecha_fin_contrato = Fecha::formatoParaSQL($request->fecha_fin_contrato);
+    $this->cantidad_dias_labor = $request->cantidad_dias_labor;
+    $this->cantidad_dias_descanso = $request->cantidad_dias_descanso;
+    $this->remuneracion_mensual = $request->remuneracion_mensual;
+    $this->codMoneda = $request->codMoneda;
+
   }
 }

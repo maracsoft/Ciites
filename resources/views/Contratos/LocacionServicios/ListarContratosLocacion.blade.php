@@ -214,7 +214,7 @@ $comp_filtros->añadirFiltro([
                     {{$contrato->getFechaHoraEmision()}}
                 </td>
                 <td>
-                    {{$contrato->getFechaInicio()}}
+                    {{$contrato->getFechaInicioEscrita()}}
                     //
                     {{$contrato->getFechaFin()}}
                 </td>

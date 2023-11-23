@@ -1359,6 +1359,7 @@ Route::group(['middleware'=>"Mantenimiento"],function()
             Route::get('/ContratosPlazo/Editar/{codContrato}','ContratoPlazoController@Editar')->name('ContratosPlazo.Editar');
 
             Route::post('/ContratosPlazo/Guardar','ContratoPlazoController@Guardar')->name('ContratosPlazo.Guardar');
+            Route::post('/ContratosPlazo/Actualizar','ContratoPlazoController@Actualizar')->name('ContratosPlazo.Actualizar');
 
 
             Route::post('/ContratosPlazo/GenerarBorrador','ContratoPlazoController@GenerarBorrador')->name('ContratosPlazo.GenerarBorrador');

@@ -66,18 +66,18 @@ class ContratoPlazoController extends Controller
     return view('Contratos.PlazoFijo.CrearContratoPlazo', compact('listaProyectos', 'listaMonedas','tiposTiempos', 'listaSedes','listaTipoAdenda'));
   }
 
-  function Editar($codContrato){
-    $contrato = ContratoPlazo::findOrFail($codContrato);
+  function Editar($codContratoPlazo){
+    $contrato = ContratoPlazo::findOrFail($codContratoPlazo);
 
     $listaProyectos = Proyecto::getProyectosActivos();
     $listaMonedas = Moneda::All();
     $listaSedes = Sede::All();
     $listaTipoAdenda = ContratoPlazo::getTiposAdendaFinanciera();
     $tiposTiempos = ContratoPlazo::getTiempos();
-    return view('Contratos.PlazoFijo.EditarContratoPlazo', compact('listaProyectos', 'listaMonedas','tiposTiempos', 'listaSedes','listaTipoAdenda'));
+    return view('Contratos.PlazoFijo.EditarContratoPlazo', compact('contrato','listaProyectos', 'listaMonedas','tiposTiempos', 'listaSedes','listaTipoAdenda'));
   }
 
-  function guardar(Request $request)
+  function Guardar(Request $request)
   {
 
     try {
@@ -86,32 +86,11 @@ class ContratoPlazoController extends Controller
       $empLogeado = Empleado::getEmpleadoLogeado();
 
       $contrato = new ContratoPlazo();
-
-      $contrato->nombres = $request->nombres;
-      $contrato->apellidos = $request->apellidos;
-      $contrato->dni = $request->dni;
+      $contrato->setDataFromRequest($request);
 
       $contrato->codEmpleadoCreador = $empLogeado->codEmpleado;
       $contrato->fechaHoraGeneracion = Carbon::now();
       $contrato->es_borrador = 0;
-
-      $contrato->domicilio = $request->domicilio;
-      $contrato->provincia = $request->provincia;
-      $contrato->departamento = $request->departamento;
-      $contrato->puesto = $request->puesto;
-      $contrato->tipo_adenda_financiera = $request->tipo_adenda_financiera;
-      $contrato->nombre_financiera = $request->nombre_financiera;
-      $contrato->duracion_convenio_numero = $request->duracion_convenio_numero;
-      $contrato->duracion_convenio_unidad_temporal = $request->duracion_convenio_unidad_temporal;
-      $contrato->nombre_contrato_locacion = $request->nombre_contrato_locacion;
-      $contrato->fecha_inicio_prueba = Fecha::formatoParaSQL($request->fecha_inicio_prueba);
-      $contrato->fecha_fin_prueba = Fecha::formatoParaSQL($request->fecha_fin_prueba);
-      $contrato->fecha_inicio_contrato = Fecha::formatoParaSQL($request->fecha_inicio_contrato);
-      $contrato->fecha_fin_contrato = Fecha::formatoParaSQL($request->fecha_fin_contrato);
-      $contrato->cantidad_dias_labor = $request->cantidad_dias_labor;
-      $contrato->cantidad_dias_descanso = $request->cantidad_dias_descanso;
-      $contrato->remuneracion_mensual = $request->remuneracion_mensual;
-      $contrato->codMoneda = $request->codMoneda;
 
       $contrato->codigo_unico = ContratoPlazo::calcularCodigoCedepas(Numeracion::getNumeracionCPF());
       Numeracion::aumentarNumeracionCPF();
@@ -119,19 +98,42 @@ class ContratoPlazoController extends Controller
       $contrato->save();
 
       DB::commit();
-      return redirect()->route('ContratosPlazo.Listar')
-        ->with('datos', "Se ha creado exitosamente el contrato " . $contrato->codigo_unico);
+      return redirect()->route('ContratosPlazo.Editar',$contrato->codContratoPlazo)->with('datos_ok', "Se ha creado exitosamente el contrato " . $contrato->codigo_unico);
     } catch (\Throwable $th) {
 
-      Debug::mensajeError('CONTRATO PLAZO GUARDAR', $th);
+      Debug::LogMessage($th);
       DB::rollBack();
       $codErrorHistorial = ErrorHistorial::registrarError(
         $th,
         app('request')->route()->getAction(),
         json_encode($request->toArray())
       );
-      return redirect()->route('ContratosPlazo.Listar')
-        ->with('datos', Configuracion::getMensajeError($codErrorHistorial));
+      return redirect()->route('ContratosPlazo.Listar')->with('datos', Configuracion::getMensajeError($codErrorHistorial));
+    }
+  }
+
+
+  function Actualizar(Request $request)
+  {
+    try {
+      db::beginTransaction();
+
+      $contrato = ContratoPlazo::findOrFail($request->codContratoPlazo);
+      $contrato->setDataFromRequest($request);
+
+      $contrato->save();
+
+      DB::commit();
+      return redirect()->route('ContratosPlazo.Editar',$request->codContratoPlazo)->with('datos_ok', "Se ha actualizado exitosamente el contrato " . $contrato->codigo_unico);
+    } catch (\Throwable $th) {
+      Debug::LogMessage($th);
+      DB::rollBack();
+      $codErrorHistorial = ErrorHistorial::registrarError(
+        $th,
+        app('request')->route()->getAction(),
+        json_encode($request->toArray())
+      );
+      return redirect()->route('ContratosPlazo.Listar')->with('datos', Configuracion::getMensajeError($codErrorHistorial));
     }
   }
 
@@ -140,26 +142,16 @@ class ContratoPlazoController extends Controller
 
   public function descargarPDF($codContrato)
   {
-
-
     $contrato = ContratoPlazo::findOrFail($codContrato);
     $pdf = $contrato->getPDF();
-    //return $pdf;
-    return $pdf->download('Contrato ' . $contrato->getTituloContrato() . '.Pdf');
+    return $pdf->stream('Contrato ' . $contrato->getTituloContrato() . '.Pdf', array("Attachment" => true));
   }
 
   public function verPDF($codContrato)
   {
     $contrato = ContratoPlazo::findOrFail($codContrato);
-    //return view('Contratos.contratoPlazoPDF',compact('contrato'));
     $pdf = $contrato->getPDF();
-
-    /*
-        return $pdf;
-        */
-
-
-    return $pdf->stream('Contrato ' . $contrato->getTituloContrato() . '.Pdf');
+    return $pdf->stream('Contrato ' . $contrato->getTituloContrato() . '.Pdf', array("Attachment" => false));
   }
 
   public function Ver($id)
@@ -210,32 +202,9 @@ class ContratoPlazoController extends Controller
 
     $contrato = new ContratoPlazo();
 
-    $contrato->nombres = $request->nombres;
-    $contrato->apellidos = $request->apellidos;
-    $contrato->dni = $request->dni;
-
+    $contrato->setDataFromRequest($request);
     $contrato->es_borrador = 1;
-
-    $contrato->domicilio = $request->domicilio;
-    $contrato->provincia = $request->provincia;
-    $contrato->departamento = $request->departamento;
-
-    $contrato->puesto = $request->puesto;
-    $contrato->tipo_adenda_financiera = $request->tipo_adenda_financiera;
-    $contrato->nombre_financiera = $request->nombre_financiera;
-    $contrato->duracion_convenio_numero = $request->duracion_convenio_numero;
-    $contrato->duracion_convenio_unidad_temporal = $request->duracion_convenio_unidad_temporal;
-    $contrato->nombre_contrato_locacion = $request->nombre_contrato_locacion;
-    $contrato->fecha_inicio_prueba = Fecha::formatoParaSQL($request->fecha_inicio_prueba);
-    $contrato->fecha_fin_prueba = Fecha::formatoParaSQL($request->fecha_fin_prueba);
-    $contrato->fecha_inicio_contrato = Fecha::formatoParaSQL($request->fecha_inicio_contrato);
-    $contrato->fecha_fin_contrato = Fecha::formatoParaSQL($request->fecha_fin_contrato);
-    $contrato->cantidad_dias_labor = $request->cantidad_dias_labor;
-    $contrato->cantidad_dias_descanso = $request->cantidad_dias_descanso;
-    $contrato->remuneracion_mensual = $request->remuneracion_mensual;
-    $contrato->codMoneda = $request->codMoneda;
     $contrato->fechaHoraGeneracion = Carbon::now();
-
     $contrato->codigo_unico = ContratoPlazo::calcularCodigoCedepas(Numeracion::getNumeracionCPF());
     /* NO GUARDAMOS */
 
