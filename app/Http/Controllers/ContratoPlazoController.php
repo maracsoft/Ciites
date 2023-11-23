@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Configuracion;
+use App\Contrato;
 use App\ContratoPlazo;
 use App\Debug;
 use App\Empleado;
@@ -65,6 +66,17 @@ class ContratoPlazoController extends Controller
     return view('Contratos.PlazoFijo.CrearContratoPlazo', compact('listaProyectos', 'listaMonedas','tiposTiempos', 'listaSedes','listaTipoAdenda'));
   }
 
+  function Editar($codContrato){
+    $contrato = ContratoPlazo::findOrFail($codContrato);
+
+    $listaProyectos = Proyecto::getProyectosActivos();
+    $listaMonedas = Moneda::All();
+    $listaSedes = Sede::All();
+    $listaTipoAdenda = ContratoPlazo::getTiposAdendaFinanciera();
+    $tiposTiempos = ContratoPlazo::getTiempos();
+    return view('Contratos.PlazoFijo.EditarContratoPlazo', compact('listaProyectos', 'listaMonedas','tiposTiempos', 'listaSedes','listaTipoAdenda'));
+  }
+
   function guardar(Request $request)
   {
 
@@ -84,6 +96,8 @@ class ContratoPlazoController extends Controller
       $contrato->es_borrador = 0;
 
       $contrato->domicilio = $request->domicilio;
+      $contrato->provincia = $request->provincia;
+      $contrato->departamento = $request->departamento;
       $contrato->puesto = $request->puesto;
       $contrato->tipo_adenda_financiera = $request->tipo_adenda_financiera;
       $contrato->nombre_financiera = $request->nombre_financiera;
@@ -203,6 +217,9 @@ class ContratoPlazoController extends Controller
     $contrato->es_borrador = 1;
 
     $contrato->domicilio = $request->domicilio;
+    $contrato->provincia = $request->provincia;
+    $contrato->departamento = $request->departamento;
+
     $contrato->puesto = $request->puesto;
     $contrato->tipo_adenda_financiera = $request->tipo_adenda_financiera;
     $contrato->nombre_financiera = $request->nombre_financiera;

@@ -76,7 +76,11 @@
         identificado con DNI Nº
         <b class="{{$campo_editable}}">{{$contrato->dni}},</b>
         con domicilio en
-        <b class="{{$campo_editable}}">{{$contrato->domicilio}},</b>
+        <b class="{{$campo_editable}}">{{$contrato->domicilio}}</b>
+        en la provincia de
+        <b class="{{$campo_editable}}">{{$contrato->provincia}}</b>,
+        departamento de
+        <b class="{{$campo_editable}}">{{$contrato->departamento}}</b>,
         a quien en adelante se le denominará
         <b>{{$contrato->getTrabajadore()}},</b>
         en los términos y condiciones siguientes:
