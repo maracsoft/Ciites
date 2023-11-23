@@ -1,9 +1,21 @@
+@php
+  $campo_editable = "";
+  if($contrato->esBorrador()){
+    $campo_editable = "campo_editable";
+
+  }
+
+@endphp
+
 <!DOCTYPE html>
 <html lang="es">
 
   <head>
     <meta charset="UTF-8">
     <title>
+      @if ($contrato->esBorrador())
+        BORRADOR
+      @endif
       {{ $contrato->getTituloContrato() }}
     </title>
 
@@ -24,7 +36,7 @@
           Este contrato fue anulado el {{ $contrato->getFechaAnulacion() }} por
           {{ $contrato->getEmpleadoCreador()->getNombreCompleto() }}.
         </span>
-        <br>
+
       </div>
     @endif
 
@@ -33,9 +45,7 @@
       <img class="logo" src="{{ App\Configuracion::getRutaImagenCedepasPNG(200) }}">
       @if ($contrato->esBorrador())
         <div class="borrador">
-          ESTE ES UN BORRADOR
-          <br>
-          No tiene valor
+          ESTE ES UN BORRADOR SIN VALOR
         </div>
       @endif
 
@@ -62,11 +72,11 @@
         con RUC. N°20610973001, con domicilio legal en Nestor Batanero 137 Dpto. 101, distrito de Santiago de Surco, provincia y departamento de Lima  debidamente representada por el señor
         <b>Federico Bernardo Tenorio Calderón,</b>
         identificado con Documento Nacional de Identidad Nº 26716577, cuyas facultades se encuentran inscritas en la partida N° 15266204 del Registro De Personas Jurídicas de la Zona Registral N°IX sede Lima, a quien en adelante se le denominará CIITES; y de la otra parte
-        <b>{{$contrato->getNombreCompleto()}}</b>
+        <b class="{{$campo_editable}}">{{$contrato->getNombreCompleto()}}</b>
         identificado con DNI Nº
-        <b>{{$contrato->dni}},</b>
+        <b class="{{$campo_editable}}">{{$contrato->dni}},</b>
         con domicilio en
-        <b>{{$contrato->domicilio}},</b>
+        <b class="{{$campo_editable}}">{{$contrato->domicilio}},</b>
         a quien en adelante se le denominará
         <b>{{$contrato->getTrabajadore()}},</b>
         en los términos y condiciones siguientes:
@@ -91,22 +101,24 @@
         </b>
         . - CIITES suscribió
 
-        {{$contrato->getMensajeAdendaConvenioContrato()}}
+        <span class="{{$campo_editable}}">
+          {{$contrato->getMensajeAdendaConvenioContrato()}}
+        </span>
 
-        <b>{{$contrato->nombre_financiera}}</b>
+        <b class="{{$campo_editable}}">{{$contrato->nombre_financiera}}</b>
         , por el plazo de
 
-        <b>{{$contrato->getTextoDuracionConvenio()}}</b>
+        <b class="{{$campo_editable}}">{{$contrato->getTextoDuracionConvenio()}}</b>
         , con el objeto de ejecutar el Contrato de Locación de servicios:
-        <b>{{$contrato->nombre_contrato_locacion}}</b>
+        <b class="{{$campo_editable}}">{{$contrato->nombre_contrato_locacion}}</b>
         En ese sentido, ante la suscripción de este convenio, no debe caber lugar a duda que, el puesto de
-        <b>{{$contrato->puesto}}</b>
+        <b class="{{$campo_editable}}">{{$contrato->puesto}}</b>
         , no es un puesto permanente, sino que está sujeto a la labor a desarrollar en el presente proyecto aunado a la duración del convenio antes mencionado; siendo esta la causa objetiva de la presente contratación. El carácter temporal del contrato de trabajo se funda en lo dispuesto en el artículo 63º del TUO del Decreto Legislativo 728, aprobado por Decreto Supremo 003-97-TR, de acuerdo al cual pueden celebrarse contratos de naturaleza temporal en el caso de un servicio específico. En ese contexto,
         <b>CIITES</b>
 
         requiere de las labores de
-        <b>{{$contrato->getTrabajadore()}}</b>
-        , cuya contratación se encuentra íntimamente vinculada a la circunstancia descrita precedentemente y, por ende supeditada a la necesidad y requerimiento del  servicio temporal en cuestión; proyectando su duración en los términos del plazo que se pacta para el presente contrato, el mismo que se estima razonable, necesario y suficiente para la conclusión de los servicios laborales materia del presente; todo lo cual constituye la causa objetiva de la presente contratación modal a plazo determinado, quedando plenamente justificada su temporalidad.
+        <b>{{$contrato->getTrabajadore()}}</b>,
+        cuya contratación se encuentra íntimamente vinculada a la circunstancia descrita precedentemente y, por ende supeditada a la necesidad y requerimiento del  servicio temporal en cuestión; proyectando su duración en los términos del plazo que se pacta para el presente contrato, el mismo que se estima razonable, necesario y suficiente para la conclusión de los servicios laborales materia del presente; todo lo cual constituye la causa objetiva de la presente contratación modal a plazo determinado, quedando plenamente justificada su temporalidad.
 
 
 
@@ -124,10 +136,10 @@
         <b>CIITES</b>
 
         contrata temporalmente los servicios personales de
-        <b>{{$contrato->getTrabajadore()}}</b>
-        , quien declara estar capacitado y conocer la actividad que desarrollará y se obliga a desempeñar sus labores como
-        <b>{{$contrato->puesto}}</b>
-        , para que ejerza las distintas funciones relativas a su puesto, descritas en los Términos de Referencia adjuntos que son parte del presente contrato; comprometiéndose a desarrollarlas con la mayor eficiencia y espíritu de colaboración, actuando con lealtad, responsabilidad,  honestidad, dedicación y diligencia, observando fidelidad hacia
+        <b>{{$contrato->getTrabajadore()}}</b>,
+        quien declara estar capacitado y conocer la actividad que desarrollará y se obliga a desempeñar sus labores como
+        <b class="{{$campo_editable}}">{{$contrato->puesto}}</b>,
+        para que ejerza las distintas funciones relativas a su puesto, descritas en los Términos de Referencia adjuntos que son parte del presente contrato; comprometiéndose a desarrollarlas con la mayor eficiencia y espíritu de colaboración, actuando con lealtad, responsabilidad,  honestidad, dedicación y diligencia, observando fidelidad hacia
         <b>CIITES</b>
         y de acuerdo con las instrucciones que le imparta el Empleador, en función a sus necesidades y requerimientos, los mismos que
         <b>{{$contrato->getTrabajadore()}}</b>
@@ -155,13 +167,17 @@
           : PERÍODO DE PRUEBA.
         </b>
 
-        -  De conformidad con lo dispuesto en el artículo 10º del TUO del D. Leg.728, las partes acuerdan que {{$contrato->getTrabajadore()}} se encontrará sujeto a un
+        -  De conformidad con lo dispuesto en el artículo 10º del TUO del D. Leg.728, las partes acuerdan que
+        <b>
+          {{$contrato->getTrabajadore()}}
+        </b>
+         se encontrará sujeto a un
         <b>
           período de prueba de tres (3) meses
         </b>
         , el cual se computará desde el
-        <b>{{$contrato->getFechaInicioPrueba()}}</b> concluyendo
-        <b>{{$contrato->getFechaFinPrueba()}}</b>
+        <b class="{{$campo_editable}}">{{$contrato->getFechaInicioPrueba()}}</b> concluyendo
+        <b class="{{$campo_editable}}">{{$contrato->getFechaFinPrueba()}}</b>
 
 
         <br>
@@ -175,9 +191,9 @@
 
 
         El plazo del presente contrato comenzará a regir desde el
-        <b>{{$contrato->getFechaInicio()}}</b>
+        <b class="{{$campo_editable}}">{{$contrato->getFechaInicio()}}</b>
         , concluyendo el
-        <b>{{$contrato->getFechaFin()}}</b>
+        <b class="{{$campo_editable}}">{{$contrato->getFechaFin()}}</b>
         , sin necesidad de comunicación previa por parte de
         <b>CIITES</b>;
         salvo acuerdo escrito de las partes para la suscripción de la correspondiente prórroga, dentro de los alcances y plazos establecidos por las normas laborales vigentes, en relación con las contrataciones sujetas a modalidad.
@@ -195,9 +211,9 @@
         se compromete a observar la jornada y el horario de trabajo que se le señale de acuerdo a las necesidades de la labor a realizar. Así, conforme a lo establecido en el artículo 4° del DS007-2022-TR (TUO de la Ley de jornada de trabajo, horario y trabajo en sobretiempo),
         <b>{{$contrato->getTrabajadore()}}</b>
         tendrá una jornada acumulativa de
-        <b>{{$contrato->cantidad_dias_labor}}</b>
+        <b class="{{$campo_editable}}">{{$contrato->cantidad_dias_labor}}</b>
         días de labor por
-        <b>{{$contrato->cantidad_dias_descanso}}</b>
+        <b class="{{$campo_editable}}">{{$contrato->cantidad_dias_descanso}}</b>
         dias de descanso con 10 horas de labor diaria. Queda perfectamente entendido entre las partes que las horas en sobretiempo que
         <b>{{$contrato->getTrabajadore()}}</b>
         acepte laborar, conforme a las necesidades de
@@ -216,8 +232,9 @@
         Como contraprestación por sus servicios,
         <b>{{$contrato->getTrabajadore()}}</b>
         percibirá una remuneración mensual de
-        <b>{{$contrato->remuneracion_mensual}}</b>
-        {{$contrato->getMoneda()->nombre_plural}}
+        <b class="{{$campo_editable}}">
+          {{number_format($contrato->remuneracion_mensual,2)}} {{$contrato->getMoneda()->nombre}}
+        </b>
         pagados en mensualidades vencidas, mediante planillas, y los demás beneficios que corresponden por Ley, dentro de los alcances y lineamientos del régimen laboral común, bajo los alcances del Decreto Legislativo N ° 728 y sus normas complementarias.
         El importe remunerativo estará sujeto a las deducciones y retenciones de ley, las ausencias injustificadas por parte de
         <b>{{$contrato->getTrabajadore()}}</b>
@@ -274,8 +291,8 @@
           </li>
           <li>
             A guardar estricta confidencialidad respecto de la información que reciba por razón de su trabajo. Por tanto, no podrá comunicar, divulgar o utilizar para beneficio propio o de cualquier otra persona, natural o jurídica, nacional o extranjera, pública o privada, la información confidencial, “Know-how”, conocimientos técnicos o similares que reciba de
-            <b>CIITES</b>
-            , ni podrá duplicarla, grabarla, copiarla o reproducirla de cualquier otra forma. Esta obligación será de cumplimiento obligatorio no solo durante la vigencia del presente contrato sino con posterioridad.
+            <b>CIITES</b>,
+            ni podrá duplicarla, grabarla, copiarla o reproducirla de cualquier otra forma. Esta obligación será de cumplimiento obligatorio no solo durante la vigencia del presente contrato sino con posterioridad.
           </li>
         </ul>
 
@@ -319,10 +336,10 @@
         <b>
           <span class="subrayado">DÉCIMO PRIMERA</span>
           .- NO DISCRIMINACIÓN.- CIITES
-        </b>
-        , en observancia de lo prescrito en el artículo 2, inciso 2 de la Constitución Política del Perú y en el Convenio 111 de la Organización Internacional del Trabajo, y consciente de que todas las personas son únicas e irrepetibles y de que su identidad está formada por una diversidad de aspectos, muchos de los cuales no involucran una mayor o menor idoneidad para el puesto de trabajo que puedan ocupar; declara que en la presente contratación no ha mediado discriminación ni favoritismo sin causa objetiva, y se obliga a no efectuar distinciones, exclusiones o preferencias, respecto de
-        <b>{{$contrato->getTrabajadore()}}</b>
-        ,  basadas en motivos de raza, color, sexo, identidad de género, orientación sexual, embarazo, discapacidad, condición seropositiva, conocida o supuesta; religión, opinión política, sindicación, ascendencia, nacionalidad, origen social, lengua, condición económica ni cualquier otro motivo especificado por la legislación nacional, el Tribunal Constitucional o la Organización Internacional del Trabajo.
+        </b>,
+        en observancia de lo prescrito en el artículo 2, inciso 2 de la Constitución Política del Perú y en el Convenio 111 de la Organización Internacional del Trabajo, y consciente de que todas las personas son únicas e irrepetibles y de que su identidad está formada por una diversidad de aspectos, muchos de los cuales no involucran una mayor o menor idoneidad para el puesto de trabajo que puedan ocupar; declara que en la presente contratación no ha mediado discriminación ni favoritismo sin causa objetiva, y se obliga a no efectuar distinciones, exclusiones o preferencias, respecto de
+        <b>{{$contrato->getTrabajadore()}}</b>,
+        basadas en motivos de raza, color, sexo, identidad de género, orientación sexual, embarazo, discapacidad, condición seropositiva, conocida o supuesta; religión, opinión política, sindicación, ascendencia, nacionalidad, origen social, lengua, condición económica ni cualquier otro motivo especificado por la legislación nacional, el Tribunal Constitucional o la Organización Internacional del Trabajo.
 
 
         <br>
@@ -336,8 +353,8 @@
         se compromete a respetar y dar estricto cumplimiento a las normas sobre seguridad y salud en el trabajo que
         <b>CIITES</b>
         establezca como medidas de prevención de accidentes y protección de los trabajadores y de todos los bienes e instalaciones de la misma. Asimismo, deberá cooperar plenamente en casos de accidente y/o siniestros, así como en la prevención de los mismos, quedando establecido que todo accidente de trabajo acerca del cual tuviera conocimiento
-        <b>{{$contrato->getTrabajadore()}}</b>
-        , deberá ser reportado en forma inmediata a fin de tomar las medidas urgentes que sean necesarias. Igualmente,
+        <b>{{$contrato->getTrabajadore()}}</b>,
+        deberá ser reportado en forma inmediata a fin de tomar las medidas urgentes que sean necesarias. Igualmente,
         <b>{{$contrato->getTrabajadore()}}</b>
         se compromete a contribuir al desarrollo de los programas de capacitacion y entrenamiento que implemente
         <b>CIITES</b>
@@ -369,10 +386,9 @@
         a los que pudiere tener acceso con ocasión de sus funciones o que estén bajo su custodia; o los valores que resultaren en deudas derivadas de la ejecución del presente contrato o préstamos personales que le hubiere otorgado
         <b>CIITES</b>
         ; o daños ocasionados durante la ejecución del mismo que originen un saldo deudor de cargo de
-        <b>{{$contrato->getTrabajadore()}}</b>
-        , para lo cual autoriza igualmente el respectivo descuento por planillas, o con cargo a su liquidación de beneficios sociales en caso de cese de la relación laboral.
+        <b>{{$contrato->getTrabajadore()}}</b>,
+        para lo cual autoriza igualmente el respectivo descuento por planillas, o con cargo a su liquidación de beneficios sociales en caso de cese de la relación laboral.
 
-        <br>
         <br>
 
         <b>
@@ -476,8 +492,8 @@
             Dado que bajo este procedimiento de entrega digital de Documentos Laborales, la firma de
             <b>{{$contrato->getTrabajadore()}}</b>
             no es obligatoria, aquel deberá confirmar expresamente la recepción de cada uno de los Documentos Laborales remitidos al trabajador por parte de
-            <b>CIITES</b>
-            , dando conformidad de recepción de los documentos mediante el acuse de recibo a través de su cuenta de correo electrónico o a través de otro mecanismo análogo de confirmación. En caso
+            <b>CIITES</b>,
+            dando conformidad de recepción de los documentos mediante el acuse de recibo a través de su cuenta de correo electrónico o a través de otro mecanismo análogo de confirmación. En caso
             <b>{{$contrato->getTrabajadore()}}</b>
             no realice el reclamo dentro del plazo establecido (3 días hábiles de remitidos los documentos laborales), se entenderá por aceptados la entrega y contenido de los documentos. En caso tuviera alguna consulta, queja, observación o detectara un error, deberá acercarse inmediatamente o enviar una comunicación escrita dentro de dicho término a fin de indicarlo y procurar resolverlo de común acuerdo entre las partes. En caso no lo hiciera, se entenderá que está conforme con su contenido.
 
@@ -491,10 +507,10 @@
           .- TRATAMIENTO DE DATOS PERSONALES CAPTADOS A TRAVÉS DE SISTEMAS DE VIDEOVIGILANCIA PARA EL CONTROL LABORAL.-
         </b>
          En virtud del poder de dirección de
-         <b>CIITES</b>
-         , este se encuentra facultado para realizar controles o tomar medidas para vigilar el ejercicio de las actividades laborales de
-         <b>{{$contrato->getTrabajadore()}}</b>
-         , entre las que se encuentra la captación y/o tratamiento de datos a través de sistemas de videovigilancia, de conformidad con lo establecido en los numerales 7.9 y 7.11 de la Directiva N° 01-2020-JUS/DGTAIPD, aprobada mediante Resolución Directoral N° 02-2020-JUS/DGTAIPD.
+         <b>CIITES</b>,
+         este se encuentra facultado para realizar controles o tomar medidas para vigilar el ejercicio de las actividades laborales de
+         <b>{{$contrato->getTrabajadore()}}</b>,
+         entre las que se encuentra la captación y/o tratamiento de datos a través de sistemas de videovigilancia, de conformidad con lo establecido en los numerales 7.9 y 7.11 de la Directiva N° 01-2020-JUS/DGTAIPD, aprobada mediante Resolución Directoral N° 02-2020-JUS/DGTAIPD.
 
         En ese sentido,
         <b>{{$contrato->getTrabajadore()}}</b>
@@ -509,9 +525,8 @@
         sobre los controles videovigilados. Asimismo,
         <b>CIITES</b>
         pondrá a disposición de
-        <b>{{$contrato->getTrabajadore()}}</b>
-        , el informativo adicional del sistema de videovigilancia, a través de medios informáticos, digitalizados o impresos, conforme a lo establecido en el numeral 6.12 de la mencionada Directiva; a efectos de garantizar el derecho reconocido en el artículo 18° de la Ley N° 29733, Ley de Protección de Datos Personales.
-
+        <b>{{$contrato->getTrabajadore()}}</b>,
+        el informativo adicional del sistema de videovigilancia, a través de medios informáticos, digitalizados o impresos, conforme a lo establecido en el numeral 6.12 de la mencionada Directiva; a efectos de garantizar el derecho reconocido en el artículo 18° de la Ley N° 29733, Ley de Protección de Datos Personales.
 
         <br>
         <br>
@@ -550,9 +565,9 @@
         deberá ser comunicado por escrito a
         <b>CIITES</b>
         para que surta efectos.
-        Las partes contratantes se someten expresamente a la jurisdicción de las autoridades judiciales y administrativas de la ciudad de Trujillo.
-        Ambas partes enteradas del contenido de todas y cada una de las cláusulas del presente documento proceden a firmar por duplicado, en señal de conformidad, en la ciudad de Trujillo, el
-        <b>{{$contrato->getFechaGeneracionEscrita()}}</b>
+        Las partes contratantes se someten expresamente a la jurisdicción de las autoridades judiciales y administrativas de la ciudad de Lima.
+        Ambas partes enteradas del contenido de todas y cada una de las cláusulas del presente documento proceden a firmar por duplicado, en señal de conformidad, en la ciudad de Lima, el
+        <b class="{{$campo_editable}}">{{$contrato->getFechaGeneracionEscrita()}}</b>
       </p>
 
 
@@ -570,8 +585,15 @@
             <td>
               <b>
                 _______________________________<br>
-                {{ strtoupper($contrato->getNombreCompleto()) }}<br>
-                DNI: {{ $contrato->dni }}<br>
+                <span class="{{$campo_editable}}">
+                  {{ strtoupper($contrato->getNombreCompleto()) }}
+                </span>
+                <br>
+                DNI:
+                <span class="{{$campo_editable}}">
+                  {{ $contrato->dni }}
+                </span>
+                <br>
                 {{ $contrato->getTrabajadore() }}
               </b>
             </td>
@@ -660,6 +682,15 @@
 
     .text-center{
       text-align: center;
+    }
+
+    .campo_editable{
+      color:rgb(0, 62, 176);
+    }
+
+    .quitar_margenes{
+      margin-top: 0px;
+      margin-bottom: 0px;
     }
   </style>
 

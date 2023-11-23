@@ -288,7 +288,7 @@
     padding: 2px 10px;
 
     text-transform: uppercase;
-    line-height: 8pt;
+    line-height: 6pt;
     font-weight: 500 !important;
     margin-bottom: 0px !important;
     cursor: text;

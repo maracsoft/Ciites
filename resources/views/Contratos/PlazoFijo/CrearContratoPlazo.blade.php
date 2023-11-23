@@ -4,6 +4,11 @@
   Contrato Plazo Fijo
 @endsection
 
+@section('tiempoEspera')
+  <div class="loader" id="pantallaCarga"></div>
+@endsection
+
+
 @section('contenido')
   <div class="p-2">
     <div class="page-title">
@@ -11,13 +16,14 @@
     </div>
   </div>
 
-  <form method = "POST" action = "{{ route('ContratosPlazo.Guardar') }}" onsubmit="" id="frmPlazoFijo" name="frmPlazoFijo">
+  <form method = "POST" action = "{{ route('ContratosPlazo.Guardar') }}" onsubmit="" id="frmPlazoFijo"
+    name="frmPlazoFijo">
 
 
     @csrf
 
     <div class="row">
-      <div class="col-12 col-md-8">
+      <div class="col-12 col-md-6">
 
 
         <div class="card">
@@ -29,30 +35,40 @@
           <div class="card-body">
             <div class="row">
 
-              <div class="col-12 col-md-3">
+              <div class="col-12 col-md-4">
+                <div class="d-flex  align-items-center ">
+                  <div class="label_movil_container flex-auto">
+                    <input type="number" class="form-control" name="dni" id="dni" value="" placeholder="">
+                    <label for="dni" class="label_movil">dni</label>
 
-                <div class="label_movil_container">
-                  <input type="number" class="form-control" name="dni" id="dni" value="" placeholder="">
-                  <label for="dni" class="label_movil">dni</label>
+                  </div>
+                  <div class="px-1">
+                    <button type="button" onclick="consultarPorDNI()" class="btn btn-success" title="">
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </div>
+
                 </div>
+
 
               </div>
 
-              <div class="col-12 col-md-3">
+              <div class="col-12 col-md-4">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control" name="nombres" id="nombres" value=""  placeholder="">
+                  <input type="text" class="form-control" name="nombres" id="nombres" value="" placeholder="">
                   <label for="nombres" class="label_movil">nombres</label>
                 </div>
               </div>
 
 
-              <div class="col-12 col-md-3">
+              <div class="col-12 col-md-4">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control" name="apellidos" id="apellidos" value=""  placeholder="">
+                  <input type="text" class="form-control" name="apellidos" id="apellidos" value=""
+                    placeholder="">
                   <label for="apellidos" class="label_movil">apellidos</label>
                 </div>
               </div>
-              <div class="col-12 col-md-3">
+              <div class="col-12 col-md-4">
                 <div class="label_movil_container">
                   <select class="form-control" name="sexo" id="sexo">
                     <option value="-1">- Seleccionar - </option>
@@ -64,19 +80,38 @@
               </div>
 
 
-              <div class="col-12 col-md-4">
+              <div class="col-12 col-md-8">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control" name="domicilio" id="domicilio" value=""  placeholder="">
+                  <input type="text" class="form-control" name="domicilio" id="domicilio" value=""
+                    placeholder="">
                   <label for="domicilio" class="label_movil">domicilio</label>
                 </div>
               </div>
+
+              <div class="col-12 col-md-6">
+                <div class="label_movil_container">
+                  <input type="text" class="form-control" name="provincia" id="provincia" value=""
+                    placeholder="">
+                  <label for="provincia" class="label_movil">Provincia</label>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <div class="label_movil_container">
+                  <input type="text" class="form-control" name="departamento" id="departamento" value=""
+                    placeholder="">
+                  <label for="departamento" class="label_movil">departamento</label>
+                </div>
+              </div>
+
+
 
             </div>
           </div>
         </div>
 
       </div>
-      <div class="col-12 col-md-4">
+      <div class="col-12 col-md-6">
         <div class="card">
           <div class="card-header">
             <b>
@@ -87,7 +122,7 @@
             <div class="row">
 
 
-              <div class="col-12">
+              <div class="col-12 col-md-5">
                 <div class="label_movil_container">
                   <select class="form-control" name="tipo_adenda_financiera" id="tipo_adenda_financiera">
                     <option value="-1">- Seleccionar - </option>
@@ -101,25 +136,35 @@
                 </div>
               </div>
 
+              <div class="col-12 col-md-7">
+                <div class="label_movil_container">
+                  <input type="text" class="form-control" name="nombre_financiera" id="nombre_financiera"
+                    placeholder="">
+                  <label for="nombre_financiera" class="label_movil">Financiera</label>
+                </div>
+              </div>
 
 
               <div class="col-12 col-md-12">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control" name="nombre_contrato_locacion" id="nombre_contrato_locacion" placeholder="">
+                  <textarea type="text" class="form-control" name="nombre_contrato_locacion" id="nombre_contrato_locacion"
+                    placeholder="" rows="3"></textarea>
                   <label for="nombre_contrato_locacion" class="label_movil">Nombre contrato Locación</label>
                 </div>
               </div>
 
-              <div class="col-4 col-md-4">
+              <div class="col-4 col-md-6">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control text-center" name="duracion_convenio_numero" id="duracion_convenio_numero" placeholder="">
-                  <label for="duracion_convenio_numero" class="label_movil">Cantidad</label>
+                  <input type="text" class="form-control text-center" name="duracion_convenio_numero"
+                    id="duracion_convenio_numero" placeholder="">
+                  <label for="duracion_convenio_numero" class="label_movil">Cantidad de Tiempo</label>
                 </div>
               </div>
 
-              <div class="col-8 col-md-8">
+              <div class="col-8 col-md-6">
                 <div class="label_movil_container">
-                  <select class="form-control" name="duracion_convenio_unidad_temporal" id="duracion_convenio_unidad_temporal">
+                  <select class="form-control" name="duracion_convenio_unidad_temporal"
+                    id="duracion_convenio_unidad_temporal">
                     <option value="-1">- Seleccionar - </option>
                     @foreach ($tiposTiempos as $tiempo)
                       <option value="{{ $tiempo }}">
@@ -132,12 +177,7 @@
               </div>
 
 
-              <div class="col-12 col-md-12">
-                <div class="label_movil_container">
-                  <input type="text" class="form-control" name="nombre_financiera" id="nombre_financiera" placeholder="">
-                  <label for="nombre_financiera" class="label_movil">Financiera</label>
-                </div>
-              </div>
+
 
             </div>
           </div>
@@ -168,7 +208,8 @@
           <div class="col-12 col-md-2">
             <div class="label_movil_container">
               <div class="input-group date form_date " data-date-format="dd/mm/yyyy" data-provide="datepicker">
-                <input type="text" class="form-control text-center" autocomplete="off" name="fecha_inicio_prueba" id="fecha_inicio_prueba" placeholder="">
+                <input type="text" class="form-control text-center" autocomplete="off" name="fecha_inicio_prueba"
+                  id="fecha_inicio_prueba" placeholder="">
                 <label for="fecha_inicio_prueba" class="label_movil">Fecha Inicio Prueba</label>
                 <div class="input-group-btn">
                   <button class="btn btn-primary date-set d-none" type="button">
@@ -184,7 +225,8 @@
           <div class="col-12 col-md-2">
             <div class="label_movil_container">
               <div class="input-group date form_date " data-date-format="dd/mm/yyyy" data-provide="datepicker">
-                <input type="text" class="form-control text-center" autocomplete="off" name="fecha_fin_prueba" id="fecha_fin_prueba" placeholder="">
+                <input type="text" class="form-control text-center" autocomplete="off" name="fecha_fin_prueba"
+                  id="fecha_fin_prueba" placeholder="">
                 <label for="fecha_fin_prueba" class="label_movil">Fecha Fin Prueba</label>
                 <div class="input-group-btn">
                   <button class="btn btn-primary date-set d-none" type="button">
@@ -200,7 +242,8 @@
           <div class="col-12 col-md-2">
             <div class="label_movil_container">
               <div class="input-group date form_date " data-date-format="dd/mm/yyyy" data-provide="datepicker">
-                <input type="text" class="form-control text-center" autocomplete="off" name="fecha_inicio_contrato" id="fecha_inicio_contrato" placeholder="">
+                <input type="text" class="form-control text-center" autocomplete="off" name="fecha_inicio_contrato"
+                  id="fecha_inicio_contrato" placeholder="">
                 <label for="fecha_inicio_contrato" class="label_movil">Fecha Inicio Contrato</label>
                 <div class="input-group-btn">
                   <button class="btn btn-primary date-set d-none" type="button">
@@ -216,7 +259,8 @@
           <div class="col-12 col-md-2">
             <div class="label_movil_container">
               <div class="input-group date form_date " data-date-format="dd/mm/yyyy" data-provide="datepicker">
-                <input type="text" class="form-control text-center" autocomplete="off" name="fecha_fin_contrato" id="fecha_fin_contrato" placeholder="">
+                <input type="text" class="form-control text-center" autocomplete="off" name="fecha_fin_contrato"
+                  id="fecha_fin_contrato" placeholder="">
                 <label for="fecha_fin_contrato" class="label_movil">Fecha Fin Contrato</label>
                 <div class="input-group-btn">
                   <button class="btn btn-primary date-set d-none" type="button">
@@ -229,7 +273,8 @@
 
           <div class="col-12 col-md-3">
             <div class="label_movil_container">
-              <input type="number" min="0" class="form-control text-right" name="remuneracion_mensual" id="remuneracion_mensual" value="" placeholder="">
+              <input type="number" min="0" class="form-control text-right" name="remuneracion_mensual"
+                id="remuneracion_mensual" value="" placeholder="">
               <label for="remuneracion_mensual" class="label_movil">Remuneración Mensual</label>
             </div>
           </div>
@@ -254,14 +299,16 @@
 
           <div class="col-12 col-md-3">
             <div class="label_movil_container">
-              <input type="number" min="0" class="form-control" name="cantidad_dias_labor" id="cantidad_dias_labor" value="" placeholder="">
+              <input type="number" min="0" class="form-control" name="cantidad_dias_labor"
+                id="cantidad_dias_labor" value="" placeholder="">
               <label for="cantidad_dias_labor" class="label_movil">Cantidad Días de Labor</label>
             </div>
           </div>
 
           <div class="col-12 col-md-3">
             <div class="label_movil_container">
-              <input type="number" min="0" class="form-control" name="cantidad_dias_descanso" id="cantidad_dias_descanso" value="" placeholder="">
+              <input type="number" min="0" class="form-control" name="cantidad_dias_descanso"
+                id="cantidad_dias_descanso" value="" placeholder="">
               <label for="cantidad_dias_descanso" class="label_movil">Cantidad Días de Descanso</label>
             </div>
           </div>
@@ -296,9 +343,15 @@
 
       </div>
       <div class="col text-right">
-        <button type="button" class="btn btn-primary" id="btnRegistrar"
-          data-loading-text="<i class='fa a-spinner fa-spin'></i> Registrando" onclick="registrar()">
 
+
+        <button type="button" class="btn btn-success" onclick="GenerarBorrador()">
+
+          Generar borrador
+        </button>
+
+
+        <button type="button" class="btn btn-primary" onclick="registrar()">
           <i class='fas fa-save'></i>
           Registrar
         </button>
@@ -309,6 +362,36 @@
     </div>
 
   </form>
+
+
+
+
+  <div class="modal fade" id="ModalBorrador" tabindex="-1" aria-labelledby="" aria-hidden="true">
+    <div class="modal-2xl modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            Ver Borrador
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="semuestra">
+            Se muestra de color
+            <span class="campo_editable">
+              AZUL
+            </span>
+            el contenido que varía en función a los datos que ingresó en el formulario.
+          </div>
+          <iframe id="iframe_borrador" src=""></iframe>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
 @endsection
 
 {{-- ************************************************************************************************************* --}}
@@ -328,12 +411,10 @@
 @section('script')
   {{-- <script src="/public/select2/bootstrap-select.min.js"></script>      --}}
   <script>
-    var cont = 0;
-    var total = 0;
-    var detalleAvance = [];
-    var modo;
+    var ModalBorrador = new bootstrap.Modal(document.getElementById("ModalBorrador"), {});
 
     $(document).ready(function() {
+      $(".loader").hide();
 
     });
 
@@ -353,7 +434,11 @@
 
     function validarFormCrear() { //Retorna TRUE si es que todo esta OK y se puede hacer el submit
       msj = '';
-      limpiarEstilos(['domicilio','puesto','tipo_adenda_financiera','nombre_financiera','duracion_convenio_numero','duracion_convenio_unidad_temporal','nombre_contrato_locacion','fecha_inicio_prueba','fecha_fin_prueba','fecha_inicio_contrato','fecha_fin_contrato','cantidad_dias_labor','cantidad_dias_descanso','remuneracion_mensual','codMoneda','nombres','dni','apellidos','sexo','domicilio']);
+      limpiarEstilos(['domicilio', 'puesto', 'tipo_adenda_financiera', 'nombre_financiera', 'duracion_convenio_numero',
+        'duracion_convenio_unidad_temporal', 'nombre_contrato_locacion', 'fecha_inicio_prueba', 'fecha_fin_prueba',
+        'fecha_inicio_contrato', 'fecha_fin_contrato', 'cantidad_dias_labor', 'cantidad_dias_descanso',
+        'remuneracion_mensual', 'codMoneda', 'nombres', 'dni', 'apellidos', 'sexo', 'domicilio'
+      ]);
 
       /* Card 1 */
       msj = validarTamañoExacto(msj, 'dni', '8', 'DNI');
@@ -364,7 +449,7 @@
 
       /* Card 2 */
       msj = validarSelect(msj, 'tipo_adenda_financiera', '-1', 'Tipo de Adenda financiera');
-      msj = validarTamañoMaximoYNulidad(msj, 'nombre_contrato_locacion', 100, 'Nombre del Contrato de Locación');
+      msj = validarTamañoMaximoYNulidad(msj, 'nombre_contrato_locacion', 300, 'Nombre del Contrato de Locación');
       msj = validarPositividadYNulidad(msj, 'duracion_convenio_numero', 'Duración del convenio (Número)');
       msj = validarSelect(msj, 'duracion_convenio_unidad_temporal', '-1', 'Duración del Convenio (Unidad de Tiempo)');
       msj = validarTamañoMaximoYNulidad(msj, 'nombre_financiera', 100, 'Financiera');
@@ -383,15 +468,124 @@
 
       return msj;
     }
+
+    function GenerarBorrador() {
+
+      var msj = validarFormCrear();
+      if (msj != "") {
+        alerta(msj)
+        return;
+      }
+
+      var datosAEnviar = {
+        _token: "{{ csrf_token() }}",
+
+        domicilio: document.getElementById("domicilio").value,
+        puesto: document.getElementById("puesto").value,
+        tipo_adenda_financiera: document.getElementById("tipo_adenda_financiera").value,
+        nombre_financiera: document.getElementById("nombre_financiera").value,
+        duracion_convenio_numero: document.getElementById("duracion_convenio_numero").value,
+        duracion_convenio_unidad_temporal: document.getElementById("duracion_convenio_unidad_temporal").value,
+        nombre_contrato_locacion: document.getElementById("nombre_contrato_locacion").value,
+        fecha_inicio_prueba: document.getElementById("fecha_inicio_prueba").value,
+        fecha_fin_prueba: document.getElementById("fecha_fin_prueba").value,
+        fecha_inicio_contrato: document.getElementById("fecha_inicio_contrato").value,
+        fecha_fin_contrato: document.getElementById("fecha_fin_contrato").value,
+        cantidad_dias_labor: document.getElementById("cantidad_dias_labor").value,
+        cantidad_dias_descanso: document.getElementById("cantidad_dias_descanso").value,
+        remuneracion_mensual: document.getElementById("remuneracion_mensual").value,
+        codMoneda: document.getElementById("codMoneda").value,
+        nombres: document.getElementById("nombres").value,
+        dni: document.getElementById("dni").value,
+        apellidos: document.getElementById("apellidos").value,
+        sexo: document.getElementById("sexo").value,
+        domicilio: document.getElementById("domicilio").value,
+
+      };
+
+      ruta = "{{ route('ContratosPlazo.GenerarBorrador') }}";
+      $(".loader").show();
+
+      $.post(ruta, datosAEnviar, function(dataRecibida) {
+        $(".loader").hide();
+
+        ModalBorrador.show()
+        objetoRespuesta = JSON.parse(dataRecibida);
+
+        var filename = objetoRespuesta.datos
+        iframe_borrador.src = "/Contratos/Borradores/Ver/" + filename;
+      });
+
+    }
+
+
+
+    /* llama a mi api que se conecta  con la api de la sunat
+        si encuentra, llena con los datos que encontró
+        si no tira mensaje de error
+    */
+    function consultarPorDNI() {
+
+      msjError = "";
+
+      msjError = validarTamañoExacto(msjError, 'dni', 8, 'DNI');
+      msjError = validarNulidad(msjError, 'dni', 'DNI');
+
+      if (msjError != "") {
+        alerta(msjError);
+        return;
+      }
+
+      $(".loader").show(); //para mostrar la pantalla de carga
+      dni = document.getElementById('dni').value;
+
+      $.get('/ConsultarAPISunat/dni/' + dni,
+        function(data) {
+          console.log("IMPRIMIENDO DATA como llegó:");
+
+          data = JSON.parse(data);
+
+          console.log(data);
+          persona = data.datos;
+
+          alertaMensaje(data.mensaje, data.titulo, data.tipoWarning);
+
+          if (data.ok == 1) {
+            document.getElementById('nombres').value = persona.nombres;
+            document.getElementById('apellidos').value = persona.apellidoPaterno + " " + persona.apellidoMaterno;
+          }
+
+          $(".loader").fadeOut("slow");
+        }
+      );
+    }
   </script>
 @endsection
 
 @section('estilos')
+  @include('CSS.RemoveInputNumberArrows')
+  <style>
+    #iframe_borrador {
+      width: 100%;
+      height: 700px;
+    }
 
-@include('CSS.RemoveInputNumberArrows')
-<style>
+    .campo_editable {
+      color: rgb(0, 62, 176);
 
+      font-weight: bold;
+    }
 
+    .semuestra{
+      text-align: center;
+      padding: 5px;
+      background-color: #f1f1f1;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
 
-</style>
+    .flex-auto{
+      flex:auto;
+    }
+  </style>
 @endsection

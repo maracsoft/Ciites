@@ -176,8 +176,5 @@
     height: 50px;
   }
 
-  .quitar_margenes{
-    margin-top: 0px;
-    margin-bottom: 0px;
-  }
+
 </style>

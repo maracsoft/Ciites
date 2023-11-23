@@ -57,12 +57,12 @@ class Contrato extends MaracModel
 
   function getFechaInicio()
   {
-    return Fecha::formatoParaVistas($this->fecha_inicio_contrato);
+    return Fecha::escribirEnTexto($this->fecha_inicio_contrato);
   }
 
   function getFechaFin()
   {
-    return Fecha::formatoParaVistas($this->fecha_fin_contrato);
+    return Fecha::escribirEnTexto($this->fecha_fin_contrato);
   }
   function getMoneda()
   {

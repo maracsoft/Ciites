@@ -8,15 +8,15 @@ use Exception;
 
 class Fecha
 {
-    
+
     var $fechaEnSQL; /* Valor  de la fecha en formato SQL  YYYY-MM-DD*/
     var $fechaEnLegible;/* Valor de la fecha en formato legible perú DD/MM/YYYY */
-    
+
 
 
     public function nuevaFechaSQL($legible){
         $this->fechaEnLegible = $legible ;
-        
+
         $sql = substr($legible,6,4).'-'.substr($legible,3,2).'-'.substr($legible,0,2);
         $this->fechaEnSQL = $sql;
     }
@@ -33,9 +33,9 @@ class Fecha
         /*              año                 mes                 dia*/
         return substr($fecha,6,4).'-'.substr($fecha,3,2).'-'.substr($fecha,0,2);
     }
-    
 
-    /* funcion tipo libreria 
+
+    /* funcion tipo libreria
         ingresa una fecha en formato sql YYYY-MM-DD
         sale una fecha en formato peruano DD/MM/YYYY
     */
@@ -62,10 +62,10 @@ class Fecha
     }
 
 
-    /* 
+    /*
         funcion para IndicadorActividadController registrarMetaProgramada
-        compara 2 fechas que llegan en vectores 
-        $fecha1 = 
+        compara 2 fechas que llegan en vectores
+        $fecha1 =
         [
             'año'=>2000,
             'mes'=>5
@@ -85,10 +85,10 @@ class Fecha
 
 
         $fechaMeta = strtotime($fechaMetaString);
- 
-    
+
+
         Debug::mensajeSimple($proyecto->fechaInicio." () ".$proyecto->fechaFinalizacion);
-        
+
 
         return ($fechaMeta <= $fechaMaxima && $fechaMeta >= $fechaMinima);
 
@@ -98,17 +98,16 @@ class Fecha
     /* Se le pasa una String de fecha en formato SQL y retorna la fecha escrita tipo "4 de Enero de 2019" */
     public static function escribirEnTexto($fecha){
 
-        
         $dia = date('d', strtotime($fecha));
         $mes = date('m', strtotime($fecha));
         $año = date('Y', strtotime($fecha));
-        
+
 
         $nombreMes = Mes::findOrFail($mes)->nombre;
         return $dia." de ".$nombreMes." de ".$año;
 
     }
-    
+
     //le resta dias a una fecha
     public static function restarDias(string $date, int $dias){
 
@@ -137,12 +136,12 @@ class Fecha
           cross join (select 0 as a union all select 1 union all select 2 union all select 3 union all select 4 union all select 5 union all select 6 union all select 7 union all select 8 union all select 9) as c
           cross join (select 0 as a union all select 1 union all select 2 union all select 3 union all select 4 union all select 5 union all select 6 union all select 7 union all select 8 union all select 9) as d
         ) a
-        where a.Date between '$date_start' and '$date_end' 
+        where a.Date between '$date_start' and '$date_end'
 
       ";
 
     }
-    
+
     /* Tratar de convertir esto en el front */
     public static function traducirDiaAEspañol(string $nombreDia) : string{
 
@@ -170,7 +169,7 @@ class Fecha
         case 'sunday':
           $resultado = "Domingo";
           break;
-                                                
+
         default:
           throw new Exception("No hay un nombre asociado para este día.");
           break;

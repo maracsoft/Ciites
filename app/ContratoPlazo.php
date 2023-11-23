@@ -131,7 +131,7 @@ class ContratoPlazo extends Contrato
 
     $nombre_archivo_descarga = $this->getTituloContrato();
     $descargarlo = false;
-    $dompdf->stream($nombre_archivo_descarga.".pdf", array("Attachment" => $descargarlo));
+    //$dompdf->stream($nombre_archivo_descarga.".pdf", array("Attachment" => $descargarlo));
 
     return $dompdf;
   }
@@ -164,11 +164,11 @@ class ContratoPlazo extends Contrato
 
 
   public function getFechaInicioPrueba(){
-    return Fecha::formatoParaVistas($this->fecha_inicio_prueba);
+    return Fecha::escribirEnTexto($this->fecha_inicio_prueba);
   }
 
   public function getFechaFinPrueba(){
-    return Fecha::formatoParaVistas($this->fecha_fin_prueba);
+    return Fecha::escribirEnTexto($this->fecha_fin_prueba);
   }
 
 

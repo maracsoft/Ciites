@@ -12,12 +12,14 @@ use App\Http\Controllers\Controller;
 use App\Moneda;
 use App\Numeracion;
 use App\Proyecto;
+use App\RespuestaAPI;
 use App\Sede;
 use App\TipoContrato;
 use App\UI\UIFiltros;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ContratoPlazoController extends Controller
 {
@@ -68,8 +70,6 @@ class ContratoPlazoController extends Controller
 
     try {
       db::beginTransaction();
-
-
 
       $empLogeado = Empleado::getEmpleadoLogeado();
 
@@ -190,4 +190,61 @@ class ContratoPlazoController extends Controller
         ->with('datos', Configuracion::getMensajeError($codErrorHistorial));
     }
   }
+
+  /* Retorna la url para visualizar el PDF */
+  public function GenerarBorrador(Request $request){
+
+    $contrato = new ContratoPlazo();
+
+    $contrato->nombres = $request->nombres;
+    $contrato->apellidos = $request->apellidos;
+    $contrato->dni = $request->dni;
+
+    $contrato->es_borrador = 1;
+
+    $contrato->domicilio = $request->domicilio;
+    $contrato->puesto = $request->puesto;
+    $contrato->tipo_adenda_financiera = $request->tipo_adenda_financiera;
+    $contrato->nombre_financiera = $request->nombre_financiera;
+    $contrato->duracion_convenio_numero = $request->duracion_convenio_numero;
+    $contrato->duracion_convenio_unidad_temporal = $request->duracion_convenio_unidad_temporal;
+    $contrato->nombre_contrato_locacion = $request->nombre_contrato_locacion;
+    $contrato->fecha_inicio_prueba = Fecha::formatoParaSQL($request->fecha_inicio_prueba);
+    $contrato->fecha_fin_prueba = Fecha::formatoParaSQL($request->fecha_fin_prueba);
+    $contrato->fecha_inicio_contrato = Fecha::formatoParaSQL($request->fecha_inicio_contrato);
+    $contrato->fecha_fin_contrato = Fecha::formatoParaSQL($request->fecha_fin_contrato);
+    $contrato->cantidad_dias_labor = $request->cantidad_dias_labor;
+    $contrato->cantidad_dias_descanso = $request->cantidad_dias_descanso;
+    $contrato->remuneracion_mensual = $request->remuneracion_mensual;
+    $contrato->codMoneda = $request->codMoneda;
+    $contrato->fechaHoraGeneracion = Carbon::now();
+
+    $contrato->codigo_unico = ContratoPlazo::calcularCodigoCedepas(Numeracion::getNumeracionCPF());
+    /* NO GUARDAMOS */
+
+    $pdf = $contrato->getPDF();
+
+    $fecha_actual = time();
+    $nombre_guardado = "CP_".$fecha_actual.".pdf";
+
+    $generated_file = $pdf->output();
+
+    Storage::put("/borradores_pdf/$nombre_guardado",$generated_file);
+
+    return RespuestaAPI::respuestaDatosOk("Se generó exitosamente el borrador",$nombre_guardado);
+
+  }
+
+
+
+  public static function VerBorrador($filename){
+    $file = Storage::get("borradores_pdf/$filename");
+    return static::setPDFResponse($file);
+  }
+
+  public static function setPDFResponse($data){
+    return response($data, 200)->header('Content-Type', 'application/pdf');
+  }
+
+
 }

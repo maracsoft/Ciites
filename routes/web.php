@@ -1358,6 +1358,11 @@ Route::group(['middleware'=>"Mantenimiento"],function()
             Route::get('/ContratosPlazo/Crear','ContratoPlazoController@Crear')->name('ContratosPlazo.Crear');
             Route::post('/ContratosPlazo/Guardar','ContratoPlazoController@Guardar')->name('ContratosPlazo.Guardar');
 
+
+            Route::post('/ContratosPlazo/GenerarBorrador','ContratoPlazoController@GenerarBorrador')->name('ContratosPlazo.GenerarBorrador');
+            Route::get('/Contratos/Borradores/Ver/{filename}','ContratoPlazoController@VerBorrador')->name('ContratosPlazo.VerBorrador');
+
+
             Route::get('/ContratosPlazo/descargarPDF/{codContrato}','ContratoPlazoController@descargarPDF')->name('ContratosPlazo.descargarPDF');
             Route::get('/ContratosPlazo/verPDF/{codContrato}','ContratoPlazoController@verPDF')->name('ContratosPlazo.verPDF');
 
