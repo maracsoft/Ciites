@@ -112,7 +112,7 @@
     <div class="sidebar">
       <div class="image-logo-container">
           <a href="{{route('user.home')}}">
-            <img src="/img/logo-ciites.png" class="brand-image w-100 px-3">
+            <img src="/img/logo-ciites-w300.png" class="brand-image w-100 px-3">
           </a>
 
       </div>

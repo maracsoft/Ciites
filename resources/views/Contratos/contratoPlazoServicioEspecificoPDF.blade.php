@@ -42,7 +42,7 @@
       @endif
 
       <div class="codigo_contrato">
-        {{ $contrato->codigoCedepas }}
+        {{ $contrato->codigo_unico }}
       </div>
     </div>
     <br>

@@ -176,7 +176,7 @@ $comp_filtros->añadirFiltro([
             <tr @if($contrato->estaAnulado()) style="background-color: rgba(255, 143, 143, 0.801)" @endif>
                 <td>
                   <span class="fontSize10">
-                    {{$contrato->codigoCedepas}}
+                    {{$contrato->codigo_unico}}
                   </span>
 
                     @if($contrato->estaAnulado())

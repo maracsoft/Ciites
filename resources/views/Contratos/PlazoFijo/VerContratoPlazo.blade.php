@@ -7,7 +7,7 @@
 @section('contenido')
 <div class="m-1">
     <h3  style="text-align: center">
-        Ver Contrato Plazo Fijo {{$contrato->codigoCedepas}}
+        Ver Contrato Plazo Fijo {{$contrato->codigo_unico}}
     </h3>
 </div>
 

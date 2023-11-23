@@ -58,8 +58,9 @@ class ContratoPlazoController extends Controller
     $listaProyectos = Proyecto::getProyectosActivos();
     $listaMonedas = Moneda::All();
     $listaSedes = Sede::All();
-
-    return view('Contratos.PlazoFijo.CrearContratoPlazo', compact('listaProyectos', 'listaMonedas', 'listaSedes'));
+    $listaTipoAdenda = ContratoPlazo::getTiposAdendaFinanciera();
+    $tiposTiempos = ContratoPlazo::getTiempos();
+    return view('Contratos.PlazoFijo.CrearContratoPlazo', compact('listaProyectos', 'listaMonedas','tiposTiempos', 'listaSedes','listaTipoAdenda'));
   }
 
   function guardar(Request $request)
@@ -68,46 +69,44 @@ class ContratoPlazoController extends Controller
     try {
       db::beginTransaction();
 
-      if ($request->asignacionFamiliar == '1')
-        $asig = 1;
-      else
-        $asig = 0;
+
 
       $empLogeado = Empleado::getEmpleadoLogeado();
 
       $contrato = new ContratoPlazo();
-      $contrato->codEmpleadoCreador = $empLogeado->codEmpleado;
+
       $contrato->nombres = $request->nombres;
       $contrato->apellidos = $request->apellidos;
-      $contrato->direccion = $request->direccion;
       $contrato->dni = $request->dni;
-      $contrato->sexo = $request->sexo;
-      $contrato->asignacionFamiliar = $asig;
+
+      $contrato->codEmpleadoCreador = $empLogeado->codEmpleado;
       $contrato->fechaHoraGeneracion = Carbon::now();
-      $contrato->fechaInicio = Fecha::formatoParaSQL($request->fechaInicio);
-      $contrato->fechaFin = Fecha::formatoParaSQL($request->fechaFin);
-      $contrato->sueldoBruto = $request->sueldoBruto;
-      $contrato->nombreProyecto = $request->nombreProyecto;
-      $contrato->nombreFinanciera = $request->nombreFinanciera;
-      $contrato->provinciaYDepartamento = $request->provinciaYDepartamento;
+      $contrato->es_borrador = 0;
 
-
-      $contrato->nombrePuesto = $request->nombrePuesto;
+      $contrato->domicilio = $request->domicilio;
+      $contrato->puesto = $request->puesto;
+      $contrato->tipo_adenda_financiera = $request->tipo_adenda_financiera;
+      $contrato->nombre_financiera = $request->nombre_financiera;
+      $contrato->duracion_convenio_numero = $request->duracion_convenio_numero;
+      $contrato->duracion_convenio_unidad_temporal = $request->duracion_convenio_unidad_temporal;
+      $contrato->nombre_contrato_locacion = $request->nombre_contrato_locacion;
+      $contrato->fecha_inicio_prueba = Fecha::formatoParaSQL($request->fecha_inicio_prueba);
+      $contrato->fecha_fin_prueba = Fecha::formatoParaSQL($request->fecha_fin_prueba);
+      $contrato->fecha_inicio_contrato = Fecha::formatoParaSQL($request->fecha_inicio_contrato);
+      $contrato->fecha_fin_contrato = Fecha::formatoParaSQL($request->fecha_fin_contrato);
+      $contrato->cantidad_dias_labor = $request->cantidad_dias_labor;
+      $contrato->cantidad_dias_descanso = $request->cantidad_dias_descanso;
+      $contrato->remuneracion_mensual = $request->remuneracion_mensual;
       $contrato->codMoneda = $request->codMoneda;
-      $contrato->codSede = $request->codSede;
-      $contrato->codTipoContrato = $request->codTipoContrato;
 
-      $contrato->codigoCedepas = ContratoPlazo::calcularCodigoCedepas(Numeracion::getNumeracionCPF());
+      $contrato->codigo_unico = ContratoPlazo::calcularCodigoCedepas(Numeracion::getNumeracionCPF());
       Numeracion::aumentarNumeracionCPF();
 
       $contrato->save();
 
-
-
-      db::commit();
-
+      DB::commit();
       return redirect()->route('ContratosPlazo.Listar')
-        ->with('datos', "Se ha creado exitosamente el contrato " . $contrato->codigoCedepas);
+        ->with('datos', "Se ha creado exitosamente el contrato " . $contrato->codigo_unico);
     } catch (\Throwable $th) {
 
       Debug::mensajeError('CONTRATO PLAZO GUARDAR', $th);
@@ -177,7 +176,7 @@ class ContratoPlazoController extends Controller
       DB::commit();
       return redirect()
         ->route('ContratosPlazo.Listar')
-        ->with('datos', 'Se ha ANULADO el contrato ' . $contrato->codigoCedepas);
+        ->with('datos', 'Se ha ANULADO el contrato ' . $contrato->codigo_unico);
     } catch (\Throwable $th) {
       Debug::mensajeError('CONTRATO PLAZO : ANULAR', $th);
       DB::rollback();

@@ -12,7 +12,7 @@ class Contrato extends MaracModel
     "apellidos",
     "dni",
 
-    "codigoCedepas",
+    "codigo_unico",
     "codEmpleadoCreador",
     "fechaHoraGeneracion",
     "es_borrador",
@@ -28,7 +28,7 @@ class Contrato extends MaracModel
 
 
     //el mb es pq por alguna razón si lo quito, las tildes se paltean en el PDF xd
-    return mb_strtoupper($this->codigoCedepas . $msjAnulado . ' - ' . $this->apellidos);
+    return mb_strtoupper($this->codigo_unico . $msjAnulado . ' - ' . $this->apellidos);
   }
 
 

@@ -18,13 +18,14 @@ class ContratoPlazo extends Contrato
   const RaizCodigoCedepas = "CP";
 
   const Columnas = [
+
     "domicilio",
+    "puesto",
     "tipo_adenda_financiera", // adenda/contrato/convenio
     "nombre_financiera",
     "duracion_convenio_numero", // "5"
     "duracion_convenio_unidad_temporal", // "Meses"
     "nombre_contrato_locacion",
-    "puesto",
     "fecha_inicio_prueba",
     "fecha_fin_prueba",
     "fecha_inicio_contrato",

@@ -123,7 +123,7 @@ $comp_filtros->añadirFiltro([
                 <td>
 
                   <span class="fontSize10">
-                    {{$contrato->codigoCedepas}}
+                    {{$contrato->codigo_unico}}
                   </span>
 
                     @if($contrato->estaAnulado())

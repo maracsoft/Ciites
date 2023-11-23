@@ -121,7 +121,7 @@ class ContratoLocacionController extends Controller
 
       $contrato->codEmpleadoCreador = $empleadoLogeado->codEmpleado;
 
-      $contrato->codigoCedepas = ContratoLocacion::calcularCodigoCedepas(Numeracion::getNumeracionCLS());
+      $contrato->codigo_unico = ContratoLocacion::calcularCodigoCedepas(Numeracion::getNumeracionCLS());
       Numeracion::aumentarNumeracionCLS();
 
       $contrato->save();
@@ -147,7 +147,7 @@ class ContratoLocacionController extends Controller
       DB::commit();
       return redirect()
         ->route('ContratosLocacion.Listar')
-        ->with('datos', 'Se ha creado el contrato ' . $contrato->codigoCedepas);
+        ->with('datos', 'Se ha creado el contrato ' . $contrato->codigo_unico);
     } catch (\Throwable $th) {
 
       Debug::mensajeError('CONTRATO LOCACION : STORE', $th);
@@ -215,7 +215,7 @@ class ContratoLocacionController extends Controller
       DB::commit();
       return redirect()
         ->route('ContratosLocacion.Listar')
-        ->with('datos', 'Se ha ANULADO el contrato ' . $contrato->codigoCedepas);
+        ->with('datos', 'Se ha ANULADO el contrato ' . $contrato->codigo_unico);
     } catch (\Throwable $th) {
       Debug::mensajeError('CONTRATO LOCACION : ANULAR', $th);
       DB::rollback();

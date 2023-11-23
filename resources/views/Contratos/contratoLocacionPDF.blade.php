@@ -60,7 +60,7 @@
       </div>
       <div style="color:#817e7e; text-align: right;">
 
-        {{ $contrato->codigoCedepas }}
+        {{ $contrato->codigo_unico }}
 
       </div>
     </div>
