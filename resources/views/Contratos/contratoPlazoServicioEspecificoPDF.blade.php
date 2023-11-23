@@ -29,8 +29,6 @@
     @endif
 
 
-
-
     <div id="Header">
       <img class="logo" src="{{ App\Configuracion::getRutaImagenCedepasPNG(200) }}">
       @if ($contrato->esBorrador())
@@ -580,10 +578,18 @@
           </tr>
         </tbody>
       </table>
+
+
+      <div class="page_break"></div>
+
+
+      <div>
+        @include('Contratos.PlazoFijo.Anexo1pdf')
+      </div>
+
     </div>
 
 
-    <div class="page_break"></div>
 
 
   </body>
@@ -650,6 +656,10 @@
 
     footer .pagenum:before {
       content: counter(page);
+    }
+
+    .text-center{
+      text-align: center;
     }
   </style>
 
