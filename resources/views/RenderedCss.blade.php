@@ -130,7 +130,7 @@
     color: rgb(255, 255, 96);
   }
 
-  .internalPadding-1 > * {
+  .internalPadding-1>* {
     padding: 0.15rem;
   }
 
@@ -174,21 +174,22 @@
   }
 
   .nombrecompleto-usuario {
-    color:#777777;
+    color: #777777;
     font-size: smaller;
     font-weight: 800;
   }
 
 
-  .cursor-pointer{
-    cursor:pointer;
+  .cursor-pointer {
+    cursor: pointer;
   }
-  .cursor-move{
-    cursor:move;
+
+  .cursor-move {
+    cursor: move;
   }
 
 
-  .page-title{
+  .page-title {
     text-align: center;
     background-color: #cee7e7;
     color: black;
@@ -200,29 +201,29 @@
     border-radius: 5px;
   }
 
-  .table-marac-header{
-    background-color:#3e8bb7;
+  .table-marac-header {
+    background-color: #3e8bb7;
     color: #fff;
   }
 
 
   /* Código para que el fomr-control-undefined también pinte a los select2 de bootstrap */
-  select.form-control.form-control-undefined + button.dropdown-toggle{
+  select.form-control.form-control-undefined+button.dropdown-toggle {
     box-shadow: 0 0 5px 3px rgba(220, 53, 69, 0.6);
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
   }
 
-  input.cb_big[type="checkbox"]{
+  input.cb_big[type="checkbox"] {
     width: 35px;
     height: 35px;
   }
 
-  input.cb_medium[type="checkbox"]{
+  input.cb_medium[type="checkbox"] {
     width: 25px;
     height: 25px;
   }
 
-  .msj_parametros_faltantes{
+  .msj_parametros_faltantes {
     max-width: 200px;
     font-size: 10pt;
     background-color: red;
@@ -232,7 +233,7 @@
   }
 
 
-  .nombre-entorno{
+  .nombre-entorno {
 
     color: white;
     font-size: 10pt;
@@ -246,31 +247,81 @@
   }
 
 
-  .modal-2xl{
+  .modal-2xl {
     max-width: 1300px;
   }
 
-  .image-logo-container{
-      background-color: white;
-      margin-right: -8px;
-      margin-left: -8px;
+  .image-logo-container {
+    background-color: white;
+    margin-right: -8px;
+    margin-left: -8px;
 
-    }
-
-
+  }
 
 
-    .nav-pills .nav-link:not(.active):hover {
-      color: #215eb3;
-      background-color: #efefef;
-    }
 
-    aside.main-sidebar{
-      background-color: white;
-    }
 
-    li.nav-item.has-treeview li.nav-item{
-    margin-left:12px;
-    }
+  .nav-pills .nav-link:not(.active):hover {
+    color: #215eb3;
+    background-color: #efefef;
+  }
 
-   </style>
+  aside.main-sidebar {
+    background-color: white;
+  }
+
+  li.nav-item.has-treeview li.nav-item {
+    margin-left: 12px;
+  }
+
+  .marac_label {
+    position: absolute;
+
+    padding: 2px 10px;
+
+    text-transform: uppercase;
+    line-height: 8pt;
+    font-weight: 500 !important;
+    margin-bottom: 0px !important;
+    cursor: auto !important;
+    transition: all 0.1s ease;
+    border-radius: 10px;
+  }
+
+  /* Modo ARRIBA */
+  /* Selecciona a los  marac_label que están inmediatamente despues de un input que sí tiene contenido  */
+  .form-control:not(:placeholder-shown) ~ .marac_label  {
+    top: -2px;
+    left: 10px;
+    font-size: 9pt;
+    color: #a9a9a9;
+    background-color: #ffffff;
+  }
+
+  /* Modo abajo (dentro del input) */
+  /* Selecciona a los  marac_label que están inmediatamente despues de los inputs que no tienen contenido */
+  .form-control:placeholder-shown ~ .marac_label  {
+    top: 16px;
+    left: 11px;
+    font-size: 11pt;
+    background-color: #ffffff00;
+    color: #adadad;
+  }
+
+
+
+  /* CON ERRORES */
+  /* Modo arriba */
+  /* Selecciona a los marac_label que están inmediatamente despues de un input con error en el sí que hay contenido  */
+  .form-control-undefined:not(:placeholder-shown) ~ .marac_label  {
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 5%, rgba(255,255,255,1) 95%, rgba(191,13,13,0) 100%);
+  }
+
+
+  /* tanto arriba como abajo */
+  /* Selecciona a los marac_label que están inmediatamente despues de un input con error */
+  .form-control-undefined ~ .marac_label  {
+    color:#ff5757 !important;
+  }
+
+</style>

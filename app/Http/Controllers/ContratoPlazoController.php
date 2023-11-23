@@ -40,17 +40,15 @@ class ContratoPlazoController extends Controller
     $listaEmpleadosQueGeneraronContratos = ContratoPlazo::listaEmpleadosQueGeneraronContratosPlazo();
     $listaEmpleadosQueGeneraronContratos = Empleado::prepararParaSelect($listaEmpleadosQueGeneraronContratos);
     $listaNombresDeContratados = ContratoPlazo::listaNombresDeContratados();
-    $listaTipoContratos = TipoContrato::All();
 
-    $tiposContrato = TipoContrato::All();
+
     return view('Contratos.PlazoFijo.ListarContratosPlazo', compact(
       'listaContratos',
       'listaEmpleadosQueGeneraronContratos',
-      'tiposContrato',
+
       'listaNombresDeContratados',
       'filtros_usados',
-      'filtros_usados_paginacion',
-      'listaTipoContratos'
+      'filtros_usados_paginacion'
     ));
   }
 
@@ -60,8 +58,8 @@ class ContratoPlazoController extends Controller
     $listaProyectos = Proyecto::getProyectosActivos();
     $listaMonedas = Moneda::All();
     $listaSedes = Sede::All();
-    $listaTipoContratos = TipoContrato::All();
-    return view('Contratos.PlazoFijo.CrearContratoPlazo', compact('listaProyectos', 'listaMonedas', 'listaSedes', 'listaTipoContratos'));
+
+    return view('Contratos.PlazoFijo.CrearContratoPlazo', compact('listaProyectos', 'listaMonedas', 'listaSedes'));
   }
 
   function guardar(Request $request)
