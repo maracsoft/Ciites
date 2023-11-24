@@ -88,7 +88,20 @@
                 </div>
               </div>
 
-              <div class="col-12 col-md-6">
+
+
+
+
+
+              <div class="col-12 col-md-4">
+                <div class="label_movil_container">
+                  <input type="text" class="form-control" name="distrito" id="distrito" value=""
+                    placeholder="">
+                  <label for="distrito" class="label_movil">distrito</label>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-4">
                 <div class="label_movil_container">
                   <input type="text" class="form-control" name="provincia" id="provincia" value=""
                     placeholder="">
@@ -96,7 +109,7 @@
                 </div>
               </div>
 
-              <div class="col-12 col-md-6">
+              <div class="col-12 col-md-4">
                 <div class="label_movil_container">
                   <input type="text" class="form-control" name="departamento" id="departamento" value=""
                     placeholder="">

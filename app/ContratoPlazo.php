@@ -222,6 +222,8 @@ class ContratoPlazo extends Contrato
     $this->sexo = $request->sexo;
 
     $this->domicilio = $request->domicilio;
+
+    $this->distrito = $request->distrito;
     $this->provincia = $request->provincia;
     $this->departamento = $request->departamento;
 

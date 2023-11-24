@@ -77,10 +77,12 @@
         <b class="{{$campo_editable}}">{{$contrato->dni}},</b>
         con domicilio en
         <b class="{{$campo_editable}}">{{$contrato->domicilio}}</b>
+        en el distrito de
+        <b class="{{$campo_editable}}">{{$contrato->distrito}}</b>,
         en la provincia de
         <b class="{{$campo_editable}}">{{$contrato->provincia}}</b>,
         departamento de
-        <b class="{{$campo_editable}}">{{$contrato->departamento}}</b>,
+        <b class="{{$campo_editable}}">{{$contrato->departamento}}</b>;
         a quien en adelante se le denominará
         <b>{{$contrato->getTrabajadore()}},</b>
         en los términos y condiciones siguientes:
@@ -91,9 +93,8 @@
         <b>
           <span class="subrayado">PRIMERO</span>
           .-	ANTECEDENTES. -
-          El Centro para la Investigación, Innovación y Desarrollo Territorial Sostenible CIITES
-        </b>
-        ; es una organización de desarrollo que impulsa proyectos para el incremento de los ingresos económicos de mujeres y hombres en condiciones vulnerables y promueve la innovación tecnológica y social para mejorar los ingresos y condiciones de vida de las poblaciones beneficiarias.
+          El Centro para la Investigación, Innovación y Desarrollo Territorial Sostenible CIITES</b>;
+        es una organización de desarrollo que impulsa proyectos para el incremento de los ingresos económicos de mujeres y hombres en condiciones vulnerables y promueve la innovación tecnológica y social para mejorar los ingresos y condiciones de vida de las poblaciones beneficiarias.
         La organización se dedica a la asistencia social, la educación y el desarrollo científico y cultural; orientado al fortalecimiento de capacidades de agricultores, agricultoras, autoridades municipales y regionales y lideres de la sociedad civil, que promueven el desarrollo local en el país; capacitar a hombres y mujeres de poblaciones vulnerables rurales y urbanos, mejorando su nivel educativo, sus conocimientos y habilidades para el desarrollo de innovaciones y tecnológicas, para el incremento de la productividad en las actividades económicas y mejora de condiciones de vida; capacitar a proveedores de servicios para mejorar su nivel educativo, conocimiento y habilidades para el desarrollo de innovaciones, incremento de productividades y mejoramiento de sus condiciones de vida.
 
         <br>
@@ -101,9 +102,7 @@
 
         <b>
           <span class="subrayado">SEGUNDO</span>
-        .- OBJETO DEL CONTRATO
-        </b>
-        . - CIITES suscribió
+          .- OBJETO DEL CONTRATO</b>. - CIITES suscribió
 
         <span class="{{$campo_editable}}">
           {{$contrato->getMensajeAdendaConvenioContrato()}}
@@ -130,10 +129,7 @@
         <br>
 
 
-        <b>
-          <span class="subrayado">TERCERO</span>
-          .-
-        </b>
+        <b><span class="subrayado">TERCERO</span>.-</b>
 
         <b>CARGO Y FUNCIONES</b>
         .- Por el presente documento,
@@ -176,10 +172,8 @@
           {{$contrato->getTrabajadore()}}
         </b>
          se encontrará sujeto a un
-        <b>
-          período de prueba de tres (3) meses
-        </b>
-        , el cual se computará desde el
+        <b>período de prueba de tres (3) meses</b>,
+        el cual se computará desde el
         <b class="{{$campo_editable}}">{{$contrato->getFechaInicioPruebaEscrita()}}</b> concluyendo
         <b class="{{$campo_editable}}">{{$contrato->getFechaFinPruebaEscrita()}}</b>
 
@@ -218,7 +212,7 @@
         <b class="{{$campo_editable}}">{{$contrato->cantidad_dias_labor}}</b>
         días de labor por
         <b class="{{$campo_editable}}">{{$contrato->cantidad_dias_descanso}}</b>
-        dias de descanso con 10 horas de labor diaria. Queda perfectamente entendido entre las partes que las horas en sobretiempo que
+        dias de descanso, con 10 horas de labor diaria. Queda perfectamente entendido entre las partes que las horas en sobretiempo que
         <b>{{$contrato->getTrabajadore()}}</b>
         acepte laborar, conforme a las necesidades de
         <b>CIITES</b>,
@@ -337,10 +331,7 @@
 
 
 
-        <b>
-          <span class="subrayado">DÉCIMO PRIMERA</span>
-          .- NO DISCRIMINACIÓN.- CIITES
-        </b>,
+        <b><span class="subrayado">DÉCIMO PRIMERA</span>.- NO DISCRIMINACIÓN.- CIITES</b>,
         en observancia de lo prescrito en el artículo 2, inciso 2 de la Constitución Política del Perú y en el Convenio 111 de la Organización Internacional del Trabajo, y consciente de que todas las personas son únicas e irrepetibles y de que su identidad está formada por una diversidad de aspectos, muchos de los cuales no involucran una mayor o menor idoneidad para el puesto de trabajo que puedan ocupar; declara que en la presente contratación no ha mediado discriminación ni favoritismo sin causa objetiva, y se obliga a no efectuar distinciones, exclusiones o preferencias, respecto de
         <b>{{$contrato->getTrabajadore()}}</b>,
         basadas en motivos de raza, color, sexo, identidad de género, orientación sexual, embarazo, discapacidad, condición seropositiva, conocida o supuesta; religión, opinión política, sindicación, ascendencia, nacionalidad, origen social, lengua, condición económica ni cualquier otro motivo especificado por la legislación nacional, el Tribunal Constitucional o la Organización Internacional del Trabajo.
@@ -388,8 +379,8 @@
         el valor de los bienes que estando bajo su responsabilidad o custodia se perdieren o deterioraren por descuido o negligencia debidamente comprobada; así como los montos de dinero de propiedad de
         <b>CIITES,</b>
         a los que pudiere tener acceso con ocasión de sus funciones o que estén bajo su custodia; o los valores que resultaren en deudas derivadas de la ejecución del presente contrato o préstamos personales que le hubiere otorgado
-        <b>CIITES</b>
-        ; o daños ocasionados durante la ejecución del mismo que originen un saldo deudor de cargo de
+        <b>CIITES</b>;
+        o daños ocasionados durante la ejecución del mismo que originen un saldo deudor de cargo de
         <b>{{$contrato->getTrabajadore()}}</b>,
         para lo cual autoriza igualmente el respectivo descuento por planillas, o con cargo a su liquidación de beneficios sociales en caso de cese de la relación laboral.
 
@@ -573,11 +564,11 @@
         para que surta efectos.
         Las partes contratantes se someten expresamente a la jurisdicción de las autoridades judiciales y administrativas de la ciudad de Lima.
         Ambas partes enteradas del contenido de todas y cada una de las cláusulas del presente documento proceden a firmar por duplicado, en señal de conformidad, en la ciudad de Lima, el
-        <b class="{{$campo_editable}}">{{$contrato->getFechaGeneracionEscrita()}}</b>
+        <b class="{{$campo_editable}}">{{$contrato->getFechaGeneracionEscrita()}}</b>.
       </p>
 
 
-      <table id="TablaFirmas" style="width: 100%; text-align:center; margin-top:90pt; font-size:11pt;">
+      <table id="TablaFirmas" style="">
         <tbody>
           <tr>
             <td>
@@ -670,6 +661,13 @@
       position: absolute;
       /* Arriba | Derecha | Abajo | Izquierda */
       margin: 0 32pt 0 32pt;
+    }
+
+    #TablaFirmas{
+      width: 100%;
+      text-align:center;
+      margin-top:90pt;
+      font-size:11pt;
     }
 
     .anulado {

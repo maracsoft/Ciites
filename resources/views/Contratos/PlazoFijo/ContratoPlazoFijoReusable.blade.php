@@ -34,7 +34,7 @@
       'duracion_convenio_unidad_temporal', 'nombre_contrato_locacion', 'fecha_inicio_prueba', 'fecha_fin_prueba',
       'fecha_inicio_contrato', 'fecha_fin_contrato', 'cantidad_dias_labor', 'cantidad_dias_descanso',
       'remuneracion_mensual', 'codMoneda', 'nombres', 'dni', 'apellidos', 'sexo', 'domicilio', 'provincia',
-      'departamento'
+      'departamento','distrito'
     ]);
 
     /* Card 1 */
@@ -44,7 +44,8 @@
     msj = validarSelect(msj, 'sexo', '-1', 'Sexo');
     msj = validarTamañoMaximoYNulidad(msj, 'domicilio', 100, 'Domicilio');
     msj = validarTamañoMaximoYNulidad(msj, 'provincia', 100, 'Provincia');
-    msj = validarTamañoMaximoYNulidad(msj, 'departamento', 100, 'epartamento');
+    msj = validarTamañoMaximoYNulidad(msj, 'departamento', 100, 'Departamento');
+    msj = validarTamañoMaximoYNulidad(msj, 'distrito', 100, 'distrito');
 
     /* Card 2 */
     msj = validarSelect(msj, 'tipo_adenda_financiera', '-1', 'Tipo de Adenda financiera');
@@ -80,6 +81,8 @@
       _token: "{{ csrf_token() }}",
 
       domicilio: document.getElementById("domicilio").value,
+
+      distrito: document.getElementById("distrito").value,
       provincia: document.getElementById("provincia").value,
       departamento: document.getElementById("departamento").value,
 
