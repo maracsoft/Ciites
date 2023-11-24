@@ -2,6 +2,7 @@
 
 namespace App;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 
 class Contrato extends MaracModel
@@ -17,7 +18,18 @@ class Contrato extends MaracModel
     "fechaHoraGeneracion",
     "es_borrador",
   ];
+  const MaximoDiasEdicion = 2;
 
+  public function sePuedeEditar(){
+    if($this->estaAnulado())
+      return false;
+
+    $fechaActual = new DateTime();
+    $fechaHoraGeneracion = new DateTime($this->fechaHoraGeneracion);
+    $diferenciaDias = $fechaHoraGeneracion->diff($fechaActual);
+
+    return $diferenciaDias->days < Contrato::MaximoDiasEdicion;
+  }
 
   //con este titulo se descargará y guardará
   public function getTituloContrato()

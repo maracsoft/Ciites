@@ -332,7 +332,7 @@
           Regresar al Menu
         </a>
       </div>
-      <div class="col-12 col-sm-4">
+      <div class="col-12 col-sm-4 text-right">
         <a class="btn btn-primary" href="{{route('ContratosPlazo.verPDF',$contrato->getId())}}">
           Ver PDF
           <i class="fas fa-file-pdf"></i>
@@ -346,13 +346,16 @@
 
 
         <button type="button" class="btn btn-success" onclick="GenerarBorrador()">
+
           Ver borrador
+          <i class="ml-1 fas fa-file-alt"></i>
         </button>
 
 
         <button type="button" class="btn btn-primary" onclick="clickGuardar()">
-          <i class='fas fa-save'></i>
+
           Guardar
+          <i class='ml-1 fas fa-save'></i>
         </button>
       </div>
 

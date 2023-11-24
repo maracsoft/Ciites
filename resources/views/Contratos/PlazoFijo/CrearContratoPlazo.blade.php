@@ -348,12 +348,14 @@
         <button type="button" class="btn btn-success" onclick="GenerarBorrador()">
 
           Ver borrador
+          <i class="ml-1 fas fa-file-alt"></i>
         </button>
 
 
         <button type="button" class="btn btn-primary" onclick="registrar()">
-          <i class='fas fa-save'></i>
+
           Registrar
+          <i class='ml-1 fas fa-save'></i>
         </button>
       </div>
 

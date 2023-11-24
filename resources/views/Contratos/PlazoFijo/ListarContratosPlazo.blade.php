@@ -160,9 +160,12 @@ $comp_filtros->añadirFiltro([
                 </td>
                 <td>
 
-                  <a class="btn btn-warning btn-sm" href="{{route('ContratosPlazo.Editar',$contrato->getId())}}">
-                    <i class="fas fa-pen"></i>
-                  </a>
+                  @if ($contrato->sePuedeEditar())
+                    <a class="btn btn-warning btn-sm" href="{{route('ContratosPlazo.Editar',$contrato->getId())}}">
+                      <i class="fas fa-pen"></i>
+                    </a>
+                  @endif
+
 
                   <a class="btn btn-primary btn-sm" href="{{route('ContratosPlazo.Ver',$contrato->getId())}}">
                     <i class="fas fa-eye"></i>

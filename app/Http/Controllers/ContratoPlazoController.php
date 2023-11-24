@@ -12,6 +12,7 @@ use App\Fecha;
 use App\Http\Controllers\Controller;
 use App\Moneda;
 use App\Numeracion;
+use App\ParametroSistema;
 use App\Proyecto;
 use App\RespuestaAPI;
 use App\Sede;
@@ -157,7 +158,14 @@ class ContratoPlazoController extends Controller
   public function Ver($id)
   {
     $contrato = ContratoPlazo::findOrFail($id);
-    return view('Contratos.PlazoFijo.VerContratoPlazo', compact('contrato'));
+
+    $listaProyectos = Proyecto::getProyectosActivos();
+    $listaMonedas = Moneda::All();
+    $listaSedes = Sede::All();
+    $listaTipoAdenda = ContratoPlazo::getTiposAdendaFinanciera();
+    $tiposTiempos = ContratoPlazo::getTiempos();
+
+    return view('Contratos.PlazoFijo.VerContratoPlazo', compact('contrato','listaProyectos', 'listaMonedas','tiposTiempos', 'listaSedes','listaTipoAdenda'));
   }
 
 
@@ -230,6 +238,50 @@ class ContratoPlazoController extends Controller
 
   public static function setPDFResponse($data){
     return response($data, 200)->header('Content-Type', 'application/pdf');
+  }
+
+
+
+
+  const MinutosEliminacion = 10;
+
+  public function EliminarArchivosBorradorInnecesarios(){
+
+    $proyect_folder_path = ParametroSistema::getParametroSistema('proyect_folder_path')->valor;
+    $ruta_archivos_borrador = $proyect_folder_path."/storage/app/borradores_pdf";
+    $real_path = realpath($ruta_archivos_borrador);
+    $listaMigraciones_files = scandir($real_path);
+
+
+    $tiempo_actual = time();
+    /* Eliminaremos los borradores generados hace más de 10 minutos */
+    $archivos_eliminados = [];
+
+    foreach ($listaMigraciones_files as $filename) {
+      if(str_contains($filename,".pdf")){
+        $hora_generacion = intval(substr($filename,3,10));
+
+        $hora_vencimiento = $hora_generacion + static::MinutosEliminacion*60;
+
+        if($tiempo_actual > $hora_vencimiento){
+          Debug::LogMessageCronBorrador("Eliminando el archivo borrador $filename");
+          unlink($real_path."/".$filename);
+          $archivos_eliminados[] = $filename;
+        }
+
+
+      }
+    }
+
+    if(count($archivos_eliminados) == 0){
+      $msj = "No se elimino ningun archivo";
+    }else{
+      $str = implode(",",$archivos_eliminados);
+      $msj = "Se eliminaron exitosamente los archivos $str";
+    }
+
+    return RespuestaAPI::respuestaOk($msj);
+
   }
 
 

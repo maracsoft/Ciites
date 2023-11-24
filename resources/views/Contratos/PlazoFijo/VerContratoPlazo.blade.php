@@ -1,213 +1,311 @@
 @extends('Layout.Plantilla')
 
 @section('titulo')
-    Contrato Plazo Fijo
+  Ver Contrato Plazo Fijo
 @endsection
 
+@section('tiempoEspera')
+  <div class="loader" id="pantallaCarga"></div>
+@endsection
+
+
 @section('contenido')
-<div class="m-1">
-    <h3  style="text-align: center">
-        Ver Contrato Plazo Fijo {{$contrato->codigo_unico}}
-    </h3>
-</div>
+  <div class="p-2">
+    <div class="page-title">
+      Ver Contrato Plazo Fijo
+    </div>
+  </div>
+
+  @include('Layout.MensajeEmergenteDatos')
 
 
 
-    <div class="card">
+  <div class="row">
+    <div class="col-12 col-md-6">
+
+
+      <div class="card">
         <div class="card-header">
+          <b>
             Datos del contratado:
+          </b>
         </div>
         <div class="card-body">
-            <div class="row">
+          <div class="row">
 
-                <div class="col-12 col-md-3 p-1">
-                    <label for="">
-                        DNI
-                    </label>
-                    <input type="number" class="form-control" name="dni" readonly
-                        id="dni" value="{{$contrato->dni}}" placeholder="DNI">
-
-                </div>
-
-
-
-
-                <div class="col-12 col-md-3 p-1">
-                    <label for="">
-                        Nombres
-                    </label>
-                    <input type="text" class="form-control" name="nombres" readonly
-                    id="nombres" value="{{$contrato->nombres}}" placeholder="Nombres">
+            <div class="col-12 col-md-4">
+              <div class="d-flex  align-items-center ">
+                <div class="label_movil_container flex-auto">
+                  <input type="number" class="form-control" name="dni" id="dni" value="{{ $contrato->dni }}" readonly
+                    placeholder="">
+                  <label for="dni" class="label_movil">dni</label>
 
                 </div>
 
 
-                <div class="col-12 col-md-3 p-1">
-                    <label for="">
-                        Apellidos
-                    </label>
-                    <input type="text" class="form-control" name="apellidos" readonly
-                    id="apellidos" value="{{$contrato->apellidos}}" placeholder="Apellidos">
-
-                </div>
-                <div class="col-12 col-md-3 p-1">
-                    <label for="">
-                        Sexo
-                    </label>
-                    <input type="text" class="form-control" value="{{$contrato->getSexo()}}" readonly>
+              </div>
 
 
-                </div>
-
-
-
-                <div class="w-100"></div>
-                <div class="col-12 col-md-4 p-1">
-                    <label for="">
-                        Dirección
-                    </label>
-                    <input type="text" class="form-control" name="direccion" readonly
-                    id="direccion" value="{{$contrato->direccion}}" placeholder="Domicilio">
-
-                </div>
-
-                <div class="col-12 col-md-4 p-1">
-                    <label for="">
-                        Provincia y Departamento
-                    </label>
-                    <input type="text" class="form-control" name="provinciaYDepartamento" readonly
-                    id="provinciaYDepartamento" value="{{$contrato->provinciaYDepartamento}}" placeholder="Provincia y Departamento">
-
-
-                </div>
-                {{-- remplazar por checkbox --}}
-                <div class="col-12 col-md-4 p-1 text-center">
-                    <div class="mt-4 form-check">
-                        <input style="" class="form-check-input" type="checkbox" onclick="return false;"
-                        @if($contrato->tieneAsignacionFamiliar())
-                            checked
-                        @endif
-                            >
-                        <label class="form-check-label" for="">
-                            Asignación familiar
-                        </label>
-                    </div>
-
-
-                </div>
             </div>
+
+            <div class="col-12 col-md-4">
+              <div class="label_movil_container">
+                <input type="text" class="form-control" name="nombres" id="nombres" value="{{ $contrato->nombres }}" readonly
+                  placeholder="">
+                <label for="nombres" class="label_movil">nombres</label>
+              </div>
+            </div>
+
+
+            <div class="col-12 col-md-4">
+              <div class="label_movil_container">
+                <input type="text" class="form-control" name="apellidos" id="apellidos" readonly
+                  value="{{ $contrato->apellidos }}" placeholder="">
+                <label for="apellidos" class="label_movil">apellidos</label>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="label_movil_container">
+                <input type="text" class="form-control" readonly value="{{ $contrato->getSexo() }}" placeholder="">
+                <label for="sexo" class="label_movil">sexo</label>
+              </div>
+            </div>
+
+
+            <div class="col-12 col-md-8">
+              <div class="label_movil_container">
+                <input type="text" class="form-control" name="domicilio" id="domicilio" readonly
+                  value="{{ $contrato->domicilio }}" placeholder="">
+                <label for="domicilio" class="label_movil">domicilio</label>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <div class="label_movil_container">
+                <input type="text" class="form-control" name="provincia" id="provincia" readonly
+                  value="{{ $contrato->provincia }}" placeholder="">
+                <label for="provincia" class="label_movil">Provincia</label>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <div class="label_movil_container">
+                <input type="text" class="form-control" name="departamento" id="departamento" readonly
+                  value="{{ $contrato->departamento }}" placeholder="">
+                <label for="departamento" class="label_movil">departamento</label>
+              </div>
+            </div>
+
+
+
+          </div>
         </div>
+      </div>
+
     </div>
-
-
-
-    <div class="card">
+    <div class="col-12 col-md-6">
+      <div class="card">
         <div class="card-header">
-            Datos del Contrato
+          <b>
+            Datos del convenio/adenda con financiera:
+          </b>
         </div>
         <div class="card-body">
-
-            <div class="row">
-
+          <div class="row">
 
 
+            <div class="col-12 col-md-5">
+              <div class="label_movil_container">
+                <input type="text" class="form-control  text-uppercase" name="tipo_adenda_financiera" id="tipo_adenda_financiera" readonly
+                    value="{{ $contrato->tipo_adenda_financiera }}" placeholder="">
+                <label for="tipo_adenda_financiera " class="label_movil">Tipo adenda financiera</label>
+              </div>
+            </div>
 
-                <div class="col">
-                    <label for="">
-                        Cargo
-                    </label>
-                    <input class="form-control" value="{{$contrato->nombrePuesto}}" readonly>
-
-                </div>
-
-                <div class="w-100"></div>
-                <div class="col-12 col-md-3 p-1">
-                    <label for="">
-                        Fecha de inicio
-                    </label>
-                    <input class="form-control" value="{{$contrato->getFechaInicioEscrita()}}" readonly>
-
-                </div>
-                <div class="col-12 col-md-3 p-1">
-                    <label for="">
-                        Fecha de fin
-                    </label>
-                    <input class="form-control" value="{{$contrato->getFechaFin()}}" readonly>
+            <div class="col-12 col-md-7">
+              <div class="label_movil_container">
+                <input type="text" class="form-control" name="nombre_financiera" id="nombre_financiera" readonly
+                  value="{{ $contrato->nombre_financiera }}" placeholder="">
+                <label for="nombre_financiera" class="label_movil">Financiera</label>
+              </div>
+            </div>
 
 
-                </div>
+            <div class="col-12 col-md-12">
+              <div class="label_movil_container">
+                <textarea type="text" class="form-control" name="nombre_contrato_locacion" id="nombre_contrato_locacion" readonly
+                  placeholder="" rows="3">{{ $contrato->nombre_contrato_locacion }}</textarea>
+                <label for="nombre_contrato_locacion" class="label_movil">Nombre contrato Locación</label>
+              </div>
+            </div>
 
-                <div class="col-12 col-md-3 p-1">
-                    <label for="">
-                        Sueldo bruto
-                    </label>
-                    <input type="number" class="form-control" value="{{$contrato->sueldoBruto}}" readonly>
-                </div>
+            <div class="col-4 col-md-6">
+              <div class="label_movil_container">
+                <input type="text" class="form-control text-center" name="duracion_convenio_numero" readonly
+                  value="{{ $contrato->duracion_convenio_numero }}" id="duracion_convenio_numero" placeholder="">
+                <label for="duracion_convenio_numero" class="label_movil">Cantidad de Tiempo</label>
+              </div>
+            </div>
 
+            <div class="col-8 col-md-6">
+              <div class="label_movil_container">
+                <input type="text" class="form-control text-uppercase" readonly value="{{ $contrato->duracion_convenio_unidad_temporal}}" placeholder="">
 
-
-
-
-                <div class="col-12 col-md-3 p-1">
-                    <label for="">
-                        Moneda
-                    </label>
-                    <input type="text" class="form-control" value="{{$contrato->getMoneda()->nombre}}" readonly>
+                <label for="duracion_convenio_unidad_temporal" class="label_movil">Unidad Tiempo</label>
+              </div>
+            </div>
 
 
 
-                </div>
-                <div class="w-100"></div>
-                <div class="col-12 col-md-3 p-1">
-                    <label for="">
-                        Sede
-                    </label>
-                    <input type="text" class="form-control"  placeholder="Proyecto" value="{{$contrato->getSede()->nombre}}" readonly>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <b>
+        Datos del Contrato
+      </b>
+    </div>
+    <div class="card-body">
+
+      <div class="row">
+
+        <div class="col-12 col-md-4">
+          <div class="label_movil_container">
+            <input type="text" class="form-control" name="puesto" id="puesto" placeholder="" readonly
+              value="{{ $contrato->puesto }}">
+            <label for="puesto" class="label_movil">Puesto</label>
+          </div>
+        </div>
 
 
-                </div>
-                <div class="col-12 col-md-3 p-1">
-                    <label for="">
-                        Proyecto
-                    </label>
-                    <input type="text" class="form-control"  placeholder="Proyecto" value="{{$contrato->nombreProyecto}}" readonly>
-
-                </div>
-                <div class="col-12 col-md-3 p-1">
-                    <label for="">
-                        Financiera
-                    </label>
-                    <input type="text" class="form-control"  placeholder="Entidad Financiera" value="{{$contrato->nombreFinanciera}}" readonly>
-
-                </div>
-
+        <div class="col-12 col-md-2">
+          <div class="label_movil_container">
+            <div class="">
+              <input type="text" class="form-control text-center" autocomplete="off" name="fecha_inicio_prueba" readonly
+                value="{{ $contrato->getFechaInicioPrueba() }}" id="fecha_inicio_prueba" placeholder="">
+              <label for="fecha_inicio_prueba" class="label_movil">Fecha Inicio Prueba</label>
 
             </div>
+
+          </div>
+
+
         </div>
-    </div>
+        <div class="col-12 col-md-2">
+          <div class="label_movil_container">
+            <div class="">
+              <input type="text" class="form-control text-center" autocomplete="off" name="fecha_fin_prueba" readonly
+                value="{{ $contrato->getFechaFinPrueba() }}" id="fecha_fin_prueba" placeholder="">
+              <label for="fecha_fin_prueba" class="label_movil">Fecha Fin Prueba</label>
 
-
-
-
-
-
-
-
-
-    <div class="row m-3">
-        <div class="col text-left">
-
-            <a href="{{route('ContratosPlazo.Listar')}}" class='btn btn-info '>
-                <i class="fas fa-arrow-left"></i>
-                Regresar al Menu
-            </a>
-
+            </div>
+          </div>
         </div>
 
 
 
+        <div class="col-12 col-md-2">
+          <div class="label_movil_container">
+            <div class="">
+              <input type="text" class="form-control text-center" autocomplete="off" name="fecha_inicio_contrato" readonly
+                value="{{ $contrato->getFechaInicio() }}" id="fecha_inicio_contrato" placeholder="">
+              <label for="fecha_inicio_contrato" class="label_movil">Fecha Inicio Contrato</label>
+
+            </div>
+
+          </div>
+
+
+        </div>
+        <div class="col-12 col-md-2">
+          <div class="label_movil_container">
+            <div class="">
+              <input type="text" class="form-control text-center" autocomplete="off" name="fecha_fin_contrato" readonly
+                value="{{ $contrato->getFechaFin() }}" id="fecha_fin_contrato" placeholder="">
+              <label for="fecha_fin_contrato" class="label_movil">Fecha Fin Contrato</label>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-3">
+          <div class="label_movil_container">
+            <input type="number" min="0" class="form-control text-right" name="remuneracion_mensual" readonly
+              id="remuneracion_mensual" value="{{ $contrato->remuneracion_mensual }}" placeholder="">
+            <label for="remuneracion_mensual" class="label_movil">Remuneración Mensual</label>
+          </div>
+        </div>
+
+
+        <div class="col-12 col-md-3">
+          <div class="label_movil_container">
+            <input type="text" class="form-control text-uppercase" readonly value="{{ $contrato->getMoneda()->nombre}}" placeholder="">
+
+            <label for="codMoneda" class="label_movil">Moneda</label>
+          </div>
+
+        </div>
+
+
+
+        <div class="col-12 col-md-3">
+          <div class="label_movil_container">
+            <input type="number" min="0" class="form-control" name="cantidad_dias_labor"
+              id="cantidad_dias_labor" value="{{ $contrato->cantidad_dias_labor }}" placeholder="" readonly>
+            <label for="cantidad_dias_labor" class="label_movil">Cantidad Días de Labor</label>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-3">
+          <div class="label_movil_container">
+            <input type="number" min="0" class="form-control" name="cantidad_dias_descanso" readonly
+              id="cantidad_dias_descanso" value="{{ $contrato->cantidad_dias_descanso }}" placeholder="">
+            <label for="cantidad_dias_descanso" class="label_movil">Cantidad Días de Descanso</label>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <div class="row m-3">
+    <div class="col-12 col-sm-4 text-left">
+      <a href="{{ route('ContratosPlazo.Listar') }}" class='btn btn-info '>
+        <i class="fas fa-arrow-left"></i>
+        Regresar al Menu
+      </a>
+    </div>
+    <div class="col-12 col-sm-4 text-right">
+      <a class="btn btn-primary" href="{{ route('ContratosPlazo.verPDF', $contrato->getId()) }}">
+        Ver PDF
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="btn btn-primary" href="{{ route('ContratosPlazo.descargarPDF', $contrato->getId()) }}">
+        Descargar PDF
+        <i class="fas fa-file-pdf"></i>
+      </a>
     </div>
 
+
+  </div>
+
+
+
+  @include('Contratos.PlazoFijo.ContratoPlazoFijoReusable')
 @endsection
 
 {{-- ************************************************************************************************************* --}}
@@ -223,3 +321,13 @@
 {{-- ************************************************************************************************************* --}}
 
 @include('Layout.EstilosPegados')
+@include('Layout.ValidatorJS')
+@section('script')
+  {{-- <script src="/public/select2/bootstrap-select.min.js"></script>      --}}
+  <script>
+    $(document).ready(function() {
+      $(".loader").hide();
+
+    });
+  </script>
+@endsection
