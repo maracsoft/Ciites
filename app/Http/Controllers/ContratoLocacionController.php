@@ -75,51 +75,11 @@ class ContratoLocacionController extends Controller
       $contrato = new ContratoLocacion();
       $empleadoLogeado = Empleado::getEmpleadoLogeado();
 
-
       /* Campos generales */
-      $contrato->motivoContrato = $request->motivoContrato;
-      $contrato->retribucionTotal = $request->retribucionTotal;
-      $contrato->codMoneda = $request->codMoneda;
-      $contrato->fechaInicio = Fecha::formatoParaSQL($request->fechaInicio);
-      $contrato->fechaFin = Fecha::formatoParaSQL($request->fechaFin);
-      $contrato->codSede = $request->codSede;
-      $contrato->esPersonaNatural = $request->esPersonaNatural;
-      $contrato->esDeCedepas = $request->esDeCedepas;
-      $contrato->nombreFinanciera = $request->nombreFinanciera;
-      $contrato->nombreProyecto = $request->nombreProyecto;
-
-      $contrato->fechaHoraGeneracion =  Carbon::now();
-
-
-
-      if ($contrato->esPersonaNatural == "1") { //PERSONA NATURAL
-
-        $contrato->ruc = $request->PN_ruc;
-        $contrato->dni = $request->PN_dni;
-
-        $contrato->nombres = $request->PN_nombres;
-        $contrato->apellidos = $request->PN_apellidos;
-
-        $contrato->sexo = $request->PN_sexo;
-        $contrato->direccion = $request->PN_direccion;
-        $contrato->provinciaYDepartamento = $request->PN_provinciaYDepartamento;
-      } else { //PERSONA JURIDICA
-
-        $contrato->ruc = $request->PJ_ruc;
-        $contrato->dni = $request->PJ_dni;
-
-        $contrato->nombres = $request->PJ_nombres;
-        $contrato->apellidos = $request->PJ_apellidos;
-
-        $contrato->sexo = $request->PJ_sexo;
-        $contrato->direccion = $request->PJ_direccion;
-        $contrato->provinciaYDepartamento = $request->PJ_provinciaYDepartamento;
-
-        $contrato->razonSocialPJ = $request->PJ_razonSocialPJ;
-        $contrato->nombreDelCargoPJ = $request->PJ_nombreDelCargoPJ;
-      }
+      $contrato->setFromRequest($request);
 
       $contrato->codEmpleadoCreador = $empleadoLogeado->codEmpleado;
+      $contrato->fechaHoraGeneracion =  Carbon::now();
 
       $contrato->codigo_unico = ContratoLocacion::calcularCodigoCedepas(Numeracion::getNumeracionCLS());
       Numeracion::aumentarNumeracionCLS();
@@ -145,9 +105,7 @@ class ContratoLocacionController extends Controller
       }
 
       DB::commit();
-      return redirect()
-        ->route('ContratosLocacion.Listar')
-        ->with('datos', 'Se ha creado el contrato ' . $contrato->codigo_unico);
+      return redirect()->route('ContratosLocacion.Listar')->with('datos', 'Se ha creado el contrato ' . $contrato->codigo_unico);
     } catch (\Throwable $th) {
 
       Debug::mensajeError('CONTRATO LOCACION : STORE', $th);
@@ -158,9 +116,7 @@ class ContratoLocacionController extends Controller
         app('request')->route()->getAction(),
         json_encode($request->toArray())
       );
-      return redirect()
-        ->route('ContratosLocacion.Listar')
-        ->with('datos', Configuracion::getMensajeError($codErrorHistorial));
+      return redirect()->route('ContratosLocacion.Listar')->with('datos', Configuracion::getMensajeError($codErrorHistorial));
     }
   }
 

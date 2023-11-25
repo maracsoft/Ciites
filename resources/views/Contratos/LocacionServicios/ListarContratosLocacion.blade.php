@@ -52,19 +52,7 @@ $comp_filtros->añadirFiltro([
   'max_width'=>'450px',
 ]);
 
-$comp_filtros->añadirFiltro([
-  'name'=>'esDeCedepas',
-  'label'=>'Tipo:',
-  'show_label'=>true,
-  'placeholder'=>'- Tipo Contrato -',
-  'type'=>'select',
-  'function'=>'equals',
-  'options'=>$tipos_contrato,
-  'options_label_field'=>'nombre',
-  'options_id_field'=>'id',
-  'size'=>'',
-  'max_width'=>'450px',
-]);
+
 
 
 $comp_filtros->añadirFiltro([

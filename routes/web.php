@@ -1506,7 +1506,7 @@ Route::group(['middleware'=>"Mantenimiento"],function()
 
 
 
-    Route::get("/Crons/EliminarArchivosBorradorInnecesarios",'ContratoPlazoController@EliminarArchivosBorradorInnecesarios');
+    Route::get(" ",'ContratoPlazoController@EliminarArchivosBorradorInnecesarios');
 
 
 

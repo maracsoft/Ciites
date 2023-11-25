@@ -80,7 +80,7 @@
     Desarrollar Prácticas de Trabajo Seguras que ayuden a controlar el riesgo a sufrir lesiones o perder la vida ante Peligros presentes en el lugar de trabajo.
   </li>
   <li>
-    No fomentar el Trabajo Inseguro del personal a cargo o del personal dCIITES. El cntro NO acepta que ningún trabajador realice actos Inseguros que ningún personal promueva la ejecución de Trabajos Inseguros. Usar mi buen criterio y sentido común.
+    No fomentar el Trabajo Inseguro del personal a cargo del personal de CIITES. El centro NO acepta que ningún trabajador realice actos Inseguros que ningún personal promueva la ejecución de Trabajos Inseguros. Usar mi buen criterio y sentido común.
   </li>
 
 </ul>
