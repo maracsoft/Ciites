@@ -386,7 +386,7 @@
 
               <div class="input-group date form_date " data-date-format="dd/mm/yyyy" data-provide="datepicker">
                 {{-- INPUT PARA EL CBTE DE LA FECHA --}}
-                <input type="text" style="text-align: center" class="form-control" id="nuevaFecha" value="">
+                <input type="text" class="form-control text-center" id="nuevaFecha" value="" placeholder="dd/mm/yyyy">
 
                 <div class="input-group-btn">
                   <button class="btn btn-primary date-set btn-sm" type="button" style="display: none">
@@ -397,7 +397,7 @@
             </th>
             <th width="40%">
               <div> {{-- INPUT PARA LUGAR --}}
-                <input type="text" class="form-control" name="nuevaDescripcion" id="nuevaDescripcion">
+                <input type="text" class="form-control" name="nuevaDescripcion" id="nuevaDescripcion" placeholder="Descripción del producto entregable">
               </div>
 
             </th>
@@ -477,13 +477,11 @@
         </table>
       </div>
 
-      <div class="row" id="divTotal" name="divTotal">
-        <div class="col-md-8">
-        </div>
+      <div class="row">
 
-        <div class="col-md-2">
+        <div class="col-12">
           {{-- HIDDEN PARA GUARDAR LA CANT DE ELEMENTOS DE LA TABLA --}}
-          <input type="hidden" name="cantElementos" id="cantElementos">
+          <input type="text" class="w-100" name="json_detalles" id="json_detalles">
 
         </div>
       </div>
@@ -502,7 +500,7 @@
 
       </div>
       <div class="col text-right">
-        <button type="button" class="btn btn-primary" id="btnRegistrar" onclick="registrar()">
+        <button type="button" class="btn btn-primary" onclick="clickGuardar()">
           <i class='fas fa-save'></i>
           Registrar
         </button>
@@ -523,25 +521,21 @@
         <tr class="selected" id="fila[Index]" name="fila[Index]">
 
           <td style="text-align:center;">
-            <input type="text" class="form-control" name="colFecha[Index]" id="colFecha[Index]"
-              value="[Fecha]" readonly style="font-size:10pt; text-align:center">
+            <input type="text" class="form-control fontSize10 text-center" value="[Fecha]" readonly>
           </td>
 
           <td style="text-align:center;">
-            <input type="text" class="form-control" name="colDescripcion[Index]" id="colDescripcion[Index]"
-              value="[Descripcion]" readonly>
+            <input type="text" class="form-control fontSize10 text-center" value="[Descripcion]" readonly>
           </td>
 
           <td style="text-align:right;">
             <input type="text" class="form-control text-right" value="[Monto]" readonly>
-            <input type="hidden" class="form-control" name="colMonto[Index]" id="colMonto[Index]"
-              value="[Monto]" readonly>
+            <input type="hidden" class="form-control" value="[Monto]" readonly>
           </td>
 
           <td style="text-align:right;">
             <input type="text" class="form-control text-right" value="[Porcentaje]%" readonly>
-            <input type="hidden" class="form-control" name="colPorcentaje[Index]" id="colPorcentaje[Index]"
-              value="[Porcentaje]" readonly>
+            <input type="hidden" class="form-control" value="[Porcentaje]" readonly>
           </td>
 
           <td style="text-align:center;">
@@ -575,7 +569,7 @@
 @include('Layout.EstilosPegados')
 @include('Layout.ValidatorJS')
 @section('script')
-  {{-- <script src="/public/select2/bootstrap-select.min.js"></script>      --}}
+
   <script>
 
 
@@ -598,24 +592,25 @@
 
     });
 
-    function registrar() {
+    function clickGuardar() {
       msje = validarFormCrear();
       if (msje != "") {
         alerta(msje);
         return false;
       }
 
+      JsonDetallesInput.value = JSON.stringify(ListaDetalles);
+
       confirmar('¿Estás seguro de crear el contrato?', 'info', 'frmLocacionServicio');
 
     }
 
-    var listaArchivos = '';
+
 
     function validarFormCrear() { //Retorna TRUE si es que todo esta OK y se puede hacer el submit
       msj = '';
 
-      limpiarEstilos(
-        [
+      limpiarEstilos([
           'esPersonaNatural',
           'PN_ruc', 'PN_dni', 'PN_nombres', 'PN_apellidos', 'PN_sexo', 'PN_direccion',
           'PN_provinciaYDepartamento', //campos de PN
@@ -667,8 +662,8 @@
       msj = validarTamañoMaximoYNulidad(msj, 'nombreFinanciera', 300, 'Financiera');
 
 
-
-      msj = validarCantidadMaximaYNulidadDetalles(msj, 'cantElementos', {{ App\Configuracion::valorMaximoNroItem }});
+      if(ListaDetalles.length == 0)
+        msj = "No ha ingresado detalles";
 
 
       if (porcentajeAcumulado != 100 && totalAcumulado != RetribucionTotalInput.value)
@@ -681,32 +676,14 @@
 
 
     indexAEliminar = 0;
-    /* Eliminar productos */
     function eliminardetalle(index) {
       indexAEliminar = index;
       confirmarConMensaje("Confirmación", "¿Desea eliminar el item N° " + (index + 1) + "?", 'warning',ejecutarEliminacionDetalle);
     }
 
     function ejecutarEliminacionDetalle() {
-
-
-
       ListaDetalles.splice(indexAEliminar, 1);
-
-
       actualizarTabla();
-    }
-
-
-
-
-    function calcularNroEnRendicionMayor() {
-      mayor = 0;
-      for (let index = 0; index < ListaDetalles.length; index++) {
-        if (mayor < ListaDetalles[index].nroEnRendicion)
-          mayor = ListaDetalles[index].nroEnRendicion;
-      }
-      return mayor;
     }
 
 
@@ -744,8 +721,6 @@
 
 
     function agregarDetalle() {
-
-
       limpiarEstilos(['nuevaFecha', 'nuevaDescripcion', 'nuevoMonto', 'nuevoPorcentaje']);
 
       nuevaFecha = NuevaFechaInput.value;
@@ -754,7 +729,6 @@
       nuevoPorcentaje = NuevoPorcentajeInput.value;
 
       msjError = "";
-
 
       msjError = validarNulidad(msjError, 'nuevaFecha', 'Fecha');
       msjError = validarTamañoMaximoYNulidad(msjError, 'nuevaDescripcion', {{ App\Configuracion::tamañoMaximoLugar }},'Descripción');
@@ -772,12 +746,9 @@
 
 
 
-
+      posicion_insercion = 0;
       // FIN DE VALIDACIONES
       if (ListaDetalles.length > 0) {
-
-        /* CÓDIGO PARA INSERTARLA DONDE ES */
-        posicion_insercion = 0;
         detener_recorrido = true;
 
         for (let item = 0; item < ListaDetalles.length && detener_recorrido; item++) {
@@ -791,33 +762,27 @@
           }
         }
 
-        ListaDetalles.splice(posicion_insercion, 0, {
-          fecha: nuevaFecha,
-          descripcion: nuevaDescripcion,
-          monto: nuevoMonto,
-          porcentaje: nuevoPorcentaje
-        });
 
-      } else {
-        ListaDetalles.push({
-          fecha: nuevaFecha,
-          descripcion: nuevaDescripcion,
-          monto: nuevoMonto,
-          porcentaje: nuevoPorcentaje
-        });
       }
 
+      ListaDetalles.splice(posicion_insercion, 0, {
+        codAvance:0,
+        fecha: nuevaFecha,
+        descripcion: nuevaDescripcion,
+        monto: nuevoMonto,
+        porcentaje: nuevoPorcentaje
+      });
 
       actualizarTabla();
+      limpiarFormAgregar();
 
+    }
+
+    function limpiarFormAgregar(){
       NuevaFechaInput.value = "";
       NuevaDescripcionInput.value = "";
-
       NuevoMontoInput.value = '';
-      NuevoPorcentajeInput.value = ('');
-
-
-
+      NuevoPorcentajeInput.value = '';
     }
 
 
@@ -828,6 +793,8 @@
     const SpanPorcentajeAcumulado = document.getElementById("spanPorcentajeAcumulado");
     const SpanMontoAcumulado = document.getElementById("spanMontoAcumulado");
 
+    const JsonDetallesInput = document.getElementById("json_detalles");
+
     function actualizarTabla() {
 
       importeTotalEscrito = RetribucionTotalInput.value;
@@ -835,19 +802,13 @@
       totalAcumulado = 0;
       porcentajeAcumulado = 0;
 
-
-      //vaciamos la tabla
-      for (let index = 100; index >= 0; index--) {
-        $('#fila' + index).remove();
-
-      }
-
+      var html_total = "";
       //insertamos en la tabla los nuevos elementos
-      for (let item = 0; item < ListaDetalles.length; item++) {
+      for (let index = 0; index < ListaDetalles.length; index++) {
         /* Actualizamos el porcentaje escrito */
-        ListaDetalles[item].porcentaje = (100 * parseFloat(ListaDetalles[item].monto) / importeTotalEscrito).toFixed(2);
+        ListaDetalles[index].porcentaje = (100 * parseFloat(ListaDetalles[index].monto) / importeTotalEscrito).toFixed(2);
 
-        element = ListaDetalles[item];
+        element = ListaDetalles[index];
 
 
 
@@ -855,7 +816,7 @@
         porcentajeAcumulado = porcentajeAcumulado + parseFloat(element.porcentaje);
 
         var HidrationObject = {
-          Index:item,
+          Index:index,
           Fecha:element.fecha,
           Descripcion:element.descripcion,
           Monto:element.monto,
@@ -863,38 +824,39 @@
         }
 
         var fila = hidrateHtmlString(PlantillaFila,HidrationObject);
-        TablaDetalles.innerHTML = TablaDetalles.innerHTML + fila;
-
+        html_total += fila;
       }
 
-
-
-      //console.log("{{ Carbon\Carbon::now()->format('d/m/Y') }}" );
-
+      TablaDetalles.innerHTML = html_total;
 
       SpanPorcentajeAcumulado.innerHTML = number_format(porcentajeAcumulado, 2) + "%";
       SpanMontoAcumulado.innerHTML = number_format(totalAcumulado, 2);
 
+      pintarColorPorcentaje(porcentajeAcumulado);
+
+      JsonDetallesInput.value = JSON.stringify(ListaDetalles);
+
+    }
+
+    function pintarColorPorcentaje(porcentajeAcumulado){
       potVerde = 255 * porcentajeAcumulado / 100;
       potRoja = 255 - potVerde;
       if (porcentajeAcumulado > 100.05) {
         potVerde = 0;
         potRoja = 255;
       }
-
-
       flagPorcentajeAcumulado.style.color = "rgb(" + potRoja + "," + potVerde + ",0)"
-
-
     }
 
 
 
     function editarDetalle(index) {
-      NuevaFechaInput.value = ListaDetalles[index].fecha;
-      NuevaDescripcionInput.value = ListaDetalles[index].descripcion;
-      NuevoMontoInput.value = ListaDetalles[index].monto;
-      NuevoPorcentajeInput.value = (ListaDetalles[index].porcentaje);
+      const Detalle = ListaDetalles[index];
+
+      NuevaFechaInput.value = Detalle.fecha;
+      NuevaDescripcionInput.value = Detalle.descripcion;
+      NuevoMontoInput.value = Detalle.monto;
+      NuevoPorcentajeInput.value = Detalle.porcentaje;
 
       indexAEliminar = index;
       ejecutarEliminacionDetalle();
@@ -932,6 +894,7 @@
         NuevoPorcentajeInput.readOnly = true;
       } else {
         alerta("Ingrese un monto de retribución para poder ingresar el monto de los avances entregables.")
+        ponerEnRojo("retribucionTotal")
       }
 
     }

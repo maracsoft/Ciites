@@ -45,17 +45,9 @@ class ContratoLocacionController extends Controller
 
     $listaMonedas = Moneda::All();
 
-    return view(
-      'Contratos.LocacionServicios.ListarContratosLocacion',
-      compact(
-        'listaContratos',
-        'listaEmpleadosQueGeneraronContratosLocacion',
-        'filtros_usados_paginacion',
-        'filtros_usados',
-        'listaMonedas',
-        'listaNombresDeContratados',
-        'listaRazonesSociales'
-      )
+    return view('Contratos.LocacionServicios.ListarContratosLocacion',
+      compact('listaContratos','listaEmpleadosQueGeneraronContratosLocacion','filtros_usados_paginacion','filtros_usados',
+      'listaMonedas','listaNombresDeContratados','listaRazonesSociales')
     );
   }
 
@@ -86,26 +78,10 @@ class ContratoLocacionController extends Controller
 
       $contrato->save();
 
-      if ($request->cantElementos == 0)
-        throw new Exception("No se ingresó ningún item.", 1);
-
-
-      $i = 0;
-      $cantidadFilas = $request->cantElementos;
-      while ($i < $cantidadFilas) {
-        $avance = new AvanceEntregable();
-        $avance->fechaEntrega =         Fecha::formatoParaSQL($request->get('colFecha' . $i));
-        $avance->descripcion =          $request->get('colDescripcion' . $i);
-        $avance->monto =                $request->get('colMonto' . $i);
-        $avance->porcentaje  =         $request->get('colPorcentaje' . $i);
-        $avance->codContratoLocacion =          $contrato->codContratoLocacion; //ultimo insertad
-
-        $avance->save();
-        $i = $i + 1;
-      }
+      $contrato->setDetallesFromRequest($request);
 
       DB::commit();
-      return redirect()->route('ContratosLocacion.Listar')->with('datos', 'Se ha creado el contrato ' . $contrato->codigo_unico);
+      return redirect()->route('ContratosLocacion.Listar')->with('datos_ok', 'Se ha creado el contrato ' . $contrato->codigo_unico);
     } catch (\Throwable $th) {
 
       Debug::mensajeError('CONTRATO LOCACION : STORE', $th);
@@ -116,17 +92,16 @@ class ContratoLocacionController extends Controller
         app('request')->route()->getAction(),
         json_encode($request->toArray())
       );
-      return redirect()->route('ContratosLocacion.Listar')->with('datos', Configuracion::getMensajeError($codErrorHistorial));
+      return redirect()->route('ContratosLocacion.Listar')->with('datos_error', Configuracion::getMensajeError($codErrorHistorial));
     }
   }
 
   public function descargarPDF($codContrato)
   {
 
-
     $contrato = ContratoLocacion::findOrFail($codContrato);
     $pdf = $contrato->getPDF();
-    //return $pdf;
+
     return $pdf->download('Contrato ' . $contrato->getTituloContrato() . '.Pdf');
   }
 
@@ -134,11 +109,6 @@ class ContratoLocacionController extends Controller
   {
     $contrato = ContratoLocacion::findOrFail($codContrato);
     $pdf = $contrato->getPDF();
-    //return view('Contratos.contratoLocacionPDF',compact('contrato'));
-    /*
-        return $pdf;
-        */
-
 
     return $pdf->stream('Contrato ' . $contrato->getTituloContrato() . '.Pdf');
   }
@@ -161,17 +131,13 @@ class ContratoLocacionController extends Controller
       $contrato = ContratoLocacion::findOrFail($codContrato);
 
       if ($contrato->codEmpleadoCreador != $empleadoLogeado->codEmpleado)
-        return redirect()
-          ->route('ContratosLocacion.Listar')
-          ->with('datos', 'El contrato solo puede ser anulado por la persona que lo creó');
+        return redirect()->route('ContratosLocacion.Listar')->with('datos_error', 'El contrato solo puede ser anulado por la persona que lo creó');
 
       $contrato->fechaHoraAnulacion = Carbon::now();
       $contrato->save();
 
       DB::commit();
-      return redirect()
-        ->route('ContratosLocacion.Listar')
-        ->with('datos', 'Se ha ANULADO el contrato ' . $contrato->codigo_unico);
+      return redirect()->route('ContratosLocacion.Listar')->with('datos_ok', 'Se ha ANULADO el contrato ' . $contrato->codigo_unico);
     } catch (\Throwable $th) {
       Debug::mensajeError('CONTRATO LOCACION : ANULAR', $th);
       DB::rollback();
@@ -180,9 +146,7 @@ class ContratoLocacionController extends Controller
         app('request')->route()->getAction(),
         $codContrato
       );
-      return redirect()
-        ->route('ContratosLocacion.Listar')
-        ->with('datos', Configuracion::getMensajeError($codErrorHistorial));
+      return redirect()->route('ContratosLocacion.Listar')->with('datos_error', Configuracion::getMensajeError($codErrorHistorial));
     }
   }
 }

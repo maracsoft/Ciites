@@ -207,7 +207,7 @@ $comp_filtros->añadirFiltro([
                     {{$contrato->getFechaFin()}}
                 </td>
                 <td>
-                    {{$contrato->getTipoContrato()}}
+
                 </td>
                 <td class="text-right">
                     {{$contrato->getMoneda()->simbolo}}

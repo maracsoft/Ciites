@@ -211,4 +211,26 @@ class ContratoLocacion extends Contrato
     }
 
   }
+  public function setDetallesFromRequest(Request $request){
+    $detalles = json_decode($request->json_detalles);
+
+    foreach ($detalles as $detalle) {
+
+      if($detalle->codAvance == 0){ //nuevo
+        $avance = new AvanceEntregable();
+        $avance->codContratoLocacion = $this->getId();
+      }else{ //existente
+        $avance = AvanceEntregable::findOrFail($detalle->codAvance);
+      }
+
+      $avance->fechaEntrega = Fecha::formatoParaSQL($detalle->fecha);
+      $avance->descripcion = $detalle->descripcion;
+      $avance->monto = $detalle->monto;
+      $avance->porcentaje = $detalle->porcentaje;
+
+      $avance->save();
+
+    }
+
+  }
 }
