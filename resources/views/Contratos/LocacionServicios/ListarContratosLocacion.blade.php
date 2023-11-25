@@ -219,6 +219,10 @@ $comp_filtros->añadirFiltro([
                   <a class="btn btn-primary btn-sm" href="{{route('ContratosLocacion.Ver',$contrato->getId())}}">
                     <i class="fas fa-eye"></i>
                   </a>
+                  <a class="btn btn-warning btn-sm" href="{{route('ContratosLocacion.Editar',$contrato->getId())}}">
+                    <i class="fas fa-pen"></i>
+                  </a>
+
                   <a href="{{route('ContratosLocacion.descargarPDF',$contrato->getId())}}" class='btn btn-info btn-sm'  title="Descargar PDF">
                     <i class="fas fa-file-download"></i>
                   </a>

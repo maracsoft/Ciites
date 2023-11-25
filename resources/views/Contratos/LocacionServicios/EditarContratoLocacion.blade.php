@@ -1,18 +1,21 @@
 @extends('Layout.Plantilla')
 
 @section('titulo')
-  Crear Contrato Locación servicios
+  Editar Contrato Locación servicios
 @endsection
 
 @section('contenido')
+
+@include('Layout.MensajeEmergenteDatos')
+
   <div class="p-2">
     <div class="page-title">
-      Crear Contrato Locación Servicios
+      Editar Contrato Locación Servicios
     </div>
   </div>
 
-  <form method = "POST" action = "{{ route('ContratosLocacion.Guardar') }}" onsubmit="" id="frmLocacionServicio"
-    name="frmLocacionServicio">
+  <form method = "POST" action = "{{ route('ContratosLocacion.Actualizar') }}" id="frmLocacionServicio" name="frmLocacionServicio">
+    <input type="hidden" name="codContratoLocacion" value="{{$contrato->codContratoLocacion}}">
 
     @csrf
     <div class="card">
@@ -26,8 +29,8 @@
 
             <select class="form-control" name="esPersonaNatural" id="esPersonaNatural" onchange="cambiarTipoPersona()">
               <option value="-1">- Tipo Persona -</option>
-              <option value="1">Persona Natural</option>
-              <option value="0">Persona Jurídica</option>
+              <option value="1" @if ($contrato->esDeNatural()) selected @endif>Persona Natural</option>
+              <option value="0" @if (!$contrato->esDeNatural()) selected @endif>Persona Jurídica</option>
             </select>
           </div>
         </div>
@@ -41,19 +44,19 @@
 
 
 
-          <div id="FormPN" hidden>
+          <div id="FormPN" @if (!$contrato->esDeNatural()) hidden @endif >
             <div class="row">
 
               <div class="col-12 col-md-2 p-1">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PN_ruc" id="PN_ruc" value="" placeholder="">
+                  <input type="text" class="form-control" name="PN_ruc" id="PN_ruc" value="{{$contrato->ruc}}" placeholder="">
                   <label for="PN_ruc" class="label_movil">RUC</label>
                 </div>
               </div>
 
               <div class="col-12 col-md-2 p-1">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PN_dni" id="PN_dni" value="" placeholder="">
+                  <input type="text" class="form-control" name="PN_dni" id="PN_dni" value="{{$contrato->dni}}" placeholder="">
                   <label for="PN_dni" class="label_movil">DNI</label>
                 </div>
               </div>
@@ -62,7 +65,7 @@
 
               <div class="col-12 col-md-2 p-1">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PN_nombres" id="PN_nombres" value=""
+                  <input type="text" class="form-control" name="PN_nombres" id="PN_nombres" value="{{$contrato->nombres}}"
                     placeholder="">
                   <label for="PN_nombres" class="label_movil">Nombre</label>
                 </div>
@@ -71,7 +74,7 @@
 
               <div class="col-12 col-md-2 p-1">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PN_apellidos" id="PN_apellidos" value=""
+                  <input type="text" class="form-control" name="PN_apellidos" id="PN_apellidos" value="{{$contrato->apellidos}}"
                     placeholder="">
                   <label for="PN_apellidos" class="label_movil">Apellidos</label>
                 </div>
@@ -80,8 +83,8 @@
                 <div class="label_movil_container">
                   <select class="form-control" name="PN_sexo" id="PN_sexo">
                     <option value="-1">- Sexo- </option>
-                    <option value="M">Masculino</option>
-                    <option value="F">Femenino</option>
+                    <option value="M" @if ($contrato->sexo == "M") selected @endif >Masculino</option>
+                    <option value="F" @if ($contrato->sexo == "F") selected @endif >Femenino</option>
                   </select>
                   <label for="PN_sexo" class="label_movil">Sexo</label>
                 </div>
@@ -90,15 +93,14 @@
 
               <div class="col-12 col-md-6 p-1">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PN_direccion" id="PN_direccion" value=""
+                  <input type="text" class="form-control" name="PN_direccion" id="PN_direccion" value="{{$contrato->direccion}}"
                     placeholder="">
                   <label for="PN_direccion" class="label_movil">Domicilio fiscal</label>
                 </div>
               </div>
               <div class="col-12 col-md-6 p-1">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PN_provinciaYDepartamento"
-                    id="PN_provinciaYDepartamento" value="" placeholder="">
+                  <input type="text" class="form-control" name="PN_provinciaYDepartamento" id="PN_provinciaYDepartamento" value="{{$contrato->provinciaYDepartamento}}" placeholder="">
                   <label for="PN_provinciaYDepartamento" class="label_movil">Provincia y Departamento</label>
                 </div>
 
@@ -111,7 +113,7 @@
 
 
 
-          <div id="FormPJ" hidden>
+          <div id="FormPJ" @if ($contrato->esDeNatural()) hidden @endif >
             <div class="row">
               <div class="col-12">
                 <label for="">
@@ -125,7 +127,7 @@
 
               <div class="col-12 col-md-4 p-1">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PJ_ruc" id="PJ_ruc" value=""
+                  <input type="text" class="form-control" name="PJ_ruc" id="PJ_ruc" value="{{$contrato->ruc}}"
                     placeholder="">
                   <label for="PJ_ruc" class="label_movil">RUC</label>
                 </div>
@@ -134,8 +136,7 @@
 
               <div class="col-12 col-md-4 p-1">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PJ_razonSocialPJ" id="PJ_razonSocialPJ"
-                    value="" placeholder="">
+                  <input type="text" class="form-control" name="PJ_razonSocialPJ" id="PJ_razonSocialPJ" value="{{$contrato->razonSocialPJ}}" placeholder="">
                   <label for="PJ_razonSocialPJ" class="label_movil">Razón Social</label>
                 </div>
               </div>
@@ -143,8 +144,8 @@
                 <div class="label_movil_container">
                   <select class="form-control" name="PJ_sexo" id="PJ_sexo">
                     <option value="-1">- Sexo- </option>
-                    <option value="M">Masculino</option>
-                    <option value="F">Femenino</option>
+                    <option value="M" @if ($contrato->sexo == "M") selected @endif >Masculino</option>
+                    <option value="F" @if ($contrato->sexo == "F") selected @endif >Femenino</option>
                   </select>
                   <label for="PJ_sexo" class="label_movil">Sexo</label>
                 </div>
@@ -153,7 +154,7 @@
 
               <div class="col-12 col-md-6 p-1">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PJ_direccion" id="PJ_direccion" value=""
+                  <input type="text" class="form-control" name="PJ_direccion" id="PJ_direccion" value="{{$contrato->direccion}}"
                     placeholder="">
                   <label for="PJ_direccion" class="label_movil">Domicilio fiscal</label>
                 </div>
@@ -161,8 +162,7 @@
 
               <div class="col-12 col-md-6 p-1">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PJ_provinciaYDepartamento"
-                    id="PJ_provinciaYDepartamento" value="" placeholder="">
+                  <input type="text" class="form-control" name="PJ_provinciaYDepartamento" id="PJ_provinciaYDepartamento" value="{{$contrato->provinciaYDepartamento}}" placeholder="">
                   <label for="PJ_provinciaYDepartamento" class="label_movil">Provincia y Departamento</label>
                 </div>
               </div>
@@ -181,8 +181,7 @@
 
               <div class="col-12 col-md-6 p-1">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PJ_dni" id="PJ_dni" value=""
-                    placeholder="">
+                  <input type="text" class="form-control" name="PJ_dni" id="PJ_dni" value="{{$contrato->dni}}" placeholder="">
                   <label for="PJ_dni" class="label_movil">DNI</label>
                 </div>
               </div>
@@ -191,8 +190,7 @@
 
               <div class="col-12 col-md-6 p-1">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PJ_nombres" id="PJ_nombres" value=""
-                    placeholder="">
+                  <input type="text" class="form-control" name="PJ_nombres" id="PJ_nombres" value="{{$contrato->nombres}}" placeholder="">
                   <label for="PJ_nombres" class="label_movil">Nombres</label>
                 </div>
 
@@ -201,8 +199,7 @@
 
               <div class="col-12 col-md-6 p-1">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PJ_apellidos" id="PJ_apellidos" value=""
-                    placeholder="">
+                  <input type="text" class="form-control" name="PJ_apellidos" id="PJ_apellidos" value="{{$contrato->apellidos}}" placeholder="">
                   <label for="PJ_apellidos" class="label_movil">Apellidos</label>
                 </div>
               </div>
@@ -215,8 +212,7 @@
 
               <div class="col-12 col-md-6 p-1">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PJ_nombreDelCargoPJ" id="PJ_nombreDelCargoPJ"
-                    value="" placeholder="">
+                  <input type="text" class="form-control" name="PJ_nombreDelCargoPJ" id="PJ_nombreDelCargoPJ" value="{{$contrato->nombreDelCargoPJ}}" placeholder="">
                   <label for="PJ_nombreDelCargoPJ" class="label_movil">Cargo en la empresa</label>
                 </div>
               </div>
@@ -250,14 +246,14 @@
 
           <div class="col-12 col-md-4 p-1">
             <div class="label_movil_container">
-              <textarea class="form-control" name="motivoContrato" id="motivoContrato" placeholder=""></textarea>
+              <textarea class="form-control" name="motivoContrato" id="motivoContrato" placeholder="">{{$contrato->motivoContrato}}</textarea>
               <label for="motivoContrato" class="label_movil">Objetivo del contrato</label>
             </div>
           </div>
           <div class="col-12 col-md-4 p-1">
             <div class="label_movil_container">
               <input type="number" min="0" class="form-control" name="retribucionTotal" id="retribucionTotal"
-                value="" placeholder="" onchange="actualizarRetribucionTotal()">
+                value="{{$contrato->retribucionTotal}}" placeholder="" onchange="actualizarRetribucionTotal()">
               <label for="retribucionTotal" class="label_movil">Monto de honorario</label>
             </div>
           </div>
@@ -268,7 +264,7 @@
               <select class="form-control" name="codMoneda" id="codMoneda">
                 <option value="-1">- Moneda - </option>
                 @foreach ($listaMonedas as $moneda)
-                  <option value="{{ $moneda->codMoneda }}">
+                  <option value="{{ $moneda->codMoneda }}" {{$moneda->isThisSelected($contrato->codMoneda)}}>
                     {{ $moneda->nombre }}
                   </option>
                 @endforeach
@@ -286,7 +282,7 @@
             <div class="label_movil_container">
 
               <div class="input-group date form_date " data-date-format="dd/mm/yyyy" data-provide="datepicker">
-                <input type="text" class="form-control text-center" autocomplete="off" name="fecha_inicio_contrato"
+                <input type="text" class="form-control text-center" autocomplete="off" name="fecha_inicio_contrato" value="{{$contrato->getFechaInicio()}}"
                   id="fecha_inicio_contrato" placeholder="">
                 <label for="fecha_inicio_contrato" class="label_movil">Fecha Inicio</label>
                 <div class="input-group-btn">
@@ -304,7 +300,7 @@
             <div class="label_movil_container">
 
               <div class="input-group date form_date " data-date-format="dd/mm/yyyy" data-provide="datepicker">
-                <input type="text" class="form-control text-center" autocomplete="off" name="fecha_fin_contrato"
+                <input type="text" class="form-control text-center" autocomplete="off" name="fecha_fin_contrato" value="{{$contrato->getFechaFin()}}"
                   id="fecha_fin_contrato" placeholder="">
                 <label for="fecha_fin_contrato" class="label_movil">Fecha Fin</label>
                 <div class="input-group-btn">
@@ -328,7 +324,7 @@
               <select class="form-control" name="codSede" id="codSede">
                 <option value="-1">- Sede - </option>
                 @foreach ($listaSedes as $sede)
-                  <option value="{{ $sede->codSede }}">
+                  <option value="{{ $sede->codSede }}" {{$sede->isThisSelected($contrato->codSede)}}>
                     {{ $sede->nombre }}
                   </option>
                 @endforeach
@@ -342,7 +338,7 @@
           <div class="col-12 col-md-4 p-1">
 
             <div class="label_movil_container">
-              <input type="text" class="form-control" name="nombreProyecto" id="nombreProyecto" placeholder="">
+              <input type="text" class="form-control" name="nombreProyecto" id="nombreProyecto" placeholder="" value="{{$contrato->nombreProyecto}}">
               <label for="nombreProyecto" class="label_movil">Proyecto</label>
             </div>
 
@@ -350,7 +346,7 @@
           <div class="col-12 col-md-4 p-1">
 
             <div class="label_movil_container">
-              <input type="text" class="form-control" name="nombreFinanciera" id="nombreFinanciera"
+              <input type="text" class="form-control" name="nombreFinanciera" id="nombreFinanciera" value="{{$contrato->nombreFinanciera}}"
                 placeholder="">
               <label for="nombreFinanciera" class="label_movil">Entidad Financiera</label>
             </div>
@@ -574,6 +570,16 @@
 @section('script')
   <script>
     $(document).ready(function() {
+
+      var ListaDetallesExistentes = @json($contrato->getAvances())
+
+      console.log("ListaDetallesExistentes",ListaDetallesExistentes);
+
+      for (let index = 0; index < ListaDetallesExistentes.length; index++) {
+        const avance = ListaDetallesExistentes[index];
+
+        agregarDetalle(avance.fecha_front,avance.descripcion,avance.monto,avance.porcentaje,avance.codAvance)
+      }
 
     });
 

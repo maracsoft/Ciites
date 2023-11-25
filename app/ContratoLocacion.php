@@ -65,9 +65,12 @@ class ContratoLocacion extends Contrato
 
   public function getAvances()
   {
-    return AvanceEntregable::where('codContratoLocacion', $this->codContratoLocacion)
-      ->orderBy('fechaEntrega', 'ASC')
-      ->get();
+    $lista = AvanceEntregable::where('codContratoLocacion', $this->codContratoLocacion)->orderBy('fechaEntrega', 'ASC')->get();
+    foreach ($lista as $avance) {
+      $avance['fecha_front'] = $avance->getFechaEntrega();
+    }
+
+    return $lista;
   }
 
 
@@ -171,11 +174,12 @@ class ContratoLocacion extends Contrato
 
   public function setFromRequest(Request $request){
 
+
     $this->motivoContrato = $request->motivoContrato;
     $this->retribucionTotal = $request->retribucionTotal;
     $this->codMoneda = $request->codMoneda;
-    $this->fechaInicio = Fecha::formatoParaSQL($request->fechaInicio);
-    $this->fechaFin = Fecha::formatoParaSQL($request->fechaFin);
+    $this->fecha_inicio_contrato = Fecha::formatoParaSQL($request->fecha_inicio_contrato);
+    $this->fecha_fin_contrato = Fecha::formatoParaSQL($request->fecha_fin_contrato);
     $this->codSede = $request->codSede;
     $this->esPersonaNatural = $request->esPersonaNatural;
 
@@ -212,22 +216,20 @@ class ContratoLocacion extends Contrato
 
   }
   public function setDetallesFromRequest(Request $request){
+
+    //eliminamos los que existen
+    AvanceEntregable::where('codContratoLocacion','=',$this->codContratoLocacion)->delete();
+
     $detalles = json_decode($request->json_detalles);
 
     foreach ($detalles as $detalle) {
-
-      if($detalle->codAvance == 0){ //nuevo
-        $avance = new AvanceEntregable();
-        $avance->codContratoLocacion = $this->getId();
-      }else{ //existente
-        $avance = AvanceEntregable::findOrFail($detalle->codAvance);
-      }
+      $avance = new AvanceEntregable();
 
       $avance->fechaEntrega = Fecha::formatoParaSQL($detalle->fecha);
       $avance->descripcion = $detalle->descripcion;
       $avance->monto = $detalle->monto;
       $avance->porcentaje = $detalle->porcentaje;
-
+      $avance->codContratoLocacion = $this->getId();
       $avance->save();
 
     }

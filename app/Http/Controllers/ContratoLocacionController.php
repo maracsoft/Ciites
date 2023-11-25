@@ -59,6 +59,16 @@ class ContratoLocacionController extends Controller
     return view('Contratos.LocacionServicios.CrearContratoLocacion', compact('listaMonedas', 'listaSedes'));
   }
 
+  public function Editar($codContrato)
+  {
+
+    $contrato = ContratoLocacion::findOrFail($codContrato);
+
+    $listaMonedas = Moneda::All();
+    $listaSedes = Sede::All();
+    return view('Contratos.LocacionServicios.EditarContratoLocacion', compact('listaMonedas', 'listaSedes','contrato'));
+  }
+
   public function guardar(Request $request)
   {
     try {
@@ -95,6 +105,36 @@ class ContratoLocacionController extends Controller
       return redirect()->route('ContratosLocacion.Listar')->with('datos_error', Configuracion::getMensajeError($codErrorHistorial));
     }
   }
+
+
+  public function Actualizar(Request $request)
+  {
+    try {
+
+      DB::beginTransaction();
+      $contrato = ContratoLocacion::findOrFail($request->codContratoLocacion);
+
+      $contrato->setFromRequest($request);
+      $contrato->save();
+      $contrato->setDetallesFromRequest($request);
+
+      DB::commit();
+      return redirect()->route('ContratosLocacion.Editar',$request->codContratoLocacion)->with('datos_ok', 'Se ha actualizado el contrato ' . $contrato->codigo_unico);
+    } catch (\Throwable $th) {
+      Debug::LogMessage($th);
+
+      DB::rollback();
+      $codErrorHistorial = ErrorHistorial::registrarError(
+        $th,
+        app('request')->route()->getAction(),
+        json_encode($request->toArray())
+      );
+      return redirect()->route('ContratosLocacion.Listar')->with('datos_error', Configuracion::getMensajeError($codErrorHistorial));
+    }
+  }
+
+
+
 
   public function descargarPDF($codContrato)
   {

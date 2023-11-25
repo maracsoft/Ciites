@@ -4,15 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Sede extends Model
+class Sede extends MaracModel
 {
     public $table = "sede";
     protected $primaryKey ="codSede";
 
-    public $timestamps = false;  //para que no trabaje con los campos fecha 
+    public $timestamps = false;  //para que no trabaje con los campos fecha
 
 
-    // le indicamos los campos de la tabla 
+    // le indicamos los campos de la tabla
     protected $fillable = ['nombre','codEmpleadoAdministrador','esSedePrincipal'];
 
     public function getAdministrador(){
@@ -27,5 +27,5 @@ class Sede extends Model
 
     }
 
-    
+
 }

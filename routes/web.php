@@ -1379,6 +1379,9 @@ Route::group(['middleware'=>"Mantenimiento"],function()
             Route::get('/ContratosLocacion/Crear','ContratoLocacionController@Crear')->name('ContratosLocacion.Crear');
             Route::post('/ContratosLocacion/Guardar','ContratoLocacionController@Guardar')->name('ContratosLocacion.Guardar');
 
+            Route::get('/ContratosLocacion/Editar/{codContrato}','ContratoLocacionController@Editar')->name('ContratosLocacion.Editar');
+            Route::post('/ContratosLocacion/Actualizar','ContratoLocacionController@Actualizar')->name('ContratosLocacion.Actualizar');
+
 
             Route::get('/ContratosLocacion/descargarPDF/{codContrato}','ContratoLocacionController@descargarPDF')->name('ContratosLocacion.descargarPDF');
             Route::get('/ContratosLocacion/verPDF/{codContrato}','ContratoLocacionController@verPDF')->name('ContratosLocacion.verPDF');
