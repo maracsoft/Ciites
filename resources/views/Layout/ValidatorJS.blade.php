@@ -63,11 +63,16 @@ function limpiarEstilos(listaInputs){
 
 
 function quitarElRojo(id){
-    listaDeClases = document.getElementById(id).classList;
 
-    listaDeClases.remove("form-control-undefined");
+  const element = document.getElementById(id);
+  if(!element){
+    throw Error("No existe el elemento con id " + id);
+  }
+  listaDeClases = element.classList;
 
-    document.getElementById(id).classList = listaDeClases;
+  listaDeClases.remove("form-control-undefined");
+
+  element.classList = listaDeClases;
 
 
 }

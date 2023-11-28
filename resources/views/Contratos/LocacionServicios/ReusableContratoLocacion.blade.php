@@ -20,11 +20,13 @@
     limpiarEstilos([
       'esPersonaNatural',
       'PN_ruc', 'PN_dni', 'PN_nombres', 'PN_apellidos', 'PN_sexo', 'PN_direccion',
-      'PN_provinciaYDepartamento', //campos de PN
-      'PJ_ruc', 'PJ_razonSocialPJ', 'PJ_sexo', 'PJ_direccion', 'PJ_provinciaYDepartamento', 'PJ_dni', 'PJ_nombres',
+      'PJ_ruc', 'PJ_razonSocialPJ', 'PJ_sexo', 'PJ_direccion', 'PJ_dni', 'PJ_nombres',
       'PJ_apellidos', 'PJ_nombreDelCargoPJ', /* Campos de PJ */
       'motivoContrato', 'fecha_inicio_contrato', 'fecha_fin_contrato', 'retribucionTotal', 'codMoneda', 'codSede', 'nombreProyecto',
-      'nombreFinanciera'
+      'nombreFinanciera',
+
+      'PN_provincia','PN_departamento',
+      'PJ_provincia','PJ_departamento',
     ]);
 
 
@@ -39,22 +41,22 @@
       msj = validarTamañoMaximoYNulidad(msj, 'PN_apellidos', 300, 'Apellidos');
       msj = validarSelect(msj, 'PN_sexo', '-1', 'Sexo');
       msj = validarTamañoMaximoYNulidad(msj, 'PN_direccion', 500, 'Dirección');
-      msj = validarTamañoMaximoYNulidad(msj, 'PN_provinciaYDepartamento', 200, 'Provincia y Departamento');
+      msj = validarTamañoMaximoYNulidad(msj, 'PN_provincia', 200, 'Provincia');
+      msj = validarTamañoMaximoYNulidad(msj, 'PN_departamento', 200, 'Departamento');
+
     }
     if (esPersonaNatural.value == '0') { //PERSONA JURIDICA
       msj = validarTamañoExacto(msj, 'PJ_ruc', '11', 'RUC');
       msj = validarTamañoMaximoYNulidad(msj, 'PJ_razonSocialPJ', 200, 'Razón Social');
       msj = validarSelect(msj, 'PJ_sexo', '-1', 'Sexo');
       msj = validarTamañoMaximoYNulidad(msj, 'PJ_direccion', 500, 'Dirección');
-      msj = validarTamañoMaximoYNulidad(msj, 'PJ_provinciaYDepartamento', 200, 'Provincia y Departamento');
-
+      msj = validarTamañoMaximoYNulidad(msj, 'PJ_provincia', 200, 'Provincia');
+      msj = validarTamañoMaximoYNulidad(msj, 'PJ_departamento', 200, 'Departamento');
 
       msj = validarTamañoExacto(msj, 'PJ_dni', '8', 'DNI');
       msj = validarTamañoMaximoYNulidad(msj, 'PJ_nombres', 300, 'Nombres');
       msj = validarTamañoMaximoYNulidad(msj, 'PJ_apellidos', 300, 'Apellidos');
       msj = validarTamañoMaximoYNulidad(msj, 'PJ_nombreDelCargoPJ', 200, 'Nombre del cargo');
-
-
     }
 
 

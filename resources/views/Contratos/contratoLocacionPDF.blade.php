@@ -85,14 +85,32 @@
         CIITES;
 
         @if ($contrato->esDeNatural())
-          y de la otra parte el señor <b>{{ $contrato->getNombreCompleto() }},</b> identificado con DNI
-          <b>{{ $contrato->dni }},</b> y RUC <b>{{ $contrato->ruc }}</b> con domicilio
-          legal en <b>{{ $contrato->direccion }},</b> provincia de <b>{{ $contrato->provinciaYDepartamento }}</b>,
+          y de la otra parte el señor <b>{{ $contrato->getNombreCompleto() }},</b>
+          identificado con DNI
+          <b>{{$contrato->dni}},</b>
+          y RUC
+          <b>{{$contrato->ruc}}</b>
+          con domicilio legal en
+          <b>{{ $contrato->direccion }}</b>,
+          provincia de
+          <b>{{ $contrato->provincia }}</b>,
+          departamento de
+          <b>
+            {{$contrato->departamento}}
+          </b>
+
         @else
           y de la otra parte <b>{{ $contrato->razonSocialPJ }}, </b>con RUC <b>{{ $contrato->ruc }}</b>
-          y domicilio fiscal en <b>{{ $contrato->direccion }}</b> provincia de
-          <b>{{ $contrato->provinciaYDepartamento }}</b>, representada por
-          su <b>{{ $contrato->nombreDelCargoPJ }}, </b><b>{{ $contrato->getNombreCompleto() }},</b> identificado con
+          y domicilio fiscal en <b>{{ $contrato->direccion }}</b>
+          provincia de
+          <b>{{ $contrato->provincia }}</b>,
+          departamento de
+          <b>
+            {{$contrato->departamento}}
+          </b>
+          representada por su
+          <b>{{ $contrato->nombreDelCargoPJ }}, </b>
+          <b>{{ $contrato->getNombreCompleto() }},</b> identificado con
           DNI
           <b>{{ $contrato->dni }}</b>,
         @endif

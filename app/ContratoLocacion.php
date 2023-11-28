@@ -197,7 +197,9 @@ class ContratoLocacion extends Contrato
 
       $this->sexo = $request->PN_sexo;
       $this->direccion = $request->PN_direccion;
-      $this->provinciaYDepartamento = $request->PN_provinciaYDepartamento;
+      $this->provincia = $request->PN_provincia;
+      $this->departamento = $request->PN_departamento;
+
     } else { //PERSONA JURIDICA
 
       $this->ruc = $request->PJ_ruc;
@@ -208,7 +210,8 @@ class ContratoLocacion extends Contrato
 
       $this->sexo = $request->PJ_sexo;
       $this->direccion = $request->PJ_direccion;
-      $this->provinciaYDepartamento = $request->PJ_provinciaYDepartamento;
+      $this->provincia = $request->PJ_provincia;
+      $this->departamento = $request->PJ_departamento;
 
       $this->razonSocialPJ = $request->PJ_razonSocialPJ;
       $this->nombreDelCargoPJ = $request->PJ_nombreDelCargoPJ;

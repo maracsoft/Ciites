@@ -91,17 +91,28 @@
               </div>
 
 
-              <div class="col-12 col-md-6 p-1">
+              <div class="col-12 col-md-4 p-1">
                 <div class="label_movil_container">
                   <input type="text" class="form-control" name="PN_direccion" id="PN_direccion" value="{{$contrato->direccion}}"
                     placeholder="">
                   <label for="PN_direccion" class="label_movil">Domicilio fiscal</label>
                 </div>
               </div>
-              <div class="col-12 col-md-6 p-1">
+
+
+
+              <div class="col-12 col-md-4 p-1">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PN_provinciaYDepartamento" id="PN_provinciaYDepartamento" value="{{$contrato->provinciaYDepartamento}}" placeholder="">
-                  <label for="PN_provinciaYDepartamento" class="label_movil">Provincia y Departamento</label>
+                  <input type="text" class="form-control" name="PN_provincia" id="PN_provincia" value="{{$contrato->provincia}}" placeholder="">
+                  <label for="PN_provincia" class="label_movil">Provincia</label>
+                </div>
+
+              </div>
+
+              <div class="col-12 col-md-4 p-1">
+                <div class="label_movil_container">
+                  <input type="text" class="form-control" name="PN_departamento" id="PN_departamento" value="{{$contrato->departamento}}" placeholder="">
+                  <label for="PN_departamento" class="label_movil">Departamento</label>
                 </div>
 
               </div>
@@ -152,7 +163,7 @@
               </div>
 
 
-              <div class="col-12 col-md-6 p-1">
+              <div class="col-12 col-md-4 p-1">
                 <div class="label_movil_container">
                   <input type="text" class="form-control" name="PJ_direccion" id="PJ_direccion" value="{{$contrato->direccion}}"
                     placeholder="">
@@ -160,13 +171,21 @@
                 </div>
               </div>
 
-              <div class="col-12 col-md-6 p-1">
+              <div class="col-12 col-md-4 p-1">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PJ_provinciaYDepartamento" id="PJ_provinciaYDepartamento" value="{{$contrato->provinciaYDepartamento}}" placeholder="">
-                  <label for="PJ_provinciaYDepartamento" class="label_movil">Provincia y Departamento</label>
+                  <input type="text" class="form-control" name="PJ_provincia" id="PJ_provincia" value="{{$contrato->provincia}}" placeholder="">
+                  <label for="PJ_provincia" class="label_movil">Provincia</label>
                 </div>
+
               </div>
 
+              <div class="col-12 col-md-4 p-1">
+                <div class="label_movil_container">
+                  <input type="text" class="form-control" name="PJ_departamento" id="PJ_departamento" value="{{$contrato->departamento}}" placeholder="">
+                  <label for="PJ_departamento" class="label_movil">Departamento</label>
+                </div>
+
+              </div>
 
             </div>
             <div class="row">

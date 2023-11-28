@@ -10,17 +10,6 @@
 @php
 
 
-$tipos_contrato = [
-  [
-    "id" => 1,
-    "nombre" => "CEDEPAS",
-  ],
-  [
-    "id" => 0,
-    "nombre" => "GPC",
-  ]
-];
-
 
 $tipos_personas = [
   [
@@ -149,7 +138,7 @@ $comp_filtros->añadirFiltro([
           <th>Contratado</th>
           <th>Fecha emisión</th>
           <th>Duración contrato</th>
-          <th>Tipo</th>
+
           <th>
             Retribución total
           </th>
@@ -206,9 +195,7 @@ $comp_filtros->añadirFiltro([
                     //
                     {{$contrato->getFechaFin()}}
                 </td>
-                <td>
 
-                </td>
                 <td class="text-right">
                     {{$contrato->getMoneda()->simbolo}}
                     {{$contrato->getRetribucionTotal()}}
@@ -219,9 +206,14 @@ $comp_filtros->añadirFiltro([
                   <a class="btn btn-primary btn-sm" href="{{route('ContratosLocacion.Ver',$contrato->getId())}}">
                     <i class="fas fa-eye"></i>
                   </a>
-                  <a class="btn btn-warning btn-sm" href="{{route('ContratosLocacion.Editar',$contrato->getId())}}">
-                    <i class="fas fa-pen"></i>
-                  </a>
+
+                  @if ($contrato->sePuedeEditar())
+                    <a class="btn btn-warning btn-sm" href="{{route('ContratosLocacion.Editar',$contrato->getId())}}">
+                      <i class="fas fa-pen"></i>
+                    </a>
+                  @endif
+
+
 
                   <a href="{{route('ContratosLocacion.descargarPDF',$contrato->getId())}}" class='btn btn-info btn-sm'  title="Descargar PDF">
                     <i class="fas fa-file-download"></i>
