@@ -4,6 +4,11 @@
   Crear Contrato Locación servicios
 @endsection
 
+@section('tiempoEspera')
+
+  <div class="loader" id="pantallaCarga"></div>
+@endsection
+
 @section('contenido')
   <div class="p-2">
     <div class="page-title">
@@ -76,6 +81,7 @@
                   <label for="PN_apellidos" class="label_movil">Apellidos</label>
                 </div>
               </div>
+
               <div class="col-12 col-md-2 p-1">
                 <div class="label_movil_container">
                   <select class="form-control" name="PN_sexo" id="PN_sexo">
@@ -88,7 +94,7 @@
               </div>
 
 
-              <div class="col-12 col-md-4 p-1">
+              <div class="col-12 col-md-3 p-1">
                 <div class="label_movil_container">
                   <input type="text" class="form-control" name="PN_direccion" id="PN_direccion" value=""
                     placeholder="">
@@ -96,7 +102,14 @@
                 </div>
               </div>
 
-              <div class="col-12 col-md-4 p-1">
+              <div class="col-12 col-md-3 p-1">
+                <div class="label_movil_container">
+                  <input type="text" class="form-control" name="PN_distrito" id="PN_distrito" value="" placeholder="">
+                  <label for="PN_distrito" class="label_movil">Distrito</label>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-3 p-1">
                 <div class="label_movil_container">
                   <input type="text" class="form-control" name="PN_provincia" id="PN_provincia" value="" placeholder="">
                   <label for="PN_provincia" class="label_movil">Provincia</label>
@@ -104,7 +117,7 @@
 
               </div>
 
-              <div class="col-12 col-md-4 p-1">
+              <div class="col-12 col-md-3 p-1">
                 <div class="label_movil_container">
                   <input type="text" class="form-control" name="PN_departamento" id="PN_departamento" value="" placeholder="">
                   <label for="PN_departamento" class="label_movil">Departamento</label>
@@ -148,19 +161,11 @@
                   <label for="PJ_razonSocialPJ" class="label_movil">Razón Social</label>
                 </div>
               </div>
-              <div class="col-12 col-md-4 p-1">
-                <div class="label_movil_container">
-                  <select class="form-control" name="PJ_sexo" id="PJ_sexo">
-                    <option value="-1">- Sexo- </option>
-                    <option value="M">Masculino</option>
-                    <option value="F">Femenino</option>
-                  </select>
-                  <label for="PJ_sexo" class="label_movil">Sexo</label>
-                </div>
-              </div>
 
 
-              <div class="col-12 col-md-4 p-1">
+
+
+              <div class="col-12 col-md-3 p-1">
                 <div class="label_movil_container">
                   <input type="text" class="form-control" name="PJ_direccion" id="PJ_direccion" value=""
                     placeholder="">
@@ -169,7 +174,14 @@
               </div>
 
 
-              <div class="col-12 col-md-4 p-1">
+              <div class="col-12 col-md-3 p-1">
+                <div class="label_movil_container">
+                  <input type="text" class="form-control" name="PJ_distrito" id="PJ_distrito" value="" placeholder="">
+                  <label for="PJ_distrito" class="label_movil">Distrito</label>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-3 p-1">
                 <div class="label_movil_container">
                   <input type="text" class="form-control" name="PJ_provincia" id="PJ_provincia" value="" placeholder="">
                   <label for="PJ_provincia" class="label_movil">Provincia</label>
@@ -177,7 +189,7 @@
 
               </div>
 
-              <div class="col-12 col-md-4 p-1">
+              <div class="col-12 col-md-3 p-1">
                 <div class="label_movil_container">
                   <input type="text" class="form-control" name="PJ_departamento" id="PJ_departamento" value="" placeholder="">
                   <label for="PJ_departamento" class="label_movil">Departamento</label>
@@ -521,6 +533,12 @@
 
       </div>
       <div class="col text-right">
+
+        <button type="button" class="btn btn-success" onclick="GenerarBorrador()">
+          Ver borrador
+          <i class="ml-1 fas fa-file-alt"></i>
+        </button>
+
         <button type="button" class="btn btn-primary" onclick="clickGuardar()">
           <i class='fas fa-save'></i>
           Registrar
@@ -590,8 +608,16 @@
 @include('Layout.EstilosPegados')
 @include('Layout.ValidatorJS')
 @section('script')
+
+  @include('Contratos.LocacionServicios.ReusableContratoLocacion')
+
   <script>
+
+    var ModalBorrador = new bootstrap.Modal(document.getElementById("ModalBorrador"), {});
+
+
     $(document).ready(function() {
+      $(".loader").hide();
 
     });
 
@@ -610,5 +636,4 @@
   </script>
 
 
-  @include('Contratos.LocacionServicios.ReusableContratoLocacion')
 @endsection

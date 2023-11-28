@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -46,19 +47,15 @@ class ContratoLocacion extends Contrato
   }
 
 
-  public function getPDF()
+  public function getPDF($listaDetalles = null)
   {
-    $listaItems = $this->getAvances();
-    $contrato = $this;
+    if($listaDetalles){
+      $listaItems = $listaDetalles;
+    }else{
+      $listaItems = $this->getAvances();
+    }
 
-    /*
-        return view('Contratos.contratoLocacionPDF',compact('contrato','listaItems'));
-        */
-
-    $pdf = \PDF::loadview(
-      'Contratos.contratoLocacionPDF',
-      array('contrato' => $this, 'listaItems' => $listaItems)
-    )->setPaper('a4', 'portrait');
+    $pdf = \PDF::loadview('Contratos.contratoLocacionPDF',array('contrato' => $this, 'listaItems' => $listaItems))->setPaper('a4', 'portrait');
 
     return $pdf;
   }
@@ -172,7 +169,7 @@ class ContratoLocacion extends Contrato
     return $listaNombres;
   }
 
-  public function setFromRequest(Request $request){
+  public function setDataFromRequest(Request $request){
 
 
     $this->motivoContrato = $request->motivoContrato;
@@ -199,6 +196,8 @@ class ContratoLocacion extends Contrato
       $this->direccion = $request->PN_direccion;
       $this->provincia = $request->PN_provincia;
       $this->departamento = $request->PN_departamento;
+      $this->distrito = $request->PN_distrito;
+
 
     } else { //PERSONA JURIDICA
 
@@ -208,21 +207,26 @@ class ContratoLocacion extends Contrato
       $this->nombres = $request->PJ_nombres;
       $this->apellidos = $request->PJ_apellidos;
 
-      $this->sexo = $request->PJ_sexo;
       $this->direccion = $request->PJ_direccion;
       $this->provincia = $request->PJ_provincia;
       $this->departamento = $request->PJ_departamento;
+      $this->distrito = $request->PJ_distrito;
 
       $this->razonSocialPJ = $request->PJ_razonSocialPJ;
       $this->nombreDelCargoPJ = $request->PJ_nombreDelCargoPJ;
     }
 
   }
-  public function setDetallesFromRequest(Request $request){
+
+
+  public function setDetallesFromRequest(Request $request,$activar_guardado = true){
 
     //eliminamos los que existen
-    AvanceEntregable::where('codContratoLocacion','=',$this->codContratoLocacion)->delete();
+    if($activar_guardado){
+      AvanceEntregable::where('codContratoLocacion','=',$this->codContratoLocacion)->delete();
+    }
 
+    $lista = new Collection();
     $detalles = json_decode($request->json_detalles);
 
     foreach ($detalles as $detalle) {
@@ -232,10 +236,15 @@ class ContratoLocacion extends Contrato
       $avance->descripcion = $detalle->descripcion;
       $avance->monto = $detalle->monto;
       $avance->porcentaje = $detalle->porcentaje;
-      $avance->codContratoLocacion = $this->getId();
-      $avance->save();
+
+      if($activar_guardado){
+        $avance->codContratoLocacion = $this->getId();
+        $avance->save();
+      }
+      $lista->push($avance);
 
     }
 
+    return $lista;
   }
 }

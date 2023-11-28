@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\AvanceEntregable;
 use App\Configuracion;
 use App\ContratoLocacion;
+use App\ContratoPlazo;
 use App\Debug;
 use App\Empleado;
 use App\ErrorHistorial;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Controller;
 use App\Moneda;
 use App\Numeracion;
 use App\Puesto;
+use App\RespuestaAPI;
 use App\Sede;
 use App\TipoOperacion;
 use App\UI\UIFiltros;
@@ -20,6 +22,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ContratoLocacionController extends Controller
 {
@@ -78,10 +81,11 @@ class ContratoLocacionController extends Controller
       $empleadoLogeado = Empleado::getEmpleadoLogeado();
 
       /* Campos generales */
-      $contrato->setFromRequest($request);
+      $contrato->setDataFromRequest($request);
 
       $contrato->codEmpleadoCreador = $empleadoLogeado->codEmpleado;
       $contrato->fechaHoraGeneracion =  Carbon::now();
+      $contrato->es_borrador = 0;
 
       $contrato->codigo_unico = ContratoLocacion::calcularCodigoCedepas(Numeracion::getNumeracionCLS());
       Numeracion::aumentarNumeracionCLS();
@@ -114,7 +118,7 @@ class ContratoLocacionController extends Controller
       DB::beginTransaction();
       $contrato = ContratoLocacion::findOrFail($request->codContratoLocacion);
 
-      $contrato->setFromRequest($request);
+      $contrato->setDataFromRequest($request);
       $contrato->save();
       $contrato->setDetallesFromRequest($request);
 
@@ -189,4 +193,35 @@ class ContratoLocacionController extends Controller
       return redirect()->route('ContratosLocacion.Listar')->with('datos_error', Configuracion::getMensajeError($codErrorHistorial));
     }
   }
+
+
+  /* Retorna la url para visualizar el PDF */
+  public function GenerarBorrador(Request $request){
+
+    $contrato = new ContratoLocacion();
+
+    $contrato->setDataFromRequest($request);
+    $contrato->es_borrador = 1;
+    $contrato->fechaHoraGeneracion = Carbon::now();
+    $contrato->codigo_unico = ContratoLocacion::calcularCodigoCedepas(Numeracion::getNumeracionCLS());
+    /* NO GUARDAMOS */
+
+    $detalles = $contrato->setDetallesFromRequest($request,false);
+
+    $pdf = $contrato->getPDF($detalles);
+
+
+    $fecha_actual = time();
+    $nombre_guardado = "CL_".$fecha_actual.".pdf";
+
+    $generated_file = $pdf->output();
+
+    Storage::put("/borradores_pdf/$nombre_guardado",$generated_file);
+
+    return RespuestaAPI::respuestaDatosOk("Se generó exitosamente el borrador",$nombre_guardado);
+
+  }
+
+
+
 }

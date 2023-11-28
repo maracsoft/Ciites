@@ -1,3 +1,4 @@
+@include('Contratos.ModalBorrador')
 <script>
 
   var ListaDetalles = [];
@@ -20,7 +21,7 @@
     limpiarEstilos([
       'esPersonaNatural',
       'PN_ruc', 'PN_dni', 'PN_nombres', 'PN_apellidos', 'PN_sexo', 'PN_direccion',
-      'PJ_ruc', 'PJ_razonSocialPJ', 'PJ_sexo', 'PJ_direccion', 'PJ_dni', 'PJ_nombres',
+      'PJ_ruc', 'PJ_razonSocialPJ', 'PJ_direccion', 'PJ_dni', 'PJ_nombres',
       'PJ_apellidos', 'PJ_nombreDelCargoPJ', /* Campos de PJ */
       'motivoContrato', 'fecha_inicio_contrato', 'fecha_fin_contrato', 'retribucionTotal', 'codMoneda', 'codSede', 'nombreProyecto',
       'nombreFinanciera',
@@ -41,15 +42,20 @@
       msj = validarTamañoMaximoYNulidad(msj, 'PN_apellidos', 300, 'Apellidos');
       msj = validarSelect(msj, 'PN_sexo', '-1', 'Sexo');
       msj = validarTamañoMaximoYNulidad(msj, 'PN_direccion', 500, 'Dirección');
+
       msj = validarTamañoMaximoYNulidad(msj, 'PN_provincia', 200, 'Provincia');
+      msj = validarTamañoMaximoYNulidad(msj, 'PN_distrito', 200, 'Distrito');
       msj = validarTamañoMaximoYNulidad(msj, 'PN_departamento', 200, 'Departamento');
 
     }
+
     if (esPersonaNatural.value == '0') { //PERSONA JURIDICA
       msj = validarTamañoExacto(msj, 'PJ_ruc', '11', 'RUC');
       msj = validarTamañoMaximoYNulidad(msj, 'PJ_razonSocialPJ', 200, 'Razón Social');
-      msj = validarSelect(msj, 'PJ_sexo', '-1', 'Sexo');
+
       msj = validarTamañoMaximoYNulidad(msj, 'PJ_direccion', 500, 'Dirección');
+
+      msj = validarTamañoMaximoYNulidad(msj, 'PJ_distrito', 200, 'Distrito');
       msj = validarTamañoMaximoYNulidad(msj, 'PJ_provincia', 200, 'Provincia');
       msj = validarTamañoMaximoYNulidad(msj, 'PJ_departamento', 200, 'Departamento');
 
@@ -375,4 +381,116 @@
 
 
   }
+
+
+
+  function GenerarBorrador() {
+
+    var msj = validarForm();
+    if (msj != "") {
+      alerta(msj)
+      return;
+    }
+
+
+
+    var obj_persona = {};
+
+    if (esPersonaNatural.value == '1') { //PERSONA NATURAL
+      obj_persona = {
+        PN_ruc: document.getElementById('PN_ruc').value,
+        PN_dni: document.getElementById('PN_dni').value,
+        PN_nombres: document.getElementById('PN_nombres').value,
+        PN_apellidos: document.getElementById('PN_apellidos').value,
+        PN_sexo: document.getElementById('PN_sexo').value,
+        PN_direccion: document.getElementById('PN_direccion').value,
+
+        PN_distrito: document.getElementById('PN_distrito').value,
+        PN_provincia: document.getElementById('PN_provincia').value,
+        PN_departamento: document.getElementById('PN_departamento').value,
+      };
+
+    }
+
+    if (esPersonaNatural.value == '0') { //PERSONA JURIDICA
+      obj_persona = {
+        PJ_ruc : document.getElementById('PJ_ruc').value,
+        PJ_razonSocialPJ : document.getElementById('PJ_razonSocialPJ').value,
+        PJ_direccion : document.getElementById('PJ_direccion').value,
+
+        PJ_distrito: document.getElementById('PJ_distrito').value,
+        PJ_provincia : document.getElementById('PJ_provincia').value,
+        PJ_departamento : document.getElementById('PJ_departamento').value,
+        PJ_dni : document.getElementById('PJ_dni').value,
+        PJ_nombres : document.getElementById('PJ_nombres').value,
+        PJ_apellidos : document.getElementById('PJ_apellidos').value,
+        PJ_nombreDelCargoPJ : document.getElementById('PJ_nombreDelCargoPJ').value,
+      };
+
+    }
+
+    var datos_generales = {
+      _token: "{{ csrf_token() }}",
+      motivoContrato : document.getElementById('motivoContrato').value,
+      fecha_inicio_contrato : document.getElementById('fecha_inicio_contrato').value,
+      fecha_fin_contrato : document.getElementById('fecha_fin_contrato').value,
+      retribucionTotal : document.getElementById('retribucionTotal').value,
+      codMoneda : document.getElementById('codMoneda').value,
+      codSede : document.getElementById('codSede').value,
+      nombreProyecto : document.getElementById('nombreProyecto').value,
+      nombreFinanciera : document.getElementById('nombreFinanciera').value,
+      esPersonaNatural : document.getElementById('esPersonaNatural').value,
+      json_detalles : JSON.stringify(ListaDetalles)
+    }
+
+    var data_send = {
+      ...obj_persona,
+      ...datos_generales
+    };
+
+
+    ruta = "{{ route('ContratosLocacion.GenerarBorrador') }}";
+    $(".loader").show();
+
+    $.post(ruta, data_send, function(dataRecibida) {
+      $(".loader").hide();
+
+      ModalBorrador.show()
+      objetoRespuesta = JSON.parse(dataRecibida);
+
+      var filename = objetoRespuesta.datos
+      iframe_borrador.src = "/Contratos/Borradores/Ver/" + filename;
+    });
+
+  }
+
 </script>
+<style>
+  #iframe_borrador {
+    width: 100%;
+    height: 700px;
+  }
+
+  .campo_editable {
+    color: rgb(0, 62, 176);
+
+    font-weight: bold;
+  }
+
+  .semuestra {
+    text-align: center;
+    padding: 5px;
+    background-color: #f1f1f1;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+
+  .flex-auto {
+    flex: auto;
+  }
+
+  .icono_buscar {
+    margin-top: 3px;
+    margin-bottom: 3px;
+  }
+</style>

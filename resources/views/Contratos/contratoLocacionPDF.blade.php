@@ -1,3 +1,10 @@
+@php
+  $campo_editable = "";
+  if($contrato->esBorrador()){
+    $campo_editable = "campo_editable";
+  }
+@endphp
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -32,6 +39,11 @@
       }
 
       .letraPequeña {}
+      .campo_editable{
+        color:rgb(0, 62, 176);
+      }
+
+
     </style>
 
 
@@ -87,32 +99,35 @@
         @if ($contrato->esDeNatural())
           y de la otra parte el señor <b>{{ $contrato->getNombreCompleto() }},</b>
           identificado con DNI
-          <b>{{$contrato->dni}},</b>
+          <b class="{{$campo_editable}}">{{$contrato->dni}},</b>
           y RUC
-          <b>{{$contrato->ruc}}</b>
+          <b class="{{$campo_editable}}">{{$contrato->ruc}}</b>
           con domicilio legal en
-          <b>{{ $contrato->direccion }}</b>,
+          <b class="{{$campo_editable}}">{{ $contrato->direccion}}</b>,
+          distrito de
+          <b class="{{$campo_editable}}">{{ $contrato->distrito}}</b>,
           provincia de
-          <b>{{ $contrato->provincia }}</b>,
+          <b class="{{$campo_editable}}">{{ $contrato->provincia}}</b>,
           departamento de
-          <b>
-            {{$contrato->departamento}}
-          </b>
+          <b class="{{$campo_editable}}">{{$contrato->departamento}}</b>
 
         @else
-          y de la otra parte <b>{{ $contrato->razonSocialPJ }}, </b>con RUC <b>{{ $contrato->ruc }}</b>
-          y domicilio fiscal en <b>{{ $contrato->direccion }}</b>
+          y de la otra parte <b>{{ $contrato->razonSocialPJ }},</b>
+          con RUC
+          <b>{{ $contrato->ruc }}</b>
+          y domicilio fiscal en
+          <b>{{ $contrato->direccion }}</b>
+          distrito de
+          <b class="{{$campo_editable}}">{{ $contrato->distrito}}</b>,
           provincia de
-          <b>{{ $contrato->provincia }}</b>,
+          <b class="{{$campo_editable}}">{{ $contrato->provincia }}</b>,
           departamento de
-          <b>
-            {{$contrato->departamento}}
-          </b>
+          <b class="{{$campo_editable}}">{{$contrato->departamento}}</b>
           representada por su
-          <b>{{ $contrato->nombreDelCargoPJ }}, </b>
-          <b>{{ $contrato->getNombreCompleto() }},</b> identificado con
-          DNI
-          <b>{{ $contrato->dni }}</b>,
+          <b class="{{$campo_editable}}">{{$contrato->nombreDelCargoPJ}}</b>,
+          <b class="{{$campo_editable}}">{{$contrato->getNombreCompleto()}}</b>,
+          identificado con DNI
+          <b class="{{$campo_editable}}">{{$contrato->dni}}</b>,
         @endif
         a quien en adelante se le denominará <b>{{ $contrato->getLocadore() }};</b> bajo las cláusulas siguientes:
 
@@ -126,7 +141,7 @@
       </p>
       <p style="text-align: justify;">
 
-        PRIMERO.- ANTECEDENTES. – El Centro para la Investigación, Innovación y Desarrollo Territorial Sostenible
+        PRIMERO.- ANTECEDENTES. - El Centro para la Investigación, Innovación y Desarrollo Territorial Sostenible
         CIITES; es una organización de desarrollo que impulsa proyectos para el incremento de los ingresos económicos de
         mujeres y hombres en condiciones vulnerables y promueve la innovación tecnológica y social para mejorar los
         ingresos y condiciones de vida de las poblaciones beneficiarias.
@@ -166,27 +181,20 @@
 
         En virtud a sus objetivos institucionales, LA COMITENTE: CIITES
 
-        ejecutará el proyecto "{{ $contrato->nombreProyecto }}"
-        financiado por {{ $contrato->nombreFinanciera }}; por lo que
+        ejecutará el proyecto
+        <b class="{{$campo_editable}}">"{{$contrato->nombreProyecto}}"</b>
+        financiado por
+        <b class="{{$campo_editable}}">{{$contrato->nombreFinanciera}}</b>;
+        por lo que
         conviene en solicitar los servicios de
-        <b>
+        <b class="{{$campo_editable}}">
           {{ $contrato->getLocadore() }},
         </b>para
-        <b>
+        <b class="{{$campo_editable}}">
           "{{ $contrato->motivoContrato }}";
         </b> según los términos de referencia adjuntos, que forman parte del presente contrato.
 
-
       </p>
-
-
-
-
-
-
-
-
-
 
 
       <p>
@@ -198,9 +206,9 @@
       </p>
       <p style="text-align: justify;">
         El tiempo asignado para el cumplimiento del contrato y entrega de los productos es del
-        <b>{{ $contrato->getFechaInicioEscrita() }}</b>
+        <b class="{{$campo_editable}}">{{ $contrato->getFechaInicioEscrita() }}</b>
         al
-        <b>{{ $contrato->getFechaFinEscrita() }}.</b>
+        <b class="{{$campo_editable}}">{{ $contrato->getFechaFinEscrita() }}.</b>
         El tiempo de contratación ha sido determinado en función al cronograma de productos.
         El presente contrato concluirá para ambas partes a la conformidad del servicio,
         la cual será expedida por el responsable de la contratación.
@@ -229,31 +237,43 @@
       </p>
       <p style="text-align: justify;">
         Como contraprestación por sus servicios, LA COMITENTE: CIITES abonará a
-        <b>
+        <b class="{{$campo_editable}}">
           {{ $contrato->getLocadore() }}
         </b>
         una retribución total de
-        {{ $contrato->getMoneda()->simbolo }} {{ number_format($contrato->retribucionTotal, 2) }}
+        <span class="{{$campo_editable}}">
+          {{ $contrato->getMoneda()->simbolo }} {{ number_format($contrato->retribucionTotal, 2) }}
+        </span>
+
         ,que incluye todo concepto de pago, la misma que estará sujeta a
         descuentos y retenciones de acuerdo a la ley y se cancelará previa presentación de
-        @if ($contrato->esDeNatural())
-          recibo por honorarios
-        @else
-          factura
-        @endif
+
+        <span class="{{$campo_editable}}">
+          @if ($contrato->esDeNatural())
+            recibo por honorarios
+          @else
+            factura
+          @endif
+        </span>
+
+
         de acuerdo al siguiente detalle:
       </p>
       <p>
-        @foreach ($contrato->getAvances() as $i => $itemavance)
+        @foreach ($listaItems as $i => $itemavance)
           <b>
             {{ chr($i + 97) }})
           </b>
-          A la presentación del Producto N°{{ $i + 1 }}: "{{ $itemavance->descripcion }}" al
-          {{ $itemavance->getFechaEntregaEscrita() }};
+          A la presentación del Producto N°{{ $i + 1 }}:
+          <span class="{{$campo_editable}}">"{{ $itemavance->descripcion }}"</span>
+          al
+          <span class="{{$campo_editable}}">{{ $itemavance->getFechaEntregaEscrita() }}</span>;
           el importe de
-          {{ $contrato->getMoneda()->simbolo }} {{ number_format($itemavance->monto, 2) }}
-          correspondiente al {{ $itemavance->porcentaje }} %.
-
+          <span class="{{$campo_editable}}">{{$contrato->getMoneda()->simbolo}} {{ number_format($itemavance->monto, 2)}}</span>
+          correspondiente al
+          <span class="{{$campo_editable}}">
+            {{ $itemavance->porcentaje }}
+          </span> %.
           <br>
         @endforeach
       </p>
@@ -406,7 +426,7 @@
       </p>
       <p>
         En señal de conformidad, ambas partes firman el presente contrato en
-        <b>
+        <b class="{{$campo_editable}}">
           {{ $contrato->getSede()->nombre }}, {{ $contrato->getFechaGeneracionEscrita() }}.
         </b>
       </p>
@@ -429,9 +449,19 @@
             <td>
               <b>
                 _____________________________<br>
-                {{ strtoupper($contrato->getNombreCompleto()) }}<br>
-                DNI: {{ $contrato->dni }}<br>
-                {{ $contrato->getLocadore() }}
+                <span class="{{$campo_editable}}">
+                  {{ strtoupper($contrato->getNombreCompleto()) }}
+                </span>
+                <br>
+                DNI:
+                <span class="{{$campo_editable}}">
+                  {{ $contrato->dni }}
+                </span>
+                <br>
+                <span class="{{$campo_editable}}">
+                  {{ $contrato->getLocadore() }}
+                </span>
+
               </b>
             </td>
           </tr>
