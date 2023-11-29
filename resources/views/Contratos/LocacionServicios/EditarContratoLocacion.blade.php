@@ -30,12 +30,15 @@
             Datos del Locador:
           </div>
           <div class="col-12 col-sm-9">
+            <div class="label_movil_container">
+              <select class="form-control" name="esPersonaNatural" id="esPersonaNatural" onchange="cambiarTipoPersona()">
+                <option value="-1">- Tipo Persona -</option>
+                <option value="1" @if ($contrato->esDeNatural()) selected @endif>Persona Natural</option>
+                <option value="0" @if (!$contrato->esDeNatural()) selected @endif>Persona Jurídica</option>
+              </select>
+              <label for="esPersonaNatural" class="label_movil">Tipo Persona</label>
+            </div>
 
-            <select class="form-control" name="esPersonaNatural" id="esPersonaNatural" onchange="cambiarTipoPersona()">
-              <option value="-1">- Tipo Persona -</option>
-              <option value="1" @if ($contrato->esDeNatural()) selected @endif>Persona Natural</option>
-              <option value="0" @if (!$contrato->esDeNatural()) selected @endif>Persona Jurídica</option>
-            </select>
           </div>
         </div>
       </div>
@@ -43,10 +46,6 @@
 
         {{-- Datos del locador --}}
         <div class="">
-
-
-
-
 
           <div id="FormPN" @if (!$contrato->esDeNatural()) hidden @endif >
             <div class="row">
@@ -59,9 +58,18 @@
               </div>
 
               <div class="col-12 col-md-2 p-1">
-                <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PN_dni" id="PN_dni" value="{{$contrato->dni}}" placeholder="">
-                  <label for="PN_dni" class="label_movil">DNI</label>
+                <div class="d-flex align-items-center ">
+                  <div class="label_movil_container flex-auto">
+                    <input type="number" class="form-control" name="PN_dni" id="PN_dni" value="{{$contrato->dni}}" placeholder="">
+                    <label for="PN_dni" class="label_movil">DNI</label>
+                  </div>
+
+                  <div class="px-1">
+                    <button type="button" onclick="consultarPorDNI_PN()" class="btn btn-success" title="">
+                      <i class="fas fa-search icono_buscar"></i>
+                    </button>
+                  </div>
+
                 </div>
               </div>
 
@@ -146,16 +154,25 @@
             <div class="row">
 
 
-              <div class="col-12 col-md-4 p-1">
-                <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PJ_ruc" id="PJ_ruc" value="{{$contrato->ruc}}"
-                    placeholder="">
-                  <label for="PJ_ruc" class="label_movil">RUC</label>
+              <div class="col-12 col-md-2 p-1">
+                <div class="d-flex align-items-center ">
+                  <div class="label_movil_container flex-auto">
+                    <input type="number" class="form-control" name="PJ_ruc" id="PJ_ruc" value="" placeholder="">
+                    <label for="PJ_ruc" class="label_movil">RUC</label>
+
+                  </div>
+                  <div class="px-1">
+                    <button type="button" onclick="consultarPorRUC()" class="btn btn-success" title="">
+                      <i class="fas fa-search icono_buscar"></i>
+                    </button>
+                  </div>
+
                 </div>
+
               </div>
 
 
-              <div class="col-12 col-md-4 p-1">
+              <div class="col-12 col-md-6 p-1">
                 <div class="label_movil_container">
                   <input type="text" class="form-control" name="PJ_razonSocialPJ" id="PJ_razonSocialPJ" value="{{$contrato->razonSocialPJ}}" placeholder="">
                   <label for="PJ_razonSocialPJ" class="label_movil">Razón Social</label>
@@ -164,7 +181,7 @@
 
 
 
-              <div class="col-12 col-md-3 p-1">
+              <div class="col-12 col-md-4 p-1">
                 <div class="label_movil_container">
                   <input type="text" class="form-control" name="PJ_direccion" id="PJ_direccion" value="{{$contrato->direccion}}"
                     placeholder="">
@@ -207,16 +224,25 @@
             <div class="row">
 
 
-              <div class="col-12 col-md-6 p-1">
-                <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PJ_dni" id="PJ_dni" value="{{$contrato->dni}}" placeholder="">
-                  <label for="PJ_dni" class="label_movil">DNI</label>
+              <div class="col-12 col-md-3 p-1">
+                <div class="d-flex align-items-center ">
+                  <div class="label_movil_container flex-auto">
+                    <input type="number" class="form-control" name="PJ_dni" id="PJ_dni" value="{{$contrato->dni}}" placeholder="">
+                    <label for="PJ_dni" class="label_movil">DNI</label>
+
+                  </div>
+                  <div class="px-1">
+                    <button type="button" onclick="consultarPorDNI_PJ()" class="btn btn-success" title="">
+                      <i class="fas fa-search icono_buscar"></i>
+                    </button>
+                  </div>
+
                 </div>
               </div>
 
 
 
-              <div class="col-12 col-md-6 p-1">
+              <div class="col-12 col-md-3 p-1">
                 <div class="label_movil_container">
                   <input type="text" class="form-control" name="PJ_nombres" id="PJ_nombres" value="{{$contrato->nombres}}" placeholder="">
                   <label for="PJ_nombres" class="label_movil">Nombres</label>
@@ -225,7 +251,7 @@
               </div>
 
 
-              <div class="col-12 col-md-6 p-1">
+              <div class="col-12 col-md-3 p-1">
                 <div class="label_movil_container">
                   <input type="text" class="form-control" name="PJ_apellidos" id="PJ_apellidos" value="{{$contrato->apellidos}}" placeholder="">
                   <label for="PJ_apellidos" class="label_movil">Apellidos</label>
@@ -238,7 +264,7 @@
 
 
 
-              <div class="col-12 col-md-6 p-1">
+              <div class="col-12 col-md-3 p-1">
                 <div class="label_movil_container">
                   <input type="text" class="form-control" name="PJ_nombreDelCargoPJ" id="PJ_nombreDelCargoPJ" value="{{$contrato->nombreDelCargoPJ}}" placeholder="">
                   <label for="PJ_nombreDelCargoPJ" class="label_movil">Cargo en la empresa</label>
@@ -248,8 +274,6 @@
 
             </div>
           </div>
-
-
 
         </div>
 

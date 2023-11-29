@@ -90,16 +90,17 @@ class ContratoLocacion extends Contrato
     return $this->esPersonaNatural == '1';
   }
 
+  public function getTextoTipoPersona() : string {
+    if($this->esDeNatural()){
+      return "PERSONA NATURAL";
+    }else{
+      return "PERSONA JURÍDICA";
+    }
+  }
 
 
-  /*
-        Si es persona jurídica, será EL LOCADOR
-        Si es persona natural:
-            Hombre: EL LOCADOR
-            Mujer : LA LOCADORA
 
 
-    */
   public function getLocadore()
   {
     if ($this->esDeNatural()) {
@@ -112,6 +113,13 @@ class ContratoLocacion extends Contrato
     return "EL LOCADOR";
   }
 
+  public function getSexoLabel(){
+    if($this->sexo == 'F'){
+      return "FEMENINO";
+    }else{
+      return "MASCULINO";
+    }
+  }
 
 
 

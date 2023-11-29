@@ -57,9 +57,18 @@
               </div>
 
               <div class="col-12 col-md-2 p-1">
-                <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PN_dni" id="PN_dni" value="" placeholder="">
-                  <label for="PN_dni" class="label_movil">DNI</label>
+                <div class="d-flex align-items-center ">
+                  <div class="label_movil_container flex-auto">
+                    <input type="number" class="form-control" name="PN_dni" id="PN_dni" value="" placeholder="">
+                    <label for="PN_dni" class="label_movil">DNI</label>
+
+                  </div>
+                  <div class="px-1">
+                    <button type="button" onclick="consultarPorDNI()" class="btn btn-success" title="">
+                      <i class="fas fa-search icono_buscar"></i>
+                    </button>
+                  </div>
+
                 </div>
               </div>
 
@@ -145,16 +154,26 @@
             <div class="row">
 
 
-              <div class="col-12 col-md-4 p-1">
-                <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PJ_ruc" id="PJ_ruc" value=""
-                    placeholder="">
-                  <label for="PJ_ruc" class="label_movil">RUC</label>
+              <div class="col-12 col-md-2 p-1">
+
+                <div class="d-flex align-items-center ">
+                  <div class="label_movil_container flex-auto">
+                    <input type="number" class="form-control" name="PJ_ruc" id="PJ_ruc" value="" placeholder="">
+                    <label for="PJ_ruc" class="label_movil">RUC</label>
+
+                  </div>
+                  <div class="px-1">
+                    <button type="button" onclick="consultarPorRUC()" class="btn btn-success" title="">
+                      <i class="fas fa-search icono_buscar"></i>
+                    </button>
+                  </div>
+
                 </div>
+
               </div>
 
 
-              <div class="col-12 col-md-4 p-1">
+              <div class="col-12 col-md-6 p-1">
                 <div class="label_movil_container">
                   <input type="text" class="form-control" name="PJ_razonSocialPJ" id="PJ_razonSocialPJ"
                     value="" placeholder="">
@@ -165,7 +184,7 @@
 
 
 
-              <div class="col-12 col-md-3 p-1">
+              <div class="col-12 col-md-4 p-1">
                 <div class="label_movil_container">
                   <input type="text" class="form-control" name="PJ_direccion" id="PJ_direccion" value=""
                     placeholder="">
@@ -209,17 +228,16 @@
             <div class="row">
 
 
-              <div class="col-12 col-md-6 p-1">
+              <div class="col-12 col-md-3 p-1">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PJ_dni" id="PJ_dni" value=""
-                    placeholder="">
+                  <input type="text" class="form-control" name="PJ_dni" id="PJ_dni" value="" placeholder="">
                   <label for="PJ_dni" class="label_movil">DNI</label>
                 </div>
               </div>
 
 
 
-              <div class="col-12 col-md-6 p-1">
+              <div class="col-12 col-md-3 p-1">
                 <div class="label_movil_container">
                   <input type="text" class="form-control" name="PJ_nombres" id="PJ_nombres" value=""
                     placeholder="">
@@ -229,7 +247,7 @@
               </div>
 
 
-              <div class="col-12 col-md-6 p-1">
+              <div class="col-12 col-md-3 p-1">
                 <div class="label_movil_container">
                   <input type="text" class="form-control" name="PJ_apellidos" id="PJ_apellidos" value=""
                     placeholder="">
@@ -243,7 +261,7 @@
 
 
 
-              <div class="col-12 col-md-6 p-1">
+              <div class="col-12 col-md-3 p-1">
                 <div class="label_movil_container">
                   <input type="text" class="form-control" name="PJ_nombreDelCargoPJ" id="PJ_nombreDelCargoPJ"
                     value="" placeholder="">

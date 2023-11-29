@@ -1,6 +1,5 @@
 @include('Contratos.ModalBorrador')
 <script>
-
   var ListaDetalles = [];
   var modo;
 
@@ -23,11 +22,12 @@
       'PN_ruc', 'PN_dni', 'PN_nombres', 'PN_apellidos', 'PN_sexo', 'PN_direccion',
       'PJ_ruc', 'PJ_razonSocialPJ', 'PJ_direccion', 'PJ_dni', 'PJ_nombres',
       'PJ_apellidos', 'PJ_nombreDelCargoPJ', /* Campos de PJ */
-      'motivoContrato', 'fecha_inicio_contrato', 'fecha_fin_contrato', 'retribucionTotal', 'codMoneda', 'codSede', 'nombreProyecto',
+      'motivoContrato', 'fecha_inicio_contrato', 'fecha_fin_contrato', 'retribucionTotal', 'codMoneda', 'codSede',
+      'nombreProyecto',
       'nombreFinanciera',
 
-      'PN_provincia','PN_departamento',
-      'PJ_provincia','PJ_departamento',
+      'PN_provincia', 'PN_departamento', 'PN_distrito',
+      'PJ_provincia', 'PJ_departamento', 'PJ_distrito'
     ]);
 
 
@@ -149,13 +149,14 @@
     msjError = "";
 
     msjError = validarNulidad(msjError, 'nuevaFecha', 'Fecha');
-    msjError = validarTamañoMaximoYNulidad(msjError, 'nuevaDescripcion', {{ App\Configuracion::tamañoMaximoLugar }},'Descripción');
+    msjError = validarTamañoMaximoYNulidad(msjError, 'nuevaDescripcion', {{ App\Configuracion::tamañoMaximoLugar }},
+      'Descripción');
 
     msjError = validarPositividadYNulidad(msjError, 'nuevoMonto', 'Monto');
     msjError = validarPositividadYNulidad(msjError, 'nuevoPorcentaje', 'Porcentaje');
 
 
-    if (parseFloat(nuevoMonto) + parseFloat(totalAcumulado) > parseFloat(RetribucionTotalInput.value)){
+    if (parseFloat(nuevoMonto) + parseFloat(totalAcumulado) > parseFloat(RetribucionTotalInput.value)) {
 
       msjError = "Al añadir este avance, el monto actual se excedería del pago total.";
     }
@@ -165,11 +166,11 @@
       return false;
     }
 
-    agregarDetalle(nuevaFecha,nuevaDescripcion,nuevoMonto,nuevoPorcentaje,0)
+    agregarDetalle(nuevaFecha, nuevaDescripcion, nuevoMonto, nuevoPorcentaje, 0)
   }
 
 
-  function agregarDetalle(nuevaFecha,nuevaDescripcion,nuevoMonto,nuevoPorcentaje,codAvance){
+  function agregarDetalle(nuevaFecha, nuevaDescripcion, nuevoMonto, nuevoPorcentaje, codAvance) {
 
     posicion_insercion = 0;
     // FIN DE VALIDACIONES
@@ -414,33 +415,33 @@
 
     if (esPersonaNatural.value == '0') { //PERSONA JURIDICA
       obj_persona = {
-        PJ_ruc : document.getElementById('PJ_ruc').value,
-        PJ_razonSocialPJ : document.getElementById('PJ_razonSocialPJ').value,
-        PJ_direccion : document.getElementById('PJ_direccion').value,
+        PJ_ruc: document.getElementById('PJ_ruc').value,
+        PJ_razonSocialPJ: document.getElementById('PJ_razonSocialPJ').value,
+        PJ_direccion: document.getElementById('PJ_direccion').value,
 
         PJ_distrito: document.getElementById('PJ_distrito').value,
-        PJ_provincia : document.getElementById('PJ_provincia').value,
-        PJ_departamento : document.getElementById('PJ_departamento').value,
-        PJ_dni : document.getElementById('PJ_dni').value,
-        PJ_nombres : document.getElementById('PJ_nombres').value,
-        PJ_apellidos : document.getElementById('PJ_apellidos').value,
-        PJ_nombreDelCargoPJ : document.getElementById('PJ_nombreDelCargoPJ').value,
+        PJ_provincia: document.getElementById('PJ_provincia').value,
+        PJ_departamento: document.getElementById('PJ_departamento').value,
+        PJ_dni: document.getElementById('PJ_dni').value,
+        PJ_nombres: document.getElementById('PJ_nombres').value,
+        PJ_apellidos: document.getElementById('PJ_apellidos').value,
+        PJ_nombreDelCargoPJ: document.getElementById('PJ_nombreDelCargoPJ').value,
       };
 
     }
 
     var datos_generales = {
       _token: "{{ csrf_token() }}",
-      motivoContrato : document.getElementById('motivoContrato').value,
-      fecha_inicio_contrato : document.getElementById('fecha_inicio_contrato').value,
-      fecha_fin_contrato : document.getElementById('fecha_fin_contrato').value,
-      retribucionTotal : document.getElementById('retribucionTotal').value,
-      codMoneda : document.getElementById('codMoneda').value,
-      codSede : document.getElementById('codSede').value,
-      nombreProyecto : document.getElementById('nombreProyecto').value,
-      nombreFinanciera : document.getElementById('nombreFinanciera').value,
-      esPersonaNatural : document.getElementById('esPersonaNatural').value,
-      json_detalles : JSON.stringify(ListaDetalles)
+      motivoContrato: document.getElementById('motivoContrato').value,
+      fecha_inicio_contrato: document.getElementById('fecha_inicio_contrato').value,
+      fecha_fin_contrato: document.getElementById('fecha_fin_contrato').value,
+      retribucionTotal: document.getElementById('retribucionTotal').value,
+      codMoneda: document.getElementById('codMoneda').value,
+      codSede: document.getElementById('codSede').value,
+      nombreProyecto: document.getElementById('nombreProyecto').value,
+      nombreFinanciera: document.getElementById('nombreFinanciera').value,
+      esPersonaNatural: document.getElementById('esPersonaNatural').value,
+      json_detalles: JSON.stringify(ListaDetalles)
     }
 
     var data_send = {
@@ -464,7 +465,132 @@
 
   }
 
+  /*
+    llama a mi api que se conecta  con la api de la sunat
+    si encuentra, llena con los datos que encontró
+    si no tira mensaje de error
+  */
+  function consultarPorDNI_PN() {
+
+    msjError = "";
+
+    msjError = validarTamañoExacto(msjError, 'PN_dni', 8, 'DNI');
+    msjError = validarNulidad(msjError, 'PN_dni', 'DNI');
+
+    if (msjError != "") {
+      alerta(msjError);
+      return;
+    }
+
+    $(".loader").show(); //para mostrar la pantalla de carga
+    dni = document.getElementById('PN_dni').value;
+
+    $.get('/ConsultarAPISunat/dni/' + dni,
+      function(data) {
+        console.log("IMPRIMIENDO DATA como llegó:");
+
+        data = JSON.parse(data);
+
+        console.log(data);
+        persona = data.datos;
+
+        alertaMensaje(data.mensaje, data.titulo, data.tipoWarning);
+
+        if (data.ok == 1) {
+          document.getElementById('PN_nombres').value = persona.nombres;
+          document.getElementById('PN_apellidos').value = persona.apellidoPaterno + " " + persona.apellidoMaterno;
+        }
+
+        $(".loader").fadeOut("slow");
+      }
+    );
+  }
+
+  function consultarPorDNI_PJ() {
+
+    msjError = "";
+
+    msjError = validarTamañoExacto(msjError, 'PJ_dni', 8, 'DNI');
+    msjError = validarNulidad(msjError, 'PJ_dni', 'DNI');
+
+    if (msjError != "") {
+      alerta(msjError);
+      return;
+    }
+
+    $(".loader").show(); //para mostrar la pantalla de carga
+    dni = document.getElementById('PJ_dni').value;
+
+    $.get('/ConsultarAPISunat/dni/' + dni,
+      function(data) {
+        console.log("IMPRIMIENDO DATA como llegó:");
+
+        data = JSON.parse(data);
+
+        console.log(data);
+        persona = data.datos;
+
+        alertaMensaje(data.mensaje, data.titulo, data.tipoWarning);
+
+        if (data.ok == 1) {
+          document.getElementById('PJ_nombres').value = persona.nombres;
+          document.getElementById('PJ_apellidos').value = persona.apellidoPaterno + " " + persona.apellidoMaterno;
+        }
+
+        $(".loader").fadeOut("slow");
+      }
+    );
+  }
+
+
+
+  /*
+    llama a mi api que se conecta  con la api de la sunat
+    si encuentra, llena con los datos que encontró
+    si no tira mensaje de error
+  */
+  function consultarPorRUC() {
+
+    msjError = "";
+    ruc = $("#PJ_ruc").val();
+    if (ruc == '')
+      msjError = ("Por favor ingrese el ruc");
+
+
+    if (ruc.length != 11)
+      msjError = ("Por favor ingrese el ruc completo. Solo 11 digitos.");
+
+
+    if (msjError != "") {
+      alerta(msjError);
+      return;
+    }
+
+    $(".loader").show(); //para mostrar la pantalla de carga
+
+    $.get('/ConsultarAPISunat/ruc/' + ruc,
+      function(data) {
+
+
+        if (data == 1) {
+          alerta("Persona juridica no encontrada.");
+
+        } else {
+
+          personaJuridicaEncontrada = JSON.parse(data)
+          console.log(personaJuridicaEncontrada);
+
+          document.getElementById('PJ_razonSocialPJ').value = personaJuridicaEncontrada.razonSocial;
+          document.getElementById('PJ_direccion').value = personaJuridicaEncontrada.direccion;
+
+        }
+
+        $(".loader").fadeOut("slow");
+      }
+    );
+  }
 </script>
+
 <style>
   #iframe_borrador {
     width: 100%;

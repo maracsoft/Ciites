@@ -36,7 +36,8 @@
             <div class="row">
 
               <div class="col-12 col-md-4">
-                <div class="d-flex  align-items-center ">
+
+                <div class="d-flex align-items-center ">
                   <div class="label_movil_container flex-auto">
                     <input type="number" class="form-control" name="dni" id="dni" value="" placeholder="">
                     <label for="dni" class="label_movil">dni</label>
