@@ -1383,6 +1383,8 @@ Route::group(['middleware'=>"Mantenimiento"],function()
             Route::post('/ContratosLocacion/Actualizar','ContratoLocacionController@Actualizar')->name('ContratosLocacion.Actualizar');
 
 
+            Route::post('/ContratosLocacion/GenerarBorrador','ContratoLocacionController@GenerarBorrador')->name('ContratosLocacion.GenerarBorrador');
+
             Route::get('/ContratosLocacion/descargarPDF/{codContrato}','ContratoLocacionController@descargarPDF')->name('ContratosLocacion.descargarPDF');
             Route::get('/ContratosLocacion/verPDF/{codContrato}','ContratoLocacionController@verPDF')->name('ContratosLocacion.verPDF');
             Route::get('/ContratosLocacion/Ver/{codContrato}','ContratoLocacionController@Ver')->name('ContratosLocacion.Ver');
