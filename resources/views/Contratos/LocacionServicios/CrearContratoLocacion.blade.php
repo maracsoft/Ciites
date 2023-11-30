@@ -64,7 +64,7 @@
 
                   </div>
                   <div class="px-1">
-                    <button type="button" onclick="consultarPorDNI()" class="btn btn-success" title="">
+                    <button type="button" onclick="consultarPorDNI_PN()" class="btn btn-success" title="">
                       <i class="fas fa-search icono_buscar"></i>
                     </button>
                   </div>
@@ -229,10 +229,20 @@
 
 
               <div class="col-12 col-md-3 p-1">
-                <div class="label_movil_container">
-                  <input type="text" class="form-control" name="PJ_dni" id="PJ_dni" value="" placeholder="">
-                  <label for="PJ_dni" class="label_movil">DNI</label>
+                <div class="d-flex align-items-center ">
+                  <div class="label_movil_container flex-auto">
+                    <input type="number" class="form-control" name="PJ_dni" id="PJ_dni" value="" placeholder="">
+                    <label for="PJ_dni" class="label_movil">DNI</label>
+
+                  </div>
+                  <div class="px-1">
+                    <button type="button" onclick="consultarPorDNI_Representante()" class="btn btn-success" title="">
+                      <i class="fas fa-search icono_buscar"></i>
+                    </button>
+                  </div>
+
                 </div>
+
               </div>
 
 
@@ -552,7 +562,7 @@
       </div>
       <div class="col text-right">
 
-        <button type="button" class="btn btn-success" onclick="GenerarBorrador()">
+        <button type="button" class="btn btn-success" onclick="GenerarBorrador()"  title="Ver borrador con los cambios actuales">
           Ver borrador
           <i class="ml-1 fas fa-file-alt"></i>
         </button>

@@ -162,7 +162,7 @@
 
               <div class="col-4 col-md-6">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control text-center" name="duracion_convenio_numero" value="{{$contrato->duracion_convenio_numero}}"
+                  <input type="number" class="form-control text-center" name="duracion_convenio_numero" value="{{$contrato->duracion_convenio_numero}}"
                     id="duracion_convenio_numero" placeholder="">
                   <label for="duracion_convenio_numero" class="label_movil">Cantidad de Tiempo</label>
                 </div>
@@ -333,35 +333,24 @@
 
 
 
-    <div class="row m-3">
-      <div class="col-12 col-sm-4 text-left">
+    <div class="row mx-2">
+      <div class="col-12 col-sm-6 text-left">
         <a href="{{ route('ContratosPlazo.Listar') }}" class='btn btn-info '>
           <i class="fas fa-arrow-left"></i>
           Regresar al Menu
         </a>
       </div>
-      <div class="col-12 col-sm-4 text-right">
-        <a class="btn btn-primary" href="{{route('ContratosPlazo.verPDF',$contrato->getId())}}">
-          Ver PDF
-          <i class="fas fa-file-pdf"></i>
-        </a>
-        <a class="btn btn-primary" href="{{route('ContratosPlazo.descargarPDF',$contrato->getId())}}">
-          Descargar PDF
-          <i class="fas fa-file-pdf"></i>
-        </a>
-      </div>
-      <div class="col-12 col-sm-4 text-right">
+
+      <div class="col-12 col-sm-6 text-right">
 
 
-        <button type="button" class="btn btn-success" onclick="GenerarBorrador()">
-
+        <button type="button" class="btn btn-success" onclick="GenerarBorrador()" title="Ver borrador con los cambios actuales">
           Ver borrador
           <i class="ml-1 fas fa-file-alt"></i>
         </button>
 
 
         <button type="button" class="btn btn-primary" onclick="clickGuardar()">
-
           Guardar
           <i class='ml-1 fas fa-save'></i>
         </button>
@@ -369,6 +358,18 @@
 
 
 
+    </div>
+    <div class="row mx-2 mt-1">
+      <div class="col-12 text-right">
+        <a class="btn btn-info btn-sm" href="{{route('ContratosPlazo.verPDF',$contrato->getId())}}">
+          Ver PDF Actual
+          <i class="fas fa-file-pdf"></i>
+        </a>
+        <a class="btn btn-info btn-sm" href="{{route('ContratosPlazo.descargarPDF',$contrato->getId())}}">
+          Descargar PDF Actual
+          <i class="fas fa-file-pdf"></i>
+        </a>
+      </div>
     </div>
 
   </form>

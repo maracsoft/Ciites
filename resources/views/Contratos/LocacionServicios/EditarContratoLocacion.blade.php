@@ -157,7 +157,7 @@
               <div class="col-12 col-md-2 p-1">
                 <div class="d-flex align-items-center ">
                   <div class="label_movil_container flex-auto">
-                    <input type="number" class="form-control" name="PJ_ruc" id="PJ_ruc" value="" placeholder="">
+                    <input type="number" class="form-control" name="PJ_ruc" id="PJ_ruc" value="{{$contrato->ruc}}" placeholder="">
                     <label for="PJ_ruc" class="label_movil">RUC</label>
 
                   </div>
@@ -232,12 +232,13 @@
 
                   </div>
                   <div class="px-1">
-                    <button type="button" onclick="consultarPorDNI_PJ()" class="btn btn-success" title="">
+                    <button type="button" onclick="consultarPorDNI_Representante()" class="btn btn-success" title="">
                       <i class="fas fa-search icono_buscar"></i>
                     </button>
                   </div>
 
                 </div>
+
               </div>
 
 
@@ -541,7 +542,7 @@
 
     </div>
 
-    <div class="m-2 row  text-center">
+    <div class="mx-2 row  text-center">
       <div class="col text-left">
 
         <a href="{{ route('ContratosLocacion.Listar') }}" class='btn btn-info '>
@@ -552,7 +553,7 @@
       </div>
       <div class="col text-right">
 
-        <button type="button" class="btn btn-success" onclick="GenerarBorrador()">
+        <button type="button" class="btn btn-success" onclick="GenerarBorrador()" title="Ver borrador con los cambios actuales">
           Ver borrador
           <i class="ml-1 fas fa-file-alt"></i>
         </button>
@@ -566,6 +567,22 @@
       </div>
 
 
+
+    </div>
+
+    <div class="mx-2 row">
+      <div class="col-12 text-right">
+
+
+        <a href="{{route('ContratosLocacion.descargarPDF',$contrato->getId())}}" class='btn btn-info btn-sm'  title="Descargar PDF">
+          Descargar PDF Actual
+          <i class="fas fa-file-download"></i>
+        </a>
+        <a target="pdf_CL_{{$contrato->getId()}}" href="{{route('ContratosLocacion.verPDF',$contrato->getId())}}" class='btn btn-info btn-sm'  title="Ver PDF">
+          Ver PDF Actual
+          <i class="fas fa-file-pdf"></i>
+        </a>
+      </div>
 
     </div>
 
@@ -657,7 +674,7 @@
 
       JsonDetallesInput.value = JSON.stringify(ListaDetalles);
 
-      confirmar('¿Estás seguro de crear el contrato?', 'info', 'frmLocacionServicio');
+      confirmar('¿Estás seguro de actualizar el contrato?', 'info', 'frmLocacionServicio');
 
     }
   </script>

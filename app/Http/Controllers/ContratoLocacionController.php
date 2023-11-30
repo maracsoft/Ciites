@@ -95,7 +95,7 @@ class ContratoLocacionController extends Controller
       $contrato->setDetallesFromRequest($request);
 
       DB::commit();
-      return redirect()->route('ContratosLocacion.Listar')->with('datos_ok', 'Se ha creado el contrato ' . $contrato->codigo_unico);
+      return redirect()->route('ContratosLocacion.Editar',$contrato->getId())->with('datos_ok', 'Se ha creado el contrato ' . $contrato->codigo_unico);
     } catch (\Throwable $th) {
 
       Debug::mensajeError('CONTRATO LOCACION : STORE', $th);

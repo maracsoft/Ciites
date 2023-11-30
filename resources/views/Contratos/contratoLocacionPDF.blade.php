@@ -12,6 +12,9 @@
     <meta charset="UTF-8">
 
     <title>
+      @if ($contrato->esBorrador())
+        BORRADOR
+      @endif
       {{ $contrato->getTituloContrato() }}
     </title>
 
@@ -43,7 +46,13 @@
         color:rgb(0, 62, 176);
       }
 
+      .borrador{
 
+        text-align: center;
+        font-size: 15pt;
+        font-weight: bold;
+        color:red;
+      }
     </style>
 
 
@@ -70,6 +79,12 @@
       <div>
         <img src="{{ App\Configuracion::getRutaImagenCedepasPNG() }}" width="100px">
       </div>
+      @if ($contrato->esBorrador())
+        <div class="borrador">
+          ESTE ES UN BORRADOR SIN VALOR
+        </div>
+      @endif
+
       <div style="color:#817e7e; text-align: right;">
 
         {{ $contrato->codigo_unico }}
@@ -97,7 +112,8 @@
         CIITES;
 
         @if ($contrato->esDeNatural())
-          y de la otra parte el señor <b>{{ $contrato->getNombreCompleto() }},</b>
+          y de la otra parte el señor
+          <b class="{{$campo_editable}}">{{ $contrato->getNombreCompleto() }},</b>
           identificado con DNI
           <b class="{{$campo_editable}}">{{$contrato->dni}},</b>
           y RUC
@@ -112,11 +128,12 @@
           <b class="{{$campo_editable}}">{{$contrato->departamento}}</b>
 
         @else
-          y de la otra parte <b>{{ $contrato->razonSocialPJ }},</b>
+          y de la otra parte
+          <b class="{{$campo_editable}}">{{ $contrato->razonSocialPJ }},</b>
           con RUC
-          <b>{{ $contrato->ruc }}</b>
+          <b class="{{$campo_editable}}">{{ $contrato->ruc }}</b>
           y domicilio fiscal en
-          <b>{{ $contrato->direccion }}</b>
+          <b class="{{$campo_editable}}">{{ $contrato->direccion }}</b>
           distrito de
           <b class="{{$campo_editable}}">{{ $contrato->distrito}}</b>,
           provincia de

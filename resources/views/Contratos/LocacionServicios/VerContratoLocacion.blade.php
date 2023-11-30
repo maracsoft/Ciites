@@ -384,7 +384,7 @@ Ver {{$contrato->codigo_unico}}
 
 
   <div class="m-2 row  text-center">
-    <div class="col text-left">
+    <div class="col-12 col-sm-6 text-left">
 
       <a href="{{ route('ContratosLocacion.Listar') }}" class='btn btn-info '>
         <i class="fas fa-arrow-left"></i>
@@ -392,7 +392,23 @@ Ver {{$contrato->codigo_unico}}
       </a>
 
     </div>
+    <div class="col-12 col-sm-6 text-right">
+
+
+      <a href="{{route('ContratosLocacion.descargarPDF',$contrato->getId())}}" class='btn btn-info btn-sm'  title="Descargar PDF">
+        Descargar PDF Actual
+        <i class="fas fa-file-download"></i>
+      </a>
+      <a target="pdf_CL_{{$contrato->getId()}}" href="{{route('ContratosLocacion.verPDF',$contrato->getId())}}" class='btn btn-info btn-sm'  title="Ver PDF">
+        Ver PDF Actual
+        <i class="fas fa-file-pdf"></i>
+      </a>
+    </div>
+
+
   </div>
+
+
 @endsection
 
 {{-- ************************************************************************************************************* --}}

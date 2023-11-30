@@ -506,12 +506,14 @@
     );
   }
 
-  function consultarPorDNI_PJ() {
+
+
+  function consultarPorDNI_Representante(){
 
     msjError = "";
 
-    msjError = validarTamañoExacto(msjError, 'PJ_dni', 8, 'DNI');
-    msjError = validarNulidad(msjError, 'PJ_dni', 'DNI');
+    msjError = validarTamañoExacto(msjError, 'PJ_dni', 8, 'DNI del representante');
+    msjError = validarNulidad(msjError, 'PJ_dni', 'DNI del representante');
 
     if (msjError != "") {
       alerta(msjError);
@@ -541,7 +543,6 @@
       }
     );
   }
-
 
 
   /*
@@ -592,10 +593,7 @@
 </script>
 
 <style>
-  #iframe_borrador {
-    width: 100%;
-    height: 700px;
-  }
+
 
   .campo_editable {
     color: rgb(0, 62, 176);

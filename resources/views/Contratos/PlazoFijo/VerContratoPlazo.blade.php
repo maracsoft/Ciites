@@ -283,19 +283,20 @@
   </div>
 
   <div class="row m-3">
-    <div class="col-12 col-sm-4 text-left">
+    <div class="col-12 col-sm-6 text-left">
       <a href="{{ route('ContratosPlazo.Listar') }}" class='btn btn-info '>
         <i class="fas fa-arrow-left"></i>
         Regresar al Menu
       </a>
     </div>
-    <div class="col-12 col-sm-4 text-right">
-      <a class="btn btn-primary" href="{{ route('ContratosPlazo.verPDF', $contrato->getId()) }}">
-        Ver PDF
+
+    <div class="col-12 col-sm-6 text-right">
+      <a class="btn btn-info btn-sm" href="{{route('ContratosPlazo.verPDF',$contrato->getId())}}">
+        Ver PDF Actual
         <i class="fas fa-file-pdf"></i>
       </a>
-      <a class="btn btn-primary" href="{{ route('ContratosPlazo.descargarPDF', $contrato->getId()) }}">
-        Descargar PDF
+      <a class="btn btn-info btn-sm" href="{{route('ContratosPlazo.descargarPDF',$contrato->getId())}}">
+        Descargar PDF Actual
         <i class="fas fa-file-pdf"></i>
       </a>
     </div>

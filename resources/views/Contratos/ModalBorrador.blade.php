@@ -25,3 +25,10 @@
     </div>
   </div>
 </div>
+<style>
+  #iframe_borrador {
+    width: 100%;
+    height: 700px;
+  }
+
+</style>

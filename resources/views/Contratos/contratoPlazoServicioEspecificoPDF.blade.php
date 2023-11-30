@@ -2,7 +2,6 @@
   $campo_editable = "";
   if($contrato->esBorrador()){
     $campo_editable = "campo_editable";
-
   }
 
 @endphp

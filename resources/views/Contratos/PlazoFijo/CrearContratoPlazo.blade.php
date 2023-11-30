@@ -169,7 +169,7 @@
 
               <div class="col-4 col-md-6">
                 <div class="label_movil_container">
-                  <input type="text" class="form-control text-center" name="duracion_convenio_numero"
+                  <input type="number" class="form-control text-center" name="duracion_convenio_numero"
                     id="duracion_convenio_numero" placeholder="">
                   <label for="duracion_convenio_numero" class="label_movil">Cantidad de Tiempo</label>
                 </div>
@@ -359,7 +359,7 @@
       <div class="col text-right">
 
 
-        <button type="button" class="btn btn-success" onclick="GenerarBorrador()">
+        <button type="button" class="btn btn-success" onclick="GenerarBorrador()" title="Ver borrador con los cambios actuales">
 
           Ver borrador
           <i class="ml-1 fas fa-file-alt"></i>
