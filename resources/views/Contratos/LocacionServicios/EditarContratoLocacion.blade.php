@@ -4,13 +4,13 @@
   Editar Contrato Locación servicios
 @endsection
 
-@section('contenido')
-
 @section('tiempoEspera')
   <div class="loader" id="pantallaCarga"></div>
 @endsection
 
-@include('Layout.MensajeEmergenteDatos')
+@section('contenido')
+
+  @include('Layout.MensajeEmergenteDatos')
 
   <div class="p-2">
     <div class="page-title">
