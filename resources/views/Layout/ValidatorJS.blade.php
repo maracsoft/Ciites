@@ -3,14 +3,14 @@
 {{-- AQUI PONDRÉ EL CODIGO JAVASCRIPT PARA EL VALIDATOR
     LO MOVERÉ AQUÍ PARA QUE SOLO LAS PAGINAS QUE NECESITEN EL VALIDATOR LO CARGUEN.
     (antes lo tenia en un archivo javascript pero ocurren errores pq los navegadores no actualizan su cache (osea el archivo))
-    
+
     --}}
 
 <script>
 
 /* FUNCIONES EN JS PARA VALIDAR INPUTS
 les ingresa como parametro
-    - msjError: el mensaje de error que se haya acumulado hasta ahora, si tiene contenido, se retorna este mismo. 
+    - msjError: el mensaje de error que se haya acumulado hasta ahora, si tiene contenido, se retorna este mismo.
                 La funcion solo se ejcuta realmente si el msjError es ""
     - id: id del elemento a validar (puede ser input o textarea)
     - nombreReferencial: nombre que aparecerá en el mensaje de retorno.
@@ -31,18 +31,18 @@ function deCompasAPuntos(amount) {
 
 function validarPuntoDecimal(msjError,id,nombreReferencial){
     mensaje ="";
-    
+
     cantidad = document.getElementById(id).value;
     var amount_parts = cantidad.split(',');
     console.log('enhorabuean');
     console.log(amount_parts);
     if(amount_parts.length>1){
-        ponerEnRojo(id);   
+        ponerEnRojo(id);
         mensaje="En el campo '"+nombreReferencial+"' no se permiten comas, solo puntos para separar la parte decimal de la entera."
     }
 
     if(msjError!="") //significa que ya hay un error en el flujo de validaciones
-        return msjError; 
+        return msjError;
     else //si no hay ningun error, retorna el mensaje generado en esta funcion (el cual será nulo si no hubo error)
         return mensaje;
 }
@@ -50,39 +50,44 @@ function validarPuntoDecimal(msjError,id,nombreReferencial){
 
 
 var expRegNombres = new RegExp("^[A-Za-zÑñ À-ÿ]+$");//para apellidos y nombres ^[a-zA-Z ]+$ ^[A-Za-zÑñ À-ÿ]$
-          
+
 function limpiarEstilos(listaInputs){
     listaInputs.forEach(element => {
 
-        
+
         quitarElRojo(element)
-        
+
     });
 
 }
 
 
 function quitarElRojo(id){
-    listaDeClases = document.getElementById(id).classList;
-    
-    listaDeClases.remove("form-control-undefined");
-    
-    document.getElementById(id).classList = listaDeClases;
-     
-       
+
+  const element = document.getElementById(id);
+  if(!element){
+    throw Error("No existe el elemento con id " + id);
+  }
+  listaDeClases = element.classList;
+
+  listaDeClases.remove("form-control-undefined");
+
+  element.classList = listaDeClases;
+
+
 }
 
 
 function ponerEnRojo(id){
     listaDeClases = document.getElementById(id).classList
-    
+
     if(!listaDeClases.contains('form-control-undefined')) //si no está ya en ROJO
     {
         listaDeClases.add("form-control-undefined");
         //Lo cambié pq cuando el input es Readonly y está como 'form-control', su color de fondo cambia a blanco y pareciera que se puede editar.
-        //De nueva esta manera, ahora cada 
+        //De nueva esta manera, ahora cada
     }
-        
+
     document.getElementById(id).classList = listaDeClases;
 }
 
@@ -90,25 +95,25 @@ function ponerEnRojo(id){
 function validarCantidadMaximaYNulidadDetalles(msjError,id,cantidadMax){
     mensaje ="";
 
-    
+
     cantidad = document.getElementById(id).value;
     //console.log(cantidad);
-    if(cantidad==0 || cantidad==null){ 
+    if(cantidad==0 || cantidad==null){
         mensaje='Debe ingresar Items';
     }else{
         cantidad=parseFloat(cantidad);
-        if(cantidad > cantidadMax) 
+        if(cantidad > cantidadMax)
             mensaje='No se puede ingresar mas de '+cantidadMax+' Items. La cantidad actual es de '+cantidad+' Items';
     }
 
     if(msjError!="") //significa que ya hay un error en el flujo de validaciones
-        return msjError; 
+        return msjError;
     else //si no hay ningun error, retorna el mensaje generado en esta funcion (el cual será nulo si no hubo error)
         return mensaje;
 }
 /* Validar numeros para gastos, importes, etc (DETALLES)*/
 function validarPositividadYNulidad(msjError,id,nombreReferencial){
-    
+
     msjError = validarPositividad(msjError,id,nombreReferencial);
     msjError = validarNulidad(msjError,id,nombreReferencial);
 
@@ -116,7 +121,7 @@ function validarPositividadYNulidad(msjError,id,nombreReferencial){
 }
 
 function validarNoNegatividadYNulidad(msjError,id,nombreReferencial){
-    
+
     msjError = validarNoNegatividad(msjError,id,nombreReferencial);
     msjError = validarNulidad(msjError,id,nombreReferencial);
 
@@ -131,7 +136,7 @@ function validarPositividad(msjError,id,nombreReferencial){
     cantidad=parseFloat(cantidad);
     //console.log(cantidad);
     if(cantidad<0){
-        ponerEnRojo(id);   
+        ponerEnRojo(id);
         mensaje="El valor del campo '"+nombreReferencial+"' debe ser positivo.";
     }
     if(cantidad==0){
@@ -140,7 +145,7 @@ function validarPositividad(msjError,id,nombreReferencial){
     }
 
     if(msjError!="") //significa que ya hay un error en el flujo de validaciones
-        return msjError; 
+        return msjError;
     else //si no hay ningun error, retorna el mensaje generado en esta funcion (el cual será nulo si no hubo error)
         return mensaje;
 }
@@ -152,12 +157,12 @@ function validarNoNegatividad(msjError,id,nombreReferencial){
     cantidad=parseFloat(cantidad);
     //console.log(cantidad);
     if(cantidad<0){
-        ponerEnRojo(id);   
+        ponerEnRojo(id);
         mensaje="El valor del campo '"+nombreReferencial+"' debe ser positivo.";
     }
 
     if(msjError!="") //significa que ya hay un error en el flujo de validaciones
-        return msjError; 
+        return msjError;
     else //si no hay ningun error, retorna el mensaje generado en esta funcion (el cual será nulo si no hubo error)
         return mensaje;
 
@@ -171,13 +176,13 @@ function validarRegExpNombres(msjError,id){
     contenido = document.getElementById(id).value;
     if (!expRegNombres.test(contenido)){
         ponerEnRojo(id);
-        
+
         mensaje = "Ingrese nombres válidos";
-        
+
     }
 
     if(msjError!="") //significa que ya hay un error en el flujo de validaciones
-        return msjError; 
+        return msjError;
     else //si no hay ningun error, retorna el mensaje generado en esta funcion (el cual será nulo si no hubo error)
         return mensaje;
 }
@@ -187,13 +192,13 @@ function validarRegExpApellidos(msjError,id){
     contenido = document.getElementById(id).value;
     if (!expRegNombres.test(contenido)){
         ponerEnRojo(id);
-         
+
         mensaje = "Ingrese apellidos válidos";
-        
+
     }
 
     if(msjError!="") //significa que ya hay un error en el flujo de validaciones
-        return msjError; 
+        return msjError;
     else //si no hay ningun error, retorna el mensaje generado en esta funcion (el cual será nulo si no hubo error)
         return mensaje;
 }
@@ -202,7 +207,7 @@ function validarContenidosIguales(msjError,id1,id2,mensajeAMostrar){
     mensaje = "";
     contenido1 = document.getElementById(id1).value;
     contenido2 = document.getElementById(id2).value;
-    
+
     if(contenido1 != contenido2){
         ponerEnRojo(id1);
         ponerEnRojo(id2);
@@ -210,13 +215,13 @@ function validarContenidosIguales(msjError,id1,id2,mensajeAMostrar){
     }
 
     if(msjError!="") //significa que ya hay un error en el flujo de validaciones
-        return msjError; 
+        return msjError;
     else //si no hay ningun error, retorna el mensaje generado en esta funcion (el cual será nulo si no hubo error)
         return mensaje;
 }
 
 function validarTamañoMaximoYNulidad(msjError,id,tamañoMax,nombreReferencial){
-    
+
     msjError = validarTamañoMaximo(msjError,id,tamañoMax,nombreReferencial);
     msjError = validarNulidad(msjError,id,nombreReferencial);
 
@@ -228,18 +233,18 @@ function validarTamañoMaximo(msjError,id,tamañoMax,nombreReferencial){
 
     mensaje ="";
 
-    
+
     contenido = document.getElementById(id).value;
     tamañoActual = contenido.length;
     if(tamañoActual > tamañoMax){
         ponerEnRojo(id);
-         
-        mensaje = "La longitud máxima del campo '" + nombreReferencial + "' es de " 
+
+        mensaje = "La longitud máxima del campo '" + nombreReferencial + "' es de "
                 + tamañoMax + " caracteres. El tamaño actual es de " + tamañoActual + " caracteres.";
     }
 
     if(msjError!="") //significa que ya hay un error en el flujo de validaciones
-        return msjError; 
+        return msjError;
     else //si no hay ningun error, retorna el mensaje generado en esta funcion (el cual será nulo si no hubo error)
         return mensaje;
 
@@ -255,7 +260,7 @@ function validarNulidad(msjError,id,nombreReferencial){
     }
 
     if(msjError!="") //significa que ya hay un error en el flujo de validaciones
-        return msjError; 
+        return msjError;
     else //si no hay ningun error, retorna el mensaje generado en esta funcion (el cual será nulo si no hubo error)
         return mensaje;
 }
@@ -268,13 +273,13 @@ function validarTamañoExacto(msjError,id,tamañoExacto,nombreReferencial){
     tamañoActual = contenido.length;
     if(tamañoActual != tamañoExacto){
         ponerEnRojo(id);
-        mensaje = "La longitud del campo '" + nombreReferencial + "' debe ser de " 
+        mensaje = "La longitud del campo '" + nombreReferencial + "' debe ser de "
                 + tamañoExacto + " caracteres. El tamaño actual es de " + tamañoActual + " caracteres.";
     }
 
 
     if(msjError!="") //significa que ya hay un error en el flujo de validaciones
-        return msjError; 
+        return msjError;
     else //si no hay ningun error, retorna el mensaje generado en esta funcion (el cual será nulo si no hubo error)
         return mensaje;
 
@@ -289,15 +294,15 @@ function validarTamañoExactoONulidad(msjError,id,tamañoExacto,nombreReferencia
     if(tamañoActual!=0)
         if(tamañoActual != tamañoExacto){
             ponerEnRojo(id);
-            mensaje = "La longitud del campo '" + nombreReferencial + "' debe ser de " 
+            mensaje = "La longitud del campo '" + nombreReferencial + "' debe ser de "
                     + tamañoExacto + " caracteres. El tamaño actual es de " + tamañoActual + " caracteres.";
         }
-    
-        
+
+
 
 
     if(msjError!="") //significa que ya hay un error en el flujo de validaciones
-        return msjError; 
+        return msjError;
     else //si no hay ningun error, retorna el mensaje generado en esta funcion (el cual será nulo si no hubo error)
         return mensaje;
 
@@ -311,12 +316,12 @@ function validarTamañoMinimo(msjError,id,tamañoMinimo,nombreReferencial){
     tamañoActual = contenido.length;
     if(tamañoActual < tamañoMinimo){
         ponerEnRojo(id);
-        mensaje = "La longitud mínima del campo '" + nombreReferencial + "' es de " 
+        mensaje = "La longitud mínima del campo '" + nombreReferencial + "' es de "
                 + tamañoMax + " caracteres. El tamaño actual es de " + tamañoActual + " caracteres.";
     }
 
     if(msjError!="") //significa que ya hay un error en el flujo de validaciones
-        return msjError; 
+        return msjError;
     else //si no hay ningun error, retorna el mensaje generado en esta funcion (el cual será nulo si no hubo error)
         return mensaje;
 }
@@ -328,12 +333,12 @@ function validarSelect(msjError,id,indiceSeleccionNula,nombreReferencial){
 
     indiceSeleccionado = document.getElementById(id).value;
     if(indiceSeleccionado == indiceSeleccionNula){
-        ponerEnRojo(id);    
+        ponerEnRojo(id);
         mensaje = "El campo '" + nombreReferencial + "' debe ser seleccionado." ;
     }
-        
+
     if(msjError!="") //significa que ya hay un error en el flujo de validaciones
-        return msjError; 
+        return msjError;
     else //si no hay ningun error, retorna el mensaje generado en esta funcion (el cual será nulo si no hubo error)
         return mensaje;
 }
@@ -348,9 +353,9 @@ function validarCodigoPresupuestal(msjError,id, codPresupProyecto,nombreReferenc
         ponerEnRojo(id);
         mensaje = "El "+nombreReferencial+" debe coincidir con el código presupuestal del proyecto [" + codPresupProyecto + "]. ";
     }
-   
+
     if(msjError!="") //significa que ya hay un error en el flujo de validaciones
-        return msjError; 
+        return msjError;
     else //si no hay ningun error, retorna el mensaje generado en esta funcion (el cual será nulo si no hubo error)
         return mensaje;
 
@@ -361,16 +366,16 @@ function validarOrigenNuevoProyecto(msjError,idNuevoCodigo, listaProyectos){
     mensaje = "";
 
     codigoPresupuestalNuevo = document.getElementById(idNuevoCodigo).value;
- 
+
     busqueda = listaProyectos.find(element => element.codigoPresupuestal == codigoPresupuestalNuevo);
     if(!(busqueda === undefined)){
         msjError = "El origen " + busqueda.codigoPresupuestal + " ya está siendo usado por el proyecto " + busqueda.nombre;
         ponerEnRojo(idNuevoCodigo);
     }
-        
+
 
     if(msjError!="") //significa que ya hay un error en el flujo de validaciones
-        return msjError; 
+        return msjError;
     else //si no hay ningun error, retorna el mensaje generado en esta funcion (el cual será nulo si no hubo error)
         return mensaje;
 }
@@ -391,17 +396,17 @@ function validarGroupButton(msjError,vectorIDs,nombreReferencial){
 
 
     if(msjError!="") //significa que ya hay un error en el flujo de validaciones
-        return msjError; 
+        return msjError;
     else //si no hay ningun error, retorna el mensaje generado en esta funcion (el cual será nulo si no hubo error)
         return mensaje;
 
 }
 
- 
+
 function validarFechaAnterior(msjError,id_fechaAnterior,id_fechaPosterior,mensajeAMostrar){
   mensaje = "";
- 
-  var dateString1 = document.getElementById(id_fechaAnterior).value 
+
+  var dateString1 = document.getElementById(id_fechaAnterior).value
   var dateString2 = document.getElementById(id_fechaPosterior).value
   var fechasValidas = compararFechas(dateString1,dateString2);
   if(!fechasValidas){
@@ -409,11 +414,11 @@ function validarFechaAnterior(msjError,id_fechaAnterior,id_fechaPosterior,mensaj
     ponerEnRojo(id_fechaAnterior);
     ponerEnRojo(id_fechaPosterior)
   }
- 
+
 
 
   if(msjError!="") //significa que ya hay un error en el flujo de validaciones
-      return msjError; 
+      return msjError;
   else //si no hay ningun error, retorna el mensaje generado en esta funcion (el cual será nulo si no hubo error)
       return mensaje;
 
@@ -427,10 +432,10 @@ function compararFechas(dateString1,dateString2){
   var dateParts1 = dateString1.split("/");
   var dateParts2 = dateString2.split("/");
 
-  var dateObject1 = new Date(dateParts1[2], dateParts1[1] - 1, dateParts1[0]); 
-  var dateObject2 = new Date(dateParts2[2], dateParts2[1] - 1, dateParts2[0]); 
+  var dateObject1 = new Date(dateParts1[2], dateParts1[1] - 1, dateParts1[0]);
+  var dateObject2 = new Date(dateParts2[2], dateParts2[1] - 1, dateParts2[0]);
 
-  
+
   if(dateObject1.getTime() > dateObject2.getTime()){
     return false; //
   }
@@ -442,9 +447,9 @@ function compararFechas(dateString1,dateString2){
 
 
 function invocarHtmlEnID(ruta,idElemento){
-    
-    $.get(ruta, function(data){                       
-            console.log('Se ha actualizado el objeto de id '+idElemento + ' con contenido invocado de  ' + ruta 
+
+    $.get(ruta, function(data){
+            console.log('Se ha actualizado el objeto de id '+idElemento + ' con contenido invocado de  ' + ruta
             //   + ' con el siguiente contenido: ' + data
             );
             objeto = document.getElementById(idElemento);
@@ -453,11 +458,11 @@ function invocarHtmlEnID(ruta,idElemento){
     );
 
 }
- 
+
 
  //  datos = {coche: "Ford", modelo: "Focus", color: "rojo"};
 function enviarPeticionPOST(ruta,datos){
-    
+
 
 }
 
@@ -466,9 +471,9 @@ function cerrarModal(idModal){
 
 }
 
-    
+
 //GIRA UN ICONO 90 grados, se vale de las clases vaAGirar y rotado que están en editarProyecto
-function girarIcono(idIcono){    
+function girarIcono(idIcono){
     //console.log('GIRANDO EL ' + idIcono);
     elemento = document.querySelector('#'+idIcono);
     estaGirado = elemento.classList.contains('rotado'); //booleano para ver si lo contiene
@@ -492,7 +497,7 @@ function maracFetch(url,request,callback){
     }).then(function(data){
         callback(data);
     });
- 
+
 }
 
 
@@ -502,9 +507,23 @@ function formatearFechaAEspañol(fecha){
   var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
   var formated = date.toLocaleDateString('es-ES',options);
-  
+
   return formated;
 
 }
+
+
+/*
+  No trasladar este codigo a Backend, algunas versiones de node no tienen el replaceAll, para eso se usa el replace con la regexp /g
+*/
+function hidrateHtmlString(html_string,object){
+
+  for (let field_name in object){
+    html_string = html_string.replaceAll("[" + field_name +"]",object[field_name]);
+  }
+  return html_string;
+
+}
+
 
 </script>

@@ -59,8 +59,7 @@ class Debug extends Model
         return $cont.' <script> x = '.$cont.' </script>';
     }
 
-
-    public static function LogMessage($msg,$msj2 = null){
+    private static function RegistrarLog($msg,$msj2 = null,$channel){
 
       if(gettype($msg) == 'array'){
         $msg = json_encode($msg, JSON_PRETTY_PRINT);
@@ -76,8 +75,15 @@ class Debug extends Model
       if($msj2)
         $segundo_msj = ": ".$msj2;
 
-      Log::channel('maraclog')->info($msg.$segundo_msj);
+      Log::channel($channel)->info($msg.$segundo_msj);
+    }
+
+    public static function LogMessage($msg,$msj2 = null){
+      static::RegistrarLog($msg,$msj2,"maraclog");
     }
 
 
+    public static function LogMessageCronBorrador($msg,$msj2 = null){
+      static::RegistrarLog($msg,$msj2,"cron_eliminacion_borradores");
+    }
 }

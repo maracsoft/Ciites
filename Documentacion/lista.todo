@@ -1,0 +1,13 @@
+Contratos plazo:
+  ☐ verificar todo el flujo de creacion y edicion bien
+
+Contrato locacion:
+  ✔ VER contrato locacion @done(23-11-28 20:08)
+  ☐ verificar todo el flujo de creacion y edicion bien
+
+
+☐ Mover el cron de limpiar borradores a otro controller
+
+
+☐ Confirmar con madre el funcionamiento del select de tipo adenda financiera
+☐ Al subir a produccion reiniciar numeracion

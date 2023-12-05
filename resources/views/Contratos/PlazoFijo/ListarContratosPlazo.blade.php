@@ -72,20 +72,6 @@ $comp_filtros->añadirFiltro([
   'max_width'=>'450px',
 ]);
 
-$comp_filtros->añadirFiltro([
-  'name'=>'codTipoContrato',
-  'label'=>'Tipo de Contrato:',
-  'show_label'=>true,
-  'placeholder'=>'- Tipo de Contrato -',
-  'type'=>'select',
-  'function'=>'equals',
-  'options'=>$listaTipoContratos,
-  'options_label_field'=>'nombre',
-  'options_id_field'=>null,
-  'size'=>'',
-  'max_width'=>'450px',
-]);
-
 
 @endphp
 
@@ -118,13 +104,12 @@ $comp_filtros->añadirFiltro([
           <th>Cod</th>
           <th>Creador</th>
           <th>Contratado</th>
-          <th>Fecha emisión</th>
+
           <th>Duración contrato</th>
-          <th>Nombre puesto</th>
-          <th>Proyecto</th>
-          <th>TipoContrato</th>
+          <th>Puesto</th>
+
           <th>
-            Sueldo Bruto
+            Remuneración
           </th>
           <th>
             Opc
@@ -138,7 +123,7 @@ $comp_filtros->añadirFiltro([
                 <td>
 
                   <span class="fontSize10">
-                    {{$contrato->codigoCedepas}}
+                    {{$contrato->codigo_unico}}
                   </span>
 
                     @if($contrato->estaAnulado())
@@ -149,6 +134,10 @@ $comp_filtros->añadirFiltro([
                 </td>
                 <td>
                     {{$contrato->getEmpleadoCreador()->getNombreCompleto()}}
+                    <br>
+                    <span class="fontSize9">
+                      Creado el {{$contrato->getFechaHoraEmision()}}
+                    </span>
                 </td>
 
                 <td>
@@ -157,29 +146,26 @@ $comp_filtros->añadirFiltro([
                         [{{$contrato->dni}}]
                     </span>
                 </td>
+
                 <td>
-                    {{$contrato->getFechaHoraEmision()}}
+                    {{$contrato->getFechaInicioEscrita()}}
+                    al
+                    {{$contrato->getFechaFinEscrita()}}
                 </td>
                 <td>
-                    {{$contrato->getFechaInicio()}}
-                    //
-                    {{$contrato->getFechaFin()}}
-                </td>
-                <td>
-                    {{$contrato->nombrePuesto}}
-                </td>
-                <td>
-                    {{$contrato->nombreProyecto}}
-                </td>
-                <td>
-                  {{$contrato->getTipoContrato()->nombre}}
+                    {{$contrato->puesto}}
                 </td>
                 <td class="text-right">
-                  {{$contrato->sueldoBruto}}
-
-
+                  {{$contrato->getMoneda()->simbolo}} {{$contrato->remuneracion_mensual}}
                 </td>
                 <td>
+
+                  @if ($contrato->sePuedeEditar())
+                    <a class="btn btn-warning btn-sm" href="{{route('ContratosPlazo.Editar',$contrato->getId())}}">
+                      <i class="fas fa-pen"></i>
+                    </a>
+                  @endif
+
 
                   <a class="btn btn-primary btn-sm" href="{{route('ContratosPlazo.Ver',$contrato->getId())}}">
                     <i class="fas fa-eye"></i>

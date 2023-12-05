@@ -70,82 +70,35 @@ Route::group(['middleware'=>"Mantenimiento"],function()
 
     Route::get('/encriptarContraseñas', function(){
 
-        // return redirect()->route('error')->with('datos','Parece que te has perdido...');
-
-        //$contraseñas = "40556946;46636006;47541289;26682689;41943357;43485279;42090409;44847934;26682687;17914644;70355561;70585629;44685699;19327774;40360154;45740336;15738099;19330869;74240802;70386230;42927000;42305800;15766143;45540460;45372425;03120627;45576187;17877014;02897932;44155217;18175358;40068481;18126610;43162714;40392458;40242073;40994213;42122048;44896824;46352412;43953715;99999999;99999999";
-
-        //$contraseñas = '24462108;47449263;09962981;44284513;15738099;09858655;07238664;45434776;73636764;74324466;75513292';
-        $contraseñas="45540460";
-        $vectorContraseñas = explode(';',$contraseñas);
-
-        $vectorContraseñasEncriptadas = [];
-        foreach ($vectorContraseñas as $item){
-            array_push($vectorContraseñasEncriptadas,Hash::make($item));
-        }
-
-        $listaEncriptadasSeparadasComas= implode(';',$vectorContraseñasEncriptadas);
-
-
-        return $listaEncriptadasSeparadasComas;
 
     });
-
-    // RUTA -> CONTROLADOR -> VISTA
-    // /home
 
 
     Route::get('/probandoProy','ProyectoController@probandoMeses');
 
 
     Route::get('/probandoCosas',function(){
-      $contrato = ContratoPlazo::findOrFail(247);
-      $pdf = $contrato->getPDFServicio();
+      $contrato = ContratoPlazo::findOrFail(248);
+      $pdf = $contrato->getPDF();
       return $pdf->stream('Contrato ' . $contrato->getTituloContrato() . '.Pdf');
     });
 
     Route::get('/serviciosDistritosRepetidos',function(){
-        $arr = Distrito::getArrayCodsDistritosNombresRepetidos();
-
-        $servPeligros = Servicio::whereIn('codDistrito',$arr)->get();
-        foreach ($servPeligros as $ser) {
-
-            echo "id=".$ser->getId()." codDistrito=".$ser->codDistrito."<br>";
-        }
 
 
     });
 
     Route::get('/unidadesDistritosRepetidos',function(){
-        $arr = Distrito::getArrayCodsDistritosNombresRepetidos();
 
-        $unidades = UnidadProductiva::whereIn('codDistrito',$arr)->get();
-        foreach ($unidades as $unid) {
-
-            echo "id=".$unid->getId()." codDistrito=".$unid->codDistrito . "  lugar=".$unid->getTextoLugar()."<br>";
-        }
 
     });
     Route::get('/serviciosDistritoUno',function(){
-        $arr = Distrito::getArrayCodsDistritosNombresRepetidos();
-        echo "UNIDADES:<br>";
-        $unidades = UnidadProductiva::where('codDistrito',1)->get();
-        foreach ($unidades as $unid) {
 
-            echo "id=".$unid->getId()." codDistrito=".$unid->codDistrito . "  lugar=".$unid->getTextoLugar()."<br>";
-        }
-
-        echo "SERVICIOS:<br>";
-        $servicios = Servicio::where('codDistrito',1)->get();
-        foreach ($servicios as $ser) {
-            echo "id=".$ser->getId()." codDistrito=".$ser->codDistrito."<br>";
-        }
     });
 
 
 
     Route::get('/distritosRepetidos',function(){
-        $arr = Distrito::getDistritosNombresRepetidos();
-        return $arr;
 
     });
 
@@ -1403,7 +1356,15 @@ Route::group(['middleware'=>"Mantenimiento"],function()
         {
             Route::get('/ContratosPlazo/Listar','ContratoPlazoController@listar')->name('ContratosPlazo.Listar');
             Route::get('/ContratosPlazo/Crear','ContratoPlazoController@Crear')->name('ContratosPlazo.Crear');
+            Route::get('/ContratosPlazo/Editar/{codContrato}','ContratoPlazoController@Editar')->name('ContratosPlazo.Editar');
+
             Route::post('/ContratosPlazo/Guardar','ContratoPlazoController@Guardar')->name('ContratosPlazo.Guardar');
+            Route::post('/ContratosPlazo/Actualizar','ContratoPlazoController@Actualizar')->name('ContratosPlazo.Actualizar');
+
+
+            Route::post('/ContratosPlazo/GenerarBorrador','ContratoPlazoController@GenerarBorrador')->name('ContratosPlazo.GenerarBorrador');
+            Route::get('/Contratos/Borradores/Ver/{filename}','ContratoPlazoController@VerBorrador')->name('ContratosPlazo.VerBorrador');
+
 
             Route::get('/ContratosPlazo/descargarPDF/{codContrato}','ContratoPlazoController@descargarPDF')->name('ContratosPlazo.descargarPDF');
             Route::get('/ContratosPlazo/verPDF/{codContrato}','ContratoPlazoController@verPDF')->name('ContratosPlazo.verPDF');
@@ -1418,6 +1379,11 @@ Route::group(['middleware'=>"Mantenimiento"],function()
             Route::get('/ContratosLocacion/Crear','ContratoLocacionController@Crear')->name('ContratosLocacion.Crear');
             Route::post('/ContratosLocacion/Guardar','ContratoLocacionController@Guardar')->name('ContratosLocacion.Guardar');
 
+            Route::get('/ContratosLocacion/Editar/{codContrato}','ContratoLocacionController@Editar')->name('ContratosLocacion.Editar');
+            Route::post('/ContratosLocacion/Actualizar','ContratoLocacionController@Actualizar')->name('ContratosLocacion.Actualizar');
+
+
+            Route::post('/ContratosLocacion/GenerarBorrador','ContratoLocacionController@GenerarBorrador')->name('ContratosLocacion.GenerarBorrador');
 
             Route::get('/ContratosLocacion/descargarPDF/{codContrato}','ContratoLocacionController@descargarPDF')->name('ContratosLocacion.descargarPDF');
             Route::get('/ContratosLocacion/verPDF/{codContrato}','ContratoLocacionController@verPDF')->name('ContratosLocacion.verPDF');
@@ -1545,7 +1511,7 @@ Route::group(['middleware'=>"Mantenimiento"],function()
 
 
 
-
+    Route::get("/Crons/EliminarArchivosBorradorInnecesarios",'ContratoPlazoController@EliminarArchivosBorradorInnecesarios');
 
 
 

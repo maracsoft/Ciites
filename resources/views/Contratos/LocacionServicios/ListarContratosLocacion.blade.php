@@ -10,17 +10,6 @@
 @php
 
 
-$tipos_contrato = [
-  [
-    "id" => 1,
-    "nombre" => "CEDEPAS",
-  ],
-  [
-    "id" => 0,
-    "nombre" => "GPC",
-  ]
-];
-
 
 $tipos_personas = [
   [
@@ -52,19 +41,7 @@ $comp_filtros->añadirFiltro([
   'max_width'=>'450px',
 ]);
 
-$comp_filtros->añadirFiltro([
-  'name'=>'esDeCedepas',
-  'label'=>'Tipo:',
-  'show_label'=>true,
-  'placeholder'=>'- Tipo Contrato -',
-  'type'=>'select',
-  'function'=>'equals',
-  'options'=>$tipos_contrato,
-  'options_label_field'=>'nombre',
-  'options_id_field'=>'id',
-  'size'=>'',
-  'max_width'=>'450px',
-]);
+
 
 
 $comp_filtros->añadirFiltro([
@@ -161,7 +138,7 @@ $comp_filtros->añadirFiltro([
           <th>Contratado</th>
           <th>Fecha emisión</th>
           <th>Duración contrato</th>
-          <th>Tipo</th>
+
           <th>
             Retribución total
           </th>
@@ -176,7 +153,7 @@ $comp_filtros->añadirFiltro([
             <tr @if($contrato->estaAnulado()) style="background-color: rgba(255, 143, 143, 0.801)" @endif>
                 <td>
                   <span class="fontSize10">
-                    {{$contrato->codigoCedepas}}
+                    {{$contrato->codigo_unico}}
                   </span>
 
                     @if($contrato->estaAnulado())
@@ -214,13 +191,11 @@ $comp_filtros->añadirFiltro([
                     {{$contrato->getFechaHoraEmision()}}
                 </td>
                 <td>
-                    {{$contrato->getFechaInicio()}}
+                    {{$contrato->getFechaInicioEscrita()}}
                     //
                     {{$contrato->getFechaFin()}}
                 </td>
-                <td>
-                    {{$contrato->getTipoContrato()}}
-                </td>
+
                 <td class="text-right">
                     {{$contrato->getMoneda()->simbolo}}
                     {{$contrato->getRetribucionTotal()}}
@@ -231,6 +206,15 @@ $comp_filtros->añadirFiltro([
                   <a class="btn btn-primary btn-sm" href="{{route('ContratosLocacion.Ver',$contrato->getId())}}">
                     <i class="fas fa-eye"></i>
                   </a>
+
+                  @if ($contrato->sePuedeEditar())
+                    <a class="btn btn-warning btn-sm" href="{{route('ContratosLocacion.Editar',$contrato->getId())}}">
+                      <i class="fas fa-pen"></i>
+                    </a>
+                  @endif
+
+
+
                   <a href="{{route('ContratosLocacion.descargarPDF',$contrato->getId())}}" class='btn btn-info btn-sm'  title="Descargar PDF">
                     <i class="fas fa-file-download"></i>
                   </a>

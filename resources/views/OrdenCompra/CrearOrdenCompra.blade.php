@@ -457,7 +457,6 @@
                     document.getElementById('señores').value = personaJuridicaEncontrada.razonSocial;
 
 
-                    //document.getElementById('actividadPrincipal').value = personaJuridicaEncontrada.actEconomicas;
                     document.getElementById('direccion').value = personaJuridicaEncontrada.direccion;
 
                 }

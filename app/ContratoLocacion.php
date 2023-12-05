@@ -2,8 +2,11 @@
 
 namespace App;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class ContratoLocacion extends Contrato
 {
@@ -16,32 +19,19 @@ class ContratoLocacion extends Contrato
   const RaizCodigoCedepas = "CL";
 
   /*
-    CONTRATO LOCACIÓN
+  CONTRATO LOCACIÓN
 
-        fechaActual
-        fechaInicio
-        fechaFin
+      fechaInicio
+      fechaFin
 
-        apellidos
-        nombres
-        dni
-        direccion
-        motivoContrato
+      apellidos
+      nombres
+      dni
+      direccion
+      motivoContrato
 
-        retribucionTotal
-    */
-
-
-  /*
-        AÑADIR RUC
-        Provincia y departamento
-        MONEDA
-
-        añadir booleano GPC
-
-
-    */
-
+      retribucionTotal
+  */
 
   //le pasamos un modelo numeracion y calcula la nomeclatura del cod cedepas
   public static function calcularCodigoCedepas($objNumeracion)
@@ -57,28 +47,27 @@ class ContratoLocacion extends Contrato
   }
 
 
-  public function getPDF()
+  public function getPDF($listaDetalles = null)
   {
-    $listaItems = $this->getAvances();
-    $contrato = $this;
+    if($listaDetalles){
+      $listaItems = $listaDetalles;
+    }else{
+      $listaItems = $this->getAvances();
+    }
 
-    /*
-        return view('Contratos.contratoLocacionPDF',compact('contrato','listaItems'));
-        */
-
-    $pdf = \PDF::loadview(
-      'Contratos.contratoLocacionPDF',
-      array('contrato' => $this, 'listaItems' => $listaItems)
-    )->setPaper('a4', 'portrait');
+    $pdf = \PDF::loadview('Contratos.contratoLocacionPDF',array('contrato' => $this, 'listaItems' => $listaItems))->setPaper('a4', 'portrait');
 
     return $pdf;
   }
 
   public function getAvances()
   {
-    return AvanceEntregable::where('codContratoLocacion', $this->codContratoLocacion)
-      ->orderBy('fechaEntrega', 'ASC')
-      ->get();
+    $lista = AvanceEntregable::where('codContratoLocacion', $this->codContratoLocacion)->orderBy('fechaEntrega', 'ASC')->get();
+    foreach ($lista as $avance) {
+      $avance['fecha_front'] = $avance->getFechaEntrega();
+    }
+
+    return $lista;
   }
 
 
@@ -95,40 +84,23 @@ class ContratoLocacion extends Contrato
   }
 
 
-  function esDeCedepas()
-  {
-    return $this->esDeCedepas == '1';
-  }
-
-
-
-  function esDeGPC()
-  {
-    return !$this->esDeCedepas();
-  }
-
-  function getTipoContrato()
-  {
-    if ($this->esDeCedepas())
-      return "CEDEPAS";
-    return "GPC";
-  }
 
   function esDeNatural()
   {
     return $this->esPersonaNatural == '1';
   }
 
+  public function getTextoTipoPersona() : string {
+    if($this->esDeNatural()){
+      return "PERSONA NATURAL";
+    }else{
+      return "PERSONA JURÍDICA";
+    }
+  }
 
 
-  /*
-        Si es persona jurídica, será EL LOCADOR
-        Si es persona natural:
-            Hombre: EL LOCADOR
-            Mujer : LA LOCADORA
 
 
-    */
   public function getLocadore()
   {
     if ($this->esDeNatural()) {
@@ -141,6 +113,13 @@ class ContratoLocacion extends Contrato
     return "EL LOCADOR";
   }
 
+  public function getSexoLabel(){
+    if($this->sexo == 'F'){
+      return "FEMENINO";
+    }else{
+      return "MASCULINO";
+    }
+  }
 
 
 
@@ -192,12 +171,88 @@ class ContratoLocacion extends Contrato
         "ruc" => $contrato->ruc,
         "nombre_ruc" => $contrato->razonSocialPJ . " - " . $contrato->ruc,
       ];
-
     }
 
 
     return $listaNombres;
   }
 
+  public function setDataFromRequest(Request $request){
 
+
+    $this->motivoContrato = $request->motivoContrato;
+    $this->retribucionTotal = $request->retribucionTotal;
+    $this->codMoneda = $request->codMoneda;
+    $this->fecha_inicio_contrato = Fecha::formatoParaSQL($request->fecha_inicio_contrato);
+    $this->fecha_fin_contrato = Fecha::formatoParaSQL($request->fecha_fin_contrato);
+    $this->codSede = $request->codSede;
+    $this->esPersonaNatural = $request->esPersonaNatural;
+
+    $this->nombreFinanciera = $request->nombreFinanciera;
+    $this->nombreProyecto = $request->nombreProyecto;
+
+
+    if ($this->esPersonaNatural == "1") { //PERSONA NATURAL
+
+      $this->ruc = $request->PN_ruc;
+      $this->dni = $request->PN_dni;
+
+      $this->nombres = $request->PN_nombres;
+      $this->apellidos = $request->PN_apellidos;
+
+      $this->sexo = $request->PN_sexo;
+      $this->direccion = $request->PN_direccion;
+      $this->provincia = $request->PN_provincia;
+      $this->departamento = $request->PN_departamento;
+      $this->distrito = $request->PN_distrito;
+
+
+    } else { //PERSONA JURIDICA
+
+      $this->ruc = $request->PJ_ruc;
+      $this->dni = $request->PJ_dni;
+
+      $this->nombres = $request->PJ_nombres;
+      $this->apellidos = $request->PJ_apellidos;
+
+      $this->direccion = $request->PJ_direccion;
+      $this->provincia = $request->PJ_provincia;
+      $this->departamento = $request->PJ_departamento;
+      $this->distrito = $request->PJ_distrito;
+
+      $this->razonSocialPJ = $request->PJ_razonSocialPJ;
+      $this->nombreDelCargoPJ = $request->PJ_nombreDelCargoPJ;
+    }
+
+  }
+
+
+  public function setDetallesFromRequest(Request $request,$activar_guardado = true){
+
+    //eliminamos los que existen
+    if($activar_guardado){
+      AvanceEntregable::where('codContratoLocacion','=',$this->codContratoLocacion)->delete();
+    }
+
+    $lista = new Collection();
+    $detalles = json_decode($request->json_detalles);
+
+    foreach ($detalles as $detalle) {
+      $avance = new AvanceEntregable();
+
+      $avance->fechaEntrega = Fecha::formatoParaSQL($detalle->fecha);
+      $avance->descripcion = $detalle->descripcion;
+      $avance->monto = $detalle->monto;
+      $avance->porcentaje = $detalle->porcentaje;
+
+      if($activar_guardado){
+        $avance->codContratoLocacion = $this->getId();
+        $avance->save();
+      }
+      $lista->push($avance);
+
+    }
+
+    return $lista;
+  }
 }

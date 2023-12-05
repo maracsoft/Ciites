@@ -130,7 +130,7 @@
     color: rgb(255, 255, 96);
   }
 
-  .internalPadding-1 > * {
+  .internalPadding-1>* {
     padding: 0.15rem;
   }
 
@@ -174,21 +174,22 @@
   }
 
   .nombrecompleto-usuario {
-    color:#777777;
+    color: #777777;
     font-size: smaller;
     font-weight: 800;
   }
 
 
-  .cursor-pointer{
-    cursor:pointer;
+  .cursor-pointer {
+    cursor: pointer;
   }
-  .cursor-move{
-    cursor:move;
+
+  .cursor-move {
+    cursor: move;
   }
 
 
-  .page-title{
+  .page-title {
     text-align: center;
     background-color: #cee7e7;
     color: black;
@@ -200,29 +201,29 @@
     border-radius: 5px;
   }
 
-  .table-marac-header{
-    background-color:#3e8bb7;
+  .table-marac-header {
+    background-color: #3e8bb7;
     color: #fff;
   }
 
 
   /* Código para que el fomr-control-undefined también pinte a los select2 de bootstrap */
-  select.form-control.form-control-undefined + button.dropdown-toggle{
+  select.form-control.form-control-undefined+button.dropdown-toggle {
     box-shadow: 0 0 5px 3px rgba(220, 53, 69, 0.6);
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
   }
 
-  input.cb_big[type="checkbox"]{
+  input.cb_big[type="checkbox"] {
     width: 35px;
     height: 35px;
   }
 
-  input.cb_medium[type="checkbox"]{
+  input.cb_medium[type="checkbox"] {
     width: 25px;
     height: 25px;
   }
 
-  .msj_parametros_faltantes{
+  .msj_parametros_faltantes {
     max-width: 200px;
     font-size: 10pt;
     background-color: red;
@@ -232,7 +233,7 @@
   }
 
 
-  .nombre-entorno{
+  .nombre-entorno {
 
     color: white;
     font-size: 10pt;
@@ -246,31 +247,35 @@
   }
 
 
-  .modal-2xl{
+  .modal-2xl {
     max-width: 1300px;
   }
 
-  .image-logo-container{
-      background-color: white;
-      margin-right: -8px;
-      margin-left: -8px;
+  .image-logo-container {
+    background-color: white;
+    margin-right: -8px;
+    margin-left: -8px;
 
-    }
-
-
+  }
 
 
-    .nav-pills .nav-link:not(.active):hover {
-      color: #215eb3;
-      background-color: #efefef;
-    }
 
-    aside.main-sidebar{
-      background-color: white;
-    }
 
-    li.nav-item.has-treeview li.nav-item{
-    margin-left:12px;
-    }
+  .nav-pills .nav-link:not(.active):hover {
+    color: #215eb3;
+    background-color: #efefef;
+  }
 
-   </style>
+  aside.main-sidebar {
+    background-color: white;
+  }
+
+  li.nav-item.has-treeview li.nav-item {
+    margin-left: 12px;
+  }
+
+
+
+</style>
+
+@include('CSS.LabelMovil')

@@ -51,12 +51,12 @@ return [
             'driver' => 'local',
             'root' => storage_path('app/comprobantes'),
         ],
-        
+
         'requerimientos' => [
             'driver' => 'local',
             'root' => storage_path('app/requerimientos'),
         ],
-        
+
         'rendiciones' => [
             'driver' => 'local',
             'root' => storage_path('app/comprobantes/rendiciones'),
@@ -74,27 +74,34 @@ return [
             'driver' => 'local',
             'root' => storage_path('app/proyectos/mediosVerificacion/Resultados'),
         ],
-        
-        
+
+
         'mediosVerificacionMetas' => [
             'driver' => 'local',
             'root' => storage_path('app/proyectos/mediosVerificacion/Metas'),
         ],
-        
-        
+
+
         'proyectos' => [
             'driver' => 'local',
             'root' => storage_path('app/proyectos'),
         ],
-        
+
         'archivoGeneral' => [
             'driver' => 'local',
             'root' => storage_path('app/archivoGeneral'),
         ],
-        
-      
-        
-        
+
+
+        'borradores_pdf' => [
+          'driver' => 'local',
+          'root' => storage_path('app/borradores_pdf'),
+        ],
+
+
+
+
+
         //este ya no se usa
         'comprobantesAbono' => [
             'driver' => 'local',
@@ -138,9 +145,9 @@ return [
         public_path('storage') => storage_path('app/public'),
         storage_path('comprobantes') => storage_path('app/comprobantes'),
         storage_path('comprobantesAbono') => storage_path('app/comprobantesAbono'),
-        
 
-        
+
+
     ],
 
 ];

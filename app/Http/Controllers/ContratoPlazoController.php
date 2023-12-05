@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Configuracion;
+use App\Contrato;
 use App\ContratoPlazo;
 use App\Debug;
 use App\Empleado;
@@ -11,13 +12,16 @@ use App\Fecha;
 use App\Http\Controllers\Controller;
 use App\Moneda;
 use App\Numeracion;
+use App\ParametroSistema;
 use App\Proyecto;
+use App\RespuestaAPI;
 use App\Sede;
 use App\TipoContrato;
 use App\UI\UIFiltros;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ContratoPlazoController extends Controller
 {
@@ -40,17 +44,15 @@ class ContratoPlazoController extends Controller
     $listaEmpleadosQueGeneraronContratos = ContratoPlazo::listaEmpleadosQueGeneraronContratosPlazo();
     $listaEmpleadosQueGeneraronContratos = Empleado::prepararParaSelect($listaEmpleadosQueGeneraronContratos);
     $listaNombresDeContratados = ContratoPlazo::listaNombresDeContratados();
-    $listaTipoContratos = TipoContrato::All();
 
-    $tiposContrato = TipoContrato::All();
+
     return view('Contratos.PlazoFijo.ListarContratosPlazo', compact(
       'listaContratos',
       'listaEmpleadosQueGeneraronContratos',
-      'tiposContrato',
+
       'listaNombresDeContratados',
       'filtros_usados',
-      'filtros_usados_paginacion',
-      'listaTipoContratos'
+      'filtros_usados_paginacion'
     ));
   }
 
@@ -60,67 +62,79 @@ class ContratoPlazoController extends Controller
     $listaProyectos = Proyecto::getProyectosActivos();
     $listaMonedas = Moneda::All();
     $listaSedes = Sede::All();
-    $listaTipoContratos = TipoContrato::All();
-    return view('Contratos.PlazoFijo.CrearContratoPlazo', compact('listaProyectos', 'listaMonedas', 'listaSedes', 'listaTipoContratos'));
+    $listaTipoAdenda = ContratoPlazo::getTiposAdendaFinanciera();
+    $tiposTiempos = ContratoPlazo::getTiempos();
+    return view('Contratos.PlazoFijo.CrearContratoPlazo', compact('listaProyectos', 'listaMonedas','tiposTiempos', 'listaSedes','listaTipoAdenda'));
   }
 
-  function guardar(Request $request)
+  function Editar($codContratoPlazo){
+    $contrato = ContratoPlazo::findOrFail($codContratoPlazo);
+
+    $listaProyectos = Proyecto::getProyectosActivos();
+    $listaMonedas = Moneda::All();
+    $listaSedes = Sede::All();
+    $listaTipoAdenda = ContratoPlazo::getTiposAdendaFinanciera();
+    $tiposTiempos = ContratoPlazo::getTiempos();
+    return view('Contratos.PlazoFijo.EditarContratoPlazo', compact('contrato','listaProyectos', 'listaMonedas','tiposTiempos', 'listaSedes','listaTipoAdenda'));
+  }
+
+  function Guardar(Request $request)
   {
 
     try {
       db::beginTransaction();
 
-      if ($request->asignacionFamiliar == '1')
-        $asig = 1;
-      else
-        $asig = 0;
-
       $empLogeado = Empleado::getEmpleadoLogeado();
 
       $contrato = new ContratoPlazo();
+      $contrato->setDataFromRequest($request);
+
       $contrato->codEmpleadoCreador = $empLogeado->codEmpleado;
-      $contrato->nombres = $request->nombres;
-      $contrato->apellidos = $request->apellidos;
-      $contrato->direccion = $request->direccion;
-      $contrato->dni = $request->dni;
-      $contrato->sexo = $request->sexo;
-      $contrato->asignacionFamiliar = $asig;
       $contrato->fechaHoraGeneracion = Carbon::now();
-      $contrato->fechaInicio = Fecha::formatoParaSQL($request->fechaInicio);
-      $contrato->fechaFin = Fecha::formatoParaSQL($request->fechaFin);
-      $contrato->sueldoBruto = $request->sueldoBruto;
-      $contrato->nombreProyecto = $request->nombreProyecto;
-      $contrato->nombreFinanciera = $request->nombreFinanciera;
-      $contrato->provinciaYDepartamento = $request->provinciaYDepartamento;
+      $contrato->es_borrador = 0;
 
-
-      $contrato->nombrePuesto = $request->nombrePuesto;
-      $contrato->codMoneda = $request->codMoneda;
-      $contrato->codSede = $request->codSede;
-      $contrato->codTipoContrato = $request->codTipoContrato;
-
-      $contrato->codigoCedepas = ContratoPlazo::calcularCodigoCedepas(Numeracion::getNumeracionCPF());
+      $contrato->codigo_unico = ContratoPlazo::calcularCodigoCedepas(Numeracion::getNumeracionCPF());
       Numeracion::aumentarNumeracionCPF();
 
       $contrato->save();
 
-
-
-      db::commit();
-
-      return redirect()->route('ContratosPlazo.Listar')
-        ->with('datos', "Se ha creado exitosamente el contrato " . $contrato->codigoCedepas);
+      DB::commit();
+      return redirect()->route('ContratosPlazo.Editar',$contrato->codContratoPlazo)->with('datos_ok', "Se ha creado exitosamente el contrato " . $contrato->codigo_unico);
     } catch (\Throwable $th) {
 
-      Debug::mensajeError('CONTRATO PLAZO GUARDAR', $th);
+      Debug::LogMessage($th);
       DB::rollBack();
       $codErrorHistorial = ErrorHistorial::registrarError(
         $th,
         app('request')->route()->getAction(),
         json_encode($request->toArray())
       );
-      return redirect()->route('ContratosPlazo.Listar')
-        ->with('datos', Configuracion::getMensajeError($codErrorHistorial));
+      return redirect()->route('ContratosPlazo.Listar')->with('datos', Configuracion::getMensajeError($codErrorHistorial));
+    }
+  }
+
+
+  function Actualizar(Request $request)
+  {
+    try {
+      db::beginTransaction();
+
+      $contrato = ContratoPlazo::findOrFail($request->codContratoPlazo);
+      $contrato->setDataFromRequest($request);
+
+      $contrato->save();
+
+      DB::commit();
+      return redirect()->route('ContratosPlazo.Editar',$request->codContratoPlazo)->with('datos_ok', "Se ha actualizado exitosamente el contrato " . $contrato->codigo_unico);
+    } catch (\Throwable $th) {
+      Debug::LogMessage($th);
+      DB::rollBack();
+      $codErrorHistorial = ErrorHistorial::registrarError(
+        $th,
+        app('request')->route()->getAction(),
+        json_encode($request->toArray())
+      );
+      return redirect()->route('ContratosPlazo.Listar')->with('datos', Configuracion::getMensajeError($codErrorHistorial));
     }
   }
 
@@ -129,32 +143,29 @@ class ContratoPlazoController extends Controller
 
   public function descargarPDF($codContrato)
   {
-
-
     $contrato = ContratoPlazo::findOrFail($codContrato);
     $pdf = $contrato->getPDF();
-    //return $pdf;
-    return $pdf->download('Contrato ' . $contrato->getTituloContrato() . '.Pdf');
+    return $pdf->stream('Contrato ' . $contrato->getTituloContrato() . '.Pdf', array("Attachment" => true));
   }
 
   public function verPDF($codContrato)
   {
     $contrato = ContratoPlazo::findOrFail($codContrato);
-    //return view('Contratos.contratoPlazoPDF',compact('contrato'));
     $pdf = $contrato->getPDF();
-
-    /*
-        return $pdf;
-        */
-
-
-    return $pdf->stream('Contrato ' . $contrato->getTituloContrato() . '.Pdf');
+    return $pdf->stream('Contrato ' . $contrato->getTituloContrato() . '.Pdf', array("Attachment" => false));
   }
 
   public function Ver($id)
   {
     $contrato = ContratoPlazo::findOrFail($id);
-    return view('Contratos.PlazoFijo.VerContratoPlazo', compact('contrato'));
+
+    $listaProyectos = Proyecto::getProyectosActivos();
+    $listaMonedas = Moneda::All();
+    $listaSedes = Sede::All();
+    $listaTipoAdenda = ContratoPlazo::getTiposAdendaFinanciera();
+    $tiposTiempos = ContratoPlazo::getTiempos();
+
+    return view('Contratos.PlazoFijo.VerContratoPlazo', compact('contrato','listaProyectos', 'listaMonedas','tiposTiempos', 'listaSedes','listaTipoAdenda'));
   }
 
 
@@ -179,7 +190,7 @@ class ContratoPlazoController extends Controller
       DB::commit();
       return redirect()
         ->route('ContratosPlazo.Listar')
-        ->with('datos', 'Se ha ANULADO el contrato ' . $contrato->codigoCedepas);
+        ->with('datos', 'Se ha ANULADO el contrato ' . $contrato->codigo_unico);
     } catch (\Throwable $th) {
       Debug::mensajeError('CONTRATO PLAZO : ANULAR', $th);
       DB::rollback();
@@ -193,4 +204,85 @@ class ContratoPlazoController extends Controller
         ->with('datos', Configuracion::getMensajeError($codErrorHistorial));
     }
   }
+
+  /* Retorna la url para visualizar el PDF */
+  public function GenerarBorrador(Request $request){
+
+    $contrato = new ContratoPlazo();
+
+    $contrato->setDataFromRequest($request);
+    $contrato->es_borrador = 1;
+    $contrato->fechaHoraGeneracion = Carbon::now();
+    $contrato->codigo_unico = ContratoPlazo::calcularCodigoCedepas(Numeracion::getNumeracionCPF());
+    /* NO GUARDAMOS */
+
+    $pdf = $contrato->getPDF();
+
+    $fecha_actual = time();
+    $nombre_guardado = "CP_".$fecha_actual.".pdf";
+
+    $generated_file = $pdf->output();
+
+    Storage::put("/borradores_pdf/$nombre_guardado",$generated_file);
+
+    return RespuestaAPI::respuestaDatosOk("Se generó exitosamente el borrador",$nombre_guardado);
+
+  }
+
+
+
+  public static function VerBorrador($filename){
+    $file = Storage::get("borradores_pdf/$filename");
+    return static::setPDFResponse($file);
+  }
+
+  public static function setPDFResponse($data){
+    return response($data, 200)->header('Content-Type', 'application/pdf');
+  }
+
+
+
+
+  const MinutosEliminacion = 10;
+
+  public function EliminarArchivosBorradorInnecesarios(){
+
+    $proyect_folder_path = ParametroSistema::getParametroSistema('proyect_folder_path')->valor;
+    $ruta_archivos_borrador = $proyect_folder_path."/storage/app/borradores_pdf";
+    $real_path = realpath($ruta_archivos_borrador);
+    $listaMigraciones_files = scandir($real_path);
+
+
+    $tiempo_actual = time();
+    /* Eliminaremos los borradores generados hace más de 10 minutos */
+    $archivos_eliminados = [];
+
+    foreach ($listaMigraciones_files as $filename) {
+      if(str_contains($filename,".pdf")){
+        $hora_generacion = intval(substr($filename,3,10));
+
+        $hora_vencimiento = $hora_generacion + static::MinutosEliminacion*60;
+
+        if($tiempo_actual > $hora_vencimiento){
+          Debug::LogMessageCronBorrador("Eliminando el archivo borrador $filename");
+          unlink($real_path."/".$filename);
+          $archivos_eliminados[] = $filename;
+        }
+
+
+      }
+    }
+
+    if(count($archivos_eliminados) == 0){
+      $msj = "No se elimino ningun archivo";
+    }else{
+      $str = implode(",",$archivos_eliminados);
+      $msj = "Se eliminaron exitosamente los archivos $str";
+    }
+
+    return RespuestaAPI::respuestaOk($msj);
+
+  }
+
+
 }

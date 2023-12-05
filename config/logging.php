@@ -66,6 +66,12 @@ return [
           'path' => storage_path('logs/marac_logs/maraclog.log'),
           'level' => 'debug',
         ],
+        'cron_eliminacion_borradores' => [
+          'driver' => 'single',
+          'path' => storage_path('logs/marac_logs/cron_eliminacion_borradores.log'),
+          'level' => 'debug',
+        ],
+
         'papertrail' => [
             'driver' => 'monolog',
             'level' => 'debug',

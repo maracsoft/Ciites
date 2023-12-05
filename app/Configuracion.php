@@ -196,8 +196,15 @@ class Configuracion extends Model
     }
 
 
-    public static function getRutaImagenCedepasPNG(){
-      return "https://gestion.ciites.com/img/logo-ciites.png";
+    public static function getRutaImagenCedepasPNG($size = null){
+      if($size == null)
+        return "https://gestion.ciites.com/img/logo-ciites.png";
+
+
+
+      return "https://gestion.ciites.com/img/logo-ciites-w".$size.".png";
+
+
     }
 
 
