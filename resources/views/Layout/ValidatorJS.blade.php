@@ -459,6 +459,21 @@ function invocarHtmlEnID(ruta,idElemento){
 
 }
 
+async function Async_InvocarHtmlEnID(ruta,idElemento){
+
+    var data = await $.get(ruta).promise();
+
+    console.log('Se ha actualizado el objeto de id '+idElemento + ' con contenido invocado de  ' + ruta);
+    objeto = document.getElementById(idElemento);
+    objeto.innerHTML = data;
+
+}
+
+
+async function invocarHtmlEnID_async(ruta,idElemento){
+    await Async_InvocarHtmlEnID(ruta,idElemento);
+}
+
 
  //  datos = {coche: "Ford", modelo: "Focus", color: "rojo"};
 function enviarPeticionPOST(ruta,datos){
@@ -525,5 +540,28 @@ function hidrateHtmlString(html_string,object){
 
 }
 
+
+
+
+/* se le manda el id de un formulario y retorna un objeto de datos asi, segun los name
+{
+  nombre:"diego",
+  apellidos:"vigo"
+}
+*/
+function getObjetoDatosSegunForm(form_id){
+  var formulario_archivos = document.getElementById(form_id);
+  var formData = new FormData(formulario_archivos);
+
+  var data_form = {};
+  for (const pair of formData.entries()) {
+    var key = pair[0];
+    var value = pair[1];
+    data_form[key] = value;
+  }
+
+  console.log("data_form",data_form);
+  return data_form;
+}
 
 </script>

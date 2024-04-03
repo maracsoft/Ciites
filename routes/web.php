@@ -503,7 +503,16 @@ Route::group(['middleware'=>"Mantenimiento"],function()
 
 
             Route::get('/PoblarReposiciones','PobladorBDController@poblarReposiciones');
+        
+            /* **************************** MODULO DE CONFIGURACIÓN DE PERIODOS ********************* */
 
+            Route::get('/PeriodoDirector/Listar', 'PeriodoDirectorController@ListarPeriodos')->name('PeriodoDirector.Listar');
+            Route::get('/PeriodoDirector/Inv_Listar', 'PeriodoDirectorController@Inv_ListarPeriodos')->name('PeriodoDirector.Inv_Listar');
+            
+            Route::get('/PeriodoDirector/GetFormInvocable/{codPeriodoDirector}', 'PeriodoDirectorController@GetFormInvocable')->name('PeriodoDirector.GetFormInvocable');
+                        
+            Route::post('/PeriodoDirector/GuardarActualizar', 'PeriodoDirectorController@GuardarActualizar')->name('PeriodoDirector.GuardarActualizar');
+            
 
             /* MODULO DE PARAMETROS DEL SISTEMA */
 
@@ -1390,6 +1399,24 @@ Route::group(['middleware'=>"Mantenimiento"],function()
             Route::get('/ContratosLocacion/Ver/{codContrato}','ContratoLocacionController@Ver')->name('ContratosLocacion.Ver');
 
             Route::get('/ContratosLocacion/Anular/{codContrato}','ContratoLocacionController@Anular')->name('ContratosLocacion.Anular');
+
+            /* *************************+ CONTRATOS NUEVO ********************************++ */
+
+            Route::get('/ContratosPlazoNuevo/Listar', 'ContratoPlazoNuevoController@listar')->name('ContratosPlazoNuevo.Listar');
+            Route::get('/ContratosPlazoNuevo/Crear', 'ContratoPlazoNuevoController@Crear')->name('ContratosPlazoNuevo.Crear');
+            Route::get('/ContratosPlazoNuevo/Editar/{codContratoPlazo}', 'ContratoPlazoNuevoController@Editar')->name('ContratosPlazoNuevo.Editar');
+
+            Route::post('/ContratosPlazoNuevo/Guardar', 'ContratoPlazoNuevoController@Guardar')->name('ContratosPlazoNuevo.Guardar');
+            Route::post('/ContratosPlazoNuevo/Actualizar', 'ContratoPlazoNuevoController@Actualizar')->name('ContratosPlazoNuevo.Actualizar');
+
+            Route::post('/ContratosPlazoNuevo/GenerarBorrador', 'ContratoPlazoNuevoController@GenerarBorrador')->name('ContratosPlazoNuevo.GenerarBorrador');
+
+            Route::get('/ContratosPlazoNuevo/descargarPDF/{codContrato}', 'ContratoPlazoNuevoController@descargarPDF')->name('ContratosPlazoNuevo.descargarPDF');
+            Route::get('/ContratosPlazoNuevo/verPDF/{codContrato}', 'ContratoPlazoNuevoController@verPDF')->name('ContratosPlazoNuevo.verPDF');
+
+            Route::get('/ContratosPlazoNuevo/Ver/{codContrato}', 'ContratoPlazoNuevoController@Ver')->name('ContratosPlazoNuevo.Ver');
+
+            Route::get('/ContratosPlazoNuevo/Anular/{codContrato}', 'ContratoPlazoNuevoController@Anular')->name('ContratosPlazoNuevo.Anular');
 
 
         });

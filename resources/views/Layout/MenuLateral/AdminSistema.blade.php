@@ -316,6 +316,13 @@
             </a>
           </li>
 
+        
+          <li class="nav-item">
+            <a href="{{route('ContratosPlazoNuevo.Listar')}}" class="nav-link">
+              <i class="fas fa-file-alt nav-icon"></i>
+              <p>Planilla NUEVO</p>
+            </a>
+          </li>
 
         </ul>
       </li>

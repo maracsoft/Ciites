@@ -11,7 +11,7 @@
         INTRODUCCIÓN
     
     </b>
-    <br>CEDEPAS NORTE, ha considerado un conjunto de valores como complemento a los contratos de trabajo con sus trabajadores y trabajadoras.El personal contratado por la institución debe conocer, respetar y comprometerse a aplicar permanentemente dichos valores, así como exigir lo propio a los consultores contratados en el marco de los programas objeto de cooperación.
+    <br>CIITES, ha considerado un conjunto de valores como complemento a los contratos de trabajo con sus trabajadores y trabajadoras.El personal contratado por la institución debe conocer, respetar y comprometerse a aplicar permanentemente dichos valores, así como exigir lo propio a los consultores contratados en el marco de los programas objeto de cooperación.
     <br>El cumplimiento del Código de Ética busca asegurar un clima de colaboración constructiva e innovativa basado en la confianza y respeto mutuo, además de proteger la imagen institucional en su conjunto. 
     <br>CEDEPAS  NORTE es una institución que tiene por finalidad la contribución a la mejora de las condiciones de vida sociales, ecológicas y económicas, esta contribución se realiza mediante servicios profesionales al desarrollo, en la ejecución de proyectos y mandatos, vinculando los aprendizajes en campo con el estado del arte en los temas relacionados a la realización de programas, asesoramiento y estudios cuya especialización se da en tres áreas: Buena Gobernabilidad, Gestión sostenible de Recursos Naturales y Cambio Climático y Desarrollo Económico Rural. El ámbito de aplicación del presente Código se extiende a toda persona que se relacione o tenga que ver directamente con la Institución, independientemente de su régimen laboral o relación contractual. Así, este Código será el marco tanto para las relaciones interpersonales del personal y consultores de la Institución como para su trato hacia los terceros vinculados al mismo. 
     
@@ -21,10 +21,10 @@
     <b>
         1.	NUESTRA VISIÓN 
     </b>
-    <br>“CEDEPAS Norte es una organización de desarrollo, ecuménica y democrática; practica la equidad, tolerancia, transparencia y solidaridad; líder en la macroregión norte, con influencia en la promoción de políticas públicas en favor del desarrollo humano.
+    <br>“CIITES es una organización de desarrollo, ecuménica y democrática; practica la equidad, tolerancia, transparencia y solidaridad; líder en la macroregión norte, con influencia en la promoción de políticas públicas en favor del desarrollo humano.
     <br>Es una organización sin fines de lucro, referente por su capital humano, fuente de proacción, prospectiva e innovación y audacia en la intervención.
     <br>Es un actor estratégico que promueve el desarrollo humano generando oportunidades de cambio a sectores de población emergente, en aspectos socioeconómicos, ambientales y políticos.
-    <br>CEDEPAS Norte es una institución reconocida que genera sinergias público – privadas, consolidando la gobernabilidad democrática, la gestión sostenible de los recursos naturales y el desarrollo de iniciativas económicas sostenibles y rentables”
+    <br>CIITES es una institución reconocida que genera sinergias público – privadas, consolidando la gobernabilidad democrática, la gestión sostenible de los recursos naturales y el desarrollo de iniciativas económicas sostenibles y rentables”
     <br>
 </p>
 
@@ -64,7 +64,7 @@
         El respeto a la persona humana: 
     </b>
     {{$contrato->getTrabajadore()}}  se compromete a un trato justo, cortés y respetuoso con todo el personal y consultores, tanto al interior como fuera de la Institución. 
-    <br>CEDEPAS NORTE valora la individualidad, la diversidad y la potencial creatividad que sus empleados y servidores brindan a la organización y que ayudan a cumplir sus metas y a alcanzar su Visión.
+    <br>CIITES valora la individualidad, la diversidad y la potencial creatividad que sus empleados y servidores brindan a la organización y que ayudan a cumplir sus metas y a alcanzar su Visión.
     <br>
     
     <b>
@@ -85,12 +85,12 @@
     <b>
         Lealtad:
     </b>
-     {{$contrato->getTrabajadore()}}  reconoce la Misión, la Visión y los reglamentos internos de CEDEPAS NORTE. Esto abarca también la crítica constructiva, según la cual cada trabajador/trabajadora expresa abiertamente sus puntos de vista de manera apropiada en el momento y lugar apropiado.
+     {{$contrato->getTrabajadore()}}  reconoce la Misión, la Visión y los reglamentos internos de CIITES. Esto abarca también la crítica constructiva, según la cual cada trabajador/trabajadora expresa abiertamente sus puntos de vista de manera apropiada en el momento y lugar apropiado.
     <br>
     <b>
         Confidencialidad:
     </b>
-     {{$contrato->getTrabajadore()}}  se compromete a un manejo de manera confidencial de toda información cuando su naturaleza exija discreción o cuando CEDEPAS NORTE lo requiera expresamente.
+     {{$contrato->getTrabajadore()}}  se compromete a un manejo de manera confidencial de toda información cuando su naturaleza exija discreción o cuando CIITES lo requiera expresamente.
     <br>
     <b>
         La cooperación con partenarios:
@@ -100,7 +100,7 @@
     <b>
         La cultura corporativa:
     </b>
-     {{$contrato->getTrabajadore()}}  reconoce que, con su trabajo y comportamiento, contribuye a la imagen institucional conjunta de CEDEPAS NORTE.
+     {{$contrato->getTrabajadore()}}  reconoce que, con su trabajo y comportamiento, contribuye a la imagen institucional conjunta de CIITES.
     
 </p>
 
@@ -122,8 +122,8 @@
     <div style="margin-left: {{$margen}}; text-align:justify" >
             -	La contratación de personal deberá realizarse cumpliéndose estrictamente los procesos de manera profesional, en base a un perfil previo que establece la formación académica de una persona, experiencia y su potencial en relación a los términos de referencia pre-establecidos. Debemos garantizar que nuestro lugar de trabajo sea justo y no esté afectado por ninguna posible impresión de favoritismo. 
         <br>-	Por política institucional no se contrata como trabajadores a parientes cercanos de un funcionario de nuestra organización, salvo por autorización del Consejo Directivo. 
-        <br>-	Es imperativo que {{$contrato->getTrabajadore()}}  mantenga separadas las esferas organizacionales de las esferas particulares, revelando inmediatamente al CEDEPAS NORTE los conflictos de interés que pudieran presentarse y resolviéndolos de forma que sean objetivamente verificables y comprensibles por todas las partes involucradas.
-        <br>-	{{$contrato->getTrabajadore()}}  reconoce que el personal no debe realizar otra actividad profesional con o sin fines de lucro o aceptar responsabilidad por tal actividad, que pudiera interferir en el eficiente cumplimiento de sus labores al interior de la Institución, sin el permiso expreso por escrito del superior competente del CEDEPAS NORTE. Misiones de consultoría del personal de la Institución dentro de su campo de actividad y dentro de sus horas laborales requieren el permiso del superior y serán realizadas en nombre de CEDEPAS NORTE que es el empleador o comitente. Se considerará cualquier honorario como un ingreso de la organización. 
+        <br>-	Es imperativo que {{$contrato->getTrabajadore()}}  mantenga separadas las esferas organizacionales de las esferas particulares, revelando inmediatamente al CIITES los conflictos de interés que pudieran presentarse y resolviéndolos de forma que sean objetivamente verificables y comprensibles por todas las partes involucradas.
+        <br>-	{{$contrato->getTrabajadore()}}  reconoce que el personal no debe realizar otra actividad profesional con o sin fines de lucro o aceptar responsabilidad por tal actividad, que pudiera interferir en el eficiente cumplimiento de sus labores al interior de la Institución, sin el permiso expreso por escrito del superior competente del CIITES. Misiones de consultoría del personal de la Institución dentro de su campo de actividad y dentro de sus horas laborales requieren el permiso del superior y serán realizadas en nombre de CIITES que es el empleador o comitente. Se considerará cualquier honorario como un ingreso de la organización. 
         <br>-	Si el trabajador (a) considera que existen intereses personales que pueden generar conflictos o influir en su desempeño laboral, debe comunicar por escrito al Director/a o superior inmediato. Cualquier excepción o situación particular a esta norma debe constar formalmente en el contrato de empleo. 
         <br>-	Los/as colaboradores/as deben abstenerse de entregar o recibir obsequios, beneficios o favores que condicionen la relación contractual, o el servicio que brinda la institución a la población objetivo. 
         <br>-	La representación institucional ante instituciones, redes, plataformas, autoridades, etc, se asumirá  únicamente con expresa autorización del Director salvo aquellos casos en que este implícita en responsabilidad del cargo.
@@ -136,7 +136,7 @@
         B.	INFORMACIÓN, CONFIDENCIALIDAD Y CUIDADO DE ACTIVOS
     </b>
     <div style="margin-left: {{$margen}}; text-align:justify" >
-        -	Es deber de los colaboradores proteger la confidencialidad de la información interna del CEDEPAS Norte, protegiendo los archivos y registros personales como institucionales. 
+        -	Es deber de los colaboradores proteger la confidencialidad de la información interna del CIITES, protegiendo los archivos y registros personales como institucionales. 
         <br>-	{{$contrato->getTrabajadore()}}  considera que la franqueza en la difusión de información y la toma de decisiones es la norma para todo el personal dentro de la Institución. No se debe utilizar, manipular o valerse de la información institucional, generada en el trabajo aún por el mismo trabajador, para lucro o beneficio personal. De igual forma, tampoco se debe pasar esta información a otros que pudieran utilizarla de tal manera. 
         <br>-	El uso, custodia y protección de los activos institucionales es responsabilidad de todos los colaboradores. Se refiere a edificios, vehículos, equipos, herramientas, metodologías, sistemas, tecnología, los cuales deben mantenerse en buen estado y en funcionamiento; por lo que se deben asumir prácticas y criterios para optimizar su rendimiento y ampliar su tiempo de vida. 
         <br>-	EL/ TRABAJADOR/A  asegurará que dichos activos puestos a su utilización, serán cuidados con responsabilidad y estarán dispuestos a informar cualquier incidente, falla o pérdida a sus superiores.
@@ -195,7 +195,7 @@
 
     </b>
     <div style="margin-left: {{$margen}}; text-align:justify" >
-        -	CEDEPAS Norte se compromete a brindar un ambiente de trabajo saludable y seguro a sus empleados. Implementando criterios y normas de seguridad establecidos, para evitar los peligros. Es responsabilidad de todos protegernos y tomar las precauciones necesarias. Es obligación de cada trabajador (a) informar inmediatamente al superior inmediato, sobre condiciones, prácticas que generan inseguridad o el suceso de un accidente en el lugar de trabajo, tanto al interior de las oficinas como en el trabajo de campo. 
+        -	CIITES se compromete a brindar un ambiente de trabajo saludable y seguro a sus empleados. Implementando criterios y normas de seguridad establecidos, para evitar los peligros. Es responsabilidad de todos protegernos y tomar las precauciones necesarias. Es obligación de cada trabajador (a) informar inmediatamente al superior inmediato, sobre condiciones, prácticas que generan inseguridad o el suceso de un accidente en el lugar de trabajo, tanto al interior de las oficinas como en el trabajo de campo. 
         <br>-	Debemos evitar todo acto de violencia en el lugar de trabajo. No aceptamos ni actos violentos ni amenazas al trabajador o familiares, de forma directa o indirecta como palabras, gestos o símbolos, un comportamiento tal es causa de despido inmediato.
         
 
@@ -206,7 +206,7 @@
         G.	PARTICIPACIÓN POLÍTICA
     </b>
     <div style="margin-left: {{$margen}}; text-align:justify" >
-        -	CEDEPAS Norte no se opone a que los empleados participen adecuadamente en procesos políticos, según sus propios criterios, opinión y compromisos individuales.  Sin embargo, sus actividades políticas se realizarán fuera del horario de trabajo. Los recursos y reputación de la organización no serán utilizados para ningún tipo de actividad política.
+        -	CIITES no se opone a que los empleados participen adecuadamente en procesos políticos, según sus propios criterios, opinión y compromisos individuales.  Sin embargo, sus actividades políticas se realizarán fuera del horario de trabajo. Los recursos y reputación de la organización no serán utilizados para ningún tipo de actividad política.
    
 
     </div>
@@ -232,8 +232,8 @@
         DISPOSICIONES FINALES
     </b>
     <br>La gestión del presente Código de Ética es una función de la Institución, el cual es responsable de su difusión, actualización y aplicación.
-    <br>CEDEPAS NORTE realizará semestralmente una evaluación del desempeño del {{$contrato->getTrabajadore()}}  pudiendo realizar recomendaciones si fuera el caso. 
-    <br>El incumplimiento del presente Código de Ética por parte de {{$contrato->getTrabajadore()}}, será entendido por el CEDEPAS NORTE como expresión de la voluntad de dar por finalizado el contrato de trabajo. De ser del caso llevará al CEDEPAS NORTE a las acciones legales correspondientes.
+    <br>CIITES realizará semestralmente una evaluación del desempeño del {{$contrato->getTrabajadore()}}  pudiendo realizar recomendaciones si fuera el caso. 
+    <br>El incumplimiento del presente Código de Ética por parte de {{$contrato->getTrabajadore()}}, será entendido por el CIITES como expresión de la voluntad de dar por finalizado el contrato de trabajo. De ser del caso llevará al CIITES a las acciones legales correspondientes.
     <br>{{$contrato->getTrabajadore()}}  declara estar de acuerdo con el presente Código de Ética y se compromete a cumplirlo.
     <br>
 </p>
