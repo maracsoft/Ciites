@@ -12,7 +12,7 @@
   <div class="well">
     <H3 style="text-align: center;">
     <strong>
-      Planes estratégicos de CEDEPAS Norte
+      Planes estratégicos  
 
       </strong>
     </H3>

@@ -144,11 +144,8 @@
             * Reporte generado el {{date("d/m/Y")}} 
             por el usuario 
             {{$empleado->getNombreCompleto()}}
-             mediante el 
-            <b>
-              Sistema Web de Gestión de Cedepas Norte
-
-            </b>
+            
+ 
           </th> 
       </tr>
   </tbody>

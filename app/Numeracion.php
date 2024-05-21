@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Utils\MaracUtils;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
@@ -20,6 +21,9 @@ class Numeracion extends Model
 
     public $timestamps = false;
 
+    public static function ConstruirCodigoUnico(string $raiz,Numeracion $objNumeracion,int $cantidad_ceros){
+        return $raiz . substr($objNumeracion->año, 2, 2) . '-' . MaracUtils::rellernarCerosIzq($objNumeracion->numeroLibreActual, $cantidad_ceros);
+    }
 
     //Retorna el numero que está libre de Reposicion de gastos
     public static function getNumeracionSOF()
@@ -80,9 +84,16 @@ class Numeracion extends Model
         return Numeracion::getNumeracionLibreDe('Contrato de locación de servicios');
     }
 
+    public static function getNumeracionCTS()
+    {
+      return Numeracion::getNumeracionLibreDe(ConstanciaDepositoCTS::RaizCodigoCedepas);
+    }
 
-
-
+    public static function aumentarNumeracionCTS()
+    {
+      return Numeracion::aumentarNumeracionDe(ConstanciaDepositoCTS::RaizCodigoCedepas);
+    }
+  
 
     public static function aumentarNumeracionSOF()
     {

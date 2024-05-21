@@ -38,6 +38,7 @@ use App\RendicionGastos;
 use App\ReposicionGastos;
 use App\RequerimientoBS;
 use App\RevisionInventario;
+use App\Routers\RouterConstanciaDeposito;
 use App\SolicitudFondos;
 use App\TipoOperacion;
 use App\UI\UIFiltros;
@@ -56,6 +57,8 @@ Route::get('/PaginaEnMantenimiento/','UserController@paginaEnMantenimiento')->na
 Route::group(['middleware'=>"Mantenimiento"],function()
 {
 
+    RouterConstanciaDeposito::RegisterRoutes();
+    
     Route::get('/login', 'UserController@verLogin')->name('user.verLogin'); //para desplegar la vista del Login
     Route::post('/ingresar', 'UserController@logearse')->name('user.logearse');
     Route::get('/cerrarSesion','UserController@cerrarSesion')->name('user.cerrarSesion');

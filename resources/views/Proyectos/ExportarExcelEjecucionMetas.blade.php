@@ -168,7 +168,7 @@ header("Pragma: no-cache");
 <table>
     <tbody>
         <tr>
-            <th colspan="20" style="font-style: oblique;font-weight: normal;text-align: left">* Reporte generado el {{date("d/m/Y")}} por el usuario {{$proyecto->getGerente()->getNombreCompleto()}} mediante el <b>Sistema Web de Gestión de Cedepas Norte</b></th> 
+            <th colspan="20" style="font-style: oblique;font-weight: normal;text-align: left">* Reporte generado el {{date("d/m/Y")}} por el usuario {{$proyecto->getGerente()->getNombreCompleto()}} </th> 
         </tr>
     </tbody>
 </table>

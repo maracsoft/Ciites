@@ -31,3 +31,12 @@
         <p>Orden de Compra</p>
       </a>
     </li>
+
+    <li class="nav-item">
+      <a href="{{route('ConstanciaDepositoCTS.Listar')}}" class="nav-link">
+        <i class="far fa-address-card nav-icon"></i>
+        <p>Const Deposito CTS</p>
+      </a>
+    </li>
+    
+    
