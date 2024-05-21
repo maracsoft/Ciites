@@ -34,6 +34,14 @@
     </li>
 
 
+    <li class="nav-item">
+      <a href="{{route('ConstanciaDepositoCTS.Listar')}}" class="nav-link">
+        <i class="far fa-address-card nav-icon"></i>
+        <p>Const Deposito CTS</p>
+      </a>
+    </li>
+    
+    
 
     <li class="nav-item has-treeview">
       <a href="#" class="nav-link">
@@ -59,6 +67,15 @@
           <a href="{{route('ContratosPlazo.Listar')}}" class="nav-link">
             <i class="fas fa-file-alt nav-icon"></i>
             <p>Planilla</p>
+          </a>
+        </li>
+
+
+        
+        <li class="nav-item">
+          <a href="{{route('ContratosPlazoNuevo.Listar')}}" class="nav-link">
+            <i class="fas fa-file-alt nav-icon"></i>
+            <p>Planilla NUEVO</p>
           </a>
         </li>
 

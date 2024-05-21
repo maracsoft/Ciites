@@ -100,7 +100,7 @@
 
 
 <div>
-  Del trajabador
+  Del trabajador
 </div>
 
 

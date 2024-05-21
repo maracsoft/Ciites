@@ -36,5 +36,8 @@ class MaracModel extends Model implements Arrayable, ArrayAccess, Jsonable, Json
         return "selected";
       return "";
     }
-
+    public function existe(): bool
+    {
+      return $this->getId() != null;
+    }
 }

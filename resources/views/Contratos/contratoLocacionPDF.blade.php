@@ -154,11 +154,11 @@
       <p>
         <u>
           <b>
-            PRIMERO</b></u>
+            PRIMERA</b></u>
       </p>
       <p style="text-align: justify;">
 
-        PRIMERO.- ANTECEDENTES. - El Centro para la Investigación, Innovación y Desarrollo Territorial Sostenible
+        PRIMERA.- ANTECEDENTES. - El Centro para la Investigación, Innovación y Desarrollo Territorial Sostenible
         CIITES; es una organización de desarrollo que impulsa proyectos para el incremento de los ingresos económicos de
         mujeres y hombres en condiciones vulnerables y promueve la innovación tecnológica y social para mejorar los
         ingresos y condiciones de vida de las poblaciones beneficiarias.
@@ -189,7 +189,7 @@
       <p>
         <u>
           <b>
-            SEGUNDO
+            SEGUNDA
           </b>
         </u>
       </p>
@@ -217,7 +217,7 @@
       <p>
         <u>
           <b>
-            TERCERO
+            TERCERA
           </b>
         </u>
       </p>
@@ -248,7 +248,7 @@
       <p>
         <u>
           <b>
-            CUARTO
+            CUARTA
           </b>
         </u>
       </p>
@@ -306,7 +306,7 @@
       <p>
         <u>
           <b>
-            QUINTO
+            QUINTA
           </b>
         </u>
       </p>
@@ -348,7 +348,7 @@
       <p>
         <u>
           <b>
-            SEXTO
+            SEXTA
           </b>
         </u>
       </p>
@@ -373,7 +373,7 @@
       <p>
         <u>
           <b>
-            SEPTIMO
+            SEPTIMA
           </b>
         </u>
       </p>
@@ -396,7 +396,7 @@
       <p>
         <u>
           <b>
-            OCTAVO
+            OCTAVA
           </b>
         </u>
       </p>
@@ -429,7 +429,7 @@
       <p>
         <u>
           <b>
-            NOVENO
+            NOVENA
           </b>
         </u>
       </p>

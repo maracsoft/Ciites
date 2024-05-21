@@ -100,7 +100,7 @@
         <div style="width: 100%; height: 8px;"></div>
         
         <div class="notaDeGeneracion">
-            *Reporte PDF generado por el sistema gestion.cedepas.org el {{App\Fecha::getFechaHoraActual()}} por {{App\Empleado::getEmpleadoLogeado()->getNombreCompleto()}}
+            *Reporte PDF generado por el sistema gestion.ciites.com el {{App\Fecha::getFechaHoraActual()}} por {{App\Empleado::getEmpleadoLogeado()->getNombreCompleto()}}
         </div>
         <div style="width: 100%; height: 70px;"></div>
  

@@ -121,8 +121,8 @@
             <tbody style="width:100%">
                 <tr>
                     <td style="width: 140px;">Factura a nombre de:</td>
-                    <td>CEDEPAS Norte</td>
-                    <td>RUC 20481234574</td>
+                    <td>DAR</td>
+                    <td>RUC 20610973001</td>
                 </tr>
                 
                 <tr>
@@ -185,7 +185,7 @@
             </tbody>
         </table>
         <div class="notaDeGeneracion">
-            *Vista PDF generada por el sistema gestion.cedepas.org el {{App\Fecha::getFechaHoraActual()}} por {{App\Empleado::getEmpleadoLogeado()->getNombreCompleto()}}
+            *Vista PDF generada por el sistema gestion.ciites.com el {{App\Fecha::getFechaHoraActual()}} por {{App\Empleado::getEmpleadoLogeado()->getNombreCompleto()}}
         </div>
 
     </div>

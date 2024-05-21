@@ -61,6 +61,11 @@
                       PHP INFO
                     </a>
 
+                    <a href="{{route('PeriodoDirector.Listar')}}" class="btn btn-primary">
+                        Periodos de Director General
+                    </a>
+
+                      
 
                 </div>
             </div>

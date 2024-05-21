@@ -132,4 +132,38 @@ class Contrato extends MaracModel
   public function esBorrador() : bool {
     return $this->es_borrador == 1;
   }
+
+
+  
+  public function getPeriodoDirector() : PeriodoDirectorGeneral {
+    return PeriodoDirectorGeneral::findOrFail($this->codPeriodoDirector);
+  }
+
+  // Directora General, ANA CECILIA ANGULO ALVA, identificada con DNI. N° 26682689
+  // Director General, FEDERICO TENORIO APPELLIDO APPELIDO, identificado con DNI. N° 26682689
+  public function getTextoDirector() : string {
+
+    $director = $this->getPeriodoDirector();
+    $nombre = $director->getNombreCompleto(true);
+    $dni = $director->dni;
+
+    if($director->esHombre()){
+      return "Presidente, $nombre, identificado con DNI. N° $dni";
+    }else{
+      return "Presidente, $nombre, identificada con DNI. N° $dni";
+    }
+  }
+
+  public function getNombreDirector(){
+    
+    $director = $this->getPeriodoDirector();
+    return $director->getNombreCompleto(true);
+  }
+  public function getDNIDirector(){
+    
+    $director = $this->getPeriodoDirector();
+    return $director->dni;
+  }
+
+
 }

@@ -20,5 +20,6 @@ return
         ],
 
     ],
-    'version_order' => 'creation'
+    'version_order' => 'creation',
+    'foreign_keys' => true,
 ];

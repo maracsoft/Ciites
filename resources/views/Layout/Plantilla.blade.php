@@ -226,7 +226,7 @@
 
   <footer class="main-footer" style="padding: 4px; font-size:9pt;">
     <div style="text-align:right;">
-      <strong>Copyright &copy; 2021
+      <strong>Copyright &copy; {{date("Y")}}
 
         .
       </strong>
