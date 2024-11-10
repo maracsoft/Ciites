@@ -54,7 +54,7 @@
                       value="{{ $constancia->getFechaHoraCreacion() }}" readonly placeholder="">
                   </div>
 
- 
+
 
 
 
@@ -72,9 +72,9 @@
                           </button>
 
                         </div>
-                        
+
                       </div>
-                       
+
 
                     </div>
 
@@ -153,11 +153,20 @@
                     <input type="number" class="form-control text-right" name="monto_ultima_grati" id="monto_ultima_grati" value="{{$constancia->monto_ultima_grati}}" placeholder="S/" >
                   </div>
 
+
+
+                  <div class="col-12 col-md-2">
+                    <label for="promedio_otras_remuneraciones" class="mb-0">Prom. otras remuneraciones</label>
+                    <input type="number" class="form-control text-right" name="promedio_otras_remuneraciones" id="promedio_otras_remuneraciones" value="{{$constancia->promedio_otras_remuneraciones}}" placeholder="S/" >
+                  </div>
+
+
+
                 </div>
               </div>
 
 
-              
+
               <div class="col-12 col-md-2">
                 <label for="fecha_deposito" class="mb-0">
                   Periodo - Fecha Inicio
@@ -174,7 +183,7 @@
 
               </div>
 
-              
+
               <div class="col-12 col-md-2">
                 <label for="fecha_deposito" class="mb-0">
                   Periodo - Fecha Fin
@@ -192,12 +201,12 @@
               </div>
 
 
-              
+
               <div class="col-12 col-md-3">
                 <label for="" class="mb-0">
                   Fecha de emisión
-                </label>  
-                
+                </label>
+
                 <div class="d-flex">
                   <input type="text" class="form-control numero_fijo text-center" readonly value="15">
                   <select class="form-control" name="mes_emision" id="mes_emision">
@@ -205,12 +214,12 @@
                     <option value="5" @if($constancia->getCodMesEmision() == "5") selected @endif>Mayo</option>
                     <option value="11" @if($constancia->getCodMesEmision() == "11") selected @endif>Noviembre</option>
                   </select>
-  
-  
+
+
                   <input type="text" class="form-control text-center año_fijo" autocomplete="off" name="año_emision" id="año_emision" value="{{$constancia->getAñoEmision()}}">
-    
+
                 </div>
-              
+
 
               </div>
 
@@ -243,7 +252,7 @@
           Ver Pdf
           <i class="fas fa-file-pdf"></i>
         </a>
-        
+
       </div>
     @endif
 
@@ -267,7 +276,7 @@
 
 
   <script>
-    
+
     $(document).ready(function() {
 
 
@@ -288,7 +297,7 @@
 
     function validarForm() {
       limpiarEstilos([
-       
+
         'nombre_banco',
         'dni',
         'nombres',
@@ -305,7 +314,7 @@
 
       var msj = "";
 
- 
+
       msj = validarSelect(msj, "nombre_banco", "", "Banco");
       msj = validarTamañoExacto(msj,'dni',8,"DNI");
       msj = validarTamañoMaximoYNulidad(msj, "nombres", 100, "Nombres");
@@ -320,7 +329,7 @@
 
       msj = validarNoNegatividadYNulidad(msj,'ultimo_sueldo_bruto',"Ultimo sueldo bruto")
       msj = validarNoNegatividadYNulidad(msj,'monto_ultima_grati',"Ultima gratificación")
-      
+      msj = validarNoNegatividadYNulidad(msj,'promedio_otras_remuneraciones',"Promedio otras remuneraciones")
 
       msj = validarSelect(msj, "mes_emision", "", "Mes de emisión");
       msj = validarPositividadYNulidad(msj,'año_emision',"Año de emisión")
@@ -380,7 +389,7 @@
     .año_fijo{
       width: 90px;
     }
-    
+
   </style>
   @include('CSS.RemoveInputNumberArrows')
 @endsection

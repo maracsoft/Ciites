@@ -39,7 +39,7 @@ class ConstanciaDepositoCTS extends MaracModel
   */
   public function getFechaHoraEmisionEscrita(){
     return Fecha::escribirEnTexto($this->fecha_emision);
-    
+
   }
   public function getFechaHoraEmision(){
     return Fecha::formatoParaVistas($this->fecha_emision);
@@ -73,7 +73,7 @@ class ConstanciaDepositoCTS extends MaracModel
   }
 
 
-  
+
   public function getFechaInicio()
   {
     if($this->fecha_inicio == ""){
@@ -90,13 +90,13 @@ class ConstanciaDepositoCTS extends MaracModel
 
     return Fecha::escribirEnTexto($this->fecha_inicio);
   }
-  
+
   public function getFechaFin()
   {
     if($this->fecha_fin == ""){
       return "";
     }
-    
+
     return Fecha::formatoParaVistas($this->fecha_fin);
   }
   public function getFechaFinEscrita()
@@ -107,7 +107,7 @@ class ConstanciaDepositoCTS extends MaracModel
 
     return Fecha::escribirEnTexto($this->fecha_fin);
   }
-  
+
 
 
   public function getFechaDepositoEscrita()
@@ -158,19 +158,21 @@ class ConstanciaDepositoCTS extends MaracModel
     return $this->codigo_unico;
   }
 
-  
+
 
   public function setDataFromRequest(Request $request)
   {
     $this->ultimo_sueldo_bruto = $request->ultimo_sueldo_bruto;
     $this->monto_ultima_grati = $request->monto_ultima_grati;
+    $this->promedio_otras_remuneraciones = $request->promedio_otras_remuneraciones;
+
     $this->nombres = $request->nombres;
     $this->apellidos = $request->apellidos;
     $this->dni = $request->dni;
     $this->fecha_deposito = Fecha::formatoParaSQL($request->fecha_deposito);
     $this->fecha_inicio = Fecha::formatoParaSQL($request->fecha_inicio);
     $this->fecha_fin = Fecha::formatoParaSQL($request->fecha_fin);
-    
+
     $this->nro_cuenta = $request->nro_cuenta;
     $this->nombre_banco = $request->nombre_banco;
     $this->nro_meses_laborados = $request->nro_meses_laborados;
@@ -189,7 +191,17 @@ class ConstanciaDepositoCTS extends MaracModel
     return MaracUtils::FormatearMonto($this->ultimo_sueldo_bruto);
   }
 
-  
+
+
+  public function getPromedioOtrasRemuneraciones(bool $formatear=false){
+    $val = $this->promedio_otras_remuneraciones;
+    if ($formatear) {
+      $val = MaracUtils::FormatearMonto($val);
+    }
+    return $val;
+  }
+
+
   public function getSextoUltimaGrati(bool $formatear=false){
     $val = $this->monto_ultima_grati / 6;
     if ($formatear) {
@@ -200,7 +212,7 @@ class ConstanciaDepositoCTS extends MaracModel
 
   public function getTotalRemuneracionComputable(bool $formatear = false)
   {
-    $val = $this->ultimo_sueldo_bruto + $this->getSextoUltimaGrati();
+    $val = $this->ultimo_sueldo_bruto + $this->getSextoUltimaGrati() + $this->promedio_otras_remuneraciones;
     if ($formatear) {
       $val = MaracUtils::FormatearMonto($val);
     }
@@ -253,7 +265,7 @@ class ConstanciaDepositoCTS extends MaracModel
     return $val;
   }
   public function getDNIDirector(){
-    
+
     $director = $this->getPeriodoDirector();
     return $director->dni;
   }
