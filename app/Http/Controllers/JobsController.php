@@ -195,11 +195,14 @@ class JobsController extends Controller
 
   public function GenerarPdfsSolicitud()
   {
-    $listaSolicitudes = SolicitudFondos::query()->limit(100)->get();
+    $max = 50;
+    $i = 0;
+    $listaSolicitudes = SolicitudFondos::query()->get();
     foreach ($listaSolicitudes as $sof) {
-      if (!$sof->archivoPdfYaExiste()) {
+      if (!$sof->archivoPdfYaExiste() && $i < $max) {
         Debug::LogMessage("Generando pdf de " . $sof->codigoCedepas);
         $sof->guardarPdfStorage();
+        $i++;
       }
     }
   }
