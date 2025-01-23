@@ -183,27 +183,13 @@ class JobsController extends Controller
 
     /* En este switch linkeamos el nombre de la funcion obtenido de la bd con la funcion de este controller */
     switch ($job->functionName) {
-      case 'GenerarPdfsSolicitud':
-        $this->GenerarPdfsSolicitud();
+      case 'aaaaaaaaaa':
+        $this->aaaaaaaaaa();
         break;
 
       default:
         throw new Exception("No se encontró una funcion asociada al job con el nombre " . $job->functionName);
         break;
-    }
-  }
-
-  public function GenerarPdfsSolicitud()
-  {
-    $max = 50;
-    $i = 0;
-    $listaSolicitudes = SolicitudFondos::query()->get();
-    foreach ($listaSolicitudes as $sof) {
-      if (!$sof->archivoPdfYaExiste() && $i < $max) {
-        Debug::LogMessage("Generando pdf de " . $sof->codigoCedepas);
-        $sof->guardarPdfStorage();
-        $i++;
-      }
     }
   }
 }

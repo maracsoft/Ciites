@@ -89,6 +89,45 @@ Route::group(['middleware' => "Mantenimiento"], function () {
   Route::get('/serviciosDistritoUno', function () {});
 
 
+  Route::get('/regenerar_pdfs/sof', function () {
+    $max = 50;
+    $i = 0;
+    $listaSolicitudes = SolicitudFondos::query()->get();
+    foreach ($listaSolicitudes as $sof) {
+      if (!$sof->archivoPdfYaExiste() && $i < $max) {
+        Debug::LogMessage("Generando pdf de " . $sof->codigoCedepas);
+        $sof->guardarPdfStorage();
+        $i++;
+      }
+    }
+  });
+  Route::get('/regenerar_pdfs/rep', function () {
+    $max = 50;
+    $i = 0;
+    $listaReposiciones = ReposicionGastos::query()->get();
+    foreach ($listaReposiciones as $rep) {
+      if (!$rep->archivoPdfYaExiste() && $i < $max) {
+        Debug::LogMessage("Generando pdf de " . $rep->codigoCedepas);
+        $rep->guardarPdfStorage();
+        $i++;
+      }
+    }
+  });
+  Route::get('/regenerar_pdfs/rbs', function () {
+    $max = 50;
+    $i = 0;
+    $listaRequerimientos = RequerimientoBS::query()->get();
+    foreach ($listaRequerimientos as $rbs) {
+      if (!$rbs->archivoPdfYaExiste() && $i < $max) {
+        Debug::LogMessage("Generando pdf de " . $rbs->codigoCedepas);
+        $rbs->guardarPdfStorage();
+        $i++;
+      }
+    }
+  });
+
+
+
 
   Route::get('/distritosRepetidos', function () {});
 

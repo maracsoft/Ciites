@@ -259,7 +259,22 @@ class ReposicionGastos extends DocumentoAdministrativo
     return MaracUtils::ResponsePdf($output, $download, $pdfname);
   }
 
+  public function getFilenameWithRoute(): string
+  {
+    $codigo = $this->codigoCedepas;
+    return "/pdfs_regenerados/REP/$codigo.pdf";
+  }
 
+  public function guardarPdfStorage()
+  {
+    $pdf_binary = $this->buildPDF()->output();
+    Storage::put($this->getFilenameWithRoute(), $pdf_binary);
+  }
+
+  public function archivoPdfYaExiste(): bool
+  {
+    return Storage::exists($this->getFilenameWithRoute());
+  }
 
 
   /* DEPRECADO */

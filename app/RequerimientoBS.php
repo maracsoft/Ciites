@@ -231,7 +231,11 @@ class RequerimientoBS extends DocumentoAdministrativo
   {
     return 'Requerimiento ' . $this->codigoCedepas . '.pdf';
   }
-
+  public function getFilenameWithRoute(): string
+  {
+    $codigo = $this->codigoCedepas;
+    return "/pdfs_regenerados/RBS/$codigo.pdf";
+  }
   /*
   para frontend, esto hace un echo como tal asi que no es necesario ningun return
   */
@@ -244,7 +248,16 @@ class RequerimientoBS extends DocumentoAdministrativo
     return MaracUtils::ResponsePdf($output, $download, $pdfname);
   }
 
+  public function guardarPdfStorage()
+  {
+    $pdf_binary = $this->buildPDF()->output();
+    Storage::put($this->getFilenameWithRoute(), $pdf_binary);
+  }
 
+  public function archivoPdfYaExiste(): bool
+  {
+    return Storage::exists($this->getFilenameWithRoute());
+  }
 
   //si está en esos estados retorna la obs, sino retorna ""
   public function getObservacionONull()
