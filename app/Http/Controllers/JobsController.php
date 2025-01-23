@@ -67,27 +67,28 @@ class JobsController extends Controller
   */
 
 
-  public function ListarJobs(){
-    $listaJobs = Job::orderBy('fechaHoraCreacion','DESC')->get();
+  public function ListarJobs()
+  {
+    $listaJobs = Job::orderBy('fechaHoraCreacion', 'DESC')->get();
 
-    return view('Jobs.ListarJobs',compact('listaJobs'));
+    return view('Jobs.ListarJobs', compact('listaJobs'));
   }
   /*  */
 
-  public function GuardarEditar(Request $request){
+  public function GuardarEditar(Request $request)
+  {
 
     try {
       db::beginTransaction();
 
       $codJob = $request->codJob;
-      if($codJob=="-1"){ //nuevo
+      if ($codJob == "-1") { //nuevo
         $job = new Job();
         $job->ejecutado = 0;
         $job->fechaHoraCreacion = Carbon::now();
 
         $msj = "creado";
-
-      }else{ //editar
+      } else { //editar
         $job = Job::findOrFail($codJob);
         $msj = "editado";
       }
@@ -102,42 +103,37 @@ class JobsController extends Controller
 
       db::commit();
 
-      return redirect()->route('Jobs.Listar')->with('datos',"Job $msj exitosamente");
-
+      return redirect()->route('Jobs.Listar')->with('datos', "Job $msj exitosamente");
     } catch (\Throwable $th) {
 
       db::rollBack();
       throw $th;
 
-      return redirect()->route('Jobs.Listar')->with('datos',"Ocurrió un error");
-
+      return redirect()->route('Jobs.Listar')->with('datos', "Ocurrió un error");
     }
-
-
   }
-  public function Eliminar($codJob){
+  public function Eliminar($codJob)
+  {
     try {
       $job = Job::findOrFail($codJob);
-      if($job->estaEjecutado()){
-        return redirect()->route('Jobs.Listar')->with('datos',"No se puede eliminar un job que ya fue ejecutado");
+      if ($job->estaEjecutado()) {
+        return redirect()->route('Jobs.Listar')->with('datos', "No se puede eliminar un job que ya fue ejecutado");
       }
       $job->delete();
 
-      return redirect()->route('Jobs.Listar')->with('datos',"Job eliminado exitosamente.");
+      return redirect()->route('Jobs.Listar')->with('datos', "Job eliminado exitosamente.");
     } catch (\Throwable $th) {
       throw $th;
-
     }
-
-
   }
 
-  public function UnRunJob($codJob){
+  public function UnRunJob($codJob)
+  {
     $job = Job::findOrFail($codJob);
 
     try {
       db::beginTransaction();
-      if(!$job->estaEjecutado())
+      if (!$job->estaEjecutado())
         return "ERROR, el job no ha sido ejecutado";
 
 
@@ -147,22 +143,22 @@ class JobsController extends Controller
 
       db::commit();
 
-      return redirect()->route('Jobs.Listar')->with('datos',"Job de-ejecutado exitosamente.");
+      return redirect()->route('Jobs.Listar')->with('datos', "Job de-ejecutado exitosamente.");
     } catch (\Throwable $th) {
       db::rollBack();
 
       throw $th;
     }
-
   }
 
 
-  public function RunJob($codJob){
+  public function RunJob($codJob)
+  {
     $job = Job::findOrFail($codJob);
 
     try {
       db::beginTransaction();
-      if($job->estaEjecutado())
+      if ($job->estaEjecutado())
         return "ERROR, el job ya había sido ejecutado";
 
       $this->ejecutarJob($job);
@@ -172,34 +168,39 @@ class JobsController extends Controller
 
       db::commit();
 
-      return redirect()->route('Jobs.Listar')->with('datos',"Job ejecutado exitosamente.");
+      return redirect()->route('Jobs.Listar')->with('datos', "Job ejecutado exitosamente.");
     } catch (\Throwable $th) {
       db::rollBack();
-      $codErrorHistorial = ErrorHistorial::registrarError($th,app('request')->route()->getAction(),json_encode($codJob));
+      $codErrorHistorial = ErrorHistorial::registrarError($th, app('request')->route()->getAction(), json_encode($codJob));
 
       throw $th;
     }
-
   }
 
 
-  private function ejecutarJob(Job $job){
+  private function ejecutarJob(Job $job)
+  {
 
     /* En este switch linkeamos el nombre de la funcion obtenido de la bd con la funcion de este controller */
     switch ($job->functionName) {
-
+      case 'GenerarPdfsSolicitud':
+        $this->GenerarPdfsSolicitud();
+        break;
 
       default:
-        throw new Exception("No se encontró una funcion asociada al job con el nombre ".$job->functionName);
+        throw new Exception("No se encontró una funcion asociada al job con el nombre " . $job->functionName);
         break;
     }
-
   }
 
-
-
-
-
-
-
+  public function GenerarPdfsSolicitud()
+  {
+    $listaSolicitudes = SolicitudFondos::query()->limit(30)->get();
+    foreach ($listaSolicitudes as $sof) {
+      if (!$sof->archivoPdfYaExiste()) {
+        Debug::LogMessage("Generando pdf de " . $sof->codigoCedepas);
+        $sof->guardarPdfStorage();
+      }
+    }
+  }
 }
