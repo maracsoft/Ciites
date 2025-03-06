@@ -315,7 +315,7 @@
     </table>
 
     <div class="notaDeGeneracion">
-      *Vista PDF generada por el sistema gestion.cedepas.org el {{ App\Fecha::getFechaHoraActual() }} por
+      *Vista PDF generada por el sistema gestion.ciites.com el {{ App\Fecha::getFechaHoraActual() }} por
       {{ App\Empleado::getEmpleadoLogeado()->getNombreCompleto() }}
     </div>
 

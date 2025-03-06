@@ -835,13 +835,13 @@ class Empleado extends MaracModel implements MaracModelInterface
       ];
       $rutas[] = (object)  [
         "url" => route('ContratosPlazo.Listar'),
-        "label" => "Contr Planilla GPC",
+        "label" => "Contr Planilla",
         "icon_class" => "fas fa-file-signature",
         "roles" => [Puesto::Administrador]
       ];
       $rutas[] = (object)  [
         "url" => route('ContratosPlazoNuevo.Listar'),
-        "label" => "Contr Planilla CEDEPAS",
+        "label" => "Contr Planilla Nuevo",
         "icon_class" => "fas fa-file-signature",
         "roles" => [Puesto::Administrador]
       ];

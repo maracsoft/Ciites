@@ -18,7 +18,7 @@
   <tbody>
     <tr>
       <td colspan="6">
-        Reporte generado por el sistema gestion.cedepas.org el
+        Reporte generado por el sistema gestion.ciites.com el
         {{ App\Fecha::getFechaHoraActual() }} por
         {{ App\Empleado::getEmpleadoLogeado()->getNombreCompleto() }}
       </td>
