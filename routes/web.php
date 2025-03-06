@@ -347,6 +347,7 @@ Route::group(['middleware' => "Mantenimiento"], function () {
 
     Route::get('/GestiónUsuarios/misDatos', 'EmpleadoController@verMisDatos')->name('GestionUsuarios.verMisDatos');
     Route::get('/GestiónUsuarios/cambiarContraseña', 'EmpleadoController@cambiarContraseña')->name('GestionUsuarios.cambiarContraseña');
+    Route::post('/ActualizarEstadoMenu', 'UserController@ActualizarEstadoMenu')->name('ActualizarEstadoMenu');
 
 
 

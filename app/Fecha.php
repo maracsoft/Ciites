@@ -62,6 +62,22 @@ class Fecha
   {
     return "01/01/2000";
   }
+  public static function formatoParaHourSelector($fechahora)
+  {
+    return date('H:i:s', strtotime($fechahora));
+  }
+
+  public static function formatoHoraParaVistas($fecha)
+  {
+    return date('h:i A', strtotime($fecha));
+  }
+
+  // 14/09/2023 - 5:05 PM
+  public static function formatoFechaHoraParaVistasSinSegundos($fecha)
+  {
+    return date("d/m/Y - g:i A", strtotime($fecha));
+  }
+
 
   //                   Viernes 14 Septiembre 2023
   public static function formatoFechaParaVistasEscrita($fecha)
@@ -89,9 +105,7 @@ class Fecha
             'mes'=>5
         ]
     */
-  public static function compararFechas($fecha1, $fecha2)
-  {
-  }
+  public static function compararFechas($fecha1, $fecha2) {}
 
   //llega string y objeto proyecto
   // 2020-01-20

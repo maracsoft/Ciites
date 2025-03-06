@@ -621,4 +621,359 @@ class Empleado extends MaracModel implements MaracModelInterface
     $ultimaRevision = RevisionInventario::getRevisionActiva();
     return $ultimaRevision->tieneAEmpleado($this->codEmpleado);
   }
+
+
+  public static function getEmpleadosConductores(): Collection
+  {
+    return static::getEmpleadosConPuesto(Puesto::getCodPuesto_Conductor());
+  }
+
+  public static function getEmpleadosAprobadoresViajes(): Collection
+  {
+    return static::getEmpleadosConPuesto(Puesto::getCodPuesto_AprobadorViajes());
+  }
+  //prepararParaSelect
+  private static function getEmpleadosConPuesto(int $codPuesto)
+  {
+    $codsEmpleadosValidos = EmpleadoPuesto::where('codPuesto', $codPuesto)->pluck('codEmpleado')->toArray();
+    $empleados = Empleado::whereIn('codEmpleado', $codsEmpleadosValidos)->get();
+    return static::prepararParaSelect($empleados);
+  }
+
+
+
+  const TipoMenuLateral_Agrupado = "agrupado";
+  const TipoMenuLateral_Desagrupado = "desagrupado";
+
+  public function seDebeAgruparMenu(): bool
+  {
+    return  $this->tipo_menu_lateral == Empleado::TipoMenuLateral_Agrupado;
+  }
+
+
+  public function getMenusAbiertosArray(): array
+  {
+    if ($this->menus_abiertos == null)
+      return [];
+    return json_decode($this->menus_abiertos, true);
+  }
+
+
+  public function tieneMenuAbierto(string $role_name): bool
+  {
+    return in_array($role_name, $this->getMenusAbiertosArray());
+  }
+
+  public function getRolesWithRoutes()
+  {
+    $routes = $this->getAccesibleRoutes();
+
+    $roles = [
+      Puesto::Empleado => [],
+      Puesto::Gerente => [],
+      Puesto::Contador => [],
+      Puesto::Administrador => [],
+      Puesto::UGE => [],
+
+      Puesto::Observador => [],
+      Puesto::ReportadorHoras => [],
+      Puesto::Conductor => [],
+
+      Puesto::AprobadorViajes => [],
+    ];
+
+    foreach ($routes as $route) {
+      foreach ($route->roles as $rol_con_permiso) {
+        $roles[$rol_con_permiso][] = $route;
+      }
+    }
+
+    // retorna un array en el que cada elemento es un puesto y el valor es un array de rutas
+
+    return $roles;
+  }
+
+  public function getAccesibleRoutes()
+  {
+    $rutas = [];
+
+    if ($this->esEmpleado()) {
+      $rutas[] = (object)  [
+        "url" => route('SolicitudFondos.Empleado.Listar'),
+        "label" => "Mis Solicitudes",
+        "icon_class" => "far fa-file-alt",
+        "roles" => [Puesto::Empleado]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('RendicionGastos.Empleado.Listar'),
+        "label" => "Mis Rendiciones",
+        "icon_class" => "far fa-file-alt",
+        "roles" => [Puesto::Empleado]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('ReposicionGastos.Empleado.Listar'),
+        "label" => "Mis Reposiciones",
+        "icon_class" => "far fa-file-alt",
+        "roles" => [Puesto::Empleado]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('RequerimientoBS.Empleado.Listar'),
+        "label" => "Mis Requerimientos",
+        "icon_class" => "far fa-file-alt",
+        "roles" => [Puesto::Empleado]
+      ];
+
+
+      $rutas[] = (object)  [
+        "url" => route('DJMovilidad.Empleado.Listar'),
+        "label" => "DJ Mov",
+        "icon_class" => "far fa-file-contract",
+        "roles" => [Puesto::Empleado]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('DJViaticos.Empleado.Listar'),
+        "label" => "DJ Viaticos",
+        "icon_class" => "far fa-file-contract",
+        "roles" => [Puesto::Empleado]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('DJVarios.Empleado.Listar'),
+        "label" => "DJ Varios",
+        "icon_class" => "far fa-file-contract",
+        "roles" => [Puesto::Empleado]
+      ];
+    }
+
+
+    if ($this->esGerente()) {
+
+      $rutas[] = (object)  [
+        "url" =>  route('SolicitudFondos.Gerente.Listar'),
+        "label" => " Aprobar Solicitudes",
+        "icon_class" => "fas fa-tasks",
+        "roles" => [Puesto::Gerente]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('RendicionGastos.Gerente.Listar'),
+        "label" => "Aprobar Rendiciones",
+        "icon_class" => "fas fa-tasks",
+        "roles" => [Puesto::Gerente]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('ReposicionGastos.Gerente.Listar'),
+        "label" => "Aprobar Reposiciones",
+        "icon_class" => "fas fa-tasks",
+        "roles" => [Puesto::Gerente]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('RequerimientoBS.Gerente.Listar'),
+        "label" => "Aprobar Requerimientos",
+        "icon_class" => "fas fa-tasks",
+        "roles" => [Puesto::Gerente]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('GestiónProyectos.Gerente.Listar'),
+        "label" => "Mis Proyectos",
+        "icon_class" => "fas fa-project-diagram",
+        "roles" => [Puesto::Gerente]
+      ];
+
+      $rutas[] = (object)  [
+        "url" => route('GestionProyectos.VerDashboard'),
+        "label" => "Dashboard",
+        "icon_class" => "fas fa-chart-line",
+        "roles" => [Puesto::Gerente]
+      ];
+    }
+
+
+    if ($this->esAdministrador()) {
+      $rutas[] = (object)  [
+        "url" => route('SolicitudFondos.Administracion.Listar'),
+        "label" => "Abonar Solicitudes",
+        "icon_class" => "far fa-file-alt",
+        "roles" => [Puesto::Administrador]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('RendicionGastos.Administracion.Listar'),
+        "label" => "Observar Rendiciones",
+        "icon_class" => "far fa-file-alt",
+        "roles" => [Puesto::Administrador]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('ReposicionGastos.Administracion.Listar'),
+        "label" => "Abonar Reposiciones",
+        "icon_class" => "far fa-file-alt",
+        "roles" => [Puesto::Administrador]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('RequerimientoBS.Administrador.Listar'),
+        "label" => "Atender Requerimientos",
+        "icon_class" => "far fa-file-alt",
+        "roles" => [Puesto::Administrador]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('OrdenCompra.Empleado.Listar'),
+        "label" => "Orden de Compra",
+        "icon_class" => "far fa-file-alt",
+        "roles" => [Puesto::Administrador]
+      ];
+
+      $rutas[] = (object)  [
+        "url" => route('ConstanciaDepositoCTS.Listar'),
+        "label" => "Const Deposito CTS",
+        "icon_class" => "far fa-file-alt",
+        "roles" => [Puesto::Administrador]
+      ];
+
+
+      $rutas[] = (object)  [
+        "url" => route('ContratosLocacion.Listar'),
+        "label" => "Contratos Locacion Serv ",
+        "icon_class" => "fas fa-file-signature",
+        "roles" => [Puesto::Administrador]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('ContratosPlazo.Listar'),
+        "label" => "Contr Planilla GPC",
+        "icon_class" => "fas fa-file-signature",
+        "roles" => [Puesto::Administrador]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('ContratosPlazoNuevo.Listar'),
+        "label" => "Contr Planilla CEDEPAS",
+        "icon_class" => "fas fa-file-signature",
+        "roles" => [Puesto::Administrador]
+      ];
+    }
+
+
+    if ($this->esContador()) {
+
+      $rutas[] = (object)  [
+        "url" => route('SolicitudFondos.Contador.Listar'),
+        "label" => "Solicitudes",
+        "icon_class" => "far fa-file-alt",
+        "roles" => [Puesto::Contador]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('RendicionGastos.Contador.Listar'),
+        "label" => "Rendiciones",
+        "icon_class" => "far fa-file-alt",
+        "roles" => [Puesto::Contador]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('ReposicionGastos.Contador.Listar'),
+        "label" => "Reposiciones",
+        "icon_class" => "far fa-file-alt",
+        "roles" => [Puesto::Contador]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('RequerimientoBS.Contador.Listar'),
+        "label" => "Requerimientos",
+        "icon_class" => "far fa-file-alt",
+        "roles" => [Puesto::Contador]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('OrdenCompra.Empleado.Listar'),
+        "label" => "Orden de Compra",
+        "icon_class" => "far fa-file-alt",
+        "roles" => [Puesto::Contador]
+      ];
+
+
+      $rutas[] = (object)  [
+        "url" => route('ConstanciaDepositoCTS.Listar'),
+        "label" => "Const Deposito CTS",
+        "icon_class" => "fas fa-file-pdf",
+        "roles" => [Puesto::Contador]
+      ];
+    }
+
+    if ($this->esUGE()) {
+      $rutas[] = (object)  [
+        "url" => route('GestiónProyectos.UGE.Listar'),
+        "label" => "Proyectos",
+        "icon_class" => "fas fa-clipboard-list",
+        "roles" => [Puesto::UGE]
+      ];
+    }
+
+    if ($this->esObservador()) {
+      $rutas[] = (object)  [
+        "url" => route('SolicitudFondos.Observador.Listar'),
+        "label" => "Solicitudes",
+        "icon_class" => "far fa-file-alt",
+        "roles" => [Puesto::Observador]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('RendicionGastos.Observador.Listar'),
+        "label" => "Rendiciones",
+        "icon_class" => "far fa-file-alt",
+        "roles" => [Puesto::Observador]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('ReposicionGastos.Observador.Listar'),
+        "label" => "Reposiciones",
+        "icon_class" => "far fa-file-alt",
+        "roles" => [Puesto::Observador]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('RequerimientoBS.Observador.Listar'),
+        "label" => "Requerimientos",
+        "icon_class" => "far fa-file-alt",
+        "roles" => [Puesto::Observador]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('GestionProyectos.VerDashboard'),
+        "label" => "Dashboard",
+        "icon_class" => "fas fa-chart-pie",
+        "roles" => [Puesto::Observador]
+      ];
+    }
+
+
+
+
+
+    if ($this->esAprobadorViajes()) {
+      $rutas[] = (object)  [
+        "url" => route('ViajeVehiculo.Aprobador.Listar'),
+        "label" => "Aprobar viajes",
+        "icon_class" => "fas fa-route",
+        "roles" => [Puesto::AprobadorViajes]
+      ];
+      $rutas[] = (object)  [
+        "url" => route('Vehiculo.Listar'),
+        "label" => "Vehículos",
+        "icon_class" => "far fa-truck-pickup",
+        "roles" => [Puesto::AprobadorViajes]
+      ];
+    }
+
+
+    if ($this->esConductor()) {
+      $rutas[] = (object)  [
+        "url" => route('ViajeVehiculo.Conductor.Listar'),
+        "label" => "Mis viajes",
+        "icon_class" => "fas fa-route",
+        "roles" => [Puesto::Conductor]
+      ];
+    }
+
+    if ($this->esContador()) {
+      $rutas[] = (object)  [
+        "url" => route('ViajeVehiculo.Contador.Listar'),
+        "label" => "Viajes - Contador",
+        "icon_class" => "fas fa-route",
+        "roles" => [Puesto::Contador]
+      ];
+    }
+
+
+
+
+
+    return $rutas;
+  }
 }

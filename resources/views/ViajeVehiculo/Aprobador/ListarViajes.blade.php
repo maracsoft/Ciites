@@ -170,7 +170,7 @@
               </td>
               <td class="text-center">
 
-                <a class="btn btn-sm btn-primary" href="{{ route('ViajeVehiculo.Contador.Ver', $viaje->getId()) }}">
+                <a class="btn btn-sm btn-primary" href="{{ route('ViajeVehiculo.Aprobador.Ver', $viaje->getId()) }}">
                   <i class="fas fa-eye"></i>
                 </a>
                 <a class="btn btn-sm btn-primary" target="_blank" href="{{ route('ViajeVehiculo.Pdf.Ver', $viaje->getId()) }}">

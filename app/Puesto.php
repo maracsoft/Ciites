@@ -17,6 +17,19 @@ class Puesto extends Model
     'estado'
   ];
 
+  const Empleado = "Empleado/a";
+  const Gerente = "Gerente";
+  const Contador = "Contador/a";
+  const Administrador = "Administrador";
+  const UGE = "UGE";
+
+  const Observador = "Observador/a";
+  const ReportadorHoras = "Reportador Horas";
+  const Conductor = "Conductor/a";
+
+  const AprobadorViajes = "Aprobador/a de Viajes";
+
+
   public function getActivo()
   {
     if ($this->estado == '1')
