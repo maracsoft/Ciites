@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" translate="no">
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,10 +16,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- Font Awesome -->
- <link rel="stylesheet" href="/adminlte/plugins/fontawesome-free/css/all.min.css">
- <link rel="stylesheet" href="/css/siderbarstyle.css">
- <link rel="stylesheet" href="/calendario/css/bootstrap-datepicker.standalone.css">
- <link rel="stylesheet" href="/select2/bootstrap-select.min.css">
+  <link rel="stylesheet" href="/adminlte/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="/css/siderbarstyle.css">
+  <link rel="stylesheet" href="/calendario/css/bootstrap-datepicker.standalone.css">
+  <link rel="stylesheet" href="/select2/bootstrap-select.min.css">
 
 
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -41,52 +42,53 @@
 
   @endphp
 </head>
+
 <body class="hold-transition sidebar-mini">
   <!--<div class="loader"></div>-->
   @yield('tiempoEspera')
-<!-- Site wrapper -->
-<div class="wrapper">
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
+  <!-- Site wrapper -->
+  <div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
 
-      <li class="nav-item">
-        <a id="aRefOcultarMenuLateral"  class="nav-link"  data-widget="pushmenu" onclick="clicMenuLateral()" href="#" role="button">
-          <i id="iconoOcultarMenuLateral" class="fas fa-chevron-left"></i>
+        <li class="nav-item">
+          <a id="aRefOcultarMenuLateral" class="nav-link" data-widget="pushmenu" onclick="clicMenuLateral()" href="#" role="button">
+            <i id="iconoOcultarMenuLateral" class="fas fa-chevron-left"></i>
+          </a>
+        </li>
+
+        <a class="btn btn-primary hidden d-sm-block " title="Volver al Inicio" href="{{ route('user.home') }}">
+          Home
         </a>
-      </li>
+        @if ($empLogeadoPlantilla->esAdminSistema())
+          <a class="btn btn-success ml-1  hidden d-sm-block " href="{{ route('AdminPanel.VerPanel') }}">
+            AdminPanel
+          </a>
+        @endif
 
-      <a class="btn btn-primary hidden d-sm-block "  title="Volver al Inicio" href="{{route('user.home')}}" >
-        Home
-      </a>
-      @if($empLogeadoPlantilla->esAdminSistema())
-        <a class="btn btn-success ml-1  hidden d-sm-block " href="{{route('AdminPanel.VerPanel')}}" >
-          AdminPanel
-        </a>
-      @endif
-
-    </ul>
+      </ul>
 
 
-    <ul class="navbar-nav ml-auto mr-2" style="">
+      <ul class="navbar-nav ml-auto mr-2" style="">
 
-      @include('Layout.Notificaciones.Solicitudes')
-      @include('Layout.Notificaciones.Rendiciones')
-      @include('Layout.Notificaciones.Reposiciones')
-      @include('Layout.Notificaciones.Requerimientos')
+        @include('Layout.Notificaciones.Solicitudes')
+        @include('Layout.Notificaciones.Rendiciones')
+        @include('Layout.Notificaciones.Reposiciones')
+        @include('Layout.Notificaciones.Requerimientos')
 
 
-    </ul>
+      </ul>
 
 
 
 
 
-    <ul class="navbar-nav ml-auto">
-      <!-- Messages Dropdown Menu --> {{-- VER CARRITO RAPIDAMENTE --}}
+      <ul class="navbar-nav ml-auto">
+        <!-- Messages Dropdown Menu --> {{-- VER CARRITO RAPIDAMENTE --}}
         @include('Layout.Notificaciones.Usuario')
-    </ul>
+      </ul>
 
 
 
@@ -96,172 +98,170 @@
 
 
 
-  </nav>
-  <!-- /.navbar -->
-  {{--  {{route('bienvenido')}} --}}
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar elevation-4">
+    </nav>
+    <!-- /.navbar -->
+    {{--  {{route('bienvenido')}} --}}
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar elevation-4">
 
 
 
 
-    <!-- Sidebar -->
+      <!-- Sidebar -->
 
 
 
-    <div class="sidebar">
-      <div class="image-logo-container">
-          <a href="{{route('user.home')}}">
+      <div class="sidebar">
+        <div class="image-logo-container">
+          <a href="{{ route('user.home') }}">
             <img src="/img/logo-ciites-w300.png" class="brand-image w-100 px-3">
           </a>
 
-      </div>
-      <!-- Sidebar user (optional) -->
-
-
-      <div class="user-panel mt-3 d-flex">
-        <div class="image pl-0 d-flex flex-column">
-          <img src="/img/usuario.png" class="img-circle elevation-2" alt="User Image">
-          <span class="mb-auto fontSize9" title="Sus roles en el sistema">
-            Roles:
-          </span>
         </div>
+        <!-- Sidebar user (optional) -->
 
 
-        <div class="info">
-          <a href="{{route('GestionUsuarios.verMisDatos')}}" class="d-block nombrecompleto-usuario">
-            {{ $empLogeadoPlantilla->nombres }}
-            <br>
-            {{ $empLogeadoPlantilla->apellidos }}
-          </a>
+        <div class="user-panel mt-3 d-flex">
+          <div class="image pl-0 d-flex flex-column">
+            <img src="/img/usuario.png" class="img-circle elevation-2" alt="User Image">
+            <span class="mb-auto fontSize9" title="Sus roles en el sistema">
+              Roles:
+            </span>
+          </div>
 
-          <div class="d-flex flex-column " >
 
-            @foreach ($empLogeadoPlantilla->getPuestos() as $puesto)
-              <label class="label_puestos" style="" title="{{$puesto->descripcion}}">
-                {{$puesto->nombreAparente}}
-              </label>
-            @endforeach
+          <div class="info">
+            <a href="{{ route('GestionUsuarios.verMisDatos') }}" class="d-block nombrecompleto-usuario">
+              {{ $empLogeadoPlantilla->nombres }}
+              <br>
+              {{ $empLogeadoPlantilla->apellidos }}
+            </a>
+
+            <div class="d-flex flex-column ">
+
+              @foreach ($empLogeadoPlantilla->getPuestos() as $puesto)
+                <label class="label_puestos" style="" title="{{ $puesto->descripcion }}">
+                  {{ $puesto->nombreAparente }}
+                </label>
+              @endforeach
+            </div>
+
           </div>
 
         </div>
 
-      </div>
 
+        @if ($empLogeadoPlantilla->esAdminSistema())
 
-      @if($empLogeadoPlantilla->esAdminSistema())
+          @if (App\ParametroSistema::mostrarMsj())
+            <div class="msj_parametros_faltantes">
+              {{ App\ParametroSistema::getMsjFaltantes() }}
+            </div>
+          @endif
+        @endif
 
-        @if(App\ParametroSistema::mostrarMsj())
-          <div class="msj_parametros_faltantes">
-            {{App\ParametroSistema::getMsjFaltantes()}}
+        @php
+          $entorno = App\ParametroSistema::getEntorno();
+        @endphp
+        @if ($entorno != 'produccion')
+          <div class="nombre-entorno">
+            Entorno: {{ $entorno }}
           </div>
         @endif
-      @endif
-
-      @php
-        $entorno = App\ParametroSistema::getEntorno();
-      @endphp
-      @if($entorno!="produccion")
-        <div class="nombre-entorno">
-          Entorno: {{$entorno}}
-        </div>
-      @endif
 
 
 
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview"
-          role="menu" data-accordion="false">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
 
-            @if($empLogeadoPlantilla->esAdminSistema())
-                @include('Layout.MenuLateral.AdminSistema')  {{-- Este tiene todo --}}
-
+            @if ($empLogeadoPlantilla->esAdminSistema())
+              @include('Layout.MenuLateral.AdminSistema') {{-- Este tiene todo --}}
             @else
-                @if($empLogeadoPlantilla->esEmpleado())
-                    @include('Layout.MenuLateral.Empleado')
-                @endif
-                @if($empLogeadoPlantilla->esGerente())
-                    @include('Layout.MenuLateral.Gerente')
-                @endif
-                @if($empLogeadoPlantilla->esJefeAdmin())
-                    @include('Layout.MenuLateral.Administrador')
-                @endif
-                @if($empLogeadoPlantilla->esContador())
-                    @include('Layout.MenuLateral.Contador')
-                @endif
-                @if($empLogeadoPlantilla->esUGE())
-                    @include('Layout.MenuLateral.UGE')
-                @endif
+              @if ($empLogeadoPlantilla->esEmpleado())
+                @include('Layout.MenuLateral.Empleado')
+              @endif
+              @if ($empLogeadoPlantilla->esGerente())
+                @include('Layout.MenuLateral.Gerente')
+              @endif
+              @if ($empLogeadoPlantilla->esJefeAdmin())
+                @include('Layout.MenuLateral.Administrador')
+              @endif
+              @if ($empLogeadoPlantilla->esContador())
+                @include('Layout.MenuLateral.Contador')
+              @endif
+              @if ($empLogeadoPlantilla->esUGE())
+                @include('Layout.MenuLateral.UGE')
+              @endif
 
-                @if($empLogeadoPlantilla->esObservador())
-                    @include('Layout.MenuLateral.Observador')
-                @endif
+              @if ($empLogeadoPlantilla->esObservador())
+                @include('Layout.MenuLateral.Observador')
+              @endif
 
             @endif
 
 
 
-        </ul>
-      </nav>
+          </ul>
+        </nav>
 
 
 
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
 
-    <!-- Main content -->
-    <section class="content">
+      <!-- Main content -->
+      <section class="content">
         @yield('contenido')
 
-    </section>
-    <!-- /.content -->
-  </div>
-
-  <footer class="main-footer" style="padding: 4px; font-size:9pt;">
-    <div style="text-align:right;">
-      <strong>Copyright &copy; {{date("Y")}}
-
-        .
-      </strong>
-      Powered by Maracsoft
+      </section>
+      <!-- /.content -->
     </div>
 
-  </footer>
+    <footer class="main-footer" style="padding: 4px; font-size:9pt;">
+      <div style="text-align:right;">
+        <strong>Copyright &copy; {{ date('Y') }}
+
+          .
+        </strong>
+        Powered by Maracsoft
+      </div>
+
+    </footer>
 
 
-</div>
-<!-- ./wrapper -->
+  </div>
+  <!-- ./wrapper -->
 
-<!-- jQuery -->
-<script src="/adminlte/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- jQuery -->
+  <script src="/adminlte/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<!-- AdminLTE App -->
-<script src="/adminlte/dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/adminlte/dist/js/adminlte.min.js"></script>
 
-<script src="/select2/bootstrap-select.min.js"></script>
+  <script src="/select2/bootstrap-select.min.js"></script>
 
-{{-- La lógica del loader show y hide depende de esta librería --}}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  {{-- La lógica del loader show y hide depende de esta librería --}}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
-<!-- LIBRERIAS PARA NOTIFICACION DE ELIMINACION--->
-<script src="/adminlte/dist/js/sweetalert.min.js"></script>
-<link rel="stylesheet" href="/adminlte/dist/css/sweetalert.css">
+  <!-- LIBRERIAS PARA NOTIFICACION DE ELIMINACION--->
+  <script src="/adminlte/dist/js/sweetalert.min.js"></script>
+  <link rel="stylesheet" href="/adminlte/dist/css/sweetalert.css">
 
-<script src="/calendario/js/bootstrap-datepicker.js"></script>
-
-
+  <script src="/calendario/js/bootstrap-datepicker.js"></script>
 
 
-<script type="application/javascript">
+
+
+  <script type="application/javascript">
 
   var menuLateralOcultado = true;
 
@@ -469,7 +469,8 @@
 </script>
 
 
-@yield('script')
+  @yield('script')
 
 </body>
+
 </html>

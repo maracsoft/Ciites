@@ -1,62 +1,21 @@
 <?php
 
-use App\ArchivoOrdenCompra;
-use App\ArchivoProyecto;
-use App\ArchivoRendicion;
-use App\ArchivoReposicion;
-use App\ArchivoReqAdmin;
-use App\ArchivoReqEmp;
-use App\ArchivoSolicitud;
-use App\BackendValidator;
-use App\BusquedaRepo;
-use App\Configuracion;
-use App\ContratoPlazo;
-use App\Debug;
-use App\DetalleReposicionGastos;
-use App\DetalleSolicitudFondos;
-use App\Distrito;
-use App\Empleado;
-use App\ErrorHistorial;
-use App\EstadoSolicitudFondos;
-use App\FakerCedepas;
-use App\Fecha;
-use App\Http\Controllers\OperacionesController;
-use App\Http\Controllers\PersonaPoblacionController;
-use App\MaracsoftBot;
-use App\Mes;
-use App\MesAño;
-use App\MetaEjecutada;
 
-use App\Numeracion;
-use App\OperacionDocumento;
-use App\OrdenCompra;
-use App\ParametroSistema;
-use App\PersonaNaturalPoblacion;
-use App\Proyecto;
-use App\Puesto;
-use App\RendicionGastos;
-use App\ReposicionGastos;
-use App\RequerimientoBS;
-use App\RevisionInventario;
+use App\Empleado;
+
 use App\Routers\RouterConstanciaDeposito;
-use App\SolicitudFondos;
-use App\TipoOperacion;
-use App\UI\UIFiltros;
-use App\User;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Hash;
+use App\Routers\RouterViajes;
 use Illuminate\Support\Facades\Route;
-use Faker\Factory as Faker;
-use Illuminate\Http\Client\Response;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Monolog\ErrorHandler;
+
+
 
 Route::get('/PaginaEnMantenimiento/', 'UserController@paginaEnMantenimiento')->name('mantenimiento');
 
 Route::group(['middleware' => "Mantenimiento"], function () {
 
   RouterConstanciaDeposito::RegisterRoutes();
+  RouterViajes::RegisterRoutes();
+
 
   Route::get('/login', 'UserController@verLogin')->name('user.verLogin'); //para desplegar la vista del Login
   Route::post('/ingresar', 'UserController@logearse')->name('user.logearse');
@@ -75,66 +34,12 @@ Route::group(['middleware' => "Mantenimiento"], function () {
   Route::get('/probandoProy', 'ProyectoController@probandoMeses');
 
 
-  Route::get('/probandoCosas', function () {
+  Route::get('/probandoCosas', function () {});
 
 
 
 
-    return "listo";
-  });
 
-  Route::get('/serviciosDistritosRepetidos', function () {});
-
-  Route::get('/unidadesDistritosRepetidos', function () {});
-  Route::get('/serviciosDistritoUno', function () {});
-
-
-  Route::get('/regenerar_pdfs/sof', function () {
-    $max = 50;
-    $i = 0;
-    $listaSolicitudes = SolicitudFondos::query()->get();
-    foreach ($listaSolicitudes as $sof) {
-      if (!$sof->archivoPdfYaExiste() && $i < $max) {
-        Debug::LogMessage("Generando pdf de " . $sof->codigoCedepas);
-        $sof->guardarPdfStorage();
-        $i++;
-      }
-    }
-  });
-  Route::get('/regenerar_pdfs/rep', function () {
-    $max = 50;
-    $i = 0;
-    $listaReposiciones = ReposicionGastos::query()->get();
-    foreach ($listaReposiciones as $rep) {
-      if (!$rep->archivoPdfYaExiste() && $i < $max) {
-        Debug::LogMessage("Generando pdf de " . $rep->codigoCedepas);
-        $rep->guardarPdfStorage();
-        $i++;
-      }
-    }
-  });
-  Route::get('/regenerar_pdfs/rbs', function () {
-    $max = 50;
-    $i = 0;
-    $listaRequerimientos = RequerimientoBS::query()->get();
-    foreach ($listaRequerimientos as $rbs) {
-      if (!$rbs->archivoPdfYaExiste() && $i < $max) {
-        Debug::LogMessage("Generando pdf de " . $rbs->codigoCedepas);
-        $rbs->guardarPdfStorage();
-        $i++;
-      }
-    }
-  });
-
-
-
-
-  Route::get('/distritosRepetidos', function () {});
-
-  Route::get('/getEmpleadoLogeado', function () {
-
-    return Empleado::getEmpleadoLogeado();
-  });
 
   Route::get('/Error', function () {
 

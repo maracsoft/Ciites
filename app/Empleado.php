@@ -16,531 +16,556 @@ use Exception;
 
 class Empleado extends MaracModel implements MaracModelInterface
 {
-    public $table = "empleado";
-    protected $primaryKey ="codEmpleado";
+  public $table = "empleado";
+  protected $primaryKey = "codEmpleado";
 
-    public $timestamps = false;  //para que no trabaje con los campos fecha
+  public $timestamps = false;  //para que no trabaje con los campos fecha
 
 
-    // le indicamos los campos de la tabla
-    protected $fillable = ['codUsuario','nombres','apellidos','activo','codigoCedepas','dni','fechaRegistro','fechaDeBaja','codSede'];
+  // le indicamos los campos de la tabla
+  protected $fillable = ['codUsuario', 'nombres', 'apellidos', 'activo', 'codigoCedepas', 'dni', 'fechaRegistro', 'fechaDeBaja', 'codSede'];
 
-    /* Facade para findOrFail, por temas de intellise */
-    public static function findf(int $id) : Empleado {
-      return Empleado::findOrFail($id);
+  /* Facade para findOrFail, por temas de intellise */
+  public static function findf(int $id): Empleado
+  {
+    return Empleado::findOrFail($id);
+  }
+
+  public function getFechaNacimiento(): string
+  {
+    return Fecha::formatoParaVistas($this->fechaNacimiento);
+  }
+
+  public static function prepararParaSelect($listaEmpleados)
+  {
+    foreach ($listaEmpleados as $empleado) {
+      $empleado['getNombreCompleto'] = $empleado->getNombreCompleto();
     }
 
-    public function getFechaNacimiento() : string{
-      return Fecha::formatoParaVistas($this->fechaNacimiento);
+    return $listaEmpleados;
+  }
 
+
+  public function getSedeQueAdministra()
+  {
+    $lista = Sede::where('codEmpleadoAdministrador', '=', $this->codEmpleado)->get();
+    if (count($lista) == 0)
+      return new Sede();
+
+    return $lista[0];
+  }
+
+  /* busca un empleado, si encuentra uno retorna el objeto empleado. si no retorna "" */
+  public static function buscarPorDNI($DNI)
+  {
+    $lista = Empleado::where('dni', '=', $DNI)->get();
+
+    if (count($lista) == 0)
+      return "";
+
+    return $lista[0];
+  }
+
+  public function getSolicitudesPorRendir()
+  {
+    $vector = [SolicitudFondos::getCodEstado('Abonada'), SolicitudFondos::getCodEstado('Contabilizada')];
+
+    return SolicitudFondos::whereIn('codEstadoSolicitud', $vector)
+      ->where('codEmpleadoSolicitante', '=', $this->codEmpleado)
+      ->where('estaRendida', '=', 0)
+      ->get();
+  }
+
+
+  public function getSolicitudesObservadas()
+  {
+    return SolicitudFondos::where('codEstadoSolicitud', '=', SolicitudFondos::getCodEstado('Observada'))
+      ->where('codEmpleadoSolicitante', '=', $this->codEmpleado)
+      ->get();
+  }
+
+
+  public function getReposicionesObservadas()
+  {
+
+    return ReposicionGastos::where('codEmpleadoSolicitante', '=', $this->codEmpleado)
+      ->where('codEstadoReposicion', '=', ReposicionGastos::getCodEstado('Observada'))
+      ->get();
+  }
+  public function getRequerimientosObservados()
+  {
+
+    return RequerimientoBS::where('codEmpleadoSolicitante', '=', $this->codEmpleado)
+      ->where('codEstadoRequerimiento', '=', RequerimientoBS::getCodEstado('Observada'))
+      ->get();
+  }
+  public function getRendicionesObservadas()
+  {
+
+    return RendicionGastos::where('codEmpleadoSolicitante', '=', $this->codEmpleado)
+      ->where('codEstadoRendicion', '=', RendicionGastos::getCodEstado('Observada'))
+      ->get();
+  }
+
+
+
+  public function getDetallesPendientesRendicion()
+  {
+    $rendicionesDelEmpleado = RendicionGastos::where('codEmpleadoSolicitante', '=', $this->codEmpleado)
+      ->get();
+    $vectorDeCodsRendicion = [];
+
+    foreach ($rendicionesDelEmpleado as $item) {
+      array_push($vectorDeCodsRendicion, $item->codRendicionGastos);
+    }
+    //Debug::mensajeSimple(implode(' , ',$vectorDeCodsRendicion));
+
+
+
+    $lista =  DetalleRendicionGastos::whereIn('codRendicionGastos', $vectorDeCodsRendicion)
+      ->where('pendienteDeVer', '=', '1')
+      ->get();
+
+    return $lista;
+  }
+  public function getDetallesPendientesReposicion()
+  {
+    $reposicionesDelEmpleado = ReposicionGastos::where('codEmpleadoSolicitante', '=', $this->codEmpleado)
+      ->get();
+    $vectorDeCodsReposicion = [];
+
+    foreach ($reposicionesDelEmpleado as $item) {
+      array_push($vectorDeCodsReposicion, $item->codReposicionGastos);
+    }
+    //Debug::mensajeSimple(implode(' , ',$vectorDeCodsRendicion));
+
+    $lista =  DetalleReposicionGastos::whereIn('codReposicionGastos', $vectorDeCodsReposicion)
+      ->where('pendienteDeVer', '=', '1')
+      ->get();
+
+    return $lista;
+  }
+
+  public function getListaEmpleadoPuesto(): Collection
+  {
+    return EmpleadoPuesto::where('codEmpleado', $this->codEmpleado)->get();
+  }
+
+
+  public function getPuestos()
+  {
+    $listaEmpleadoPuesto = $this->getListaEmpleadoPuesto();
+    $codPuestos = [];
+    foreach ($listaEmpleadoPuesto as $empleadoPuesto) {
+      array_push($codPuestos, $empleadoPuesto->codPuesto);
     }
 
-    public static function prepararParaSelect($listaEmpleados){
-      foreach ($listaEmpleados as $empleado) {
-        $empleado['getNombreCompleto'] = $empleado->getNombreCompleto();
-      }
+    $listaPuestos = Puesto::whereIn('codPuesto', $codPuestos)->orderBy('ordenListado', 'ASC')->get();
+    return $listaPuestos;
+  }
 
-      return $listaEmpleados;
+  public function getPuestosPorComas()
+  {
+    $array = [];
+    $lista = $this->getPuestos();
+    foreach ($lista as $pue) {
+      $array[] = $pue->nombre;
     }
+    return implode(",", $array);
+  }
+
+  public function getLetraSegunSexo()
+  {
+    if ($this->sexo == "H")
+      return "o";
+    else
+      return "a";
+  }
 
 
-    public function getSedeQueAdministra(){
-        $lista = Sede::where('codEmpleadoAdministrador','=',$this->codEmpleado)->get();
-        if(count($lista)==0)
-            return new Sede();
 
-        return $lista[0];
+
+
+  //le pasamos la id del usuario y te retorna el codigo cedepas del empleado
+  public function getNombrePorUser($idAuth)
+  {
+    $lista = Empleado::where('codUsuario', '=', $idAuth)->get();
+    return $lista[0]->nombres;
+  }
+
+  public function esEmpleado(): bool
+  {
+    $codPuestoEsperado = Puesto::getCodPuesto_Empleado();
+    return $this->verificarPuesto($codPuestoEsperado);
+  }
+
+  public function esGerente(): bool
+  {
+
+    $codPuestoEsperado = Puesto::getCodPuesto_Gerente();
+    return $this->verificarPuesto($codPuestoEsperado);
+  }
+
+  public function esContador(): bool
+  {
+    $codPuestoEsperado = Puesto::getCodPuesto_Contador();
+    return $this->verificarPuesto($codPuestoEsperado);
+  }
+  public function esObservador(): bool
+  {
+    $codPuestoEsperado = Puesto::getCodPuesto_Observador();
+    return $this->verificarPuesto($codPuestoEsperado);
+  }
+
+  public function esConductor(): bool
+  {
+    $codPuestoEsperado = Puesto::getCodPuesto_Conductor();
+    return $this->verificarPuesto($codPuestoEsperado);
+  }
+
+  public function esAprobadorViajes(): bool
+  {
+    $codPuestoEsperado = Puesto::getCodPuesto_AprobadorViajes();
+    return $this->verificarPuesto($codPuestoEsperado);
+  }
+
+
+
+  /* Retorna el obj sede si el empleado es contador */
+  public function getSedeContador()
+  {
+    return Sede::findOrFail($this->codSedeContador);
+  }
+
+  public function getSedeContadorOAdministrador()
+  {
+    if ($this->esContador())
+      return $this->getSedeContador();
+
+    if ($this->esJefeAdmin())
+      return $this->getSedeQueAdministra();
+  }
+
+  public function esAdminSistema()
+  {
+    $usuario = User::findOrFail($this->codUsuario);
+    return $usuario->isAdmin == '1';
+  }
+  public function verificarPuesto($codPuestoEsperado): bool
+  {
+    $listaEmpleadoPuesto = $this->getListaEmpleadoPuesto();
+    foreach ($listaEmpleadoPuesto as $emp_puesto) {
+      if ($emp_puesto->codPuesto == $codPuestoEsperado)
+        return true;
     }
+    return false;
+  }
 
-    /* busca un empleado, si encuentra uno retorna el objeto empleado. si no retorna "" */
-    public static function buscarPorDNI($DNI){
-        $lista = Empleado::where('dni','=',$DNI)->get();
+  public function esUGE()
+  {
+    $codPuestoEsperado = Puesto::getCodPuesto_UGE();
+    return $this->verificarPuesto($codPuestoEsperado);
+  }
 
-        if( count($lista) == 0 )
-            return "";
+  public function esAdministrador()
+  {
+    $codPuestoEsperado = Puesto::getCodPuesto_Administrador();
+    return $this->verificarPuesto($codPuestoEsperado);
+  }
 
-        return $lista[0];
 
-    }
 
-    public function getSolicitudesPorRendir(){
-        $vector = [SolicitudFondos::getCodEstado('Abonada'),SolicitudFondos::getCodEstado('Contabilizada')];
-
-        return SolicitudFondos::whereIn('codEstadoSolicitud',$vector)
-        ->where('codEmpleadoSolicitante','=',$this->codEmpleado)
-        ->where('estaRendida','=',0)
-        ->get();
-
-
-    }
-
-
-    public function getSolicitudesObservadas(){
-        return SolicitudFondos::
-            where('codEstadoSolicitud','=',SolicitudFondos::getCodEstado('Observada'))
-            ->where('codEmpleadoSolicitante','=',$this->codEmpleado)
-            ->get();
-
-
-    }
-
-
-    public function getReposicionesObservadas(){
-
-        return ReposicionGastos::where('codEmpleadoSolicitante','=',$this->codEmpleado)
-            ->where('codEstadoReposicion','=',ReposicionGastos::getCodEstado('Observada'))
-            ->get();
-
-
-    }
-    public function getRequerimientosObservados(){
-
-        return RequerimientoBS::where('codEmpleadoSolicitante','=',$this->codEmpleado)
-            ->where('codEstadoRequerimiento','=',RequerimientoBS::getCodEstado('Observada'))
-            ->get();
-
-
-    }
-    public function getRendicionesObservadas(){
-
-        return RendicionGastos::where('codEmpleadoSolicitante','=',$this->codEmpleado)
-            ->where('codEstadoRendicion','=',RendicionGastos::getCodEstado('Observada'))
-            ->get();
-
-
-    }
-
-
-
-    public function getDetallesPendientesRendicion(){
-        $rendicionesDelEmpleado = RendicionGastos::where('codEmpleadoSolicitante','=',$this->codEmpleado)
-            ->get();
-        $vectorDeCodsRendicion = [];
-
-        foreach ($rendicionesDelEmpleado as $item) {
-            array_push($vectorDeCodsRendicion,$item->codRendicionGastos);
-
-        }
-        //Debug::mensajeSimple(implode(' , ',$vectorDeCodsRendicion));
-
-
-
-        $lista =  DetalleRendicionGastos::
-            whereIn('codRendicionGastos',$vectorDeCodsRendicion)
-            ->where('pendienteDeVer','=','1')
-            ->get();
-
-        return $lista;
-    }
-    public function getDetallesPendientesReposicion(){
-        $reposicionesDelEmpleado = ReposicionGastos::where('codEmpleadoSolicitante','=',$this->codEmpleado)
-            ->get();
-        $vectorDeCodsReposicion = [];
-
-        foreach ($reposicionesDelEmpleado as $item) {
-            array_push($vectorDeCodsReposicion,$item->codReposicionGastos);
-
-        }
-        //Debug::mensajeSimple(implode(' , ',$vectorDeCodsRendicion));
-
-        $lista =  DetalleReposicionGastos::
-            whereIn('codReposicionGastos',$vectorDeCodsReposicion)
-            ->where('pendienteDeVer','=','1')
-            ->get();
-
-        return $lista;
-    }
-
-    public function getListaEmpleadoPuesto() : Collection{
-      return EmpleadoPuesto::where('codEmpleado',$this->codEmpleado)->get();
-
-    }
-
-
-    public function getPuestos(){
-        $listaEmpleadoPuesto = $this->getListaEmpleadoPuesto();
-        $codPuestos = [];
-        foreach ($listaEmpleadoPuesto as $empleadoPuesto) {
-            array_push($codPuestos,$empleadoPuesto->codPuesto);
-        }
-
-        $listaPuestos = Puesto::whereIn('codPuesto',$codPuestos)->orderBy('ordenListado','ASC')->get();
-        return $listaPuestos;
-    }
-
-    public function getPuestosPorComas(){
-        $array = [];
-        $lista = $this->getPuestos();
-        foreach ($lista as $pue ) {
-            $array[] = $pue->nombre;
-        }
-        return implode(",",$array);
-    }
-
-    public function getLetraSegunSexo(){
-      if($this->sexo == "H")
-        return "o";
-      else
-        return "a";
-
-    }
-
-
-
-
-
-    //le pasamos la id del usuario y te retorna el codigo cedepas del empleado
-    public function getNombrePorUser( $idAuth){
-        $lista = Empleado::where('codUsuario','=',$idAuth)->get();
-        return $lista[0]->nombres;
-
-    }
-
-    public function esEmpleado() : bool{
-      $codPuestoEsperado = Puesto::getCodPuesto_Empleado();
-      return $this->verificarPuesto($codPuestoEsperado);
-    }
-
-    public function esGerente() : bool{
-
-      $codPuestoEsperado = Puesto::getCodPuesto_Gerente();
-      return $this->verificarPuesto($codPuestoEsperado);
-
-    }
-
-    public function esContador() : bool{
-      $codPuestoEsperado = Puesto::getCodPuesto_Contador();
-      return $this->verificarPuesto($codPuestoEsperado);
-    }
-    public function esObservador() : bool{
-      $codPuestoEsperado = Puesto::getCodPuesto_Observador();
-      return $this->verificarPuesto($codPuestoEsperado);
-    }
-
-
-    /* Retorna el obj sede si el empleado es contador */
-    public function getSedeContador(){
-        return Sede::findOrFail($this->codSedeContador);
-    }
-
-    public function getSedeContadorOAdministrador(){
-        if($this->esContador())
-            return $this->getSedeContador();
-
-        if($this->esJefeAdmin())
-            return $this->getSedeQueAdministra();
-
-    }
-
-    public function esAdminSistema(){
-        $usuario = User::findOrFail($this->codUsuario);
-        return $usuario->isAdmin=='1';
-
-    }
-    public function verificarPuesto($codPuestoEsperado) : bool{
-      $listaEmpleadoPuesto = $this->getListaEmpleadoPuesto();
-      foreach ($listaEmpleadoPuesto as $emp_puesto) {
-        if($emp_puesto->codPuesto == $codPuestoEsperado)
-          return true;
-      }
-      return false;
-    }
-
-    public function esUGE(){
-      $codPuestoEsperado = Puesto::getCodPuesto_UGE();
-      return $this->verificarPuesto($codPuestoEsperado);
-    }
-
-    public function esAdministrador(){
-      $codPuestoEsperado = Puesto::getCodPuesto_Administrador();
-      return $this->verificarPuesto($codPuestoEsperado);
-    }
-
-
-
-    /* REFACTORIZAR ESTO PARA LA NUEVA CONFIGURACION DEL A BASE DE DATOOOOOOOOOOOOOOOOOOOOOOOOOS
+  /* REFACTORIZAR ESTO PARA LA NUEVA CONFIGURACION DEL A BASE DE DATOOOOOOOOOOOOOOOOOOOOOOOOOS
     SOLO TIENES K CAMBIAR TODAS LAS FUNCIONES QUE USEN EL codPuesto POR LA NUEVA TABLA
 
     */
-    //para modulo ProvisionFondos.
-    public function esJefeAdmin() : bool{
-      $codPuestoEsperado = Puesto::getCodPuesto_Administrador();
-      return $this->verificarPuesto($codPuestoEsperado);
+  //para modulo ProvisionFondos.
+  public function esJefeAdmin(): bool
+  {
+    $codPuestoEsperado = Puesto::getCodPuesto_Administrador();
+    return $this->verificarPuesto($codPuestoEsperado);
+  }
 
+  public function getPuestoOld()
+  {
+    if ($this->codPuesto != null)
+      return $this->getPuesto()->nombre;
+
+    return "";
+  }
+  public function getPuesto()
+  {
+
+    return Puesto::findOrFail($this->codPuesto);
+  }
+
+  public function estaActivo()
+  {
+    return $this->activo == '1';
+  }
+
+  public function getColorSegunActivo()
+  {
+    return $this->estaActivo() ? '' : 'rgb(250,200,200)';
+  }
+
+
+
+
+  public static function getListaGerentesActivos(): Collection
+  {
+
+    $arrayCodEmp = [];
+    $listaEmpleadoPuesto = EmpleadoPuesto::where('codPuesto', Puesto::getCodigo('Gerente'))->get();
+    foreach ($listaEmpleadoPuesto as $emp) {
+      $arrayCodEmp[] = $emp->codEmpleado;
     }
 
-    public function getPuestoOld(){
-      if($this->codPuesto != null)
-        return $this->getPuesto()->nombre;
+    $lista = Empleado::whereIn('codEmpleado', $arrayCodEmp)->where('activo', '=', '1')->get();
 
-      return "";
-    }
-    public function getPuesto(){
+    return $lista;
+  }
 
-      return Puesto::findOrFail($this->codPuesto);
-    }
-
-    public function estaActivo(){
-        return $this->activo == '1';
+  public static function getListaContadoresActivos()
+  {
+    $arrayCodEmp = [];
+    $listaEmpleadoPuesto = EmpleadoPuesto::where('codPuesto', Puesto::getCodigo('Contador'))->get();
+    foreach ($listaEmpleadoPuesto as $emp) {
+      $arrayCodEmp[] = $emp->codEmpleado;
     }
 
-    public function getColorSegunActivo(){
-        return $this->estaActivo() ? '' : 'rgb(250,200,200)';
+    $lista = Empleado::whereIn('codEmpleado', $arrayCodEmp)->where('activo', '=', '1')->get();
+
+    return $lista;
+  }
+
+  public static function getListaAdministradoresActivos()
+  {
+    $arrayCodEmp = [];
+    $listaEmpleadoPuesto = EmpleadoPuesto::where('codPuesto', Puesto::getCodigo('Administrador'))->get();
+    foreach ($listaEmpleadoPuesto as $emp) {
+      $arrayCodEmp[] = $emp->codEmpleado;
     }
 
+    $lista = Empleado::whereIn('codEmpleado', $arrayCodEmp)->where('activo', '=', '1')->get();
+
+    return $lista;
+  }
 
 
+  public function getListaProyectosObservador(): Collection
+  {
 
-    public static function getListaGerentesActivos() : Collection{
-
-        $arrayCodEmp = [];
-        $listaEmpleadoPuesto = EmpleadoPuesto::where('codPuesto',Puesto::getCodigo('Gerente'))->get();
-        foreach ($listaEmpleadoPuesto as $emp ) {
-          $arrayCodEmp[] = $emp->codEmpleado;
-        }
-
-        $lista = Empleado::whereIn('codEmpleado',$arrayCodEmp)->where('activo','=','1')->get();
-
-        return $lista;
-
+    $listaProyectoObservador = ProyectoObservador::where('codEmpleadoObservador', $this->getId())->get();
+    $codsProyectos = [];
+    foreach ($listaProyectoObservador as $proy_obs) {
+      $codsProyectos[] = $proy_obs->codProyecto;
     }
 
-    public static function getListaContadoresActivos(){
-      $arrayCodEmp = [];
-      $listaEmpleadoPuesto = EmpleadoPuesto::where('codPuesto',Puesto::getCodigo('Contador'))->get();
-      foreach ($listaEmpleadoPuesto as $emp ) {
-        $arrayCodEmp[] = $emp->codEmpleado;
-      }
+    $proyectos = Proyecto::whereIn('codProyecto', $codsProyectos)->get();
+    $proyectos = Proyecto::añadirNombreYcod($proyectos);
+    return $proyectos;
+  }
 
-      $lista = Empleado::whereIn('codEmpleado',$arrayCodEmp)->where('activo','=','1')->get();
 
-        return $lista;
+  //solo se aplica a los gerentes, retorna lista de proyectos que este gerente lidera
+  public function getListaProyectos(): Collection
+  {
+    $proy = Proyecto::where('codEmpleadoDirector', '=', $this->codEmpleado)->get();
+    $proy = Proyecto::añadirNombreYcod($proy);
+    //retornamos el Collection
+    return $proy;
+  }
 
+  // solo para gerente
+  public function getListaSolicitudesDeGerente()
+  {
+
+    $listaSolicitudesFondos = $this->getListaSolicitudesDeGerente2()->get();
+    return $listaSolicitudesFondos;
+  }
+
+  public function getListaSolicitudesDeGerente2()
+  {
+    //Construimos primero la busqueda de todos los proyectos que tenga este gerente
+    $listaProyectos = $this->getListaProyectos();
+    $vecProy = [];
+    foreach ($listaProyectos as $itemProyecto) {
+      array_push($vecProy, $itemProyecto->codProyecto);
     }
 
-    public static function getListaAdministradoresActivos(){
-      $arrayCodEmp = [];
-      $listaEmpleadoPuesto = EmpleadoPuesto::where('codPuesto',Puesto::getCodigo('Administrador'))->get();
-      foreach ($listaEmpleadoPuesto as $emp ) {
-        $arrayCodEmp[] = $emp->codEmpleado;
-      }
+    $listaSolicitudesFondos = SolicitudFondos::whereIn('codProyecto', $vecProy);
 
-      $lista = Empleado::whereIn('codEmpleado',$arrayCodEmp)->where('activo','=','1')->get();
+    return $listaSolicitudesFondos;
+  }
 
-        return $lista;
-
-    }
-
-
-    public function getListaProyectosObservador() : Collection {
-
-      $listaProyectoObservador = ProyectoObservador::where('codEmpleadoObservador',$this->getId())->get();
-      $codsProyectos = [];
-      foreach ($listaProyectoObservador as $proy_obs) {
-        $codsProyectos[] = $proy_obs->codProyecto;
-      }
-
-      $proyectos = Proyecto::whereIn('codProyecto',$codsProyectos)->get();
-      $proyectos = Proyecto::añadirNombreYcod($proyectos);
-      return $proyectos;
-    }
-
-
-    //solo se aplica a los gerentes, retorna lista de proyectos que este gerente lidera
-    public function getListaProyectos() : Collection{
-        $proy = Proyecto::where('codEmpleadoDirector','=',$this->codEmpleado)->get();
-        $proy = Proyecto::añadirNombreYcod($proy);
-        //retornamos el Collection
-        return $proy;
-    }
-
-    // solo para gerente
-    public function getListaSolicitudesDeGerente(){
-
-        $listaSolicitudesFondos = $this->getListaSolicitudesDeGerente2()->get();
-        return $listaSolicitudesFondos;
-
-    }
-
-    public function getListaSolicitudesDeGerente2(){
-        //Construimos primero la busqueda de todos los proyectos que tenga este gerente
-        $listaProyectos = $this->getListaProyectos();
-        $vecProy=[];
-        foreach ($listaProyectos as $itemProyecto ) {
-           array_push($vecProy,$itemProyecto->codProyecto );
-        }
-
-        $listaSolicitudesFondos = SolicitudFondos::whereIn('codProyecto',$vecProy);
-
-        return $listaSolicitudesFondos;
-
-    }
-
-    //solo para gerente
-    /* DEPRECATED */
+  //solo para gerente
+  /* DEPRECATED */
 
 
 
 
 
 
-    public static function hayEmpleadoLogeado() : bool {
-      if(is_null(Auth::id())){
+  public static function hayEmpleadoLogeado(): bool
+  {
+    if (is_null(Auth::id())) {
 
-        return false;
-      }
-
-
-
-      return true;
-
-
-    }
-
-
-    public static function getEmpleadoLogeado() : Empleado{
-        $codUsuario = Auth::id();
-        $empleados = Empleado::where('codUsuario','=',$codUsuario)->get();
-
-        if(is_null(Auth::id())){
-            throw new Exception("No hay ningún usuario logeado");
-        }
-
-
-        if(count($empleados)<0) //si no encontró el empleado de este user
-        {
-            Debug::mensajeError('Empleado','    getEmpleadoLogeado() ');
-            throw new Exception("El usuario logeado no tienen ningun empleado");
-        }
-        return $empleados[0];
+      return false;
     }
 
 
 
-    public function usuario(){
-
-        try{
-        $usuario = User::findOrFail($this->codUsuario);
-
-        }catch(Throwable $th){
-            Debug::mensajeError('MODELO EMPLEADO', $th);
-
-            return "usuario no encontrado.";
+    return true;
+  }
 
 
-        }
+  public static function getEmpleadoLogeado(): Empleado
+  {
+    $codUsuario = Auth::id();
+    $empleados = Empleado::where('codUsuario', '=', $codUsuario)->get();
 
-        return $usuario;
-
+    if (is_null(Auth::id())) {
+      throw new Exception("No hay ningún usuario logeado");
     }
 
 
-    public function getNombreCompleto(){
-        return $this->apellidos.' '.$this->nombres;
+    if (count($empleados) < 0) //si no encontró el empleado de este user
+    {
+      Debug::mensajeError('Empleado', '    getEmpleadoLogeado() ');
+      throw new Exception("El usuario logeado no tienen ningun empleado");
+    }
+    return $empleados[0];
+  }
+
+
+
+  public function usuario()
+  {
+
+    try {
+      $usuario = User::findOrFail($this->codUsuario);
+    } catch (Throwable $th) {
+      Debug::mensajeError('MODELO EMPLEADO', $th);
+
+      return "usuario no encontrado.";
     }
 
-    public static function getEmpleadosActivos(){
-        return Empleado::where('activo','=','1')
-            ->get();
+    return $usuario;
+  }
+
+
+  public function getNombreCompleto()
+  {
+    return $this->apellidos . ' ' . $this->nombres;
+  }
+
+  public static function getEmpleadosActivos()
+  {
+    return Empleado::where('activo', '=', '1')
+      ->get();
+  }
+
+  //obtiene una lista de los empleados ordenada alfabeticamente por apellidos (excepto el admin)
+  //ESTA FUNCION DEBE USARSE SIEMPRE PARA MOSTRARLE A LOS USUARIOS LA LISTA DE EMPLEADOS (en un select x ejemplo)
+  public static function getListaEmpleadosPorApellido(): Collection
+  {
+
+    $lista = Empleado::where('mostrarEnListas', '=', "1")->orderBy('apellidos')->get();
+    foreach ($lista as $emp) {
+      $emp['nombreCompleto'] = $emp->getNombreCompleto();
     }
+    return $lista;
+  }
+  public static function getMesActual()
+  {
+    date_default_timezone_set('America/Lima');
+    return (int)date('m');
+  }
 
-    //obtiene una lista de los empleados ordenada alfabeticamente por apellidos (excepto el admin)
-    //ESTA FUNCION DEBE USARSE SIEMPRE PARA MOSTRARLE A LOS USUARIOS LA LISTA DE EMPLEADOS (en un select x ejemplo)
-    public static function getListaEmpleadosPorApellido() : Collection{
 
-      $lista = Empleado::where('mostrarEnListas','=',"1")->orderBy('apellidos')->get();
-      foreach ($lista as $emp) {
-        $emp['nombreCompleto'] = $emp->getNombreCompleto();
-      }
-      return $lista;
+  public function getNotificaciones(string $nombreTipoNotificacion, bool $mostrarSoloNoVistas)
+  {
+    $tipoNoti = TipoNotificacion::where('nombre', $nombreTipoNotificacion)->first();
+
+    $query =  Notificacion::where('codEmpleado', '=', $this->codEmpleado)->where('codTipoNotificacion', $tipoNoti->getId());
+    if ($mostrarSoloNoVistas)
+      $query = $query->where('visto', 0);
+
+    return $query->get();
+  }
+
+
+
+
+
+  public static function getAdministradorAleatorio(): Empleado
+  {
+    $emp_puesto = EmpleadoPuesto::where('codPuesto', '=', Puesto::getCodPuesto_Administrador())->get();
+    $index = rand(1, count($emp_puesto)) - 1;
+    $admin = Empleado::findOrFail($emp_puesto[$index]->codEmpleado);
+    return $admin;
+  }
+
+  public static function getContadorAleatorio($codProyecto): Empleado
+  {
+
+    $listaContadoresDeProyecto = ProyectoContador::where('codProyecto', '=', $codProyecto)->get();
+    $num = rand(1, count($listaContadoresDeProyecto)) - 1;
+
+    $codEmpleadoContador = $listaContadoresDeProyecto[$num]->codEmpleadoContador;
+    //error_log($codEmpleadoContador);
+    return Empleado::findOrFail($codEmpleadoContador);
+  }
+
+
+
+  public function getListaIPs()
+  {
+    $listaLogeos = LogeoHistorial::where('codEmpleado', '=', $this->codEmpleado)->get();
+    $listaIps = [];
+    foreach ($listaLogeos as $logeo) {
+      if (!in_array($logeo->ipLogeo, $listaIps))
+        $listaIps[] = $logeo->ipLogeo;
     }
-    public static function getMesActual(){
-        date_default_timezone_set('America/Lima');
-        return (int)date('m');
-    }
+    return $listaIps;
+  }
 
-
-    public function getNotificaciones(string $nombreTipoNotificacion ,bool $mostrarSoloNoVistas){
-      $tipoNoti = TipoNotificacion::where('nombre',$nombreTipoNotificacion)->first();
-
-      $query =  Notificacion::where('codEmpleado','=',$this->codEmpleado)->where('codTipoNotificacion',$tipoNoti->getId());
-      if($mostrarSoloNoVistas)
-        $query = $query->where('visto',0);
-
-      return $query->get();
-
-    }
-
-
-
-
-
-    public static function getAdministradorAleatorio() : Empleado{
-        $emp_puesto = EmpleadoPuesto::where('codPuesto','=',Puesto::getCodPuesto_Administrador())->get();
-        $index = rand(1,count($emp_puesto))-1;
-        $admin = Empleado::findOrFail($emp_puesto[$index]->codEmpleado);
-        return $admin;
-    }
-
-    public static function getContadorAleatorio($codProyecto) : Empleado{
-
-        $listaContadoresDeProyecto = ProyectoContador::where('codProyecto','=',$codProyecto)->get();
-        $num = rand(1,count($listaContadoresDeProyecto))-1;
-
-        $codEmpleadoContador = $listaContadoresDeProyecto[$num]->codEmpleadoContador;
-        //error_log($codEmpleadoContador);
-        return Empleado::findOrFail($codEmpleadoContador);
-
-    }
-
-
-
-    public function getListaIPs(){
-        $listaLogeos = LogeoHistorial::where('codEmpleado','=',$this->codEmpleado)->get();
-        $listaIps = [];
-        foreach ($listaLogeos as $logeo) {
-            if(!in_array($logeo->ipLogeo,$listaIps))
-                $listaIps[] = $logeo->ipLogeo;
-        }
-        return $listaIps;
-    }
-
-    //retorna la IP con la que más frecuentemente se conecta
-    public function getIPPrincipal(){
-        $id = $this->codEmpleado;
-        $SQL = "select
+  //retorna la IP con la que más frecuentemente se conecta
+  public function getIPPrincipal()
+  {
+    $id = $this->codEmpleado;
+    $SQL = "select
                     codEmpleado,ipLogeo,count(codLogeoHistorial) as 'CantidadIngresos'
                 from logeo_historial
                 WHERE codEmpleado = $id
                 GROUP by codEmpleado, ipLogeo
                 ORDER by count(codLogeoHistorial) DESC";
 
-        $resultados = DB::select($SQL);
-        if(count($resultados)==0)
-            return "No hay ingresos.";
+    $resultados = DB::select($SQL);
+    if (count($resultados) == 0)
+      return "No hay ingresos.";
 
-        $vector = json_decode(json_encode($resultados),false);
-        $logeoPrincipal = $vector[0];
+    $vector = json_decode(json_encode($resultados), false);
+    $logeoPrincipal = $vector[0];
 
-        return  $logeoPrincipal->ipLogeo;
-    }
+    return  $logeoPrincipal->ipLogeo;
+  }
 
-     public function getCantidadDeLogeosDeUnaIP($ip){
-        $lista = LogeoHistorial::where('codEmpleado','=',$this->codEmpleado)
-            ->where('ipLogeo','=',$ip)
-            ->get();
-        return count ($lista);
-     }
+  public function getCantidadDeLogeosDeUnaIP($ip)
+  {
+    $lista = LogeoHistorial::where('codEmpleado', '=', $this->codEmpleado)
+      ->where('ipLogeo', '=', $ip)
+      ->get();
+    return count($lista);
+  }
 
-     public function getIPyCantidadLogeos(){
-        $ip = $this->getIPPrincipal();
-        $cant = $this->getCantidadDeLogeosDeUnaIP($ip);
-        return $ip." ($cant)";
-     }
-
-
-
-
+  public function getIPyCantidadLogeos()
+  {
+    $ip = $this->getIPPrincipal();
+    $cant = $this->getCantidadDeLogeosDeUnaIP($ip);
+    return $ip . " ($cant)";
+  }
 
 
 
@@ -548,11 +573,16 @@ class Empleado extends MaracModel implements MaracModelInterface
 
 
 
-     public function getCantidadObservacionesMesAño($mes,$año){
-        $id = $this->codEmpleado;
 
-        //Cantidad de observaciones de todas las reposiciones de un empleado
-        $sql = "
+
+
+
+  public function getCantidadObservacionesMesAño($mes, $año)
+  {
+    $id = $this->codEmpleado;
+
+    //Cantidad de observaciones de todas las reposiciones de un empleado
+    $sql = "
             select
                 R.codEmpleadoSolicitante,
                 count(O.codOperacionDocumento) as 'cant'
@@ -570,32 +600,25 @@ class Empleado extends MaracModel implements MaracModelInterface
             group by R.codEmpleadoSolicitante
         ";
 
-        //Debug::mensajeSimple($sql);
-        $respuesta = DB::select($sql);
+    //Debug::mensajeSimple($sql);
+    $respuesta = DB::select($sql);
 
-        if(empty($respuesta)){
-            Debug::mensajeSimple("ES NULO");
-            return 0;
-        }
-        return $respuesta[0]->cant;
-
-     }
-
-
-     function tieneAccesoAInventario(){
-
-        if(!RevisionInventario::hayUnaRevisionActiva())
-            return false;
+    if (empty($respuesta)) {
+      Debug::mensajeSimple("ES NULO");
+      return 0;
+    }
+    return $respuesta[0]->cant;
+  }
 
 
-        $ultimaRevision = RevisionInventario::getRevisionActiva();
-        return $ultimaRevision->tieneAEmpleado($this->codEmpleado);
+  function tieneAccesoAInventario()
+  {
 
-     }
-
-
-
+    if (!RevisionInventario::hayUnaRevisionActiva())
+      return false;
 
 
-
+    $ultimaRevision = RevisionInventario::getRevisionActiva();
+    return $ultimaRevision->tieneAEmpleado($this->codEmpleado);
+  }
 }
