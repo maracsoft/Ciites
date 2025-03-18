@@ -40,6 +40,7 @@ class Empleado extends MaracModel implements MaracModelInterface
   {
     foreach ($listaEmpleados as $empleado) {
       $empleado['getNombreCompleto'] = $empleado->getNombreCompleto();
+      $empleado['nombreCompleto'] = $empleado->getNombreCompleto();
     }
 
     return $listaEmpleados;
