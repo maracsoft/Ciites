@@ -2,12 +2,25 @@
 
 namespace App\Utils;
 
+use App\ParametroSistema;
 use Dompdf\Dompdf;
 use Illuminate\Database\Eloquent\Model;
 
 class MaracUtils
 {
+  public static function ActivarDescargaExcelSegunParametro(string $filename)
+  {
+    $descargarExcel = ParametroSistema::exportacionExcelActivada();
+    if ($descargarExcel) {
 
+      header('Pragma: public');
+      header('Expires: 0');
+
+      header('Content-type: application/vnd.ms-excel');
+      header("Content-Disposition: attachment; filename=$filename");
+      header('Pragma: no-cache');
+    }
+  }
   public static function FormatearMonto(float $monto)
   {
     return  number_format($monto, 2, '.', ' ');
