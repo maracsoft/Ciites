@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\ActividadPrincipal;
 use App\Configuracion;
 use App\Debug;
+use App\Empleado;
 use App\ErrorHistorial;
 use App\Fecha;
 use App\Http\Controllers\Controller;
@@ -21,6 +22,7 @@ use App\TipoPersonaJuridica;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class PersonaPoblacionController extends Controller
 {
@@ -468,16 +470,30 @@ class PersonaPoblacionController extends Controller
   public static function ConsultarAPISunatRUC($ruc)
   {
     try {
+      $apiKey = Configuracion::getEdulysApiKey();
 
-      $token = Configuracion::getTokenParaAPISunat();
-      $linkConsulta = "https://dniruc.apisperu.com/api/v1/ruc/" . $ruc . "?token=" . $token;
+      $data = [
+        'nro_documento' => $ruc,
+        'tipo_documento' => 'ruc',
+        'origen' => 'Ciites',
+        'nombre_usuario_logeado' => Empleado::hayEmpleadoLogeado() ? Empleado::getEmpleadoLogeado()->getNombreCompleto() : 'Usuario Ciites no logueado',
+        'api_key' => $apiKey,
+      ];
 
-      $resultado = file_get_contents($linkConsulta);
-      if (str_contains($resultado, "ruc"))
-        return $resultado;
-      else //no encontrado
-        return "1";
-      return $resultado; //retorna el json
+      $response = Http::asForm()->post('https://edulys.maracsoft.pe/api/consulta', $data);
+
+      if (!$response->successful()) {
+        return "1"; // Error de comunicación
+      }
+
+      $resultadoEdulys = $response->json();
+
+      if (isset($resultadoEdulys['ok']) && $resultadoEdulys['ok'] == '1') {
+        $datos = json_encode($resultadoEdulys['datos']);
+        return $datos;
+      } else {
+        return "1"; // "1" si no se encuentra
+      }
     } catch (\Throwable $th) {
       Debug::mensajeError('PERSONA POBLACION CONTROLLER ConsultarAPISunatRUC', $th);
       $codErrorHistorial = ErrorHistorial::registrarError(
