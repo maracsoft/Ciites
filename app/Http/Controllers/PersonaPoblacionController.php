@@ -483,7 +483,7 @@ class PersonaPoblacionController extends Controller
       $response = Http::asForm()->post('https://edulys.maracsoft.pe/api/consulta', $data);
 
       if (!$response->successful()) {
-        return "1"; // Error de comunicación
+        return "1"; // Error de comunicación (mostrará "Persona juridica no encontrada.)
       }
 
       $resultadoEdulys = $response->json();
@@ -509,24 +509,38 @@ class PersonaPoblacionController extends Controller
   public static function ConsultarAPISunatDNI($dni)
   {
     try {
-      $token = Configuracion::getTokenParaAPISunat();
-      $linkConsulta = "https://dniruc.apisperu.com/api/v1/dni/" . $dni . "?token=" . $token;
+      $apiKey = Configuracion::getEdulysApiKey();
 
-      $respuestaGET = file_get_contents($linkConsulta);
-      //return $respuestaGET;
-      $resultado = json_decode($respuestaGET);
+      $data = [
+        'nro_documento' => $dni,
+        'tipo_documento' => 'dni',
+        'origen' => 'Ciites',
+        'nombre_usuario_logeado' => Empleado::hayEmpleadoLogeado() ? Empleado::getEmpleadoLogeado()->getNombreCompleto() : 'Usuario Ciites no logueado',
+        'api_key' => $apiKey,
+      ];
 
-      if (str_contains($respuestaGET, '"success":false')) {
-        return RespuestaAPI::respuestaDatosError("No se encontró a la persona con el dni $dni");
+      $response = Http::asForm()->post('https://edulys.maracsoft.pe/api/consulta', $data);
+
+      if (!$response->successful()) {
+        return RespuestaAPI::respuestaDatosError("Error de comunicación con Edulys.");
       }
 
-      $resObj = [];
-      $resObj['apellidoPaterno'] = ucwords(mb_strtolower($resultado->apellidoPaterno));
-      $resObj['apellidoMaterno'] = ucwords(mb_strtolower($resultado->apellidoMaterno));
-      $resObj['nombres'] = ucwords(mb_strtolower($resultado->nombres));
-      $nombreCompleto =  $resObj['nombres'] . " " . $resObj['apellidoPaterno'] . " " . $resObj['apellidoMaterno'];
+      $resultadoEdulys = $response->json();
 
-      return RespuestaAPI::respuestaDatosOk("Persona con DNI $dni '$nombreCompleto' encontrada exitosamente.", $resObj);
+      if (isset($resultadoEdulys['ok']) && $resultadoEdulys['ok'] == '1') {
+        $datosPersona = $resultadoEdulys['datos'];
+
+        $resObj = [];
+        $resObj['apellidoPaterno'] = ucwords(mb_strtolower($datosPersona['apellidoPaterno']));
+        $resObj['apellidoMaterno'] = ucwords(mb_strtolower($datosPersona['apellidoMaterno']));
+        $resObj['nombres'] = ucwords(mb_strtolower($datosPersona['nombres']));
+        $nombreCompleto =  $resObj['nombres'] . " " . $resObj['apellidoPaterno'] . " " . $resObj['apellidoMaterno'];
+
+        return RespuestaAPI::respuestaDatosOk("Persona con DNI $dni '$nombreCompleto' encontrada exitosamente.", $resObj);
+      } else {
+        $mensajeError = $resultadoEdulys['mensaje'] ?? "No se encontró a la persona con el dni $dni";
+        return RespuestaAPI::respuestaDatosError($mensajeError);
+      }
     } catch (\Throwable $th) {
       Debug::LogMessage($th);
       $codErrorHistorial = ErrorHistorial::registrarError(
@@ -535,7 +549,7 @@ class PersonaPoblacionController extends Controller
         $dni
       );
       throw $th;
-      return json_encode("ERROR");
+      return json_encode("ERROR"); 
     }
   }
 
