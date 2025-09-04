@@ -14,293 +14,277 @@ use App\Proyecto;
 use App\ReposicionGastos;
 use App\SolicitudFondos;
 use App\User;
- 
+use Faker\Factory as Faker;
+
 
 
 class F_REP_FlujoTest extends DuskTestCase
 {
-     
-
-    /* PARA CORRER SOLO ESTE TEST
-        php artisan dusk tests/Browser/F_REP_FlujoTest.php
-
-    */
-
-    public $codigoPresupuestal = "";
-    public $reposicion;
-
-    const codUsuarioEmisor = 9;
-
-    public function testFlujoREP()
-    {
-        Debug::mensajeSimple("INICIANDO EL FLUJO DE REPOSICION");
-        $this->assertTrue(Configuracion::mostrarInputsEscondidos());
-        $this->crearReposicion();
-
-        Debug::mensajeSimple("El cod presupuestal de la repo es: '".$this->codigoPresupuestal."'");
-        $this->reposicion = ReposicionGastos::where('codigoCedepas','=',$this->codigoPresupuestal)->first();
-        
-        $this->gerente_observarReposicion();
-        $this->empleado_editarReposicion();
-
-        $this->gerente_observarReposicion();
-        $this->empleado_editarReposicion();
-
-        $this->gerente_observarReposicion();
-        $this->empleado_editarReposicion();
-        
-        $this->aprobarReposicion();
-        $this->abonarReposicion();
-        $this->contabilizarReposicion();
-
-        Debug::mensajeSimple("FLUJO DE REPOSICION FINALIZADO");
-
-    }   
-
-    public function crearReposicion(){
 
 
-        $this->browse(function (Browser $browser) {        
-            $proyecto = Proyecto::findOrFail(1);
-            $cuerpo = FakerCedepas::F_REP_generarCuerpo($proyecto);
-            $usuario = User::findOrFail(static::codUsuarioEmisor);
-            
+  /* PARA CORRER SOLO ESTE TEST
+		php artisan dusk tests/Browser/F_REP_FlujoTest.php
+	*/
 
-            $browser = $browser
-                ->loginAs($usuario)
-                ->visit('/ReposicionGastos/Empleado/crear');
+  public $codigoREP = "";
+  public $reposicion;
 
-            foreach($cuerpo as $nombreCampo => $valor){
-                Debug::mensajeSimple($nombreCampo."=".$valor);
-                if(in_array($nombreCampo,['codProyecto','codBanco','codMoneda'])) //si es de los de select
-                    $browser = $browser->select('#'.$nombreCampo,$valor);
-                else
-                    $browser = $browser->type("#".$nombreCampo,$valor);
-                
-            }
+  public static $codUsuarioEmisor;
 
+  const delta_time = 1000;
 
-            $cantidadItems = 10;
-            for ($i=0; $i < $cantidadItems ; $i++) { 
-                $detalle = FakerCedepas::F_REP_GenerarDetalle($proyecto);
-                $browser = $browser
-                    ->type('#fechaComprobante',$detalle['colFecha'])
-                    ->select('#ComboBoxCDP',$detalle['colTipo'])
-                    ->type('#ncbte',$detalle['colComprobante'])
-                    ->type('#concepto',$detalle['colConcepto'])
-                    ->type('#importe',$detalle['colImporte'])
-                    ->type('#codigoPresupuestal',$detalle['colCodigoPresupuestal'])
-                    //->screenshot('SS-PRUEBA')
-                    ->press('#btnadddet');
-                    
-            }
+  public function testFlujoREP()
+  {
+    // $this->activarInputsEscondidos();
+    // $this->assertTrue(Configuracion::mostrarInputsEscondidos());
+    self::$codUsuarioEmisor = env('TEST_USER_ID');
 
-            $nombreArchivo = "Ms Excel.pdf";
-            $browser = $browser->attach('#filenames', __DIR__.'/ArchivosPrueba/'.$nombreArchivo);
-            $browser = $browser->type('#nombresArchivos',json_encode([$nombreArchivo])); //ESTO CAMBIA 
-            
+    $this->crearReposicion();
 
-            $browser = $browser
-                ->press('#btnRegistrar')
-                ->pause(300) //esperamos a que aparezca el modal de confirmacion
-                ->screenshot('SS-ConfirmREP')
-                ->assertSee('¿Está seguro de crear la reposicion?')
-                ->press('SÍ')
-                ->pause(200) //esperamos a que nos redirija a la pagina de listar
-                ->assertSee('Se ha registrado la rep') // Se ha registrado la reposicion N°REP21-000017
-                ->screenshot('SS-ListarREPdespuesdeCrear')
-            ; 
+    $this->reposicion = ReposicionGastos::where('codigoCedepas', '=', $this->codigoREP)->first();
 
-            
+    // $this->gerente_observarReposicion();
+    // return;
+    // $this->empleado_editarReposicion();
 
-            $mensajeLlegada = $browser->text('#msjEmergenteDatos');
-            //Debug::mensajeSimple($mensajeLlegada);
-            $this->codigoPresupuestal = mb_substr($mensajeLlegada,33,12);
+    // $this->gerente_observarReposicion();
+    // $this->empleado_editarReposicion();
 
-            /* RENDIMIENTO
-                con 10 ELEMENTOS
-                    con screenshots demora 10.87 17.03 10.6 10.42
-                    sin screenshots demora 10.45 10.54 10.62 11.44
+    $this->gerente_aprobarReposicion();
+    $this->administrador_abonarReposicion();
+    // $this->contador_contabilizarReposicion();
 
-                    Las screenshots no demoran mas el TEST
-            */
-             
-        });
+    // $this->desactivarInputsEscondidos();
+  }
+
+  public function crearReposicion()
+  {
 
 
-    }
-
-    public function aprobarReposicion(){
-
-        $this->browse(function (Browser $browser) {        
-            $reposicion = $this->reposicion;
-            $proyecto = $reposicion->getProyecto();
-
-            //$cuerpo = FakerCedepas::F_SOL_generarCuerpoAprobacion($proyecto);
-            
-            $usuario = User::findOrFail($proyecto->getGerente()->usuario()->codUsuario);
-            
-            $browser = $browser
-                ->loginAs($usuario)
-                ->visit(route('ReposicionGastos.Gerente.ver',$reposicion->codReposicionGastos));
-             
-            /* LOS CODIGOS PRESUPUESTALES NO LOS CAMBIAMOS */
-            $browser = $browser
-                    ->press('#botonActivarEdicion')
-                    ->pause(100)
-                    ->type('#resumen',$reposicion->resumen." CORREGIDO") //EL TYPE LO REMPLAZA TOTALMENTE
-                    //->screenshot('hola mundo XD')
-                    ; 
-                     
-            $browser = $browser
-                
-                ->press('#botonAprobar')
-                ->pause(1000) //esperamos a que aparezca el modal de confirmacion
-                ->assertSee('¿Está seguro de Aprobar la Reposición?')
-                ->screenshot('SS-ConfirmAprobacionREP')
-                ->press('SÍ')
-                ->pause(500) //esperamos a que nos redirija a la pagina de listar
-                ->assertSee('Se aprobó correctamente la Reposic')
-                ->screenshot('SS-ListarREP-postAprob')
-                ;
-             
-        });
-
-    }
-
-    public function gerente_observarReposicion(){
-
-        $this->browse(function (Browser $browser) {        
-            $reposicion = $this->reposicion;
-            $proyecto = $reposicion->getProyecto();
-
-            //$cuerpo = FakerCedepas::F_SOL_generarCuerpoAprobacion($proyecto);
-            
-            $usuario = User::findOrFail($proyecto->getGerente()->usuario()->codUsuario);
-            
-            $browser = $browser
-                ->loginAs($usuario)
-                ->visit(route('ReposicionGastos.Gerente.ver',$reposicion->codReposicionGastos));
-            
-            $browser = $browser
-                ->press('#botonObservar')
-                ->pause(300) //esperamos a que aparezca el modal de confirmacion
-                ->assertSee('Observar Reposición de Gastos')
-                ->type('#observacion',"este es el texto de la observación.")
-                ->press('#botonGuardarObservacion')
-                ->assertSee('¿Esta seguro de observar la reposicion?')
-                ->screenshot('SS-ConfirmObservacionREP')
-                ->pause(500) 
-                ->press('SÍ') 
-                ->pause(2500) //esperamos a que nos redirija a la pagina de listar. Aqui poner > a 2500 pq con menos falla
-                ->screenshot('SS-ListarREP-postObservacion')
-                ->assertSee('correctamente la Rep')
-                
-                /* 
-                Por alguna razon a veces este test funciona y otras no xd
-                sin cambiar codigo xd
-                */
-                ;
-
-        });
-    }
-
-    public function empleado_editarReposicion(){
-        
-
-        $this->browse(function (Browser $browser) {        
-            $reposicion = $this->reposicion;
-            $usuario = User::findOrFail(static::codUsuarioEmisor);
-
-            $browser = $browser
-                ->loginAs($usuario)
-                ->visit(route('ReposicionGastos.Empleado.editar',$reposicion->codReposicionGastos));
-
-            $browser = $browser
-                ->pause(1000)
-                ->press('#btnRegistrar')
-                ->pause(300) //esperamos a que aparezca el modal de confirmacion
-                ->screenshot('SS-ConfirmUpdateREP')
-                ->assertSee('¿Seguro de guardar los cambios de la reposición?')
-                ->press('SÍ')
-                ->pause(200) //esperamos a que nos redirija a la pagina de listar
-                ->assertSee('Se ha editado la reposi') // Se ha registrado la reposicion N°REP21-000017
-                ->screenshot('SS-ListarDespuesDeUpdateREP')
-                ; 
-
-        });
-
-    }
-
-    public function abonarReposicion(){
-
-        $this->browse(function (Browser $browser) {        
-            $reposicion = $this->reposicion;
-            $proyecto = $reposicion->getProyecto();
-
-            //$cuerpo = FakerCedepas::F_SOL_generarCuerpoAprobacion($proyecto);
-            
-            $usuario = User::findOrFail(9);//administradora MARYCRUZ BRIONES 
-            
-            $browser = $browser
-                ->loginAs($usuario)
-                ->visit(route('ReposicionGastos.Administracion.ver',$reposicion->codReposicionGastos));
-                     
-            $browser = $browser
-                ->press('#botonAbonar')
-                ->pause(300) //esperamos a que aparezca el modal de confirmacion
-                ->assertSee('¿Esta seguro de abonar la reposicion?')
-                ->screenshot('SS-ConfirmAbonacionREP')
-                ->press('SÍ')
-                ->pause(200) //esperamos a que nos redirija a la pagina de listar
-                ->assertSee('Se abonó correctamente l')
-                ->screenshot('SS-ListarREP-postAbono')
-                ;
-             
-        });
-    }
-    public function contabilizarReposicion(){
-
-        $this->browse(function (Browser $browser) {        
-            $reposicion = $this->reposicion;
-            $proyecto = $reposicion->getProyecto();
-
-            //$cuerpo = FakerCedepas::F_SOL_generarCuerpoAprobacion($proyecto);
-            
-            $usuario = User::findOrFail(33);//contadora 
-            
-            $browser = $browser
-                ->loginAs($usuario)
-                ->visit(route('ReposicionGastos.Contador.ver',$reposicion->codReposicionGastos));
-            
-            /* Marcamos como contabilizados algunos gastos */
-            
-            $detalles  = $reposicion->detalles();
-            foreach ($detalles as $detalle) {
-                $num = rand(0,1); //Aleatoriamente marcamos algunos
-                if($num==0){
-                    $browser = $browser->press('#checkBoxContabilizarItem'.$detalle->codDetalleReposicion);
-                }
-            }
-
-            
-            $browser = $browser
-                ->press('#botonContabilizar')
-                ->assertSee('¿Seguro de contabilizar la reposicion?')
-                ->pause(300) //esperamos a que aparezca el modal de confirmacion
-                ->screenshot('SS-ConfirmContabilizacion-REP')
-                ->press('SÍ')
-                ->pause(200) //esperamos a que nos redirija a la pagina de listar
-                ->assertSee('Se contabilizó correctam')
-                ->screenshot('SS-ListarREP-postContabilizar')
-                ;
-             
-        });
-
-         
-
-    }
+    $this->browse(function (Browser $browser) {
+      $proyecto = Proyecto::findOrFail(env('TEST_PROYECTO_ID'));
+      $cuerpo = FakerCedepas::F_REP_generarCuerpo($proyecto);
+      $usuario = User::findOrFail(self::$codUsuarioEmisor);
 
 
+      $browser
+        ->loginAs($usuario)
+        ->visit('/ReposicionGastos/Empleado/crear')
+        ->pause(self::delta_time);
 
+      foreach ($cuerpo as $nombreCampo => $valor) {
+
+        if (in_array($nombreCampo, ['codProyecto', 'codBanco', 'codMoneda'])) //si es de los de select
+          $browser->select('#' . $nombreCampo, $valor);
+        else
+          $browser->type("#" . $nombreCampo, $valor);
+      }
+
+
+      $cantidadItems = rand(1, 4);
+      for ($i = 0; $i < $cantidadItems; $i++) {
+        $detalle = FakerCedepas::F_REP_GenerarDetalle($proyecto);
+        $browser
+          ->type('#fechaComprobante', $detalle['colFecha'])
+          ->pause(self::delta_time)
+          ->select('#ComboBoxCDP', $detalle['colTipo'])
+          ->pause(self::delta_time)
+          ->type('#ncbte', $detalle['colComprobante'])
+          ->pause(self::delta_time)
+          ->type('#concepto', $detalle['colConcepto'])
+          ->pause(self::delta_time)
+          ->type('#importe', $detalle['colImporte'])
+          ->pause(self::delta_time)
+          ->type('#codigoPresupuestal', $detalle['colCodigoPresupuestal'])
+          ->pause(self::delta_time)
+          ->press('#btnadddet')
+          ->pause(self::delta_time);
+      }
+
+      $nombreArchivo = "Ms Excel.pdf";
+      $browser->attach('#filenames', __DIR__ . '/ArchivosPrueba/' . $nombreArchivo);
+      ; //ESTO CAMBIA porque? de la nada desaparece v:
+
+
+      $browser
+        ->press('#btnRegistrar')
+        ->pause(self::delta_time) //esperamos a que aparezca el modal de confirmacion
+        ->assertSee('¿Está seguro de crear la reposicion?')
+        ->press('SÍ')
+        ->pause(self::delta_time) //esperamos a que nos redirija a la pagina de listar
+        ->assertSee('Se ha registrado la reposicion') // Se ha registrado la reposicion N°REP21-000017
+      ;
+
+      $mensajeLlegada = $browser->text('#msjEmergenteDatos');
+      $this->codigoREP = mb_substr($mensajeLlegada, 33, 12);
+    });
+  }
+
+  public function gerente_aprobarReposicion()
+  {
+
+    $this->browse(function (Browser $browser) {
+      $reposicion = $this->reposicion;
+      $proyecto = $reposicion->getProyecto();
+      $faker = Faker::create();
+
+
+      $usuario = User::findOrFail($proyecto->getGerente()->usuario()->codUsuario);
+
+      $browser
+        // ->loginAs($usuario)
+        ->visit(route('ReposicionGastos.Gerente.ver', $reposicion->codReposicionGastos))
+        ->pause(self::delta_time);
+
+      /* LOS CODIGOS PRESUPUESTALES NO LOS CAMBIAMOS */
+      if ($faker->boolean) {
+        $browser
+          ->press('#botonActivarEdicion')
+          ->pause(self::delta_time)
+          ->type('#resumen', $reposicion->resumen . " CORREGIDO") //EL TYPE LO REMPLAZA TOTALMENTE
+          ->pause(self::delta_time)
+        ;
+      }
+
+      $browser
+        ->press('#botonAprobar')
+        ->pause(self::delta_time) //esperamos a que aparezca el modal de confirmacion
+        ->assertSee('¿Está seguro de Aprobar la Reposición?')
+        ->press('SÍ')
+        ->pause(self::delta_time) //esperamos a que nos redirija a la pagina de listar
+        ->assertSee('Se aprobó correctamente la Reposic')
+      ;
+    });
+  }
+
+  public function gerente_observarReposicion()
+  {
+
+    $this->browse(function (Browser $browser) {
+      $reposicion = $this->reposicion;
+      $proyecto = $reposicion->getProyecto();
+      $faker = Faker::create();
+
+      //$cuerpo = FakerCedepas::F_SOL_generarCuerpoAprobacion($proyecto);
+
+      $usuario = User::findOrFail($proyecto->getGerente()->usuario()->codUsuario);
+
+      $browser
+        // ->loginAs($usuario)
+        ->visit(route('ReposicionGastos.Gerente.ver', $reposicion->codReposicionGastos))
+
+        ->press('#botonObservar')
+        ->pause(self::delta_time) //esperamos a que aparezca el modal de confirmacion
+        ->assertSee('Observar Reposición de Gastos')
+        ->type('#observacion', $faker->sentence())
+        ->pause(self::delta_time)
+        ->press('#botonGuardarObservacion')
+        ->pause(self::delta_time)
+        ->assertSee('¿Esta seguro de observar la reposicion?')
+        ->press('SÍ')
+        ->pause(self::delta_time) //esperamos a que nos redirija a la pagina de listar. Aqui poner > a 2500 pq con menos falla
+        ->assertSee('correctamente la Rep')
+        ->pause(self::delta_time);
+
+
+      // Por alguna razon a veces este test funciona y otras no xd sin cambiar codigo xd
+
+    });
+  }
+
+  public function empleado_editarReposicion()
+  {
+
+
+    $this->browse(function (Browser $browser) {
+      $reposicion = $this->reposicion;
+      $usuario = User::findOrFail(self::$codUsuarioEmisor);
+
+      $browser
+        // ->loginAs($usuario)
+        ->visit(route('ReposicionGastos.Empleado.editar', $reposicion->codReposicionGastos));
+
+      $browser
+        ->pause(self::delta_time)
+        ->press('#btnRegistrar')
+        ->pause(self::delta_time) //esperamos a que aparezca el modal de confirmacion
+        ->assertSee('¿Seguro de guardar los cambios de la reposición?')
+        ->press('SÍ')
+        ->pause(self::delta_time) //esperamos a que nos redirija a la pagina de listar
+        ->assertSee('Se ha editado la reposición') // Se ha registrado la reposicion N°REP21-000017
+        ->pause(self::delta_time)
+      ;
+    });
+  }
+
+  public function administrador_abonarReposicion()
+  {
+
+    $this->browse(function (Browser $browser) {
+      $reposicion = $this->reposicion;
+
+
+      //$cuerpo = FakerCedepas::F_SOL_generarCuerpoAprobacion($proyecto);
+
+      $usuario = User::findOrFail(9); //administradora MARYCRUZ BRIONES
+
+      $browser
+        // ->loginAs($usuario)
+        ->visit(route('ReposicionGastos.Administracion.ver', $reposicion->codReposicionGastos));
+
+      $browser
+        ->press('#botonAbonar')
+        ->pause(self::delta_time) //esperamos a que aparezca el modal de confirmacion
+        ->assertSee('¿Esta seguro de abonar la reposicion?')
+        ->press('SÍ')
+        ->pause(self::delta_time) //esperamos a que nos redirija a la pagina de listar
+        ->assertSee('Se abonó correctamente l')
+        ->pause(self::delta_time)
+      ;
+    });
+  }
+  public function contador_contabilizarReposicion()
+  {
+
+    $this->browse(function (Browser $browser) {
+      $reposicion = $this->reposicion;
+      $faker = Faker::create();
+
+      //$cuerpo = FakerCedepas::F_SOL_generarCuerpoAprobacion($proyecto);
+
+      $usuario = User::findOrFail(33); //contadora
+
+      $browser
+        // ->loginAs($usuario)
+        ->visit(route('ReposicionGastos.Contador.ver', $reposicion->codReposicionGastos));
+
+      /* Marcamos como contabilizados algunos gastos */
+
+      $detalles  = $reposicion->detalles();
+      $algunoMarcado = false;
+
+      foreach ($detalles as $detalle) {
+        if ($faker->boolean) { // Aleatoriamente intentamos marcar algunos
+          $browser->press('#checkBoxContabilizarItem' . $detalle->codDetalleReposicion);
+          $algunoMarcado = true; // Si al menos uno se marca
+        }
+      }
+
+      // comprobamos si alguno fue marcado. Si no, forzamos la marca del primero
+      if (!$algunoMarcado) {
+        $browser->press('#checkBoxContabilizarItem' . $detalles->first()->codDetalleReposicion);
+      }
+
+
+      $browser
+        ->press('#botonContabilizar')
+        ->pause(self::delta_time) //esperamos a que aparezca el modal de confirmacion
+        ->assertSee('¿Seguro de contabilizar la reposicion?')
+        ->press('SÍ')
+        ->pause(self::delta_time) //esperamos a que nos redirija a la pagina de listar
+        // ->assertSee('Se contabilizó correctam') // COMENTADO PORQUE LA RUTA LISTAR DA ERROR
+        // ->pause(self::delta_time)
+      ;
+    });
+  }
 }

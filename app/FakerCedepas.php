@@ -85,6 +85,7 @@ class FakerCedepas extends Model
             'resumen' => $faker->text(300),
             //'codEstadoSolicitud' => '1',
             'codMoneda' =>'1',
+            'codigoContrapartida' => $faker->numberBetween(11111, 99999),
         ];
         return $datos;
     }
