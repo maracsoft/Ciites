@@ -115,12 +115,12 @@
                 Atender Requerimiento
             </button>
 
-            <button type="button" class='btn btn-warning ' style="" data-toggle="modal" data-target="#ModalObservar">
+            <button type="button" class='btn btn-warning ' style="" data-toggle="modal" data-target="#ModalObservar" dusk='boton_observar_rbs'>
                 <i class="fas fa-eye-slash"></i>
                 Observar
             </button> 
 
-            <a href="#" class="btn btn-danger" style=""onclick="clickRechazar()">
+            <a href="#" class="btn btn-danger" style=""onclick="clickRechazar()" dusk='boton_rechazar_rbs'>
                 <i class="fas fa-times"></i> 
                 Rechazar
             </a>
@@ -176,7 +176,7 @@
                             Salir
                         </button>
 
-                        <button type="button" onclick="clickObservar()" class="btn btn-primary">
+                        <button type="button" onclick="clickObservar()" class="btn btn-primary" dusk='boton_guardar_observacion_modal'>
                             Guardar <i class="fas fa-save"></i>
                         </button>
                     </div>

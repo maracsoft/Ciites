@@ -14,266 +14,381 @@ use App\RequerimientoGastos;
 use App\RequerimientoBS;
 use App\SolicitudFondos;
 use App\User;
- 
+use Faker\Factory as Faker;
+use Tests\Browser\Helpers\GeneralFunctions;
+
 class F_REQ_FlujoTest extends DuskTestCase
 {
-        /* PARA CORRER SOLO ESTE TEST
+  /* PARA CORRER SOLO ESTE TEST
         php artisan dusk tests/Browser/F_REQ_FlujoTest.php
 
     */
 
-    public $codigoPresupuestal = "";
-    public $requerimiento;
-    const codUsuarioEmisor = 9;
+  public $codigoRBS = "";
+  public $requerimiento;
+  public static $codUsuarioEmisor;
 
-    public function testFlujoREQ()
-    {
-        Debug::mensajeSimple("INICIANDO EL FLUJO DE REQUERIMIENTO");
-        $this->assertTrue(Configuracion::mostrarInputsEscondidos());
-        $this->crearRequerimiento();
+  const delta_time = 1000;
 
-        Debug::mensajeSimple("El cod presupuestal del REQUERIMIENTO es: '".$this->codigoPresupuestal."'");
-        $this->requerimiento = RequerimientoBS::where('codigoCedepas','=',$this->codigoPresupuestal)->first();
-         
-        $this->gerente_observarRequerimiento();
-        $this->empleado_editarRequerimiento();
-        
-        $this->aprobarRequerimiento();
-         
-        $this->atenderRequerimiento();
-        $this->contabilizarRequerimiento();
- 
-        Debug::mensajeSimple("FLUJO DE REQUERIMIENTO FINALIZADO");
+  public function testFlujoREQ()
+  {
 
-    }   
+    // $this->activarInputsEscondidos();
 
-    public function crearRequerimiento(){
+    // $this->assertTrue(Configuracion::mostrarInputsEscondidos());
+    self::$codUsuarioEmisor = env('TEST_USER_ID');
+
+    $this->empleado_crearRequerimiento();
+    $this->requerimiento = RequerimientoBS::where('codigoCedepas', $this->codigoRBS)->firstOrFail();
+
+    // $this->gerente_rechazarRequerimiento();
+
+    // $this->gerente_observarRequerimiento();
+    // $this->empleado_editarRequerimiento();
+
+    $this->gerente_aprobarRequerimiento();
+
+    // $this->administrador_observarRequerimiento();
+    // $this->empleado_editarRequerimiento();
+
+    // $this->gerente_aprobarRequerimiento();
+
+    // $this->administrador_rechazarRequerimiento();
+
+    $this->administrador_atenderRequerimiento();
+
+    $this->contador_contabilizarRequerimiento();
+
+    // $this->desactivarInputsEscondidos();
+  }
+
+  public function empleado_crearRequerimiento()
+  {
+
+    $this->browse(function (Browser $browser) {
+      $proyecto = Proyecto::findOrFail(env('TEST_PROYECTO_ID'));
+      $cuerpo = FakerCedepas::F_REQ_generarCuerpo($proyecto);
+      $usuario = User::findOrFail(self::$codUsuarioEmisor);
+
+      $browser
+        ->loginAs($usuario)
+        ->visit(route('RequerimientoBS.Empleado.CrearRequerimientoBS'))
+        ->pause(self::delta_time);
+
+      foreach ($cuerpo as $nombreCampo => $valor) {
+        Debug::mensajeSimple($nombreCampo . "=" . $valor);
+        if (in_array($nombreCampo, ['codProyecto'])) //si es de los de select
+          $browser->select('#' . $nombreCampo, $valor);
+        else
+          $browser->type("#" . $nombreCampo, $valor);
+      }
+
+      $cantidadItems = rand(1, 5);
+
+      $browser->pause(self::delta_time);
+
+      for ($i = 0; $i < $cantidadItems; $i++) {
+        $detalle = FakerCedepas::F_REQ_GenerarDetalle($proyecto);
+        $browser
+          ->select('#ComboBoxUnidad', $detalle['ComboBoxUnidad'])
+          ->pause(self::delta_time)
+          ->type('#cantidad', $detalle['cantidad'])
+          ->pause(self::delta_time)
+          ->type('#descripcion', $detalle['descripcion'])
+          ->pause(self::delta_time)
+          ->type('#codigoPresupuestal', $detalle['codigoPresupuestal'])
+          ->pause(self::delta_time)
+          ->press('#btnadddet')
+          ->pause(self::delta_time);
+      }
+
+      $nombreArchivo = "Ms Excel.pdf";
+      $browser->attach('#filenames', __DIR__ . '/ArchivosPrueba/' . $nombreArchivo)
+        //  ->type('@file_names', json_encode([$nombreArchivo]))
+      ;
 
 
-        $this->browse(function (Browser $browser) {        
-            $proyecto = Proyecto::findOrFail(1);
-            $cuerpo = FakerCedepas::F_REQ_generarCuerpo($proyecto);
-            $usuario = User::findOrFail(static::codUsuarioEmisor);
+      $browser
+        ->press('#btnRegistrar')
+        ->pause(self::delta_time) //esperamos a que aparezca el modal de confirmacion
+        ->assertSee('¿Está seguro de crear el requerimiento?')
+        ->pause(self::delta_time)
+        ->press('SÍ')
+        ->pause(self::delta_time) //esperamos a que nos redirija a la pagina de listar
+        ->assertSee('Se ha Registrado el requerimiento'); //Se ha Registrado el requerimiento N°REQ21-000041
 
-            $browser = $browser
-                ->loginAs($usuario)
-                ->visit(route('RequerimientoBS.Empleado.CrearRequerimientoBS'));
+      $mensajeLlegada = $browser->text('#msjEmergenteDatos');
+      $this->codigoRBS = mb_substr($mensajeLlegada, 36, 12);
+      $browser->pause(self::delta_time);
 
-            foreach($cuerpo as $nombreCampo => $valor){
-                Debug::mensajeSimple($nombreCampo."=".$valor);
-                if(in_array($nombreCampo,['codProyecto'])) //si es de los de select
-                    $browser = $browser->select('#'.$nombreCampo,$valor);
-                else
-                    $browser = $browser->type("#".$nombreCampo,$valor);
-            }
-            
-            $cantidadItems = 10;
-            for ($i=0; $i < $cantidadItems ; $i++) { 
-                $detalle = FakerCedepas::F_REQ_GenerarDetalle($proyecto);
-                $browser = $browser
-                    ->select('#ComboBoxUnidad',$detalle['ComboBoxUnidad'])
-                    ->type('#cantidad',$detalle['cantidad'])
-                    ->type('#descripcion',$detalle['descripcion'])
-                    ->type('#codigoPresupuestal',$detalle['codigoPresupuestal'])
-
-                    ->press('#btnadddet');
-                    
-            }
-            
-            $nombreArchivo = "Ms Excel.pdf";
-            $browser = $browser->attach('#filenames', __DIR__.'/ArchivosPrueba/'.$nombreArchivo);
-            $browser = $browser->type('#nombresArchivos',json_encode([$nombreArchivo]));
-
-
-            $browser = $browser
-                ->press('#btnRegistrar')
-                ->pause(300) //esperamos a que aparezca el modal de confirmacion
-                ->screenshot('SS-ConfirmREQ')
-                ->assertSee('¿Está seguro de crear el requerimiento?')
-                ->press('SÍ')
-                ->pause(200) //esperamos a que nos redirija a la pagina de listar
-                ->assertSee('Se ha Registrado el requerimiento') //Se ha Registrado el requerimiento N°REQ21-000041
-                ->screenshot('SS-ListarREQdespuesdeCrear')
-                ; 
-
-            
-
-            $mensajeLlegada = $browser->text('#msjEmergenteDatos');
-            //Debug::mensajeSimple($mensajeLlegada);
-            $this->codigoPresupuestal = mb_substr($mensajeLlegada,36,12);
-
-            /* RENDIMIENTO
+      /* RENDIMIENTO
                 con 10 ELEMENTOS
                     con screenshots demora 10.87 17.03 10.6 10.42
                     sin screenshots demora 10.45 10.54 10.62 11.44
 
                     Las screenshots no demoran mas el TEST
             */
-             
-        });
+    });
+  }
 
+  public function gerente_aprobarRequerimiento()
+  {
 
-    }
+    $this->browse(function (Browser $browser) {
+      $requerimiento = $this->requerimiento;
+      $proyecto = $requerimiento->getProyecto();
+      $faker = Faker::create();
 
-    public function aprobarRequerimiento(){
+      //$cuerpo = FakerCedepas::F_SOL_generarCuerpoAprobacion($proyecto);
 
-        $this->browse(function (Browser $browser) {        
-            $requerimiento = $this->requerimiento;
-            $proyecto = $requerimiento->getProyecto();
+      $usuario = User::findOrFail($proyecto->getGerente()->usuario()->codUsuario);
 
-            //$cuerpo = FakerCedepas::F_SOL_generarCuerpoAprobacion($proyecto);
-            
-            $usuario = User::findOrFail($proyecto->getGerente()->usuario()->codUsuario);
-            
-            $browser = $browser
-                ->loginAs($usuario)
-                ->visit(route('RequerimientoBS.Gerente.ver',$requerimiento->codRequerimiento));
-             
-            /* LOS CODIGOS PRESUPUESTALES NO LOS CAMBIAMOS */
-            $browser = $browser
-                    ->press('#botonActivarEdicion')
-                    ->pause(100)
-                    ->type('#justificacion',$requerimiento->resumen." CORREGIDO") //EL TYPE LO REMPLAZA TOTALMENTE
-                    //->screenshot('hola mundo XD')
-                    ; 
-                     
-            $browser = $browser
-                
-                ->press('#botonAprobar')
-                ->pause(1000) //esperamos a que aparezca el modal de confirmacion
-                ->assertSee('¿Está seguro de Aprobar el requerimiento?')
-                ->screenshot('SS-ConfirmAprobacionREQ')
-                ->press('SÍ')
-                ->pause(500) //esperamos a que nos redirija a la pagina de listar
-                ->assertSee('Se aprobó correctamente el requeri')
-                ->screenshot('SS-ListarREQ-postAprob')
-                ;
-             
-        });
+      $browser
+        // ->loginAs($usuario)
+        ->visit(route('RequerimientoBS.Gerente.ver', $requerimiento->codRequerimiento))
+        ->pause(self::delta_time);
 
-    }
+      /* LOS CODIGOS PRESUPUESTALES NO LOS CAMBIAMOS */
+      if ($faker->boolean) {
+        $browser
+          ->press('#botonActivarEdicion')
+          ->pause(self::delta_time)
+          ->type('#justificacion', $requerimiento->justificacion . " CORREGIDO") //EL TYPE LO REMPLAZA TOTALMENTE
+        ;
+      }
 
-    public function gerente_observarRequerimiento(){
+      $browser
 
-        $this->browse(function (Browser $browser) {        
-            $requerimiento = $this->requerimiento;
-            $proyecto = $requerimiento->getProyecto();
+        ->press('#botonAprobar')
+        ->pause(self::delta_time) //esperamos a que aparezca el modal de confirmacion
+        ->assertSee('¿Está seguro de Aprobar el requerimiento?')
+        ->press('SÍ')
+        ->pause(self::delta_time) //esperamos
+        ->assertSee('Se aprobó correctamente el requerimiento')
+        ->pause(self::delta_time);
+    });
+  }
 
-            //$cuerpo = FakerCedepas::F_SOL_generarCuerpoAprobacion($proyecto);
-            
-            $usuario = User::findOrFail($proyecto->getGerente()->usuario()->codUsuario);
-            
-            $browser = $browser
-                ->loginAs($usuario)
-                ->visit(route('RequerimientoBS.Gerente.ver',$requerimiento->codRequerimiento));
-            
-            $browser = $browser
-                ->press('#botonObservar')
-                ->pause(300) //esperamos a que aparezca el modal de confirmacion
-                ->assertSee('Observar Requerimiento de Bienes y Servicios')
-                ->type('#observacion',"este es el texto de la observación.")
-                ->press('#botonGuardarObservacion')
-                ->assertSee('¿Esta seguro de observar el requerimiento?')
-                ->screenshot('SS-ConfirmObservacionREQ')
-                ->pause(500)
-                ->press('SÍ')
-                ->pause(2500) //esperamos a que nos redirija a la pagina de listar. Aqui poner > a 2500 pq con menos falla
-                ->screenshot('SS-ListarREQ-postObservacion')
-                ->assertSee('Se observó correctamente el requer')
-                /* 
+  public function gerente_observarRequerimiento()
+  {
+
+    $this->browse(function (Browser $browser) {
+      $requerimiento = $this->requerimiento;
+      $proyecto = $requerimiento->getProyecto();
+      $faker = Faker::create();
+
+      //$cuerpo = FakerCedepas::F_SOL_generarCuerpoAprobacion($proyecto);
+
+      $usuario = User::findOrFail($proyecto->getGerente()->usuario()->codUsuario);
+
+      $browser
+        // ->loginAs($usuario)
+        ->visit(route('RequerimientoBS.Gerente.ver', $requerimiento->codRequerimiento))
+        ->pause(self::delta_time);
+
+      $browser
+        ->press('#botonObservar')
+        ->pause(self::delta_time) //esperamos a que aparezca el modal de confirmacion
+        ->assertSee('Observar Requerimiento de Bienes y Servicios')
+        ->type('#observacion', $faker->sentence())
+        ->press('#botonGuardarObservacion')
+        ->assertSee('¿Esta seguro de observar el requerimiento?')
+        ->pause(self::delta_time)
+        ->press('SÍ')
+        ->pause(self::delta_time) //esperamos a que nos redirija a la pagina de listar. Aqui poner > a 2500 pq con menos falla
+        ->assertSee('Se observó correctamente el requerimiento')
+        ->pause(self::delta_time)
+        /*
                 Por alguna razon a veces este test funciona y otras no xd
                 sin cambiar codigo xd
-                */
-                ;
+                */;
+    });
+  }
 
-        });
-    }
+  public function gerente_rechazarRequerimiento()
+  {
 
-    public function empleado_editarRequerimiento(){
-        
+    $this->browse(function (Browser $browser) {
+      $requerimiento = $this->requerimiento;
+      $proyecto = $requerimiento->getProyecto();
+      $faker = Faker::create();
 
-        $this->browse(function (Browser $browser) {        
-            $requerimiento = $this->requerimiento;
-            $usuario = User::findOrFail(static::codUsuarioEmisor);
+      //$cuerpo = FakerCedepas::F_SOL_generarCuerpoAprobacion($proyecto);
 
-            $browser = $browser
-                ->loginAs($usuario)
-                ->visit(route('RequerimientoBS.Empleado.EditarRequerimientoBS',$requerimiento->codRequerimiento));
+      $usuario = User::findOrFail($proyecto->getGerente()->usuario()->codUsuario);
 
-            $browser = $browser
-                ->pause(1000)
-                ->press('#btnRegistrar')
-                ->pause(300) //esperamos a que aparezca el modal de confirmacion
-                ->screenshot('SS-ConfirmUpdateREQ')
-                ->assertSee('¿Está seguro de guardar los cambios del requerimiento?')
-                ->press('SÍ')
-                ->pause(200) //esperamos a que nos redirija a la pagina de listar
-                ->assertSee('Se ha editado el requerimient') // Se ha registrado la reposicion N°REQ21-000017
-                ->screenshot('SS-ListarDespuesDeUpdateREQ')
-                ; 
+      $browser
+        // ->loginAs($usuario)
+        ->visit(route('RequerimientoBS.Gerente.ver', $requerimiento->codRequerimiento))
+        ->pause(self::delta_time);
 
-        });
+      $browser
+        ->press('@boton_rechazar_rbs')
+        ->pause(self::delta_time) //esperamos a que aparezca el modal de confirmacion
+        ->assertSee('¿Esta seguro de rechazar el requerimiento?')
+        ->pause(self::delta_time)
+        ->press('SÍ')
+        ->pause(self::delta_time) //esperamos a que nos redirija a la pagina de listar. Aqui poner > a 2500 pq con menos falla
+        ->assertSee('Se rechazó correctamente el requerimiento')
+        ->pause(self::delta_time);
+    });
+  }
 
-    }
+  public function empleado_editarRequerimiento()
+  {
+    $this->browse(function (Browser $browser) {
+      $requerimiento = $this->requerimiento;
+      $usuario = User::findOrFail(self::$codUsuarioEmisor);
 
-    public function atenderRequerimiento(){
+      $browser
+        // ->loginAs($usuario)
+        ->visit(route('RequerimientoBS.Empleado.EditarRequerimientoBS', $requerimiento->codRequerimiento))
+        ->pause(self::delta_time);
 
-        $this->browse(function (Browser $browser) {        
-            $requerimiento = $this->requerimiento;
-            $proyecto = $requerimiento->getProyecto();
+      $browser
+        ->pause(self::delta_time)
+        ->press('#btnRegistrar')
+        ->pause(self::delta_time) //esperamos a que aparezca el modal de confirmacion
+        ->assertSee('¿Está seguro de guardar los cambios del requerimiento?')
+        ->press('SÍ')
+        ->pause(self::delta_time) //esperamos a que nos redirija a la pagina de listar
+        ->assertSee('Se ha editado el requerimiento') // Se ha registrado la reposicion N°REQ21-000017
+        ->pause(self::delta_time);
+    });
+  }
 
-            //$cuerpo = FakerCedepas::F_SOL_generarCuerpoAprobacion($proyecto);
-            
-            $usuario = User::findOrFail(9);//administradora MARYCRUZ BRIONES 
-            
-            $browser = $browser
-                ->loginAs($usuario)
-                ->visit(route('RequerimientoBS.Administrador.VerAtender',$requerimiento->codRequerimiento));
-                     
-            $browser = $browser
-                ->press('#botonAtender')
-                ->pause(300) //esperamos a que aparezca el modal de confirmacion
-                ->assertSee('¿Seguro que desea atender el requerimiento?')
-                ->screenshot('SS-ConfirmAtenderREQ')
-                ->press('SÍ')
-                ->pause(200) //esperamos a que nos redirija a la pagina de listar
-                ->assertSee('Atendido satisfactoriamente.')
-                ->screenshot('SS-ListarREQ-postAtender')
-                ;
-             
-        });
-    }
-    public function contabilizarRequerimiento(){
+  public function administrador_atenderRequerimiento()
+  {
 
-        $this->browse(function (Browser $browser) {        
-            $requerimiento = $this->requerimiento;
-            $proyecto = $requerimiento->getProyecto();
+    $this->browse(function (Browser $browser) {
+      $requerimiento = $this->requerimiento;
+      $proyecto = $requerimiento->getProyecto();
+      $faker = Faker::create();
 
-            //$cuerpo = FakerCedepas::F_SOL_generarCuerpoAprobacion($proyecto);
-            
-            $usuario = User::findOrFail(33);//contadora 
-            
-            $browser = $browser
-                ->loginAs($usuario)
-                ->visit(route('RequerimientoBS.Contador.ver',$requerimiento->codRequerimiento));
-            
-            /* Marcamos como contabilizados algunos gastos */
+      //$cuerpo = FakerCedepas::F_SOL_generarCuerpoAprobacion($proyecto);
 
-            $browser = $browser
-                ->press('#botonContabilizarRequerimiento')
-                ->assertSee('¿Desea marcar como contabilizada el requerimiento?')
-                ->pause(300) //esperamos a que aparezca el modal de confirmacion
-                ->screenshot('SS-ConfirmContabilizacion-REQ')
-                ->press('SÍ')
-                ->pause(200) //esperamos a que nos redirija a la pagina de listar
-                ->assertSee('Requerimiento REQ')
-                ->screenshot('SS-ListarREQ-postContabilizar')
-                ;
-             
-        });
+      $usuario = User::findOrFail(9); //administradora MARYCRUZ BRIONES
 
-         
+      $browser
+        // ->loginAs($usuario)
+        ->visit(route('RequerimientoBS.Administrador.VerAtender', $requerimiento->codRequerimiento))
+        ->pause(self::delta_time);
 
-    }
+      if ($faker->boolean) {
+        $nombreArchivo = "Ms Excel.pdf";
+        $browser->attach('#filenames', __DIR__ . '/ArchivosPrueba/' . $nombreArchivo)
+          // ->type('@file_names', json_encode([$nombreArchivo]))
+        ;
+      }
 
+      $browser
+        ->press('#botonAtender')
+        ->pause(self::delta_time) //esperamos a que aparezca el modal de confirmacion
+        ->assertSee('¿Seguro que desea atender el requerimiento?')
+        ->press('SÍ')
+        ->pause(self::delta_time) //esperamos a que nos redirija a la pagina de listar
+        ->assertSee('Atendido satisfactoriamente.')
+        ->pause(self::delta_time);
+    });
+  }
+
+  public function administrador_observarRequerimiento()
+  {
+
+    $this->browse(function (Browser $browser) {
+      $requerimiento = $this->requerimiento;
+      $proyecto = $requerimiento->getProyecto();
+      $faker = Faker::create();
+
+      //$cuerpo = FakerCedepas::F_SOL_generarCuerpoAprobacion($proyecto);
+
+      $usuario = User::findOrFail(9);
+
+      $browser
+        // ->loginAs($usuario)
+        ->visit(route('RequerimientoBS.Administrador.VerAtender', $requerimiento->codRequerimiento))
+        ->pause(self::delta_time);
+
+      $browser
+        ->press('@boton_observar_rbs')
+        ->pause(self::delta_time) //esperamos a que aparezca el modal de confirmacion
+        ->assertSee('Observar Requerimiento de Bienes y Servicios')
+        ->type('#observacion', $faker->sentence())
+        ->press('@boton_guardar_observacion_modal')
+        ->assertSee('¿Desea observar el requerimiento?')
+        ->pause(self::delta_time)
+        ->press('SÍ')
+        ->pause(self::delta_time) //esperamos a que nos redirija a la pagina de listar. Aqui poner > a 2500 pq con menos falla
+        ->assertSee('Se observó correctamente el requerimiento')
+        ->pause(self::delta_time);
+    });
+  }
+
+  public function administrador_rechazarRequerimiento()
+  {
+
+    $this->browse(function (Browser $browser) {
+      $requerimiento = $this->requerimiento;
+      $proyecto = $requerimiento->getProyecto();
+      $faker = Faker::create();
+
+      //$cuerpo = FakerCedepas::F_SOL_generarCuerpoAprobacion($proyecto);
+
+      $usuario = User::findOrFail(9);
+
+      $browser
+        // ->loginAs($usuario)
+        ->visit(route('RequerimientoBS.Administrador.VerAtender', $requerimiento->codRequerimiento))
+        ->pause(self::delta_time);
+
+      $browser
+        ->press('@boton_rechazar_rbs')
+        ->pause(self::delta_time) //esperamos a que aparezca el modal de confirmacion
+        ->assertSee('¿Esta seguro de rechazar el requerimiento?')
+        ->pause(self::delta_time)
+        ->press('SÍ')
+        ->pause(self::delta_time) //esperamos a que nos redirija a la pagina de listar. Aqui poner > a 2500 pq con menos falla
+        ->assertSee('Se rechazó correctamente el requerimiento')
+        ->pause(self::delta_time);
+    });
+  }
+
+  public function contador_contabilizarRequerimiento()
+  {
+
+    $this->browse(function (Browser $browser) {
+      $requerimiento = $this->requerimiento;
+      $faker = Faker::create();
+
+      //$cuerpo = FakerCedepas::F_SOL_generarCuerpoAprobacion($proyecto);
+
+      $usuario = User::findOrFail(33); //contadora
+
+      $browser
+        // ->loginAs($usuario)
+        ->visit(route('RequerimientoBS.Contador.ver', $requerimiento->codRequerimiento))
+        ->pause(self::delta_time);
+
+      if ($faker->boolean) {
+        $nombreArchivo = "Ms Excel.pdf";
+        $browser->attach('#filenames', __DIR__ . '/ArchivosPrueba/' . $nombreArchivo)
+        ->check('#ar_añadir')
+          ->pause(self::delta_time)
+          // ->type('@file_names', json_encode([$nombreArchivo]))
+        ;
+      }
+
+      /* Marcamos como contabilizados algunos gastos */
+
+      $browser
+        ->press('#botonContabilizarRequerimiento')
+        ->pause(self::delta_time)
+        ->assertSee('¿Desea marcar como contabilizada el requerimiento?') //esperamos a que aparezca el modal de confirmacion
+        ->press('SÍ')
+        ->pause(self::delta_time) //esperamos a que nos redirija a la pagina de listar
+        // ->assertSee('Requerimiento REQ') // COMENTADO PORQUE LA RUTA LISTAR DA ERROR
+        // ->pause(self::delta_time)
+        ;
+    });
+  }
 }

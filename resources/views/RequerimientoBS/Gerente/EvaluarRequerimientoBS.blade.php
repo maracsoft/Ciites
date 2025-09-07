@@ -50,7 +50,7 @@
                   <i class="fas fa-eye-slash"></i>
                   Observar
               </button> 
-              <a href="#" class="btn btn-danger" onclick="clickRechazar()">
+              <a href="#" class="btn btn-danger" onclick="clickRechazar()" dusk='boton_rechazar_rbs'>
                   <i class="fas fa-times"></i> 
                   Rechazar
               </a>
