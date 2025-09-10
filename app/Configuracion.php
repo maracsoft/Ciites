@@ -163,7 +163,10 @@ class Configuracion extends Model
         return env('TOKEN_API_SUNAT');
     }
 
-
+    public static function getEdulysApiKey()
+    {
+        return env('EDULYS_API_KEY');
+    }
 
 
 
