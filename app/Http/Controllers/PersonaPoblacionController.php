@@ -470,17 +470,16 @@ class PersonaPoblacionController extends Controller
   public static function ConsultarAPISunatRUC($ruc)
   {
     try {
-      $apiKey = Configuracion::getEdulysApiKey();
+      $access_token = Configuracion::getEdulysAccessToken();
+      $name = Empleado::hayEmpleadoLogeado() ? Empleado::getEmpleadoLogeado()->getNombreCompleto() : 'Usuario Ciites no logueado';
 
       $data = [
-        'nro_documento' => $ruc,
-        'tipo_documento' => 'ruc',
-        'origen' => 'Ciites',
-        'nombre_usuario_logeado' => Empleado::hayEmpleadoLogeado() ? Empleado::getEmpleadoLogeado()->getNombreCompleto() : 'Usuario Ciites no logueado',
-        'api_key' => $apiKey,
+        'ruc' => $ruc,
+        'nombre_usuario_logeado' => $name,
+        'access_token' => $access_token,
       ];
 
-      $response = Http::asForm()->post('https://edulys.maracsoft.pe/api/consulta', $data);
+      $response = Http::asForm()->post('https://edulys.maracsoft.pe/api/v2/consulta/ruc', $data);
 
       if (!$response->successful()) {
         return "1"; // Error de comunicación (mostrará "Persona juridica no encontrada.)
@@ -509,17 +508,16 @@ class PersonaPoblacionController extends Controller
   public static function ConsultarAPISunatDNI($dni)
   {
     try {
-      $apiKey = Configuracion::getEdulysApiKey();
+      $access_token = Configuracion::getEdulysAccessToken();
+      $name = Empleado::hayEmpleadoLogeado() ? Empleado::getEmpleadoLogeado()->getNombreCompleto() : 'Usuario Ciites no logueado';
 
       $data = [
-        'nro_documento' => $dni,
-        'tipo_documento' => 'dni',
-        'origen' => 'Ciites',
-        'nombre_usuario_logeado' => Empleado::hayEmpleadoLogeado() ? Empleado::getEmpleadoLogeado()->getNombreCompleto() : 'Usuario Ciites no logueado',
-        'api_key' => $apiKey,
+        'dni' => $dni,
+        'nombre_usuario_logeado' => $name,
+        'access_token' => $access_token,
       ];
 
-      $response = Http::asForm()->post('https://edulys.maracsoft.pe/api/consulta', $data);
+      $response = Http::asForm()->post('https://edulys.maracsoft.pe/api/v2/consulta/dni', $data);
 
       if (!$response->successful()) {
         return RespuestaAPI::respuestaDatosError("Error de comunicación con Edulys.");
@@ -549,7 +547,7 @@ class PersonaPoblacionController extends Controller
         $dni
       );
       throw $th;
-      return json_encode("ERROR"); 
+      return json_encode("ERROR");
     }
   }
 
