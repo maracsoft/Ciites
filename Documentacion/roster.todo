@@ -1,0 +1,44 @@
+CONTROL DE DIAS DE TRABAJO EN SEDE
+
+Cada usuario debe poder solicitar dias de descanso (por defecto todos son dias presencial)
+Una vez lo aprueba wilson, recien pasan a ser D (descanso)
+
+se deberia poder configurar el regimen de cada persona (eso solo wilson o administradores) (14 x 7)
+
+Cada usuario ve su calendario pero solo el suyo
+Wilson y adm pueden ver de todos
+
+Cada dia puede tener los estados
+  P  Presencial
+  D  descanso
+  V  vacaciones (vacaciones)
+  LP licencia de paternidad
+  DM descanso medico
+
+Solo se cuenta como dias trabajados P y V
+
+El control es por mes
+el archivo de excel que me pasaron por whatsapp es el exportable del sistema
+
+Cada mes se arrastra un saldo del mes anterior
+
+En una columna deberia mostrase tambien la cantidad total de dias de vacaciones que va en TODO EL AÑO (este si anual)
+
+
+En una solicitud se puede solicitar dias de vacaciones, de descanso y licencia de paternidad, y de descanso medico
+
+ROL ADM:
+  ☐ Pantalla ver mi calendario de este y otros meses   2d
+  ☐ Pantalla solicitar dias de descanso          2d
+
+
+ROL USUARIO NORMAL:
+  ☐ Pantalla ver la matriz de todos             2d
+  ☐ Pantalla listar solicitudes, pueden(APROBAR RECHAZAR OBSERVAR)     1d
+  ☐ Descargar excel de matriz de todos          3d
+  ☐ Configurar regimenes de todos (trabajo y descanso) 0.5d
+
+
+
+1500 + igv PARA EL DOS DE ENERO
+
