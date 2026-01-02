@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Utils\Configuracion;
 use App\Empleado;
 use App\LogeoHistorial;
-use App\RespuestaAPI;
+use App\Utils\RespuestaAPI;
 use Carbon\Carbon;
 
 class UserController extends Controller

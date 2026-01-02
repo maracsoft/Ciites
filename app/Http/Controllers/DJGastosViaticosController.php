@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\DJGastosViaticos;
 use App\Empleado;
 use App\Moneda;
-use App\Debug;
+use App\Utils\Debug;
 use App\DetalleDJGastosMovilidad;
 use App\DJGastosMovilidad;
 use Illuminate\Support\Facades\DB;

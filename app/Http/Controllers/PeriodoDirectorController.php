@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Utils\Configuracion;
-use App\Debug;
+use App\Utils\Debug;
 use App\Empleado;
 use App\ErrorHistorial;
-use App\Fecha;
+use App\Utils\Fecha;
 use App\Http\Controllers\Controller;
 use App\Moneda;
 use App\ObjetivoProgramacion;
 use App\PeriodoDirectorGeneral;
 use App\ProgramacionAsesores;
 use App\RelacionPaquetePeriodoDirectorGeneral;
-use App\RespuestaAPI;
+use App\Utils\RespuestaAPI;
 use App\Usuario;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

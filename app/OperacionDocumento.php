@@ -2,28 +2,29 @@
 
 namespace App;
 
-
+use App\Utils\Fecha;
 use Illuminate\Database\Eloquent\Model;
 //START MODEL_HELPER
+
 /**
- * @property int $codOperacionDocumento int(11)     
- * @property int $codTipoDocumento int(11)     
- * @property int $codTipoOperacion int(11)     
- * @property int $codDocumento int(11)     
- * @property string $fechaHora datetime     
- * @property string $descripcionObservacion varchar(500) NULLABLE    
- * @property int $codPuesto int(11)     
- * @property int $codEmpleado int(11)     
+ * @property int $codOperacionDocumento int(11)
+ * @property int $codTipoDocumento int(11)
+ * @property int $codTipoOperacion int(11)
+ * @property int $codDocumento int(11)
+ * @property string $fechaHora datetime
+ * @property string $descripcionObservacion varchar(500) NULLABLE
+ * @property int $codPuesto int(11)
+ * @property int $codEmpleado int(11)
  * @method static OperacionDocumento findOrFail($primary_key)
  * @method static OperacionDocumento | null find($primary_key)
  * @method static OperacionDocumentoCollection all()
  * @method static \App\Builders\OperacionDocumentoBuilder query()
  * @method static \App\Builders\OperacionDocumentoBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\OperacionDocumentoBuilder where(string $column,string $value)
- * @method static \App\Builders\OperacionDocumentoBuilder whereNotNull(string $column) 
- * @method static \App\Builders\OperacionDocumentoBuilder whereNull(string $column) 
+ * @method static \App\Builders\OperacionDocumentoBuilder whereNotNull(string $column)
+ * @method static \App\Builders\OperacionDocumentoBuilder whereNull(string $column)
  * @method static \App\Builders\OperacionDocumentoBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\OperacionDocumentoBuilder orderBy(string $column,array $sentido) 
+ * @method static \App\Builders\OperacionDocumentoBuilder orderBy(string $column,array $sentido)
  */
 //END MODEL_HELPER
 class OperacionDocumento extends MaracModel

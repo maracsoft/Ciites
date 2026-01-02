@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Storage;
 
 
-use App\Debug;
+use App\Utils\Debug;
 use App\ErrorHistorial;
 use App\EstadoRendicionGastos;
 use App\Numeracion;

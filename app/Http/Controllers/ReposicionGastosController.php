@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Utils\Configuracion;
 use App\ArchivoReposicion;
 use App\Banco;
-use App\BusquedaRepo;
+
 use App\CDP;
-use App\Debug;
+use App\Utils\Debug;
 use App\DetalleReposicionGastos;
 use App\Empleado;
 use App\ErrorHistorial;
@@ -92,8 +92,7 @@ class ReposicionGastosController extends Controller
   public function ListarConFiltroDeEmpleado(Request $request)
   {
 
-    if (!BusquedaRepo::hayBusquedaActiva())
-      BusquedaRepo::iniciarBusqueda();
+
 
     return $this->listarOfEmpleado($request);
   }
@@ -398,7 +397,6 @@ class ReposicionGastosController extends Controller
         //DAMOS VUELTA A LA FECHA
         // AÑO                  MES                 DIA
         $detalle->fechaComprobante =   substr($fechaDet, 6, 4) . '-' . substr($fechaDet, 3, 2) . '-' . substr($fechaDet, 0, 2);
-        //Debug::mensajeSimple('----'.$detalle->fechaComprobante);
 
 
         $detalle->setTipoCDPPorNombre($request->get('colTipo' . $i));
@@ -1102,8 +1100,7 @@ class ReposicionGastosController extends Controller
 
   public function descargarPDF($id)
   {
-    if (BusquedaRepo::hayBusquedaActiva())
-      BusquedaRepo::finalizarBusqueda();
+
 
     $reposicion = ReposicionGastos::findOrFail($id);
     return $reposicion->getPDF(true);
@@ -1111,8 +1108,7 @@ class ReposicionGastosController extends Controller
 
   public function verPDF($id)
   {
-    if (BusquedaRepo::hayBusquedaActiva())
-      BusquedaRepo::finalizarBusqueda();
+
 
     $reposicion = ReposicionGastos::findOrFail($id);
     return $reposicion->getPDF(false);

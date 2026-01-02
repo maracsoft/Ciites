@@ -1,11 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Utils;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 
-class Debug extends MaracModel
+class Debug
 {
   //ESTE NO ES UN MODELO, ES UNA CLASE PARA PRINTEAR MSJS BACANES EN LA CONSOLA
 

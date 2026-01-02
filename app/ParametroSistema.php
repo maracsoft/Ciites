@@ -2,30 +2,32 @@
 
 namespace App;
 
+use App\Utils\Debug;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 //START MODEL_HELPER
+
 /**
- * @property int $codParametro int(11)     
- * @property string $descripcion varchar(500)     
- * @property string $nombre varchar(200)     
- * @property string $valor varchar(1000)     
- * @property string $fechaHoraCreacion datetime     
- * @property string $fechaHoraBaja datetime NULLABLE    
- * @property string $fechaHoraActualizacion datetime NULLABLE    
- * @property int $codTipoParametro int(11)     
- * @property string $modulo varchar(100)     
+ * @property int $codParametro int(11)
+ * @property string $descripcion varchar(500)
+ * @property string $nombre varchar(200)
+ * @property string $valor varchar(1000)
+ * @property string $fechaHoraCreacion datetime
+ * @property string $fechaHoraBaja datetime NULLABLE
+ * @property string $fechaHoraActualizacion datetime NULLABLE
+ * @property int $codTipoParametro int(11)
+ * @property string $modulo varchar(100)
  * @method static ParametroSistema findOrFail($primary_key)
  * @method static ParametroSistema | null find($primary_key)
  * @method static ParametroSistemaCollection all()
  * @method static \App\Builders\ParametroSistemaBuilder query()
  * @method static \App\Builders\ParametroSistemaBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\ParametroSistemaBuilder where(string $column,string $value)
- * @method static \App\Builders\ParametroSistemaBuilder whereNotNull(string $column) 
- * @method static \App\Builders\ParametroSistemaBuilder whereNull(string $column) 
+ * @method static \App\Builders\ParametroSistemaBuilder whereNotNull(string $column)
+ * @method static \App\Builders\ParametroSistemaBuilder whereNull(string $column)
  * @method static \App\Builders\ParametroSistemaBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\ParametroSistemaBuilder orderBy(string $column,array $sentido) 
+ * @method static \App\Builders\ParametroSistemaBuilder orderBy(string $column,array $sentido)
  */
 //END MODEL_HELPER
 class ParametroSistema extends MaracModel

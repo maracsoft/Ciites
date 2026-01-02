@@ -2,7 +2,6 @@
 
 namespace App\Utils;
 
-use App\Debug;
 use App\EstadoDesembolsoConvenio;
 use App\SolicitudFondos;
 use Illuminate\Database\Eloquent\Builder;

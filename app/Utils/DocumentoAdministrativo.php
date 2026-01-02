@@ -1,10 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Utils;
 
+use App\Empleado;
+use App\MaracModel;
+use App\OperacionDocumento;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 //START MODEL_HELPER
+
 /**
  * @method static DocumentoAdministrativo findOrFail($primary_key)
  * @method static DocumentoAdministrativo | null find($primary_key)
@@ -12,10 +16,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \App\Builders\DocumentoAdministrativoBuilder query()
  * @method static \App\Builders\DocumentoAdministrativoBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\DocumentoAdministrativoBuilder where(string $column,string $value)
- * @method static \App\Builders\DocumentoAdministrativoBuilder whereNotNull(string $column) 
- * @method static \App\Builders\DocumentoAdministrativoBuilder whereNull(string $column) 
+ * @method static \App\Builders\DocumentoAdministrativoBuilder whereNotNull(string $column)
+ * @method static \App\Builders\DocumentoAdministrativoBuilder whereNull(string $column)
  * @method static \App\Builders\DocumentoAdministrativoBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\DocumentoAdministrativoBuilder orderBy(string $column,array $sentido) 
+ * @method static \App\Builders\DocumentoAdministrativoBuilder orderBy(string $column,array $sentido)
  */
 //END MODEL_HELPER
 class DocumentoAdministrativo extends MaracModel

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Utils\Fecha;
 use App\Utils\MaracUtils;
 use Dompdf\Dompdf;
 use Exception;
@@ -10,27 +11,28 @@ use Illuminate\Database\Eloquent\Model;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 //START MODEL_HELPER
+
 /**
- * @property int $codVehiculo int(11)     
- * @property string $placa varchar(20)     
- * @property string $fecha_compra date     
- * @property int $codSede int(11)     
- * @property float $kilometraje_actual float NULLABLE   se actualiza con cada viaje 
- * @property int $codEmpleadoRegistrador int(11)    el que lo registró en el sistema 
- * @property string $fechaHoraRegistro datetime    el que lo registró en el sistema 
- * @property string $modelo varchar(200)     
- * @property string $color varchar(200)     
- * @property string $codigo_factura varchar(200)     
+ * @property int $codVehiculo int(11)
+ * @property string $placa varchar(20)
+ * @property string $fecha_compra date
+ * @property int $codSede int(11)
+ * @property float $kilometraje_actual float NULLABLE   se actualiza con cada viaje
+ * @property int $codEmpleadoRegistrador int(11)    el que lo registró en el sistema
+ * @property string $fechaHoraRegistro datetime    el que lo registró en el sistema
+ * @property string $modelo varchar(200)
+ * @property string $color varchar(200)
+ * @property string $codigo_factura varchar(200)
  * @method static Vehiculo findOrFail($primary_key)
  * @method static Vehiculo | null find($primary_key)
  * @method static VehiculoCollection all()
  * @method static \App\Builders\VehiculoBuilder query()
  * @method static \App\Builders\VehiculoBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\VehiculoBuilder where(string $column,string $value)
- * @method static \App\Builders\VehiculoBuilder whereNotNull(string $column) 
- * @method static \App\Builders\VehiculoBuilder whereNull(string $column) 
+ * @method static \App\Builders\VehiculoBuilder whereNotNull(string $column)
+ * @method static \App\Builders\VehiculoBuilder whereNull(string $column)
  * @method static \App\Builders\VehiculoBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\VehiculoBuilder orderBy(string $column,array $sentido) 
+ * @method static \App\Builders\VehiculoBuilder orderBy(string $column,array $sentido)
  */
 //END MODEL_HELPER
 class Vehiculo extends MaracModel

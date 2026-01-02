@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Utils\Configuracion;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Debug;
+use App\Utils\Debug;
 use App\DetalleDJGastosMovilidad;
 use App\DJGastosMovilidad;
 use Illuminate\Support\Facades\DB;

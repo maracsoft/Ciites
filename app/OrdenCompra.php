@@ -3,6 +3,9 @@
 namespace App;
 
 use App\Utils\Configuracion;
+use App\Utils\Debug;
+use App\Utils\Fecha;
+use App\Utils\Numeros;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;

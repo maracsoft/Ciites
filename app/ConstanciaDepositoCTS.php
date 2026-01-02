@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Http\Controllers\ArchivoGeneralController;
+use App\Utils\Fecha;
 use App\Utils\MaracUtils;
 use DateTime;
 use Dompdf\Dompdf;
@@ -11,37 +12,38 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 //START MODEL_HELPER
+
 /**
- * @property int $codConstancia int(11)     
- * @property string $codigo_unico varchar(25)     
- * @property int $codEmpleadoCreador int(11)     
- * @property string $fechaHoraCreacion datetime     
- * @property int $codPeriodoDirector int(11)     
- * @property float $ultimo_sueldo_bruto float     
- * @property float $monto_ultima_grati float     
- * @property string $nombres varchar(200)     
- * @property string $apellidos varchar(200)     
- * @property string $dni varchar(20)     
- * @property string $fecha_deposito date     
- * @property string $nro_cuenta varchar(50)     
- * @property int $nro_meses_laborados int(11)     
- * @property int $nro_dias_laborados int(11)     
- * @property float $monto_total_cts float     
- * @property string $fecha_inicio date    del periodo 
- * @property string $fecha_fin date    del periodo 
- * @property string $fecha_emision date NULLABLE   emision formal del documento, no es la fecha de creacion del registro en bd. Es logica negocio 
- * @property string $nombre_banco varchar(300) NULLABLE    
- * @property float $promedio_otras_remuneraciones float     
+ * @property int $codConstancia int(11)
+ * @property string $codigo_unico varchar(25)
+ * @property int $codEmpleadoCreador int(11)
+ * @property string $fechaHoraCreacion datetime
+ * @property int $codPeriodoDirector int(11)
+ * @property float $ultimo_sueldo_bruto float
+ * @property float $monto_ultima_grati float
+ * @property string $nombres varchar(200)
+ * @property string $apellidos varchar(200)
+ * @property string $dni varchar(20)
+ * @property string $fecha_deposito date
+ * @property string $nro_cuenta varchar(50)
+ * @property int $nro_meses_laborados int(11)
+ * @property int $nro_dias_laborados int(11)
+ * @property float $monto_total_cts float
+ * @property string $fecha_inicio date    del periodo
+ * @property string $fecha_fin date    del periodo
+ * @property string $fecha_emision date NULLABLE   emision formal del documento, no es la fecha de creacion del registro en bd. Es logica negocio
+ * @property string $nombre_banco varchar(300) NULLABLE
+ * @property float $promedio_otras_remuneraciones float
  * @method static ConstanciaDepositoCTS findOrFail($primary_key)
  * @method static ConstanciaDepositoCTS | null find($primary_key)
  * @method static ConstanciaDepositoCTSCollection all()
  * @method static \App\Builders\ConstanciaDepositoCTSBuilder query()
  * @method static \App\Builders\ConstanciaDepositoCTSBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\ConstanciaDepositoCTSBuilder where(string $column,string $value)
- * @method static \App\Builders\ConstanciaDepositoCTSBuilder whereNotNull(string $column) 
- * @method static \App\Builders\ConstanciaDepositoCTSBuilder whereNull(string $column) 
+ * @method static \App\Builders\ConstanciaDepositoCTSBuilder whereNotNull(string $column)
+ * @method static \App\Builders\ConstanciaDepositoCTSBuilder whereNull(string $column)
  * @method static \App\Builders\ConstanciaDepositoCTSBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\ConstanciaDepositoCTSBuilder orderBy(string $column,array $sentido) 
+ * @method static \App\Builders\ConstanciaDepositoCTSBuilder orderBy(string $column,array $sentido)
  */
 //END MODEL_HELPER
 class ConstanciaDepositoCTS extends MaracModel

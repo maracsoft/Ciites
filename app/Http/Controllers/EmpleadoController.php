@@ -14,14 +14,14 @@ use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Proyecto;
 use App\Sede;
-use App\Debug;
+use App\Utils\Debug;
 use App\EmpleadoPuesto;
 use App\ErrorHistorial;
-use App\Fecha;
+use App\Utils\Fecha;
 
 use App\ProyectoContador;
 use App\ProyectoObservador;
-use App\RespuestaAPI;
+use App\Utils\RespuestaAPI;
 use Throwable;
 
 class EmpleadoController extends Controller

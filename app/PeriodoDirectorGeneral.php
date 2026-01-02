@@ -2,28 +2,30 @@
 
 namespace App;
 
+use App\Utils\Fecha;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 //START MODEL_HELPER
+
 /**
- * @property int $codPeriodoDirector int(11)     
- * @property string $fecha_inicio date     
- * @property string $fecha_fin date NULLABLE    
- * @property string $nombres varchar(200)     
- * @property string $apellidos varchar(200)     
- * @property string $dni varchar(20)     
- * @property string $sexo varchar(5)     
- * @property string $fechaHoraCreacion datetime     
+ * @property int $codPeriodoDirector int(11)
+ * @property string $fecha_inicio date
+ * @property string $fecha_fin date NULLABLE
+ * @property string $nombres varchar(200)
+ * @property string $apellidos varchar(200)
+ * @property string $dni varchar(20)
+ * @property string $sexo varchar(5)
+ * @property string $fechaHoraCreacion datetime
  * @method static PeriodoDirectorGeneral findOrFail($primary_key)
  * @method static PeriodoDirectorGeneral | null find($primary_key)
  * @method static PeriodoDirectorGeneralCollection all()
  * @method static \App\Builders\PeriodoDirectorGeneralBuilder query()
  * @method static \App\Builders\PeriodoDirectorGeneralBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\PeriodoDirectorGeneralBuilder where(string $column,string $value)
- * @method static \App\Builders\PeriodoDirectorGeneralBuilder whereNotNull(string $column) 
- * @method static \App\Builders\PeriodoDirectorGeneralBuilder whereNull(string $column) 
+ * @method static \App\Builders\PeriodoDirectorGeneralBuilder whereNotNull(string $column)
+ * @method static \App\Builders\PeriodoDirectorGeneralBuilder whereNull(string $column)
  * @method static \App\Builders\PeriodoDirectorGeneralBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\PeriodoDirectorGeneralBuilder orderBy(string $column,array $sentido) 
+ * @method static \App\Builders\PeriodoDirectorGeneralBuilder orderBy(string $column,array $sentido)
  */
 //END MODEL_HELPER
 class PeriodoDirectorGeneral extends MaracModel

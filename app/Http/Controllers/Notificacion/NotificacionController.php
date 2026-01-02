@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\ActividadPrincipal;
 use App\Utils\Configuracion;
-use App\Debug;
+
 use App\Empleado;
 use App\ErrorHistorial;
 use App\Models\Notificaciones\Notificacion;

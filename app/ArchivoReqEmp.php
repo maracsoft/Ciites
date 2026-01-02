@@ -6,21 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Support\Facades\Storage;
 //START MODEL_HELPER
+
 /**
- * @property int $codArchivoReqEmp int(11)     
- * @property string $nombreDeGuardado varchar(100)     
- * @property int $codRequerimiento int(11)     
- * @property string $nombreAparente varchar(500)     
+ * @property int $codArchivoReqEmp int(11)
+ * @property string $nombreDeGuardado varchar(100)
+ * @property int $codRequerimiento int(11)
+ * @property string $nombreAparente varchar(500)
  * @method static ArchivoReqEmp findOrFail($primary_key)
  * @method static ArchivoReqEmp | null find($primary_key)
  * @method static ArchivoReqEmpCollection all()
  * @method static \App\Builders\ArchivoReqEmpBuilder query()
  * @method static \App\Builders\ArchivoReqEmpBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\ArchivoReqEmpBuilder where(string $column,string $value)
- * @method static \App\Builders\ArchivoReqEmpBuilder whereNotNull(string $column) 
- * @method static \App\Builders\ArchivoReqEmpBuilder whereNull(string $column) 
+ * @method static \App\Builders\ArchivoReqEmpBuilder whereNotNull(string $column)
+ * @method static \App\Builders\ArchivoReqEmpBuilder whereNull(string $column)
  * @method static \App\Builders\ArchivoReqEmpBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\ArchivoReqEmpBuilder orderBy(string $column,array $sentido) 
+ * @method static \App\Builders\ArchivoReqEmpBuilder orderBy(string $column,array $sentido)
  */
 //END MODEL_HELPER
 class ArchivoReqEmp extends MaracModel
@@ -60,7 +61,7 @@ class ArchivoReqEmp extends MaracModel
     foreach ($listaArchivos as $itemArchivo) {
       $nombreViejo = $itemArchivo->nombreDeGuardado;
       $nombreNuevo = $requerimiento->getNombreGuardadoNuevoArchivoEmp($j);
-      //Debug::mensajeSimple("j=".$j.'Nombre viejo='.$nombreViejo."  nombreNuevo=".$nombreNuevo);
+
 
       $itemArchivo->nombreDeGuardado = $nombreNuevo;
       $itemArchivo->save();

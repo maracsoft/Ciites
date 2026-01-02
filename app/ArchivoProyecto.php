@@ -7,23 +7,24 @@ use Illuminate\Support\Facades\Storage;
 
 
 //START MODEL_HELPER
+
 /**
- * @property int $codArchivoProyecto int(11)     
- * @property string $nombreDeGuardado varchar(100)     
- * @property int $codProyecto int(11)     
- * @property string $fechaHoraSubida datetime     
- * @property int $codTipoArchivoProyecto int(11)     
- * @property string $nombreAparente varchar(100)     
+ * @property int $codArchivoProyecto int(11)
+ * @property string $nombreDeGuardado varchar(100)
+ * @property int $codProyecto int(11)
+ * @property string $fechaHoraSubida datetime
+ * @property int $codTipoArchivoProyecto int(11)
+ * @property string $nombreAparente varchar(100)
  * @method static ArchivoProyecto findOrFail($primary_key)
  * @method static ArchivoProyecto | null find($primary_key)
  * @method static ArchivoProyectoCollection all()
  * @method static \App\Builders\ArchivoProyectoBuilder query()
  * @method static \App\Builders\ArchivoProyectoBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\ArchivoProyectoBuilder where(string $column,string $value)
- * @method static \App\Builders\ArchivoProyectoBuilder whereNotNull(string $column) 
- * @method static \App\Builders\ArchivoProyectoBuilder whereNull(string $column) 
+ * @method static \App\Builders\ArchivoProyectoBuilder whereNotNull(string $column)
+ * @method static \App\Builders\ArchivoProyectoBuilder whereNull(string $column)
  * @method static \App\Builders\ArchivoProyectoBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\ArchivoProyectoBuilder orderBy(string $column,array $sentido) 
+ * @method static \App\Builders\ArchivoProyectoBuilder orderBy(string $column,array $sentido)
  */
 //END MODEL_HELPER
 class ArchivoProyecto extends MaracModel
@@ -67,7 +68,7 @@ class ArchivoProyecto extends MaracModel
     foreach ($listaArchivos as $itemArchivo) {
       $nombreViejo = $itemArchivo->nombreDeGuardado;
       $nombreNuevo = $proyecto->getNombreGuardadoNuevoArchivo($j);
-      //Debug::mensajeSimple("j=".$j.'Nombre viejo='.$nombreViejo."  nombreNuevo=".$nombreNuevo);
+
 
       $itemArchivo->nombreDeGuardado = $nombreNuevo;
       $itemArchivo->save();

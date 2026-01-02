@@ -6,7 +6,7 @@ use App\Utils\Configuracion;
 use App\ErrorHistorial;
 use App\Http\Controllers\Controller;
 use App\ParametroSistema;
-use App\RespuestaAPI;
+use App\Utils\RespuestaAPI;
 use App\TipoParametroSistema;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Debug;
+
 use App\Empleado;
 use App\ErrorHistorial;
 use App\Utils\Configuracion;

@@ -2,6 +2,10 @@
 
 namespace App;
 
+use App\Utils\Debug;
+use App\Utils\DocumentoAdministrativo;
+use App\Utils\Fecha;
+use App\Utils\Numeros;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Database\Eloquent\Model;
@@ -12,36 +16,37 @@ use Illuminate\Support\Collection;
 
 
 //START MODEL_HELPER
+
 /**
- * @property int $codRendicionGastos int(11)     
- * @property int $codSolicitud int(11)     
- * @property int $codMoneda int(11)     
- * @property string $codigoCedepas varchar(50)     
- * @property float $totalImporteRecibido float NULLABLE    
- * @property float $totalImporteRendido float NULLABLE    
- * @property float $saldoAFavorDeEmpleado float NULLABLE    
- * @property string $resumenDeActividad varchar(350)     
- * @property int $codEstadoRendicion int(11)     
- * @property string $fechaHoraRendicion datetime NULLABLE    
- * @property string $fechaHoraRevisado datetime NULLABLE    
- * @property string $observacion varchar(500) NULLABLE    
- * @property int $codEmpleadoSolicitante int(11)     
- * @property int $codEmpleadoEvaluador int(11) NULLABLE    
- * @property int $codEmpleadoContador int(11) NULLABLE    
- * @property int $cantArchivos int(11) NULLABLE    
- * @property string $terminacionesArchivos varchar(200) NULLABLE    
- * @property int $codProyecto int(11)     
- * @property string $codigoContrapartida varchar(200) NULLABLE    
+ * @property int $codRendicionGastos int(11)
+ * @property int $codSolicitud int(11)
+ * @property int $codMoneda int(11)
+ * @property string $codigoCedepas varchar(50)
+ * @property float $totalImporteRecibido float NULLABLE
+ * @property float $totalImporteRendido float NULLABLE
+ * @property float $saldoAFavorDeEmpleado float NULLABLE
+ * @property string $resumenDeActividad varchar(350)
+ * @property int $codEstadoRendicion int(11)
+ * @property string $fechaHoraRendicion datetime NULLABLE
+ * @property string $fechaHoraRevisado datetime NULLABLE
+ * @property string $observacion varchar(500) NULLABLE
+ * @property int $codEmpleadoSolicitante int(11)
+ * @property int $codEmpleadoEvaluador int(11) NULLABLE
+ * @property int $codEmpleadoContador int(11) NULLABLE
+ * @property int $cantArchivos int(11) NULLABLE
+ * @property string $terminacionesArchivos varchar(200) NULLABLE
+ * @property int $codProyecto int(11)
+ * @property string $codigoContrapartida varchar(200) NULLABLE
  * @method static RendicionGastos findOrFail($primary_key)
  * @method static RendicionGastos | null find($primary_key)
  * @method static RendicionGastosCollection all()
  * @method static \App\Builders\RendicionGastosBuilder query()
  * @method static \App\Builders\RendicionGastosBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\RendicionGastosBuilder where(string $column,string $value)
- * @method static \App\Builders\RendicionGastosBuilder whereNotNull(string $column) 
- * @method static \App\Builders\RendicionGastosBuilder whereNull(string $column) 
+ * @method static \App\Builders\RendicionGastosBuilder whereNotNull(string $column)
+ * @method static \App\Builders\RendicionGastosBuilder whereNull(string $column)
  * @method static \App\Builders\RendicionGastosBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\RendicionGastosBuilder orderBy(string $column,array $sentido) 
+ * @method static \App\Builders\RendicionGastosBuilder orderBy(string $column,array $sentido)
  */
 //END MODEL_HELPER
 class RendicionGastos extends DocumentoAdministrativo

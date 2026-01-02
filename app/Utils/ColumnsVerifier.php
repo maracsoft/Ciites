@@ -2,7 +2,7 @@
 
 namespace App\Utils;
 
-use App\Debug;
+use App\Utils\Debug;
 use App\MaracModel;
 use App\Models\ParametroSistema;
 use Illuminate\Database\Eloquent\Model;

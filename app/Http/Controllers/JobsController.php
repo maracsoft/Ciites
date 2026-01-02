@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\ActivoInventario;
-use App\BusquedaRepo;
+
 use App\Utils\Configuracion;
 use App\ContratoLocacion;
 use App\ContratoPlazo;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Debug;
+use App\Utils\Debug;
 use App\DetalleDJGastosMovilidad;
 use App\DetalleRevision;
 use App\DJGastosMovilidad;

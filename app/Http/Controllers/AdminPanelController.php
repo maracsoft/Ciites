@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\ActividadPrincipal;
 
-use App\Debug;
+
 use App\ErrorHistorial;
 use App\ParametroSistema;
 use Illuminate\Support\Facades\DB;

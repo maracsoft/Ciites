@@ -5,21 +5,22 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 //START MODEL_HELPER
+
 /**
- * @property int $codArchivoSolicitud int(11)     
- * @property string $nombreDeGuardado varchar(200)     
- * @property int $codSolicitud int(11)     
- * @property string $nombreAparente varchar(100)     
+ * @property int $codArchivoSolicitud int(11)
+ * @property string $nombreDeGuardado varchar(200)
+ * @property int $codSolicitud int(11)
+ * @property string $nombreAparente varchar(100)
  * @method static ArchivoSolicitud findOrFail($primary_key)
  * @method static ArchivoSolicitud | null find($primary_key)
  * @method static ArchivoSolicitudCollection all()
  * @method static \App\Builders\ArchivoSolicitudBuilder query()
  * @method static \App\Builders\ArchivoSolicitudBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\ArchivoSolicitudBuilder where(string $column,string $value)
- * @method static \App\Builders\ArchivoSolicitudBuilder whereNotNull(string $column) 
- * @method static \App\Builders\ArchivoSolicitudBuilder whereNull(string $column) 
+ * @method static \App\Builders\ArchivoSolicitudBuilder whereNotNull(string $column)
+ * @method static \App\Builders\ArchivoSolicitudBuilder whereNull(string $column)
  * @method static \App\Builders\ArchivoSolicitudBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\ArchivoSolicitudBuilder orderBy(string $column,array $sentido) 
+ * @method static \App\Builders\ArchivoSolicitudBuilder orderBy(string $column,array $sentido)
  */
 //END MODEL_HELPER
 class ArchivoSolicitud extends MaracModel
@@ -52,7 +53,7 @@ class ArchivoSolicitud extends MaracModel
     foreach ($listaArchivos as $itemArchivo) {
       $nombreViejo = $itemArchivo->nombreDeGuardado;
       $nombreNuevo = $solicitud->getNombreGuardadoNuevoArchivo($j);
-      //Debug::mensajeSimple("j=".$j.'Nombre viejo='.$nombreViejo."  nombreNuevo=".$nombreNuevo);
+
 
       $itemArchivo->nombreDeGuardado = $nombreNuevo;
       $itemArchivo->save();

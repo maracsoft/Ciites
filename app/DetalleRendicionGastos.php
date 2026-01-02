@@ -2,31 +2,33 @@
 
 namespace App;
 
+use App\Utils\Fecha;
 use Illuminate\Database\Eloquent\Model;
 //START MODEL_HELPER
+
 /**
- * @property int $codDetalleRendicion int(11)     
- * @property int $codRendicionGastos int(11)     
- * @property string $fecha date     
- * @property string $nroComprobante varchar(200)     
- * @property string $concepto varchar(500)     
- * @property float $importe float     
- * @property string $codigoPresupuestal varchar(200)     
- * @property int $codTipoCDP int(11)     
- * @property string $terminacionArchivo varchar(10) NULLABLE    
- * @property int $nroEnRendicion int(11)     
- * @property int $contabilizado tinyint(4) NULLABLE    
- * @property int $pendienteDeVer int(11)     
+ * @property int $codDetalleRendicion int(11)
+ * @property int $codRendicionGastos int(11)
+ * @property string $fecha date
+ * @property string $nroComprobante varchar(200)
+ * @property string $concepto varchar(500)
+ * @property float $importe float
+ * @property string $codigoPresupuestal varchar(200)
+ * @property int $codTipoCDP int(11)
+ * @property string $terminacionArchivo varchar(10) NULLABLE
+ * @property int $nroEnRendicion int(11)
+ * @property int $contabilizado tinyint(4) NULLABLE
+ * @property int $pendienteDeVer int(11)
  * @method static DetalleRendicionGastos findOrFail($primary_key)
  * @method static DetalleRendicionGastos | null find($primary_key)
  * @method static DetalleRendicionGastosCollection all()
  * @method static \App\Builders\DetalleRendicionGastosBuilder query()
  * @method static \App\Builders\DetalleRendicionGastosBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\DetalleRendicionGastosBuilder where(string $column,string $value)
- * @method static \App\Builders\DetalleRendicionGastosBuilder whereNotNull(string $column) 
- * @method static \App\Builders\DetalleRendicionGastosBuilder whereNull(string $column) 
+ * @method static \App\Builders\DetalleRendicionGastosBuilder whereNotNull(string $column)
+ * @method static \App\Builders\DetalleRendicionGastosBuilder whereNull(string $column)
  * @method static \App\Builders\DetalleRendicionGastosBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\DetalleRendicionGastosBuilder orderBy(string $column,array $sentido) 
+ * @method static \App\Builders\DetalleRendicionGastosBuilder orderBy(string $column,array $sentido)
  */
 //END MODEL_HELPER
 class DetalleRendicionGastos extends MaracModel

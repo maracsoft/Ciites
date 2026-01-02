@@ -5,21 +5,22 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 //START MODEL_HELPER
+
 /**
- * @property int $codArchivoOrden int(11)     
- * @property string $nombreGuardado varchar(100)     
- * @property int $codOrdenCompra int(11)     
- * @property string $nombreAparente varchar(300)     
+ * @property int $codArchivoOrden int(11)
+ * @property string $nombreGuardado varchar(100)
+ * @property int $codOrdenCompra int(11)
+ * @property string $nombreAparente varchar(300)
  * @method static ArchivoOrdenCompra findOrFail($primary_key)
  * @method static ArchivoOrdenCompra | null find($primary_key)
  * @method static ArchivoOrdenCompraCollection all()
  * @method static \App\Builders\ArchivoOrdenCompraBuilder query()
  * @method static \App\Builders\ArchivoOrdenCompraBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\ArchivoOrdenCompraBuilder where(string $column,string $value)
- * @method static \App\Builders\ArchivoOrdenCompraBuilder whereNotNull(string $column) 
- * @method static \App\Builders\ArchivoOrdenCompraBuilder whereNull(string $column) 
+ * @method static \App\Builders\ArchivoOrdenCompraBuilder whereNotNull(string $column)
+ * @method static \App\Builders\ArchivoOrdenCompraBuilder whereNull(string $column)
  * @method static \App\Builders\ArchivoOrdenCompraBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\ArchivoOrdenCompraBuilder orderBy(string $column,array $sentido) 
+ * @method static \App\Builders\ArchivoOrdenCompraBuilder orderBy(string $column,array $sentido)
  */
 //END MODEL_HELPER
 class ArchivoOrdenCompra extends MaracModel
@@ -52,7 +53,7 @@ class ArchivoOrdenCompra extends MaracModel
     foreach ($listaArchivos as $itemArchivo) {
       $nombreViejo = $itemArchivo->nombreGuardado;
       $nombreNuevo = $orden->getNombreGuardadoNuevoArchivo($j);
-      //Debug::mensajeSimple("j=".$j.'Nombre viejo='.$nombreViejo."  nombreNuevo=".$nombreNuevo);
+
 
       $itemArchivo->nombreGuardado = $nombreNuevo;
       $itemArchivo->save();

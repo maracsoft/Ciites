@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\ArchivoOrdenCompra;
 use App\Banco;
 use App\Utils\Configuracion;
-use App\Debug;
+use App\Utils\Debug;
 use App\DetalleOrdenCompra;
 use App\Empleado;
 use App\ErrorHistorial;

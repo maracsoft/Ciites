@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Utils\Configuracion;
 use App\ViajeVehiculo;
-use App\Debug;
+use App\Utils\Debug;
 use App\Empleado;
 use App\ErrorHistorial;
 use App\EstadoViajeVehiculo;

@@ -2,7 +2,7 @@
 
 namespace App\Utils;
 
-use App\Debug;
+
 use Exception;
 
 class MaracEstado

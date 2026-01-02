@@ -2,44 +2,47 @@
 
 namespace App;
 
+use App\Utils\Debug;
+use App\Utils\Fecha;
 use DateTime;
 use Dompdf\Dompdf;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 //START MODEL_HELPER
+
 /**
- * @property int $codViaje int(11)     
- * @property int $codVehiculo int(11)     
- * @property string $fechaHoraSalida datetime     
- * @property float $kilometraje_salida float     
- * @property string $motivo text     
- * @property int $codEmpleadoAprobador int(11)     
- * @property string $fechaHoraLlegada datetime NULLABLE    
- * @property float $kilometraje_llegada float NULLABLE    
- * @property string $codigo_factura_combustible varchar(100) NULLABLE    
- * @property float $monto_factura_combustible float NULLABLE    
- * @property float $kilometraje_recorrido float NULLABLE    
- * @property float $rendimiento float NULLABLE   kilometro por sol 
- * @property int $codEmpleadoRegistrador int(11)     
- * @property string $fechaHoraRegistro datetime     
- * @property string $estado varchar(200)     
- * @property string $fechaHoraValidacion datetime NULLABLE    
- * @property string $fechaHoraConclusion datetime NULLABLE   fecha hora que el usuario marco que ya esta concluido el viaje 
- * @property string $lugar_origen varchar(200)     
- * @property string $lugar_destino varchar(200)     
- * @property string $observaciones_salida text NULLABLE    
- * @property string $observaciones_llegada text NULLABLE    
+ * @property int $codViaje int(11)
+ * @property int $codVehiculo int(11)
+ * @property string $fechaHoraSalida datetime
+ * @property float $kilometraje_salida float
+ * @property string $motivo text
+ * @property int $codEmpleadoAprobador int(11)
+ * @property string $fechaHoraLlegada datetime NULLABLE
+ * @property float $kilometraje_llegada float NULLABLE
+ * @property string $codigo_factura_combustible varchar(100) NULLABLE
+ * @property float $monto_factura_combustible float NULLABLE
+ * @property float $kilometraje_recorrido float NULLABLE
+ * @property float $rendimiento float NULLABLE   kilometro por sol
+ * @property int $codEmpleadoRegistrador int(11)
+ * @property string $fechaHoraRegistro datetime
+ * @property string $estado varchar(200)
+ * @property string $fechaHoraValidacion datetime NULLABLE
+ * @property string $fechaHoraConclusion datetime NULLABLE   fecha hora que el usuario marco que ya esta concluido el viaje
+ * @property string $lugar_origen varchar(200)
+ * @property string $lugar_destino varchar(200)
+ * @property string $observaciones_salida text NULLABLE
+ * @property string $observaciones_llegada text NULLABLE
  * @method static ViajeVehiculo findOrFail($primary_key)
  * @method static ViajeVehiculo | null find($primary_key)
  * @method static ViajeVehiculoCollection all()
  * @method static \App\Builders\ViajeVehiculoBuilder query()
  * @method static \App\Builders\ViajeVehiculoBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\ViajeVehiculoBuilder where(string $column,string $value)
- * @method static \App\Builders\ViajeVehiculoBuilder whereNotNull(string $column) 
- * @method static \App\Builders\ViajeVehiculoBuilder whereNull(string $column) 
+ * @method static \App\Builders\ViajeVehiculoBuilder whereNotNull(string $column)
+ * @method static \App\Builders\ViajeVehiculoBuilder whereNull(string $column)
  * @method static \App\Builders\ViajeVehiculoBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\ViajeVehiculoBuilder orderBy(string $column,array $sentido) 
+ * @method static \App\Builders\ViajeVehiculoBuilder orderBy(string $column,array $sentido)
  */
 //END MODEL_HELPER
 class ViajeVehiculo extends MaracModel
@@ -47,7 +50,7 @@ class ViajeVehiculo extends MaracModel
   public $table = "viaje_vehiculo";
   protected $primaryKey = "codViaje";
 
-  public $timestamps = false;  //para que no trabaje con los campos fecha 
+  public $timestamps = false;  //para que no trabaje con los campos fecha
 
 
 
@@ -292,7 +295,7 @@ class ViajeVehiculo extends MaracModel
     return "-";
   }
 
-  /* 
+  /*
   Booleana,retorna true si se puede editar
     se puede editar si ha sido creada hace 5 minutos o menos.
     */

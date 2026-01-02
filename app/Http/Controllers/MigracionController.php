@@ -13,7 +13,7 @@ use App\Http\Controllers\Controller;
 use App\Migracion;
 use App\ParametroSistema;
 use App\Proyecto;
-use App\RespuestaAPI;
+use App\Utils\RespuestaAPI;
 use App\RevisionInventario;
 use App\Sede;
 use Facade\FlareClient\Http\Response;

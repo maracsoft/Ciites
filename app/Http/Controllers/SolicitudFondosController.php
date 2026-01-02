@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Collection;
 use PhpParser\Node\Expr\Throw_;
 use App\Moneda;
-use App\Debug;
+use App\Utils\Debug;
 use App\ErrorHistorial;
 use App\Numeracion;
 use App\ProyectoContador;

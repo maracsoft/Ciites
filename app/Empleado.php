@@ -12,41 +12,44 @@ use Throwable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use App\User;
+use App\Utils\Debug;
+use App\Utils\Fecha;
 use Exception;
 
 //START MODEL_HELPER
+
 /**
- * @property int $codEmpleado int(11)     
- * @property int $codUsuario int(11)     
- * @property string $codigoCedepas varchar(50)     
- * @property string $nombres varchar(300)     
- * @property string $apellidos varchar(300)     
- * @property string $correo varchar(60)     
- * @property string $dni char(8)     
- * @property int $codPuesto int(11) NULLABLE    
- * @property int $activo int(11)     
- * @property string $fechaRegistro date     
- * @property string $fechaDeBaja date NULLABLE    
- * @property int $codSede int(11)     
- * @property string $sexo char(1)     
- * @property string $fechaNacimiento date     
- * @property string $nombreCargo varchar(100)     
- * @property string $direccion varchar(300)     
- * @property string $nroTelefono varchar(20)     
- * @property int $codSedeContador int(11) NULLABLE    
- * @property int $mostrarEnListas tinyint(4)     
- * @property string $tipo_menu_lateral varchar(50)     
- * @property string $menus_abiertos text NULLABLE    
+ * @property int $codEmpleado int(11)
+ * @property int $codUsuario int(11)
+ * @property string $codigoCedepas varchar(50)
+ * @property string $nombres varchar(300)
+ * @property string $apellidos varchar(300)
+ * @property string $correo varchar(60)
+ * @property string $dni char(8)
+ * @property int $codPuesto int(11) NULLABLE
+ * @property int $activo int(11)
+ * @property string $fechaRegistro date
+ * @property string $fechaDeBaja date NULLABLE
+ * @property int $codSede int(11)
+ * @property string $sexo char(1)
+ * @property string $fechaNacimiento date
+ * @property string $nombreCargo varchar(100)
+ * @property string $direccion varchar(300)
+ * @property string $nroTelefono varchar(20)
+ * @property int $codSedeContador int(11) NULLABLE
+ * @property int $mostrarEnListas tinyint(4)
+ * @property string $tipo_menu_lateral varchar(50)
+ * @property string $menus_abiertos text NULLABLE
  * @method static Empleado findOrFail($primary_key)
  * @method static Empleado | null find($primary_key)
  * @method static EmpleadoCollection all()
  * @method static \App\Builders\EmpleadoBuilder query()
  * @method static \App\Builders\EmpleadoBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\EmpleadoBuilder where(string $column,string $value)
- * @method static \App\Builders\EmpleadoBuilder whereNotNull(string $column) 
- * @method static \App\Builders\EmpleadoBuilder whereNull(string $column) 
+ * @method static \App\Builders\EmpleadoBuilder whereNotNull(string $column)
+ * @method static \App\Builders\EmpleadoBuilder whereNull(string $column)
  * @method static \App\Builders\EmpleadoBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\EmpleadoBuilder orderBy(string $column,array $sentido) 
+ * @method static \App\Builders\EmpleadoBuilder orderBy(string $column,array $sentido)
  */
 //END MODEL_HELPER
 class Empleado extends MaracModel implements MaracModelInterface
@@ -154,7 +157,7 @@ class Empleado extends MaracModel implements MaracModelInterface
     foreach ($rendicionesDelEmpleado as $item) {
       array_push($vectorDeCodsRendicion, $item->codRendicionGastos);
     }
-    //Debug::mensajeSimple(implode(' , ',$vectorDeCodsRendicion));
+
 
 
 
@@ -173,7 +176,7 @@ class Empleado extends MaracModel implements MaracModelInterface
     foreach ($reposicionesDelEmpleado as $item) {
       array_push($vectorDeCodsReposicion, $item->codReposicionGastos);
     }
-    //Debug::mensajeSimple(implode(' , ',$vectorDeCodsRendicion));
+
 
     $lista =  DetalleReposicionGastos::whereIn('codReposicionGastos', $vectorDeCodsReposicion)
       ->where('pendienteDeVer', '=', '1')
@@ -636,7 +639,7 @@ class Empleado extends MaracModel implements MaracModelInterface
             group by R.codEmpleadoSolicitante
         ";
 
-    //Debug::mensajeSimple($sql);
+
     $respuesta = DB::select($sql);
 
     if (empty($respuesta)) {
@@ -647,16 +650,7 @@ class Empleado extends MaracModel implements MaracModelInterface
   }
 
 
-  function tieneAccesoAInventario()
-  {
 
-    if (!RevisionInventario::hayUnaRevisionActiva())
-      return false;
-
-
-    $ultimaRevision = RevisionInventario::getRevisionActiva();
-    return $ultimaRevision->tieneAEmpleado($this->codEmpleado);
-  }
 
 
   public static function getEmpleadosConductores(): Collection

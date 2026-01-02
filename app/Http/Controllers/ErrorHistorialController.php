@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Utils\Configuracion;
-use App\Debug;
+use App\Utils\Debug;
 use Carbon\Carbon;
 
 class ErrorHistorialController extends Controller

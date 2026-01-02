@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Utils\Fecha;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 

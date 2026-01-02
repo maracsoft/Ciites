@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Utils\Configuracion;
-use App\Debug;
+use App\Utils\Debug;
 use App\DetalleDJGastosVarios;
 use App\DJGastosVarios;
 use App\Empleado;

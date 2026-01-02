@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 #region Uses
-use App\ActividadResultado;
+
 use App\ArchivoProyecto;
 use App\ArchivoReposicion;
 use App\Utils\Configuracion;
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 use NumberFormatter;
 use App\LugarEjecucion;
 use App\Sede;
-use App\Debug;
+use App\Utils\Debug;
 use App\Departamento;
 use App\Provincia;
 use App\Distrito;
@@ -36,7 +36,7 @@ use App\PersonaNaturalPoblacion;
 use App\RendicionGastos;
 use App\ReposicionGastos;
 use App\RequerimientoBS;
-use App\RespuestaAPI;
+use App\Utils\RespuestaAPI;
 use App\SolicitudFondos;
 use App\TipoArchivoProyecto;
 use App\TipoDocumento;
@@ -570,31 +570,6 @@ class ProyectoController extends Controller
   }
 
 
-  public function verMetas()
-  {
-    return view('Proyectos.Gerente.verMetas');
-  }
-
-  public function probandoMeses()
-  {
-    $meta = MetaEjecutada::findOrFail(4);
-    return json_encode($meta) . "  ¿?  " . $meta->sePuedeEditar();
-  }
-
-  public function registrarMetasEjecutadas($codProyecto)
-  {
-    $proyecto = Proyecto::findOrFail($codProyecto);
-    return view('Proyectos.RegistroEjecucionMetas', compact('proyecto'));
-  }
-
-
-
-  public function exportarMetasEjecutadas($codProyecto)
-  {
-    $proyecto = Proyecto::findOrFail($codProyecto);
-
-    return view('Proyectos.ExportarExcelEjecucionMetas', compact('proyecto'));
-  }
 
 
 
