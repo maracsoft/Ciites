@@ -1,5 +1,6 @@
 <?php
 
+use App\Proyecto;
 use App\Routers\RouterAdminSistema;
 use App\Routers\RouterConstanciaDeposito;
 use App\Routers\RouterContratos;

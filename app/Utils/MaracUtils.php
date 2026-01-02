@@ -4,6 +4,7 @@ namespace App\Utils;
 
 use App\ParametroSistema;
 use Dompdf\Dompdf;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 
 class MaracUtils
@@ -57,5 +58,26 @@ class MaracUtils
     return response($output, 200)
       ->header('Content-Type', 'application/pdf')
       ->header('Content-Disposition', $header);
+  }
+
+  /* retorna array con nombres de los archivos */
+  public static function LeerCarpeta(string $ruta_carpeta)
+  {
+
+    $real_path = realpath($ruta_carpeta);
+    if (!$real_path) {
+      throw new Exception("No existe la ruta $ruta_carpeta");
+    }
+
+    $archivos = scandir($real_path);
+
+    $array_final = [];
+    foreach ($archivos as $filename) {
+      if ($filename != ".." && $filename != ".") {
+        $array_final[] = $filename;
+      }
+    }
+
+    return $array_final;
   }
 }

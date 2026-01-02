@@ -4,16 +4,13 @@ namespace App\Models\Notificaciones;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TipoNotificacion extends Model
+class TipoNotificacion extends MaracModel
 {
-    public $timestamps = false;
+  public $timestamps = false;
 
-    public $table = 'tipo_notificacion';
+  public $table = 'tipo_notificacion';
 
-    protected $primaryKey = 'codTipoNotificacion';
+  protected $primaryKey = 'codTipoNotificacion';
 
-    protected $fillable = [];
- 
-    
-
+  protected $fillable = [];
 }

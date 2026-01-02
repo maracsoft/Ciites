@@ -7,7 +7,9 @@ use App\Utils\MaracEstado;
 use B;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
+//START MODEL_HELPER
 
+//END MODEL_HELPER
 class EstadoViajeVehiculo extends MaracEstado
 {
 

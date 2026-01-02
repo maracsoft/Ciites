@@ -31,6 +31,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $observaciones_salida text NULLABLE    
  * @property string $observaciones_llegada text NULLABLE    
  * @method static ViajeVehiculo findOrFail($primary_key)
+ * @method static ViajeVehiculo | null find($primary_key)
+ * @method static ViajeVehiculoCollection all()
+ * @method static \App\Builders\ViajeVehiculoBuilder query()
+ * @method static \App\Builders\ViajeVehiculoBuilder where(string $column,string $operator, string $value)
+ * @method static \App\Builders\ViajeVehiculoBuilder where(string $column,string $value)
+ * @method static \App\Builders\ViajeVehiculoBuilder whereNotNull(string $column) 
+ * @method static \App\Builders\ViajeVehiculoBuilder whereNull(string $column) 
+ * @method static \App\Builders\ViajeVehiculoBuilder whereIn(string $column,array $array)
+ * @method static \App\Builders\ViajeVehiculoBuilder orderBy(string $column,array $sentido) 
  */
 //END MODEL_HELPER
 class ViajeVehiculo extends MaracModel

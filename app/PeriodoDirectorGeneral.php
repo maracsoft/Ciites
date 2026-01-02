@@ -4,23 +4,44 @@ namespace App;
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
-
-class PeriodoDirectorGeneral extends Model
+//START MODEL_HELPER
+/**
+ * @property int $codPeriodoDirector int(11)     
+ * @property string $fecha_inicio date     
+ * @property string $fecha_fin date NULLABLE    
+ * @property string $nombres varchar(200)     
+ * @property string $apellidos varchar(200)     
+ * @property string $dni varchar(20)     
+ * @property string $sexo varchar(5)     
+ * @property string $fechaHoraCreacion datetime     
+ * @method static PeriodoDirectorGeneral findOrFail($primary_key)
+ * @method static PeriodoDirectorGeneral | null find($primary_key)
+ * @method static PeriodoDirectorGeneralCollection all()
+ * @method static \App\Builders\PeriodoDirectorGeneralBuilder query()
+ * @method static \App\Builders\PeriodoDirectorGeneralBuilder where(string $column,string $operator, string $value)
+ * @method static \App\Builders\PeriodoDirectorGeneralBuilder where(string $column,string $value)
+ * @method static \App\Builders\PeriodoDirectorGeneralBuilder whereNotNull(string $column) 
+ * @method static \App\Builders\PeriodoDirectorGeneralBuilder whereNull(string $column) 
+ * @method static \App\Builders\PeriodoDirectorGeneralBuilder whereIn(string $column,array $array)
+ * @method static \App\Builders\PeriodoDirectorGeneralBuilder orderBy(string $column,array $sentido) 
+ */
+//END MODEL_HELPER
+class PeriodoDirectorGeneral extends MaracModel
 {
 
   public $table = "periodo_director_general";
   protected $primaryKey = "codPeriodoDirector";
 
-  public $timestamps = false;  //para que no trabaje con los campos fecha 
+  public $timestamps = false;  //para que no trabaje con los campos fecha
 
-  /* 
+  /*
   contrato locacion
   contrato plazo
   contrato plazo nuevo
   reposicion
   requerimiento
   solicitud fondos
-  
+
 
   */
 
@@ -65,8 +86,8 @@ class PeriodoDirectorGeneral extends Model
 
   public function getNombreCompleto(bool $en_mayusculas)
   {
-    $fullname = $this->nombres . " " . $this->apellidos; 
-    if($en_mayusculas){
+    $fullname = $this->nombres . " " . $this->apellidos;
+    if ($en_mayusculas) {
       $fullname = mb_strtoupper($fullname);
     }
 
@@ -78,15 +99,17 @@ class PeriodoDirectorGeneral extends Model
     return $this->apellidos . " " . $this->nombre;
   }
 
-  public function esHombre(){
+  public function esHombre()
+  {
     return $this->sexo == 'M';
   }
-  public function esMujer(){
+  public function esMujer()
+  {
     return $this->sexo == 'F';
   }
 
-  
-  
+
+
 
   public function getSexoEscrito()
   {
@@ -130,7 +153,8 @@ class PeriodoDirectorGeneral extends Model
     return $buscar[0];
   }
 
-  public static function getCodPeriodoActivo() : int {
+  public static function getCodPeriodoActivo(): int
+  {
     return (static::getPeriodoActivo())->getId();
   }
 }

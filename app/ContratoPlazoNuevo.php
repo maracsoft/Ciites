@@ -7,7 +7,51 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-
+//START MODEL_HELPER
+/**
+ * @property int $codContratoPlazo int(11)     
+ * @property string $nombres varchar(500)     
+ * @property string $dni varchar(500)     
+ * @property string $apellidos varchar(500)     
+ * @property string $codigo_unico varchar(500)     
+ * @property string $fechaHoraGeneracion datetime     
+ * @property int $codMoneda int(11)     
+ * @property int $codEmpleadoCreador int(11)     
+ * @property string $domicilio varchar(500)     
+ * @property string $tipo_adenda_financiera varchar(500)     
+ * @property string $nombre_financiera varchar(500)     
+ * @property int $duracion_convenio_numero int(11)     
+ * @property string $duracion_convenio_unidad_temporal varchar(500)     
+ * @property string $nombre_proyecto varchar(500)     
+ * @property string $puesto varchar(500)     
+ * @property string $fecha_inicio_prueba date NULLABLE    
+ * @property string $fecha_fin_prueba date NULLABLE    
+ * @property string $fecha_inicio_contrato date     
+ * @property string $fecha_fin_contrato date     
+ * @property int $cantidad_dias_labor int(11) NULLABLE    
+ * @property int $cantidad_dias_descanso int(11) NULLABLE    
+ * @property float $remuneracion_mensual float     
+ * @property string $fechaHoraAnulacion date NULLABLE    
+ * @property int $es_borrador int(11)     
+ * @property string $provincia varchar(200)     
+ * @property string $departamento varchar(200)     
+ * @property string $sexo varchar(5)     
+ * @property string $distrito varchar(200)     
+ * @property string $tipo_contrato varchar(100)     
+ * @property int $tiene_periodo_prueba int(11)     
+ * @property int $codPeriodoDirector int(11) NULLABLE    
+ * @method static ContratoPlazoNuevo findOrFail($primary_key)
+ * @method static ContratoPlazoNuevo | null find($primary_key)
+ * @method static ContratoPlazoNuevoCollection all()
+ * @method static \App\Builders\ContratoPlazoNuevoBuilder query()
+ * @method static \App\Builders\ContratoPlazoNuevoBuilder where(string $column,string $operator, string $value)
+ * @method static \App\Builders\ContratoPlazoNuevoBuilder where(string $column,string $value)
+ * @method static \App\Builders\ContratoPlazoNuevoBuilder whereNotNull(string $column) 
+ * @method static \App\Builders\ContratoPlazoNuevoBuilder whereNull(string $column) 
+ * @method static \App\Builders\ContratoPlazoNuevoBuilder whereIn(string $column,array $array)
+ * @method static \App\Builders\ContratoPlazoNuevoBuilder orderBy(string $column,array $sentido) 
+ */
+//END MODEL_HELPER
 class ContratoPlazoNuevo extends Contrato
 {
   public $timestamps = false;
@@ -55,14 +99,16 @@ class ContratoPlazoNuevo extends Contrato
   const Tiempo_Mes = "mes";
   const Tiempo_Año = "año";
 
-  public static function getTiempos(){
+  public static function getTiempos()
+  {
     return [
       static::Tiempo_Año,
       static::Tiempo_Mes,
       static::Tiempo_Dia,
     ];
   }
-  public static function getTiposAdendaFinanciera(){
+  public static function getTiposAdendaFinanciera()
+  {
     return [
       static::TipoAdendaFinanciera_Adenda,
       static::TipoAdendaFinanciera_Contrato,
@@ -70,7 +116,8 @@ class ContratoPlazoNuevo extends Contrato
     ];
   }
 
-  public static function getTiposContrato() : array {
+  public static function getTiposContrato(): array
+  {
     return [
       static::TipoContrato_Atipico => "Atípico",
       static::TipoContrato_ConJornada => "Con Jornada",
@@ -80,7 +127,8 @@ class ContratoPlazoNuevo extends Contrato
     ];
   }
 
-  public static function getTiposContratoParaFiltro() : array {
+  public static function getTiposContratoParaFiltro(): array
+  {
     $tipos = static::getTiposContrato();
 
     return [
@@ -108,14 +156,16 @@ class ContratoPlazoNuevo extends Contrato
     ];
   }
 
-  public function getTipoContratoLabel() : string{
+  public function getTipoContratoLabel(): string
+  {
     $tipos = static::getTiposContrato();
     return $tipos[$this->tipo_contrato];
   }
 
 
 
-  public function getTextoDuracionConvenio(){
+  public function getTextoDuracionConvenio()
+  {
     $num = $this->duracion_convenio_numero;
 
     switch ($this->duracion_convenio_unidad_temporal) {
@@ -137,10 +187,11 @@ class ContratoPlazoNuevo extends Contrato
         break;
     }
 
-    return $num." ".$texto;
+    return $num . " " . $texto;
   }
 
-  public function getMensajeAdendaConvenioContrato(){
+  public function getMensajeAdendaConvenioContrato()
+  {
     switch ($this->tipo_adenda_financiera) {
       case 'adenda':
         return "una adenda al convenio con ";
@@ -153,7 +204,7 @@ class ContratoPlazoNuevo extends Contrato
         break;
 
       default:
-        throw new Exception ("Tipo de adenda financiera invalida, verifique la base de datos");
+        throw new Exception("Tipo de adenda financiera invalida, verifique la base de datos");
         break;
     }
   }
@@ -187,8 +238,8 @@ class ContratoPlazoNuevo extends Contrato
     $dompdf->setPaper('A4');
     $dompdf->render();
 
-    if($this->esBorrador()){
-      $dompdf->getCanvas()->page_text(400, 800, "Documento borrador, no tiene valor", $font, 8, array(200,0,0));
+    if ($this->esBorrador()) {
+      $dompdf->getCanvas()->page_text(400, 800, "Documento borrador, no tiene valor", $font, 8, array(200, 0, 0));
     }
 
     return $dompdf;
@@ -213,7 +264,7 @@ class ContratoPlazoNuevo extends Contrato
   }
 
 
-  function getRemuneracionMensualEscrita() : string
+  function getRemuneracionMensualEscrita(): string
   {
 
     return Numeros::escribirNumero($this->remuneracion_mensual);
@@ -221,24 +272,28 @@ class ContratoPlazoNuevo extends Contrato
 
 
 
-  public function getFechaInicioPruebaEscrita(){
+  public function getFechaInicioPruebaEscrita()
+  {
     return Fecha::escribirEnTexto($this->fecha_inicio_prueba);
   }
 
-  public function getFechaFinPruebaEscrita(){
+  public function getFechaFinPruebaEscrita()
+  {
     return Fecha::escribirEnTexto($this->fecha_fin_prueba);
   }
 
-  public function getFechaInicioPrueba(){
-    if($this->fecha_inicio_prueba == null){
+  public function getFechaInicioPrueba()
+  {
+    if ($this->fecha_inicio_prueba == null) {
       return "";
     }
 
     return Fecha::formatoParaVistas($this->fecha_inicio_prueba);
   }
 
-  public function getFechaFinPrueba(){
-    if($this->fecha_fin_prueba == null){
+  public function getFechaFinPrueba()
+  {
+    if ($this->fecha_fin_prueba == null) {
       return "";
     }
     return Fecha::formatoParaVistas($this->fecha_fin_prueba);
@@ -301,7 +356,8 @@ class ContratoPlazoNuevo extends Contrato
     return $listaNombres;
   }
 
-  public function setDataFromRequest(Request $request){
+  public function setDataFromRequest(Request $request)
+  {
 
     $this->nombres = $request->nombres;
     $this->apellidos = $request->apellidos;
@@ -330,43 +386,47 @@ class ContratoPlazoNuevo extends Contrato
     $this->tipo_contrato = $request->tipo_contrato;
     $this->tiene_periodo_prueba = $request->tiene_periodo_prueba;
 
-    if($this->tienePeriodoPrueba()){
+    if ($this->tienePeriodoPrueba()) {
       $this->fecha_inicio_prueba = Fecha::formatoParaSQL($request->fecha_inicio_prueba);
       $this->fecha_fin_prueba = Fecha::formatoParaSQL($request->fecha_fin_prueba);
     }
-
   }
 
 
-  public function verificarTipo_Atipico() : bool {
+  public function verificarTipo_Atipico(): bool
+  {
     return $this->tipo_contrato == static::TipoContrato_Atipico;
   }
-  public function verificarTipo_ConJornada() : bool {
+  public function verificarTipo_ConJornada(): bool
+  {
     return $this->tipo_contrato == static::TipoContrato_ConJornada;
   }
-  public function verificarTipo_SinJornada() : bool {
+  public function verificarTipo_SinJornada(): bool
+  {
     return $this->tipo_contrato == static::TipoContrato_SinJornada;
   }
-  public function verificarTipo_PuestoConfianza() : bool {
+  public function verificarTipo_PuestoConfianza(): bool
+  {
     return $this->tipo_contrato == static::TipoContrato_PuestoConfianza;
   }
-  public function verificarTipo_MedioTiempo() : bool {
+  public function verificarTipo_MedioTiempo(): bool
+  {
     return $this->tipo_contrato == static::TipoContrato_MedioTiempo;
   }
 
 
 
 
-  public function tienePeriodoPrueba() : bool {
+  public function tienePeriodoPrueba(): bool
+  {
     return $this->tiene_periodo_prueba == 1;
   }
 
-  public function getLabelTienePeriodoPrueba() : string {
-    if($this->tienePeriodoPrueba())
+  public function getLabelTienePeriodoPrueba(): string
+  {
+    if ($this->tienePeriodoPrueba())
       return "SÍ";
     else
       return "NO";
   }
-
- 
 }

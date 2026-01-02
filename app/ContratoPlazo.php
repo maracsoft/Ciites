@@ -7,7 +7,48 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-
+//START MODEL_HELPER
+/**
+ * @property int $codContratoPlazo int(11)     
+ * @property string $nombres varchar(500)     
+ * @property string $dni varchar(500)     
+ * @property string $apellidos varchar(500)     
+ * @property string $codigo_unico varchar(500)     
+ * @property string $fechaHoraGeneracion datetime     
+ * @property int $codMoneda int(11)     
+ * @property int $codEmpleadoCreador int(11)     
+ * @property string $domicilio varchar(500)     
+ * @property string $tipo_adenda_financiera varchar(500)     
+ * @property string $nombre_financiera varchar(500)     
+ * @property int $duracion_convenio_numero int(11)     
+ * @property string $duracion_convenio_unidad_temporal varchar(500)     
+ * @property string $nombre_contrato_locacion varchar(500)     
+ * @property string $puesto varchar(500)     
+ * @property string $fecha_inicio_prueba date     
+ * @property string $fecha_fin_prueba date     
+ * @property string $fecha_inicio_contrato date     
+ * @property string $fecha_fin_contrato date     
+ * @property int $cantidad_dias_labor int(11)     
+ * @property int $cantidad_dias_descanso int(11)     
+ * @property float $remuneracion_mensual float     
+ * @property string $fechaHoraAnulacion date NULLABLE    
+ * @property int $es_borrador int(11)     
+ * @property string $provincia varchar(200)     
+ * @property string $departamento varchar(200)     
+ * @property string $sexo varchar(5)     
+ * @property string $distrito varchar(200)     
+ * @method static ContratoPlazo findOrFail($primary_key)
+ * @method static ContratoPlazo | null find($primary_key)
+ * @method static ContratoPlazoCollection all()
+ * @method static \App\Builders\ContratoPlazoBuilder query()
+ * @method static \App\Builders\ContratoPlazoBuilder where(string $column,string $operator, string $value)
+ * @method static \App\Builders\ContratoPlazoBuilder where(string $column,string $value)
+ * @method static \App\Builders\ContratoPlazoBuilder whereNotNull(string $column) 
+ * @method static \App\Builders\ContratoPlazoBuilder whereNull(string $column) 
+ * @method static \App\Builders\ContratoPlazoBuilder whereIn(string $column,array $array)
+ * @method static \App\Builders\ContratoPlazoBuilder orderBy(string $column,array $sentido) 
+ */
+//END MODEL_HELPER
 class ContratoPlazo extends Contrato
 {
   public $timestamps = false;
@@ -45,14 +86,16 @@ class ContratoPlazo extends Contrato
   const Tiempo_Mes = "mes";
   const Tiempo_Año = "año";
 
-  public static function getTiempos(){
+  public static function getTiempos()
+  {
     return [
       static::Tiempo_Año,
       static::Tiempo_Mes,
       static::Tiempo_Dia,
     ];
   }
-  public static function getTiposAdendaFinanciera(){
+  public static function getTiposAdendaFinanciera()
+  {
     return [
       static::TipoAdendaFinanciera_Adenda,
       static::TipoAdendaFinanciera_Contrato,
@@ -60,7 +103,8 @@ class ContratoPlazo extends Contrato
     ];
   }
 
-  public function getTextoDuracionConvenio(){
+  public function getTextoDuracionConvenio()
+  {
     $num = $this->duracion_convenio_numero;
 
     switch ($this->duracion_convenio_unidad_temporal) {
@@ -82,10 +126,11 @@ class ContratoPlazo extends Contrato
         break;
     }
 
-    return $num." ".$texto;
+    return $num . " " . $texto;
   }
 
-  public function getMensajeAdendaConvenioContrato(){
+  public function getMensajeAdendaConvenioContrato()
+  {
     switch ($this->tipo_adenda_financiera) {
       case 'adenda':
         return "una adenda al convenio con ";
@@ -98,7 +143,7 @@ class ContratoPlazo extends Contrato
         break;
 
       default:
-        throw new Exception ("Tipo de adenda financiera invalida, verifique la base de datos");
+        throw new Exception("Tipo de adenda financiera invalida, verifique la base de datos");
         break;
     }
   }
@@ -132,8 +177,8 @@ class ContratoPlazo extends Contrato
     $dompdf->setPaper('A4');
     $dompdf->render();
 
-    if($this->esBorrador()){
-      $dompdf->getCanvas()->page_text(400, 800, "Documento borrador, no tiene valor", $font, 8, array(200,0,0));
+    if ($this->esBorrador()) {
+      $dompdf->getCanvas()->page_text(400, 800, "Documento borrador, no tiene valor", $font, 8, array(200, 0, 0));
     }
 
     return $dompdf;
@@ -158,7 +203,7 @@ class ContratoPlazo extends Contrato
   }
 
 
-  function getRemuneracionMensualEscrita() : string
+  function getRemuneracionMensualEscrita(): string
   {
 
     return Numeros::escribirNumero($this->remuneracion_mensual);
@@ -166,19 +211,23 @@ class ContratoPlazo extends Contrato
 
 
 
-  public function getFechaInicioPruebaEscrita(){
+  public function getFechaInicioPruebaEscrita()
+  {
     return Fecha::escribirEnTexto($this->fecha_inicio_prueba);
   }
 
-  public function getFechaFinPruebaEscrita(){
+  public function getFechaFinPruebaEscrita()
+  {
     return Fecha::escribirEnTexto($this->fecha_fin_prueba);
   }
 
-  public function getFechaInicioPrueba(){
+  public function getFechaInicioPrueba()
+  {
     return Fecha::formatoParaVistas($this->fecha_inicio_prueba);
   }
 
-  public function getFechaFinPrueba(){
+  public function getFechaFinPrueba()
+  {
     return Fecha::formatoParaVistas($this->fecha_fin_prueba);
   }
 
@@ -214,7 +263,8 @@ class ContratoPlazo extends Contrato
     return $listaNombres;
   }
 
-  public function setDataFromRequest(Request $request){
+  public function setDataFromRequest(Request $request)
+  {
 
     $this->nombres = $request->nombres;
     $this->apellidos = $request->apellidos;
@@ -241,6 +291,5 @@ class ContratoPlazo extends Contrato
     $this->cantidad_dias_descanso = $request->cantidad_dias_descanso;
     $this->remuneracion_mensual = $request->remuneracion_mensual;
     $this->codMoneda = $request->codMoneda;
-
   }
 }

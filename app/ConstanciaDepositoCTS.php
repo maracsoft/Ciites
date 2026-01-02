@@ -10,7 +10,40 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-
+//START MODEL_HELPER
+/**
+ * @property int $codConstancia int(11)     
+ * @property string $codigo_unico varchar(25)     
+ * @property int $codEmpleadoCreador int(11)     
+ * @property string $fechaHoraCreacion datetime     
+ * @property int $codPeriodoDirector int(11)     
+ * @property float $ultimo_sueldo_bruto float     
+ * @property float $monto_ultima_grati float     
+ * @property string $nombres varchar(200)     
+ * @property string $apellidos varchar(200)     
+ * @property string $dni varchar(20)     
+ * @property string $fecha_deposito date     
+ * @property string $nro_cuenta varchar(50)     
+ * @property int $nro_meses_laborados int(11)     
+ * @property int $nro_dias_laborados int(11)     
+ * @property float $monto_total_cts float     
+ * @property string $fecha_inicio date    del periodo 
+ * @property string $fecha_fin date    del periodo 
+ * @property string $fecha_emision date NULLABLE   emision formal del documento, no es la fecha de creacion del registro en bd. Es logica negocio 
+ * @property string $nombre_banco varchar(300) NULLABLE    
+ * @property float $promedio_otras_remuneraciones float     
+ * @method static ConstanciaDepositoCTS findOrFail($primary_key)
+ * @method static ConstanciaDepositoCTS | null find($primary_key)
+ * @method static ConstanciaDepositoCTSCollection all()
+ * @method static \App\Builders\ConstanciaDepositoCTSBuilder query()
+ * @method static \App\Builders\ConstanciaDepositoCTSBuilder where(string $column,string $operator, string $value)
+ * @method static \App\Builders\ConstanciaDepositoCTSBuilder where(string $column,string $value)
+ * @method static \App\Builders\ConstanciaDepositoCTSBuilder whereNotNull(string $column) 
+ * @method static \App\Builders\ConstanciaDepositoCTSBuilder whereNull(string $column) 
+ * @method static \App\Builders\ConstanciaDepositoCTSBuilder whereIn(string $column,array $array)
+ * @method static \App\Builders\ConstanciaDepositoCTSBuilder orderBy(string $column,array $sentido) 
+ */
+//END MODEL_HELPER
 class ConstanciaDepositoCTS extends MaracModel
 {
   public $timestamps = false;
@@ -22,8 +55,9 @@ class ConstanciaDepositoCTS extends MaracModel
 
   protected $fillable = [];
 
-  public function getNombreCompleto() : string {
-    return $this->apellidos . " ".$this->nombres;
+  public function getNombreCompleto(): string
+  {
+    return $this->apellidos . " " . $this->nombres;
   }
 
   public static function calcularCodigoCedepasLibre(Numeracion $numeracion)
@@ -37,19 +71,22 @@ class ConstanciaDepositoCTS extends MaracModel
   a escogerse en front en un select
 
   */
-  public function getFechaHoraEmisionEscrita(){
+  public function getFechaHoraEmisionEscrita()
+  {
     return Fecha::escribirEnTexto($this->fecha_emision);
-
   }
-  public function getFechaHoraEmision(){
+  public function getFechaHoraEmision()
+  {
     return Fecha::formatoParaVistas($this->fecha_emision);
   }
 
-  public function getAñoEmision(){
-    return date("Y",strtotime($this->fecha_emision));
+  public function getAñoEmision()
+  {
+    return date("Y", strtotime($this->fecha_emision));
   }
-  public function getCodMesEmision(){
-    return date("n",strtotime($this->fecha_emision));
+  public function getCodMesEmision()
+  {
+    return date("n", strtotime($this->fecha_emision));
   }
 
   public function getEmpleadoCreador()
@@ -76,7 +113,7 @@ class ConstanciaDepositoCTS extends MaracModel
 
   public function getFechaInicio()
   {
-    if($this->fecha_inicio == ""){
+    if ($this->fecha_inicio == "") {
       return "";
     }
 
@@ -84,7 +121,7 @@ class ConstanciaDepositoCTS extends MaracModel
   }
   public function getFechaInicioEscrita()
   {
-    if($this->fecha_inicio == ""){
+    if ($this->fecha_inicio == "") {
       return "";
     }
 
@@ -93,7 +130,7 @@ class ConstanciaDepositoCTS extends MaracModel
 
   public function getFechaFin()
   {
-    if($this->fecha_fin == ""){
+    if ($this->fecha_fin == "") {
       return "";
     }
 
@@ -101,7 +138,7 @@ class ConstanciaDepositoCTS extends MaracModel
   }
   public function getFechaFinEscrita()
   {
-    if($this->fecha_fin == ""){
+    if ($this->fecha_fin == "") {
       return "";
     }
 
@@ -181,19 +218,21 @@ class ConstanciaDepositoCTS extends MaracModel
     $this->monto_total_cts = $this->getTotalCTS(false);
 
     $codMes = intval($request->mes_emision);
-    $codMes = $codMes < 10 ? "0".$codMes : $codMes;
+    $codMes = $codMes < 10 ? "0" . $codMes : $codMes;
     $año = $request->año_emision;
 
     $this->fecha_emision = "$año-$codMes-15";
   }
 
-  public function getUltimoSueldoBruto(){
+  public function getUltimoSueldoBruto()
+  {
     return MaracUtils::FormatearMonto($this->ultimo_sueldo_bruto);
   }
 
 
 
-  public function getPromedioOtrasRemuneraciones(bool $formatear=false){
+  public function getPromedioOtrasRemuneraciones(bool $formatear = false)
+  {
     $val = $this->promedio_otras_remuneraciones;
     if ($formatear) {
       $val = MaracUtils::FormatearMonto($val);
@@ -202,7 +241,8 @@ class ConstanciaDepositoCTS extends MaracModel
   }
 
 
-  public function getSextoUltimaGrati(bool $formatear=false){
+  public function getSextoUltimaGrati(bool $formatear = false)
+  {
     $val = $this->monto_ultima_grati / 6;
     if ($formatear) {
       $val = MaracUtils::FormatearMonto($val);
@@ -258,13 +298,14 @@ class ConstanciaDepositoCTS extends MaracModel
   public function getTotalCTS(bool $formatear = false)
   {
     $val = $this->getMontoMesesLaborados() + $this->getMontoDiasLaborados();
-    if($formatear){
+    if ($formatear) {
       $val = MaracUtils::FormatearMonto($val);
     }
 
     return $val;
   }
-  public function getDNIDirector(){
+  public function getDNIDirector()
+  {
 
     $director = $this->getPeriodoDirector();
     return $director->dni;
@@ -276,7 +317,8 @@ class ConstanciaDepositoCTS extends MaracModel
     $director = $this->getPeriodoDirector();
     return $director->getNombreCompleto(true);
   }
-  public function getPeriodoDirector() : PeriodoDirectorGeneral {
+  public function getPeriodoDirector(): PeriodoDirectorGeneral
+  {
     return PeriodoDirectorGeneral::findOrFail($this->codPeriodoDirector);
   }
   /* ********************************** HTML COMPONENTS ************************************* */

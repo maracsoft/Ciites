@@ -9,7 +9,41 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-
+//START MODEL_HELPER
+/**
+ * @property int $codSolicitud int(11)     
+ * @property int $codProyecto int(11)     
+ * @property string $codigoCedepas varchar(200)     
+ * @property int $codEmpleadoSolicitante int(11)     
+ * @property string $fechaHoraEmision datetime     
+ * @property float $totalSolicitado float NULLABLE    
+ * @property string $girarAOrdenDe varchar(200)     
+ * @property string $numeroCuentaBanco varchar(200)     
+ * @property int $codBanco int(11)     
+ * @property string $justificacion varchar(350) NULLABLE    
+ * @property int $codEmpleadoEvaluador int(11) NULLABLE    
+ * @property string $fechaHoraRevisado datetime NULLABLE    
+ * @property int $codEstadoSolicitud int(11)     
+ * @property string $fechaHoraAbonado datetime NULLABLE    
+ * @property string $observacion varchar(300) NULLABLE    
+ * @property string $terminacionArchivo varchar(10) NULLABLE    
+ * @property int $codEmpleadoAbonador int(11) NULLABLE    
+ * @property int $estaRendida int(11) NULLABLE    
+ * @property int $codEmpleadoContador int(11) NULLABLE    
+ * @property int $codMoneda int(11)     
+ * @property string $codigoContrapartida varchar(200) NULLABLE    
+ * @method static SolicitudFondos findOrFail($primary_key)
+ * @method static SolicitudFondos | null find($primary_key)
+ * @method static SolicitudFondosCollection all()
+ * @method static \App\Builders\SolicitudFondosBuilder query()
+ * @method static \App\Builders\SolicitudFondosBuilder where(string $column,string $operator, string $value)
+ * @method static \App\Builders\SolicitudFondosBuilder where(string $column,string $value)
+ * @method static \App\Builders\SolicitudFondosBuilder whereNotNull(string $column) 
+ * @method static \App\Builders\SolicitudFondosBuilder whereNull(string $column) 
+ * @method static \App\Builders\SolicitudFondosBuilder whereIn(string $column,array $array)
+ * @method static \App\Builders\SolicitudFondosBuilder orderBy(string $column,array $sentido) 
+ */
+//END MODEL_HELPER
 class SolicitudFondos extends DocumentoAdministrativo
 {
   public $table = "solicitud_fondos";

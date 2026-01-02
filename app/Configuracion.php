@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use League\CommonMark\Util\Configuration;
 
-class Configuracion extends Model
+class Configuracion extends MaracModel
 {
   const estamosEnMantenimiento = false;
 

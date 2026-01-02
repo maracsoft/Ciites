@@ -3,8 +3,27 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
-class Puesto extends Model
+//START MODEL_HELPER
+/**
+ * @property int $codPuesto int(11)     
+ * @property string $nombre varchar(200)     
+ * @property int $estado int(11)     
+ * @property string $nombreAparente varchar(100)     
+ * @property string $descripcion varchar(250)     
+ * @property int $ordenListado int(11)     
+ * @method static Puesto findOrFail($primary_key)
+ * @method static Puesto | null find($primary_key)
+ * @method static PuestoCollection all()
+ * @method static \App\Builders\PuestoBuilder query()
+ * @method static \App\Builders\PuestoBuilder where(string $column,string $operator, string $value)
+ * @method static \App\Builders\PuestoBuilder where(string $column,string $value)
+ * @method static \App\Builders\PuestoBuilder whereNotNull(string $column) 
+ * @method static \App\Builders\PuestoBuilder whereNull(string $column) 
+ * @method static \App\Builders\PuestoBuilder whereIn(string $column,array $array)
+ * @method static \App\Builders\PuestoBuilder orderBy(string $column,array $sentido) 
+ */
+//END MODEL_HELPER
+class Puesto extends MaracModel
 {
   public $timestamps = false;
 
