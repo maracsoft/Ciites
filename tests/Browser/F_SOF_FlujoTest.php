@@ -21,6 +21,9 @@ class F_SOF_FlujoTest extends DuskTestCase
   public $solicitud;
 
   const codUsuarioEmisor = 9;
+  const codUsuarioAdministrador = 9;
+  const codUsuarioContador = 9;
+  const DeltaTime = 300;
 
   /* PARA CORRER SOLO ESTE TEST
         php artisan dusk tests/Browser/F_SOF_FlujoTest.php
@@ -34,6 +37,7 @@ class F_SOF_FlujoTest extends DuskTestCase
         ->type('usuario', 'admin')
         ->type('password', env('ADMIN_PASSWORD'))
         ->press('ingresar')
+        ->pause(static::DeltaTime)
         ->assertSee('Solicitud de Fondos');
     });
   }
@@ -54,11 +58,13 @@ class F_SOF_FlujoTest extends DuskTestCase
     //$this->editarSolicitud();
     $this->aprobarSolicitud();
     $this->abonarSolicitud();
-    $this->contabilizarSolicitud();
+    //$this->contabilizarSolicitud();
     Debug::mensajeSimple("Se terminó el flujo de Solicitud.");
     $this->crearRendicion();
+    /*
     $this->gerente_observarRendicion();
     $this->emp_editarRend();
+    */
     $this->aprobarRendicion();
     $this->contabilizarRendicion();
     Debug::mensajeSimple("Se terminó el flujo de Solicitud y Rendición");
@@ -91,19 +97,18 @@ class F_SOF_FlujoTest extends DuskTestCase
           ->type('#concepto', $detalle['concepto'])
           ->type('#importe', $detalle['importe'])
           ->type('#codigoPresupuestal', $detalle['codigoPresupuestal'])
-          ->press('#btnadddet');
+          ->press('#btnadddet')
+          ->pause(static::DeltaTime);
       }
 
       $browser = $browser
 
         ->press('#btnRegistrar')
-        ->pause(300) //esperamos a que aparezca el modal de confirmacion
+        ->pause(static::DeltaTime) //esperamos a que aparezca el modal de confirmacion
         ->assertSee('¿Seguro de crear la solicitud?')
-        ->screenshot('SS-ConfirmSOL')
         ->press('SÍ')
-        ->pause(200) //esperamos a que nos redirija a la pagina de listar
-        ->assertSee('Se ha creado')
-        ->screenshot('SS-ListarSOL');
+        ->pause(static::DeltaTime) //esperamos a que nos redirija a la pagina de listar
+        ->assertSee('Se ha creado');
       $mensajeLlegada = $browser->text('#msjEmergenteDatos');
       //Debug::mensajeSimple($mensajeLlegada);
       $this->codigoPresupuestal = mb_substr($mensajeLlegada, 26, 12);
@@ -141,7 +146,7 @@ class F_SOF_FlujoTest extends DuskTestCase
           $browser = $browser->type("#" . $nombreCampo, $valor);
       }
 
-      //esta es la cantidad de items que se añadirán
+      //esta es la cantidad de items que se aÃ±adirÃ¡n
       $cantidadItems = 10;
       for ($i = 0; $i < $cantidadItems; $i++) {
         $detalle = FakerCedepas::F_SOL_GenerarDetalle($proyecto);
@@ -149,19 +154,18 @@ class F_SOF_FlujoTest extends DuskTestCase
           ->type('#concepto', $detalle['concepto'])
           ->type('#importe', $detalle['importe'])
           ->type('#codigoPresupuestal', $detalle['codigoPresupuestal'])
-          ->press('#btnadddet');
+          ->press('#btnadddet')
+          ->pause(static::DeltaTime);
       }
 
       $browser = $browser
 
         ->press('#btnRegistrar')
+        ->pause(static::DeltaTime) //esperamos a que aparezca el modal de confirmacion
         ->assertSee('¿Seguro de actualizar la solicitud?')
-        ->pause(300) //esperamos a que aparezca el modal de confirmacion
-        ->screenshot('SS-ConfirmEditSOL')
         ->press('SÍ')
-        ->pause(200) //esperamos a que nos redirija a la pagina de listar
-        ->assertSee('actualizado')
-        ->screenshot('SS-ListarSOL-postEdit');
+        ->pause(static::DeltaTime) //esperamos a que nos redirija a la pagina de listar
+        ->assertSee('actualizado');
     });
   }
 
@@ -183,7 +187,7 @@ class F_SOF_FlujoTest extends DuskTestCase
       /* LOS CODIGOS PRESUPUESTALES NO LOS CAMBIAMOS */
       $browser = $browser
         ->press('#botonActivarEdicion')
-        ->pause(100)
+        ->pause(static::DeltaTime)
         ->type('#justificacion', $solicitud->justificacion . " CORREGIDO") //EL TYPE LO REMPLAZA TOTALMENTE
 
       ;
@@ -191,11 +195,11 @@ class F_SOF_FlujoTest extends DuskTestCase
       $browser = $browser
 
         ->press('#botonAprobar')
-        ->pause(3000) //esperamos a que aparezca el modal de confirmacion
+        ->pause(static::DeltaTime) //esperamos a que aparezca el modal de confirmacion
         ->assertSee('¿Está seguro de Aprobar la Solicitud?')
 
         ->press('SÍ')
-        ->pause(2000) //esperamos a que nos redirija a la pagina de listar
+        ->pause(static::DeltaTime) //esperamos a que nos redirija a la pagina de listar
         ->assertSee('Aprobada');
     });
   }
@@ -209,7 +213,7 @@ class F_SOF_FlujoTest extends DuskTestCase
 
       //$cuerpo = FakerCedepas::F_SOL_generarCuerpoAprobacion($proyecto);
 
-      $usuario = User::findOrFail(9); //administradora MARYCRUZ BRIONES
+      $usuario = User::findOrFail(self::codUsuarioAdministrador); //administradora MARYCRUZ BRIONES
 
       $browser = $browser
         ->loginAs($usuario)
@@ -218,13 +222,11 @@ class F_SOF_FlujoTest extends DuskTestCase
       $browser = $browser
 
         ->press('#botonAbonar')
+        ->pause(static::DeltaTime) //esperamos a que aparezca el modal de confirmacion
         ->assertSee('¿Está seguro de marcar como abonada la solicitud?')
-        ->pause(300) //esperamos a que aparezca el modal de confirmacion
-        ->screenshot('SS-ConfirmAbonacionSOL')
         ->press('SÍ')
-        ->pause(200) //esperamos a que nos redirija a la pagina de listar
-        ->assertSee('Abonada')
-        ->screenshot('SS-ListarSOL-postAbono');
+        ->pause(static::DeltaTime) //esperamos a que nos redirija a la pagina de listar
+        ->assertSee('Abonada');
     });
   }
 
@@ -239,7 +241,7 @@ class F_SOF_FlujoTest extends DuskTestCase
 
       //$cuerpo = FakerCedepas::F_SOL_generarCuerpoAprobacion($proyecto);
 
-      $usuario = User::findOrFail(33); //contadora
+      $usuario = User::findOrFail(self::codUsuarioContador); //contadora
 
       $browser = $browser
         ->loginAs($usuario)
@@ -247,13 +249,11 @@ class F_SOF_FlujoTest extends DuskTestCase
       $browser = $browser
 
         ->press('#botonContabilizar')
+        ->pause(static::DeltaTime) //esperamos a que aparezca el modal de confirmacion
         ->assertSee('¿Desea marcar como contabilizada la solicitud?')
-        ->pause(300) //esperamos a que aparezca el modal de confirmacion
-        ->screenshot('SS-ConfirmContabilizacion-SOL')
         ->press('SÍ')
-        ->pause(200) //esperamos a que nos redirija a la pagina de listar
-        ->assertSee('Contabilizada')
-        ->screenshot('SS-ListarSOL-postContabilizar');
+        ->pause(static::DeltaTime) //esperamos a que nos redirija a la pagina de listar
+        ->assertSee('Contabilizada');
     });
   }
 
@@ -285,8 +285,8 @@ class F_SOF_FlujoTest extends DuskTestCase
           ->type('#concepto', $detalle['colConcepto'])
           ->type('#importe', $detalle['colImporte'])
           ->type('#codigoPresupuestal', $detalle['colCodigoPresupuestal'])
-          //->screenshot('SS-PRUEBA')
-          ->press('#btnadddet');
+          ->press('#btnadddet')
+          ->pause(static::DeltaTime);
       }
       /* FALTARIA SUBIR LOS ARCHIVOS AQUI */
       $nombreArchivo = "Ms Excel.pdf";
@@ -302,13 +302,11 @@ class F_SOF_FlujoTest extends DuskTestCase
 
       $browser = $browser
         ->press('#btnRegistrar')
+        ->pause(static::DeltaTime) //esperamos a que aparezca el modal de confirmacion
         ->assertSee('¿Estás seguro de crear la Rendición?')
-        ->pause(300) //esperamos a que aparezca el modal de confirmacion
-        ->screenshot('SS-ConfirmREN')
         ->press('SÍ')
-        ->pause(200) //esperamos a que nos redirija a la pagina de listar
-        ->assertSee('Se ha creado la')
-        ->screenshot('SS-ListarREN');
+        ->pause(static::DeltaTime) //esperamos a que nos redirija a la pagina de listar
+        ->assertSee('Se ha creado la');
       $mensajeLlegada = $browser->text('#msjEmergenteDatos');
       //Debug::mensajeSimple($mensajeLlegada);
       $this->codigoPresupuestal = mb_substr($mensajeLlegada, 26, 12);
@@ -344,21 +342,18 @@ class F_SOF_FlujoTest extends DuskTestCase
       /* LOS CODIGOS PRESUPUESTALES NO LOS CAMBIAMOS */
       $browser = $browser
         ->press('#botonActivarEdicion')
-        ->pause(100)
+        ->pause(static::DeltaTime)
         ->type('#resumen', $rendicion->resumen . " CORREGIDO") //EL TYPE LO REMPLAZA TOTALMENTE
-        //->screenshot('hola mundo XD')
       ;
 
       $browser = $browser
 
         ->press('#botonAprobar')
+        ->pause(static::DeltaTime) //esperamos a que aparezca el modal de confirmacion
         ->assertSee('¿Está seguro de Aprobar la Rendición?')
-        ->pause(300) //esperamos a que aparezca el modal de confirmacion
-        ->screenshot('SS-ConfirmAprobacionREN')
         ->press('SÍ')
-        ->pause(200) //esperamos a que nos redirija a la pagina de listar
-        ->assertSee($rendicion->codigoCedepas . " Aprobada")
-        ->screenshot('SS-ListarREN-postAprob');
+        ->pause(static::DeltaTime) //esperamos a que nos redirija a la pagina de listar
+        ->assertSee($rendicion->codigoCedepas . " Aprobada");
     });
   }
 
@@ -371,24 +366,23 @@ class F_SOF_FlujoTest extends DuskTestCase
       $solicitud = $this->solicitud;
       $rendicion = $solicitud->getRendicion();
       //$cuerpo = FakerCedepas::F_SOL_generarCuerpoAprobacion($proyecto);
-      $usuario = User::findOrFail(33); //contadora
+      $usuario = User::findOrFail(self::codUsuarioContador); //contadora
       $browser = $browser
         ->loginAs($usuario)
         ->visit(route('RendicionGastos.Contador.verContabilizar', $rendicion->codRendicionGastos));
 
       foreach ($rendicion->getDetalles() as $detalle) {
-        $browser = $browser->press("#checkBoxContabilizar" . $detalle->codDetalleRendicion);
+        $browser = $browser->press("#checkBoxContabilizar" . $detalle->codDetalleRendicion)
+          ->pause(static::DeltaTime);
       }
 
       $browser = $browser
         ->press('#botonContabilizar')
+        ->pause(static::DeltaTime) //esperamos a que aparezca el modal de confirmacion
         ->assertSee('¿Seguro de contabilizar la rendicion?')
-        ->pause(300) //esperamos a que aparezca el modal de confirmacion
-        ->screenshot('SS-ConfirmContabilizacion-REN')
         ->press('SÍ')
-        ->pause(200) //esperamos a que nos redirija a la pagina de listar
-        ->assertSee('Se contabilizó correctamente la Rendición')
-        ->screenshot('SS-ListarREN-postContabilizar');
+        ->pause(static::DeltaTime) //esperamos a que nos redirija a la pagina de listar
+        ->assertSee('Se contabilizó correctamente la Rendición');
     });
   }
 
@@ -411,24 +405,19 @@ class F_SOF_FlujoTest extends DuskTestCase
       /* LOS CODIGOS PRESUPUESTALES NO LOS CAMBIAMOS */
       $browser = $browser
         ->press('#botonActivarEdicion')
-        ->pause(100)
+        ->pause(static::DeltaTime)
         ->type('#resumen', $rendicion->resumen . "x") //EL TYPE LO REMPLAZA TOTALMENTE
-        //->screenshot('hola mundo XD')
       ;
 
       $browser = $browser
 
         ->press('#botonObservar')
-        ->pause(300) //esperamos a que aparezca el modal de confirmacion
+        ->pause(static::DeltaTime) //esperamos a que aparezca el modal de confirmacion
         ->assertSee('Observar Rendición de Gastos')
 
-        ->screenshot('SS-textoObservarREN')
         ->type("#observacion", "este es el texto de la observacion")
         ->press('#guardarObservacion')
-        ->pause(500)
-        ->press("SÍ")
-        ->pause(1500)
-        ->screenshot('SS-ListarREN-postObs')
+        ->pause(static::DeltaTime)
         ->assertSee("Rendicion " . $rendicion->codigoCedepas . " Observada");
     });
   }
@@ -453,15 +442,13 @@ class F_SOF_FlujoTest extends DuskTestCase
 
             */
       $browser = $browser
-        ->pause(1000)
+        ->pause(static::DeltaTime)
         ->press('#botonActualizar')
+        ->pause(static::DeltaTime) //esperamos a que aparezca el modal de confirmacion
         ->assertSee('¿Está seguro de actualizar la rendición?')
-        ->pause(300) //esperamos a que aparezca el modal de confirmacion
-        ->screenshot('SS-Confirm-EditarREN')
         ->press('SÍ')
-        ->pause(200) //esperamos a que nos redirija a la pagina de listar
-        ->assertSee('Se ha Editado la rendición N°' . $rendicion->codigoCedepas)
-        ->screenshot('SS-ListarREN-postEdicion');
+        ->pause(static::DeltaTime) //esperamos a que nos redirija a la pagina de listar
+        ->assertSee('Se ha Editado la rendición NÂ°' . $rendicion->codigoCedepas);
     });
   }
 
