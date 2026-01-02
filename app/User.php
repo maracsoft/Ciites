@@ -5,13 +5,13 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Passport\HasApiTokens;
+
 //START MODEL_HELPER
 
 //END MODEL_HELPER
 class User extends Authenticatable
 {
-  use HasApiTokens, Notifiable;
+  use Notifiable;
   public $table = "usuario";
   protected $primaryKey = 'codUsuario';
   public $timestamps = false;

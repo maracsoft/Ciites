@@ -6,3 +6,4 @@ Documentacion/BD CEDEPAS SistemaWeb v32.erwin
 phinx.php
 .phpunit.result.cache
 phpunit.dusk.xml
+tests/testing-chrome-win64/*
