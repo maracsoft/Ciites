@@ -31,6 +31,11 @@ class F_REP_FlujoTest extends DuskTestCase
   public $reposicion;
 
   const codUsuarioEmisor = 9;
+  const codUsuarioAdministrador = 9;
+  const codProyecto = 64;
+  const codUsuarioContador = 9;
+
+  const DeltaTime = 300;
 
   public function testFlujoREP()
   {
@@ -62,7 +67,7 @@ class F_REP_FlujoTest extends DuskTestCase
 
 
     $this->browse(function (Browser $browser) {
-      $proyecto = Proyecto::findOrFail(1);
+      $proyecto = Proyecto::findOrFail(self::codProyecto);
       $cuerpo = FakerCedepas::F_REP_generarCuerpo($proyecto);
       $usuario = User::findOrFail(static::codUsuarioEmisor);
 
@@ -90,8 +95,8 @@ class F_REP_FlujoTest extends DuskTestCase
           ->type('#concepto', $detalle['colConcepto'])
           ->type('#importe', $detalle['colImporte'])
           ->type('#codigoPresupuestal', $detalle['colCodigoPresupuestal'])
-          //->screenshot('SS-PRUEBA')
-          ->press('#btnadddet');
+          ->press('#btnadddet')
+          ->pause(self::DeltaTime);
       }
 
       $nombreArchivo = "Ms Excel.pdf";
@@ -101,27 +106,18 @@ class F_REP_FlujoTest extends DuskTestCase
 
       $browser = $browser
         ->press('#btnRegistrar')
-        ->pause(300) //esperamos a que aparezca el modal de confirmacion
-        ->screenshot('SS-ConfirmREP')
+        ->pause(self::DeltaTime)
         ->assertSee('¿Está seguro de crear la reposicion?')
+        ->pause(self::DeltaTime)
         ->press('SÍ')
-        ->pause(200) //esperamos a que nos redirija a la pagina de listar
-        ->assertSee('Se ha registrado la rep') // Se ha registrado la reposicion N°REP21-000017
-        ->screenshot('SS-ListarREPdespuesdeCrear');
+        ->pause(self::DeltaTime)
+        ->assertSee('Se ha registrado la rep');
 
 
 
       $mensajeLlegada = $browser->text('#msjEmergenteDatos');
       //Debug::mensajeSimple($mensajeLlegada);
       $this->codigoPresupuestal = mb_substr($mensajeLlegada, 33, 12);
-
-      /* RENDIMIENTO
-                con 10 ELEMENTOS
-                    con screenshots demora 10.87 17.03 10.6 10.42
-                    sin screenshots demora 10.45 10.54 10.62 11.44
-
-                    Las screenshots no demoran mas el TEST
-            */
     });
   }
 
@@ -143,21 +139,18 @@ class F_REP_FlujoTest extends DuskTestCase
       /* LOS CODIGOS PRESUPUESTALES NO LOS CAMBIAMOS */
       $browser = $browser
         ->press('#botonActivarEdicion')
-        ->pause(100)
+        ->pause(self::DeltaTime)
         ->type('#resumen', $reposicion->resumen . " CORREGIDO") //EL TYPE LO REMPLAZA TOTALMENTE
-        //->screenshot('hola mundo XD')
       ;
 
       $browser = $browser
 
         ->press('#botonAprobar')
-        ->pause(1000) //esperamos a que aparezca el modal de confirmacion
+        ->pause(self::DeltaTime)
         ->assertSee('¿Está seguro de Aprobar la Reposición?')
-        ->screenshot('SS-ConfirmAprobacionREP')
         ->press('SÍ')
-        ->pause(500) //esperamos a que nos redirija a la pagina de listar
-        ->assertSee('Se aprobó correctamente la Reposic')
-        ->screenshot('SS-ListarREP-postAprob');
+        ->pause(self::DeltaTime)
+        ->assertSee('Se aprobó correctamente la Reposic');
     });
   }
 
@@ -178,16 +171,14 @@ class F_REP_FlujoTest extends DuskTestCase
 
       $browser = $browser
         ->press('#botonObservar')
-        ->pause(300) //esperamos a que aparezca el modal de confirmacion
+        ->pause(self::DeltaTime)
         ->assertSee('Observar Reposición de Gastos')
         ->type('#observacion', "este es el texto de la observación.")
         ->press('#botonGuardarObservacion')
+        ->pause(self::DeltaTime)
         ->assertSee('¿Esta seguro de observar la reposicion?')
-        ->screenshot('SS-ConfirmObservacionREP')
-        ->pause(500)
         ->press('SÍ')
-        ->pause(2500) //esperamos a que nos redirija a la pagina de listar. Aqui poner > a 2500 pq con menos falla
-        ->screenshot('SS-ListarREP-postObservacion')
+        ->pause(self::DeltaTime)
         ->assertSee('correctamente la Rep')
 
         /*
@@ -210,15 +201,14 @@ class F_REP_FlujoTest extends DuskTestCase
         ->visit(route('ReposicionGastos.Empleado.editar', $reposicion->codReposicionGastos));
 
       $browser = $browser
-        ->pause(1000)
+        ->pause(self::DeltaTime)
         ->press('#btnRegistrar')
-        ->pause(300) //esperamos a que aparezca el modal de confirmacion
-        ->screenshot('SS-ConfirmUpdateREP')
+        ->pause(self::DeltaTime)
         ->assertSee('¿Seguro de guardar los cambios de la reposición?')
+        ->pause(self::DeltaTime * 2)
         ->press('SÍ')
-        ->pause(200) //esperamos a que nos redirija a la pagina de listar
-        ->assertSee('Se ha editado la reposi') // Se ha registrado la reposicion N°REP21-000017
-        ->screenshot('SS-ListarDespuesDeUpdateREP');
+        ->pause(self::DeltaTime)
+        ->assertSee('Se ha editado la reposi');
     });
   }
 
@@ -239,13 +229,11 @@ class F_REP_FlujoTest extends DuskTestCase
 
       $browser = $browser
         ->press('#botonAbonar')
-        ->pause(300) //esperamos a que aparezca el modal de confirmacion
+        ->pause(self::DeltaTime)
         ->assertSee('¿Esta seguro de abonar la reposicion?')
-        ->screenshot('SS-ConfirmAbonacionREP')
         ->press('SÍ')
-        ->pause(200) //esperamos a que nos redirija a la pagina de listar
-        ->assertSee('Se abonó correctamente l')
-        ->screenshot('SS-ListarREP-postAbono');
+        ->pause(self::DeltaTime)
+        ->assertSee('Se abonó correctamente l');
     });
   }
   public function contabilizarReposicion()
@@ -257,7 +245,7 @@ class F_REP_FlujoTest extends DuskTestCase
 
       //$cuerpo = FakerCedepas::F_SOL_generarCuerpoAprobacion($proyecto);
 
-      $usuario = User::findOrFail(33); //contadora
+      $usuario = User::findOrFail(self::codUsuarioContador); //contadora
 
       $browser = $browser
         ->loginAs($usuario)
@@ -269,20 +257,19 @@ class F_REP_FlujoTest extends DuskTestCase
       foreach ($detalles as $detalle) {
         $num = rand(0, 1); //Aleatoriamente marcamos algunos
         if ($num == 0) {
-          $browser = $browser->press('#checkBoxContabilizarItem' . $detalle->codDetalleReposicion);
+          $browser = $browser->press('#checkBoxContabilizarItem' . $detalle->codDetalleReposicion)
+            ->pause(self::DeltaTime);
         }
       }
 
 
       $browser = $browser
         ->press('#botonContabilizar')
+        ->pause(self::DeltaTime)
         ->assertSee('¿Seguro de contabilizar la reposicion?')
-        ->pause(300) //esperamos a que aparezca el modal de confirmacion
-        ->screenshot('SS-ConfirmContabilizacion-REP')
         ->press('SÍ')
-        ->pause(200) //esperamos a que nos redirija a la pagina de listar
-        ->assertSee('Se contabilizó correctam')
-        ->screenshot('SS-ListarREP-postContabilizar');
+        ->pause(self::DeltaTime)
+        ->assertSee('Se contabilizó correctam');
     });
   }
 }
