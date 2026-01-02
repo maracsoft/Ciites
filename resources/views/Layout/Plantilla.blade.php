@@ -429,6 +429,35 @@
       });
 
     }
+
+    const NotificacionAbajoDerecha = Swal.mixin({
+      toast: true,
+      position: 'bottom-end',
+      showConfirmButton: false,
+      timer: 3000,
+
+    });
+
+
+    function mostrarNotificacion(icono, texto) {
+      // [success,error,warning,info,question]
+      NotificacionAbajoDerecha.fire({
+        icon: icono,
+        title: texto
+      })
+
+    }
+
+    // api_response = objRespuesta
+    function mostrarNotificacionSegunRespuesta(api_response) {
+      if (api_response.ok == 1 || api_response.ok == "1") {
+
+        mostrarNotificacion(api_response.tipoWarning, api_response.mensaje)
+      } else {
+
+        alertaMensaje(api_response.titulo, api_response.mensaje, api_response.tipoWarning);
+      }
+    }
   </script>
 
 

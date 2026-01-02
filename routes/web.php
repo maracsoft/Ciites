@@ -137,6 +137,10 @@ Route::group(['middleware' => "Mantenimiento"], function () {
 
       Route::post('/GestionProyectos/Guardar', 'ProyectoController@Guardar')->name('GestionProyectos.Guardar');
       Route::post('/GestionProyectos/Actualizar', 'ProyectoController@Actualizar')->name('GestionProyectos.Actualizar');
+      Route::post('/GestionProyectos/ActualizarDirector', 'ProyectoController@ActualizarDirector')->name('GestionProyectos.ActualizarDirector');
+      Route::post('/GestionProyectos/ActualizarEstado', 'ProyectoController@ActualizarEstado')->name('GestionProyectos.ActualizarEstado');
+
+
 
 
 

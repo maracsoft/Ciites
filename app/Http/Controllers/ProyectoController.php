@@ -25,25 +25,14 @@ use App\PoblacionBeneficiaria;
 use App\EntidadFinanciera;
 use App\ErrorHistorial;
 use App\EstadoProyecto;
-use App\Fecha;
-use App\IndicadorActividad;
-use App\IndicadorObjEspecifico;
-use App\ObjetivoEstrategico;
-use App\PlanEstrategicoInstitucional;
-use App\RelacionProyectoObj;
-use App\ObjetivoEspecifico;
-use App\ResultadoEsperado;
-use App\IndicadorResultado;
-use App\MedioVerificacionMeta;
-use App\MedioVerificacionResultado;
+
 use App\MetaEjecutada;
-use Illuminate\Support\Facades\Storage;
+
 use App\Moneda;
-use App\OperacionDocumento;
+
 use App\PersonaJuridicaPoblacion;
 use App\PersonaNaturalPoblacion;
-use App\PersonaPoblacion;
-use App\RelacionProyectoObjMilenio;
+
 use App\RendicionGastos;
 use App\ReposicionGastos;
 use App\RequerimientoBS;
@@ -52,12 +41,8 @@ use App\SolicitudFondos;
 use App\TipoArchivoProyecto;
 use App\TipoDocumento;
 use App\TipoFinanciamiento;
-use DateTime;
-use Exception;
-use Illuminate\Http\Response;
-//require __DIR__ . "/vendor/autoload.php";
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+
 
 #endregion Uses
 class ProyectoController extends Controller
@@ -122,6 +107,7 @@ class ProyectoController extends Controller
     $listaGerentes = Empleado::getListaGerentesActivos();
     $listaProyectos = Proyecto::All();
     $action = route('GestionProyectos.Guardar');
+    $listaEstados = EstadoProyecto::all();
 
     return view('Proyectos.CrearEditar', compact(
       'proyecto',
@@ -132,7 +118,8 @@ class ProyectoController extends Controller
       'listaSedes',
       'listaTipoFinanciamiento',
       'listaGerentes',
-      'listaProyectos'
+      'listaProyectos',
+      'listaEstados'
 
 
     ));
@@ -156,6 +143,7 @@ class ProyectoController extends Controller
 
 
     $action = route('GestionProyectos.Actualizar');
+    $listaEstados = EstadoProyecto::all();
 
     return view('Proyectos.CrearEditar', compact(
       'proyecto',
@@ -167,7 +155,8 @@ class ProyectoController extends Controller
       'listaSedes',
       'listaTipoFinanciamiento',
       'listaGerentes',
-      'listaProyectos'
+      'listaProyectos',
+      'listaEstados'
     ));
   }
 
@@ -179,7 +168,7 @@ class ProyectoController extends Controller
 
       //validamos si ya hay otro proyecto activo con ese cod presupuestal
       $proyectosMismoCodPresup = Proyecto::where('codigoPresupuestal', '=', $request->codigoPresupuestal)
-        ->where('codEstadoProyecto', '!=', Proyecto::getCodEstado('Finalizado'))
+
         ->get();
       if (count($proyectosMismoCodPresup) != 0) {
 
@@ -212,6 +201,7 @@ class ProyectoController extends Controller
   function Actualizar(Request $request)
   {
     try {
+
       DB::beginTransaction();
 
       //validamos si ya hay otro proyecto activo con ese cod presupuestal
@@ -229,7 +219,7 @@ class ProyectoController extends Controller
 
       DB::commit();
 
-      return redirect()->route('GestionProyectos.Listar')->with('datos', 'Proyecto creado exitosamente, ya puede asignar contadores y registrar información detallada del proyecto en el botón Editar.');
+      return redirect()->route('GestionProyectos.Editar', $proyecto->codProyecto)->with('datos', 'Proyecto actualizado exitosamente.');
     } catch (\Throwable $th) {
 
 
@@ -244,36 +234,6 @@ class ProyectoController extends Controller
   }
 
 
-
-
-  /* Funcion ejecutada desde JS con un get */
-  /* La cadena tiene el formato 15*2
-    Donde 15 esel codigo del proyecto
-    donde 2 es el codigo del nuevo estado
-    */
-  function actualizarEstado($cadena)
-  {
-    try {
-      db::beginTransaction();
-      $vector = explode('*', $cadena);
-      $codProyecto = $vector[0];
-      $codNuevoEstado = $vector[1];
-
-      $proyecto = Proyecto::findOrFail($codProyecto);
-      $proyecto->codEstadoProyecto = $codNuevoEstado;
-      $proyecto->save();
-
-      db::commit();
-
-      return TRUE;
-    } catch (\Throwable $th) {
-
-      Debug::mensajeError('PROYECTO CONTROLLER actualizarEstado', $th);
-      DB::rollBack();
-      $codErrorHistorial = ErrorHistorial::registrarError($th, app('request')->route()->getAction(), $cadena);
-      return FALSE;
-    }
-  }
 
 
 

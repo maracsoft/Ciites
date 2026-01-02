@@ -61,6 +61,7 @@ class Proyecto extends MaracModel
     $this->nombreLargo = $request->nombreLargo;
     $this->codEmpleadoDirector = $request->codEmpleadoDirector;
     $this->codSedePrincipal = $request->codSedePrincipal;
+    $this->codEstadoProyecto = $request->codEstadoProyecto;
   }
 
 

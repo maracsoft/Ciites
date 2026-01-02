@@ -56,17 +56,7 @@
               <td>{{ $itemProyecto->nombre }}</td>
               <td>
 
-                <select class="form-control " onchange="actualizarEstado({{ $itemProyecto->codProyecto }},'{{ $itemProyecto->nombre }}')"
-                  style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true" data-live-search="true" id="selectEstado">
-                  @foreach ($listaEstados as $estado)
-                    <option value="{{ $estado->codEstadoProyecto }}"
-                      {{ $itemProyecto->codEstadoProyecto == $estado->codEstadoProyecto ? 'selected' : '' }}>
-                      {{ $estado->nombre }}
-                    </option>
-                  @endforeach
-
-
-                </select>
+                {{ $itemProyecto->getEstado()->nombre }}
 
 
 
@@ -74,22 +64,8 @@
               </td>
               <td> {{-- BUSCADOR DINAMICO POR NOMBRES --}}
 
-                <select class="form-control" onchange="guardar({{ $itemProyecto->codProyecto }})"
-                  id="Proyecto{{ $itemProyecto->codProyecto }}" name="Proyecto{{ $itemProyecto->codProyecto }}">
+                {{ $itemProyecto->getGerente()->getNombreCompleto() }}
 
-                  <option value="-1" @if (is_null($itemProyecto->codEmpleadoDirector)) selected @endif>
-                    - Seleccione Gerente -
-                  </option>
-
-                  @foreach ($listaGerentes as $gerente)
-                    <option value="{{ $gerente->codEmpleado }}"
-                      {{ $itemProyecto->codEmpleadoDirector == $gerente->codEmpleado ? 'selected' : '' }}>
-                      {{ $gerente->getNombreCompleto() }}
-                    </option>
-                  @endforeach
-
-
-                </select>
 
               </td>
               <td>
@@ -120,34 +96,4 @@
 
 
 
-<script>
-  function guardar(codProyecto) {
-    var codGerente = $('#Proyecto' + codProyecto).val();
-    if (codGerente != "-1") {
-      //$.get('/asignarGerentesContadores/actualizar/'+codProyecto+'*'+codGerente+'*1', function(data){
-      $.get('/GestionProyectos/' + codProyecto + '*' + codGerente + '*1' + '/asignarGerente', function(data) {
-        if (data) alertaMensaje('Enbuenahora', 'Se actualizó el gerente', 'success');
-        else alerta('No se pudo actualizar el gerente');
-      });
-    } else {
-      alerta('seleccione un Gerente');
-    }
-
-  }
-
-
-  function actualizarEstado(codProyecto, nombreProyecto) {
-    codEstado = document.getElementById('selectEstado').value;
-
-    $.get('/GestionProyectos/ActualizarEstado/' + codProyecto + '*' + codEstado, function(data) {
-      console.log(data);
-      if (data == true)
-        alertaMensaje('Enbuenahora', 'Se actualizó el estado del proyecto', 'success');
-      else {
-
-        alerta('No se pudo actualizar el estado del proyecto. Hubo un error interno. Contacte con el administrador');
-      }
-    });
-
-  }
-</script>
+<script></script>

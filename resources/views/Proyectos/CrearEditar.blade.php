@@ -9,7 +9,7 @@
 
     <form id="frmUpdateInfoProyecto" name="frmUpdateInfoProyecto" role="form" action="{{ $action }}" method="post"
       enctype="multipart/form-data">
-
+      <input type="hidden" name="codProyecto" value="{{ $proyecto->codProyecto }}">
       @csrf
 
       @include('Layout.MensajeEmergenteDatos')
@@ -67,6 +67,19 @@
             </div>
 
 
+            <div class="col-12 col-sm-2">
+              <label for="">Estado</label>
+              <select class="form-control" name="codEstadoProyecto" id="codEstadoProyecto">
+                <option value="">-- Seleccionar --</option>
+                @foreach ($listaEstados as $estado)
+                  <option value="{{ $estado->codEstadoProyecto }}" {{ $estado->isThisSelected($proyecto->codEstadoProyecto) }}>
+                    {{ $estado->nombre }}
+                  </option>
+                @endforeach
+              </select>
+
+
+            </div>
 
 
 
@@ -146,7 +159,7 @@
 
     function validarActualizacion() {
       msjError = "";
-      limpiarEstilos(['codigoPresupuestal', 'nombre', 'nombreLargo', 'codEmpleadoDirector', 'codSedePrincipal']);
+      limpiarEstilos(['codigoPresupuestal', 'nombre', 'nombreLargo', 'codEmpleadoDirector', 'codSedePrincipal', 'codEstadoProyecto']);
 
 
       msjError = validarTamañoMaximoYNulidad(msjError, 'nombre', 100, 'Nombre');
@@ -156,6 +169,7 @@
 
       msjError = validarSelect(msjError, 'codEmpleadoDirector', "", 'Gerente');
       msjError = validarSelect(msjError, 'codSedePrincipal', "", 'Sede');
+      msjError = validarSelect(msjError, 'codEstadoProyecto', "", 'Estado');
 
 
       const codigo = getVal('codigoPresupuestal');
