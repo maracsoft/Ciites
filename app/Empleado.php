@@ -772,12 +772,7 @@ class Empleado extends MaracModel implements MaracModelInterface
         "icon_class" => "fas fa-tasks",
         "roles" => [Puesto::Gerente]
       ];
-      $rutas[] = (object)  [
-        "url" => route('GestiónProyectos.Gerente.Listar'),
-        "label" => "Mis Proyectos",
-        "icon_class" => "fas fa-project-diagram",
-        "roles" => [Puesto::Gerente]
-      ];
+
 
       $rutas[] = (object)  [
         "url" => route('GestionProyectos.VerDashboard'),
@@ -891,14 +886,7 @@ class Empleado extends MaracModel implements MaracModelInterface
       ];
     }
 
-    if ($this->esUGE()) {
-      $rutas[] = (object)  [
-        "url" => route('GestiónProyectos.UGE.Listar'),
-        "label" => "Proyectos",
-        "icon_class" => "fas fa-clipboard-list",
-        "roles" => [Puesto::UGE]
-      ];
-    }
+
 
     if ($this->esObservador()) {
       $rutas[] = (object)  [
