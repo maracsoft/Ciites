@@ -69,7 +69,7 @@ class Kernel extends HttpKernel
     'ValidarSesionContador' => \App\Http\Middleware\ValidarSesionContador::class,
     'ValidarSesionGerente' => \App\Http\Middleware\ValidarSesionGerente::class,
     'ValidarSesionAdminSistema' => \App\Http\Middleware\ValidarSesionGerente::class,
-    'ValidarSesionUGE' => \App\Http\Middleware\ValidarSesionUGE::class,
+
     'ValidarSesionAdministracionOContador' => \App\Http\Middleware\ValidarSesionAdministracionOContador::class,
 
     'ValidarSesionObservador' => \App\Http\Middleware\ValidarSesionObservador::class,

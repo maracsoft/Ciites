@@ -28,10 +28,8 @@ Route::group(['middleware' => "Mantenimiento"], function () {
   Route::get('/', 'UserController@home')->name('user.home');
 
 
-  Route::get('/encriptarContraseñas', function () {});
 
 
-  Route::get('/probandoProy', 'ProyectoController@probandoMeses');
 
 
   Route::get('/probandoCosas', function () {});
@@ -68,15 +66,7 @@ Route::group(['middleware' => "Mantenimiento"], function () {
   Route::get('/listarProvinciasDeDepartamento/{id}', 'ProyectoController@listarProvinciasDeDepartamento');
   Route::get('/listarDistritosDeProvincia/{id}', 'ProyectoController@listarDistritosDeProvincia');
 
-  Route::get('/listarObjetivosDePEI/{id}', 'PlanEstrategicoInstitucionalController@listarObjetivos');
 
-  Route::get('/listarPersonasDePoblacion/{codPob}/Naturales', 'PersonaPoblacionController@listarPersonasNaturales');
-  Route::get('/listarPersonasDePoblacion/{codPob}/Juridicas', 'PersonaPoblacionController@listarPersonasJuridicas');
-
-  Route::get('/BaseDatosPoblacion/PersonasNaturales/consultarPorDni/{dni}', 'PersonaPoblacionController@consultarPoblacionPorDni');
-
-
-  Route::get('/GestionProyectos/MetaEjecutada/{codMeta}/VerArchivos', 'IndicadorActividadController@vistaArchivosDeMeta');
 
   Route::get('/ConsultarAPISunat/ruc/{ruc}', 'PersonaPoblacionController@ConsultarAPISunatRUC');
   Route::get('/ConsultarAPISunat/dni/{dni}', 'PersonaPoblacionController@ConsultarAPISunatDNI');
@@ -410,7 +400,7 @@ Route::group(['middleware' => "Mantenimiento"], function () {
       Route::get('/Operaciones/Eliminar/{codOperacion}', 'OperacionesController@EliminarOperacion')->name('Operaciones.EliminarOperacion');
 
 
-      Route::get('/PoblarReposiciones', 'PobladorBDController@poblarReposiciones');
+
 
       /* **************************** MODULO DE CONFIGURACIÓN DE PERIODOS ********************* */
 
@@ -435,53 +425,6 @@ Route::group(['middleware' => "Mantenimiento"], function () {
 
 
 
-
-      /* MODULO DE INVENTARIOS (por mientras estará aquí) */
-      Route::get('/RevisionesInventario/Listar', 'RevisionInventarioController@listarRevisiones')->name('RevisionInventario.Listar');
-      Route::get('/RevisionesInventario/Crear', 'RevisionInventarioController@crear')->name('RevisionInventario.Crear');
-      Route::post('/RevisionesInventario/Guardar', 'RevisionInventarioController@guardar')->name('RevisionInventario.Guardar');
-      Route::get('/RevisionesInventario/Cerrar/{codRevision}', 'RevisionInventarioController@Cerrar')->name('RevisionInventario.Cerrar');
-
-
-      Route::get('/RevisionesInventario/VistaMiniGrupoRevision', 'RevisionInventarioController@VistaMiniGrupoRevision')->name('RevisionInventario.VistaMiniGrupoRevision');
-      Route::get('/RevisionesInventario/Ver/{id}', 'RevisionInventarioController@verRevision')->name('RevisionInventario.Ver');
-
-      Route::get('/RevisionesInventario/CambiarEstadoDetalle', 'RevisionInventarioController@CambiarEstadoDetalle')->name('RevisionInventario.CambiarEstadoDetalle');
-
-      Route::get('/RevisionesInventario/regenerarActivos/{codRevision}', 'RevisionInventarioController@regenerarActivos')->name('RevisionInventario.regenerarActivos');
-
-
-      /* Crud dinámico de revisores (API) */
-      Route::get('/RevisionesInventario/Invocables/ObtenerHTMLRevisores/{codRevision}', 'RevisionInventarioController@ObtenerHTMLRevisores')->name('RevisionInventario.ObtenerHTMLRevisores');
-      Route::get('/RevisionesInventario/Revisores/AñadirARevision', 'RevisionInventarioController@AñadirRevisorARevision')->name('RevisionInventario.AñadirRevisorARevision');
-      Route::get('/RevisionesInventario/Revisores/QuitarRevisor/{codEmpRevisor}', 'RevisionInventarioController@QuitarRevisor')->name('RevisionInventario.QuitarRevisor');
-
-
-      Route::get('/ActivoInventario/Crear', 'ActivoInventarioController@crear')->name('ActivoInventario.Crear');
-      Route::post('/ActivoInventario/Guardar', 'ActivoInventarioController@guardar')->name('ActivoInventario.Guardar');
-      Route::get('/ActivoInventario/Listar', 'ActivoInventarioController@Listar')->name('ActivoInventario.Listar');
-
-      Route::get('/ActivoInventario/{codActivo}/VerActivo', 'ActivoInventarioController@VerActivo')->name('ActivoInventario.VerActivo');
-
-
-
-      /* ------------------------------------------ MODULO DE REPORTES ------------------------------ */
-
-      Route::get('/Reporte/Listar', 'ReporteController@Listar')->name('Reportes.Listar');
-
-
-      Route::get('/Reporte/Ver/ReposRechazadas', 'ReporteController@ReposRechazadas')->name('Reportes.Ver.ReposRechazadas');
-      Route::get('/Reporte/Ver/Importe', 'ReporteController@Importe')->name('Reportes.Ver.Importe');
-
-      Route::get('/Reporte/Ver/ImportesREPyREN', 'ReporteController@ImportesREPyREN')->name('Reportes.Ver.ImportesREPyREN');
-      Route::get('/Reporte/Ver/ImportesREPporProyectos', 'ReporteController@ImportesREPporProyectos')->name('Reportes.Ver.ImportesREPporProyectos');
-      Route::get('/Reporte/PDF/ImportesREPporProyectos', 'ReporteController@verPDF_ImportesREPporProyectos')->name('Reportes.PDF.ImportesREPporProyectos');
-
-
-      Route::get('/Reporte/Ver/Observaciones', 'ReporteController@Observaciones')->name('Reportes.Ver.Observaciones');
-
-      Route::get('/Reporte/Ver/ReporteTesis', 'ReporteController@ReporteTesis')->name('Reportes.Ver.ReporteTesis');
-      Route::get('/Reporte/Ver/ListarTiemposBusqueda', 'ReporteController@ListarTiemposBusqueda')->name('Reportes.Ver.ListarTiemposBusqueda');
 
 
 
@@ -528,9 +471,6 @@ Route::group(['middleware' => "Mantenimiento"], function () {
       Route::get('/GestiónUsuarios/{id}/reactivar', 'EmpleadoController@reactivarEmpleado')->name('GestionUsuarios.reactivar');
 
 
-      Route::get('/GestionUsuarios/cambiarTodosLosNombresAFormatoBonito', 'EmpleadoController@cambiarNombresEmpleadosAFormatoBonito')->name('GestionUsuarios.cambiarTodosLosNombresAFormatoBonito');
-
-
       Route::get('/GestiónUsuarios/ActualizarSedeContador/{cadena}', 'EmpleadoController@cambiarSedeAContador')->name('GestionUsuarios.cambiarSedeAContador');
 
 
@@ -554,18 +494,6 @@ Route::group(['middleware' => "Mantenimiento"], function () {
 
 
 
-      /* ----------------------------------------------        MODULO TIPO DE PERSONA JURIDICA   ------------------------------------------ */
-      Route::get('/GestiónTipoPersonaJuridica/listar', 'TipoPersonaJuridicaController@listarTipos')->name('GestiónTipoPersonaJuridica.Listar');
-
-      Route::get('/GestiónTipoPersonaJuridica/crear', 'TipoPersonaJuridicaController@crearTipo')->name('GestiónTipoPersonaJuridica.create');
-      Route::post('/GestiónTipoPersonaJuridica/save', 'TipoPersonaJuridicaController@guardarCrearTipo')->name('GestiónTipoPersonaJuridica.store');
-
-      Route::get('/GestiónTipoPersonaJuridica/{id}/editar', 'TipoPersonaJuridicaController@editarTipo')->name('GestiónTipoPersonaJuridica.edit');
-      Route::post('/GestiónTipoPersonaJuridica/update', 'TipoPersonaJuridicaController@guardarEditarTipo')->name('GestiónTipoPersonaJuridica.update');
-
-      Route::get('/GestiónTipoPersonaJuridica/{id}/eliminar', 'TipoPersonaJuridicaController@eliminarTipo')->name('GestiónTipoPersonaJuridica.delete');
-
-
 
       /* ---------------------------------------------- MODULO UNIDAD DE MEDIDA -------------------------------------------- */
       Route::get('/GestiónUnidadMedida/listar', 'UnidadMedidaController@listarUnidades')->name('GestiónUnidadMedida.listar');
@@ -579,77 +507,14 @@ Route::group(['middleware' => "Mantenimiento"], function () {
       Route::get('/GestiónUnidadMedida/{id}/eliminar', 'UnidadMedidaController@delete')->name('GestiónUnidadMedida.eliminar');
 
 
-      /* CRUD FINANCIERAS */
-      Route::get('/Financieras/listar', 'EntidadFinancieraController@listar')->name('EntidadFinanciera.listar');
-      Route::get('/Financieras/crear', 'EntidadFinancieraController@crear')->name('EntidadFinanciera.crear');
-      Route::get('/Financieras/editar/{id}', 'EntidadFinancieraController@editar')->name('EntidadFinanciera.editar');
-      Route::post('/Financieras/actualizar', 'EntidadFinancieraController@actualizar')->name('EntidadFinanciera.actualizar');
-
-
-      Route::post('/Financieras/guardar', 'EntidadFinancieraController@guardar')->name('EntidadFinanciera.guardar');
-      Route::get('/Financieras/eliminar/{id}', 'EntidadFinancieraController@eliminar')->name('EntidadFinanciera.eliminar');
-
-      /* CRUD TIPO FINANCIAMIENTO */
-      Route::get('/TipoFinanciamiento/listar', 'TipoFinanciamientoController@listar')->name('TipoFinanciamiento.listar');
-      Route::get('/TipoFinanciamiento/crear', 'TipoFinanciamientoController@crear')->name('TipoFinanciamiento.crear');
-      Route::get('/TipoFinanciamiento/editar/{id}', 'TipoFinanciamientoController@editar')->name('TipoFinanciamiento.editar');
-      Route::post('/TipoFinanciamiento/actualizar', 'TipoFinanciamientoController@actualizar')->name('TipoFinanciamiento.actualizar');
-
-
-      Route::post('/TipoFinanciamiento/guardar', 'TipoFinanciamientoController@guardar')->name('TipoFinanciamiento.guardar');
-      Route::get('/TipoFinanciamiento/eliminar/{id}', 'TipoFinanciamientoController@eliminar')->name('TipoFinanciamiento.eliminar');
-
       /* CRUD OBJETIVOS ESTRATEGICOS */
 
-      Route::post('/ObjetivoEstrategico/agregarEditarObjetivoEstrategico', 'ObjetivoEstrategicoController@agregarEditarObjetivoEstrategico')
-        ->name('ObjetivoEstrategico.agregarEditarObjetivoEstrategico');
-
-      Route::get('/ObjetivoEstrategico/eliminar/{id}', 'ObjetivoEstrategicoController@eliminar')->name('ObjetivoEstrategico.eliminar');
-
-
-      /* CRUD PLANES ESTRATEGICOS */
-      Route::get('/PlanEstrategico/listar', 'PlanEstrategicoInstitucionalController@listar')->name('PlanEstrategico.listar');
-
-      Route::get('/PlanEstrategico/crear', 'PlanEstrategicoInstitucionalController@crear')->name('PlanEstrategico.crear');
-      Route::get('/PlanEstrategico/editar/{id}', 'PlanEstrategicoInstitucionalController@editar')->name('PlanEstrategico.editar');
-
-
-      Route::get('/PlanEstrategico/eliminar/{id}', 'PlanEstrategicoInstitucionalController@eliminar')->name('PlanEstrategico.eliminar');
-
-      Route::post('/PlanEstrategico/actualizar', 'PlanEstrategicoInstitucionalController@actualizar')->name('PlanEstrategico.actualizar');
-      Route::post('/PlanEstrategico/guardar', 'PlanEstrategicoInstitucionalController@guardar')->name('PlanEstrategico.guardar');
-
-      Route::get('/PlanEstrategico/generarRelacionesProyectosYObjetivosEstrategicos', 'PlanEstrategicoInstitucionalController@generarRelacionesProyectosYObjetivosEstrategicos')
-        ->name('PlanEstrategico.generarRelacionesProyectosYObjetivosEstrategicos');
 
       /* CRUD SEDE */
 
       Route::get('/Sede/listarSedes', 'SedeController@listarSedes')->name('Sede.ListarSedes');
 
       Route::post('/Sede/GuardarEditar', 'SedeController@GuardarEditar')->name('Sede.GuardarEditar');
-
-
-      /* CRUD Actividad Principal (de las personas naturales) */
-
-      Route::get('/ActividadPrincipal/listar', 'ActividadPrincipalController@listar')->name('ActividadPrincipal.Listar');
-
-
-      Route::post('/ActividadPrincipal/guardarEditarActividad', 'ActividadPrincipalController@guardarEditarActividad')->name('ActividadPrincipal.guardarEditarActividad');
-
-
-      Route::get('/ActividadPrincipal/{id}/eliminar', 'ActividadPrincipalController@eliminar')->name('ActividadPrincipal.eliminar');
-
-
-      /* OBJETIVO MILENIO */
-
-      Route::get('/ObjetivosMilenio/Listar', 'ObjetivoMilenioController@listar')->name('ObjetivoMilenio.listar');
-
-      Route::post('/ObjetivosMilenio/agregarEditarObjetivo', 'ObjetivoMilenioController@agregarEditarObjetivo')->name('ObjetivoMilenio.agregarEditarObjetivo');
-
-      Route::get('/ObjetivosMilenio/eliminar/{cod}', 'ObjetivoMilenioController@eliminar')->name('ObjetivoMilenio.eliminar');
-
-
-      Route::get('/ObjetivosMilenio/generarRelacionesProyectosYObjMilenio/', 'ObjetivoMilenioController@generarRelacionesProyectosYObjMilenio')->name('ObjetivoMilenio.generarRelacionesProyectosYObjMilenio');
     });
 
 
@@ -680,43 +545,9 @@ Route::group(['middleware' => "Mantenimiento"], function () {
     Route::group(['middleware' => "ValidarSesionGerenteOUGE"], function () {
 
 
-      Route::get('/GestionProyectos/RedirigirAProyectoSegunActor/{codProy}', 'ProyectoController@RedirigirAProyectoSegunActor')
-        ->name('GestionProyectos.RedirigirAProyectoSegunActor');
-
-      Route::get('/GestionProyectos/{codProyecto}/RedirigirAVistaMetas/', 'ProyectoController@RedirigirAVistaMetas')
-        ->name('GestionProyectos.RedirigirAVistaMetas');
-      // redirije a GestionProyectos.Gerente.RegistrarMetasEjecutadas y  GestionProyectos.UGE.RegistrarMetasEjecutadas
-
-      /* INVOCABLES Se consumen desde JS */
-      Route::get('/GestionProyectos/{codProyecto}/invocarObjetivosEspecificos', 'ProyectoController@invocarObjetivosEspecificos')->name('GestionProyectos.InvocarDesplegable.ObjetivosEspecificos');
-      Route::get('/GestionProyectos/{codProyecto}/invocarResultadosEsperadosActividades', 'ProyectoController@invocarResultadosEsperadosActividades')->name('GestionProyectos.InvocarDesplegable.ResultadosEsperadosActividades');
-      Route::get('/GestionProyectos/{codProyecto}/invocarResultadosEsperadosIndicadores', 'ProyectoController@invocarResultadosEsperadosIndicadores')->name('GestionProyectos.InvocarDesplegable.InvocarResultadosEsperadosIndicadores');
-
-      Route::get('/GestionProyectos/{codProyecto}/invocarPoblacionesBeneficiarias', 'ProyectoController@invocarPoblacionesBeneficiarias')->name('GestionProyectos.InvocarDesplegable.InvocarPoblacionesBeneficiarias');
-
-      Route::get('/GestionProyectos/{codProyecto}/invocarTablaObjEstr', 'ProyectoController@invocarTablaObjEstr')->name('GestionProyectos.InvocarDesplegable.InvocarTablaObjEstr');
-      Route::get('/GestionProyectos/{codProyecto}/invocarLugaresEjecucion', 'ProyectoController@invocarLugaresEjecucion')
-        ->name('GestionProyectos.InvocarLugaresEjecucion');
-
-
-      Route::get('/GestionProyectos/{codProyecto}/cargarMaestrosDetalle', 'ProyectoController@cargarMaestrosDetalle')->name('GestionProyectos.cargarMaestrosDetalle');
 
 
 
-
-      //para excel (ESTAS LAS PUEDEN USAR TODOS)
-      Route::get('/GestiónProyectos/{id}/ExportarPoblacion', 'ProyectoController@ExportarPoblacionBeneficiaria')->name('GestiónProyectos.ExportarPoblacion');
-      Route::get('/GestionProyectos/{id}/ExportarModeloMarcoLogico', 'ProyectoController@ExportarModeloMarcoLogico')->name('GestionProyectos.ExportarModeloMarcoLogico');
-      Route::get('/GestionProyectos/Metas/ExportarExcel/{codProyecto}', 'ProyectoController@exportarMetasEjecutadas')->name('GestionProyectos.Gerente.ExportarMetasEjecutadas');
-      Route::get('/GestiónProyectos/{id}/darDeBaja', 'ProyectoController@darDeBaja')->name('GestiónProyectos.darDeBaja');
-      Route::get('/GestiónProyectos/ActualizarEstado/{cadena}', 'ProyectoController@actualizarEstado');
-
-      //seguimiento del proyecto
-      Route::get('/GestionProyectos/descargarMedioVerificacionResultado/{codMedio}', 'MedioVerificacionResultadoController@descargar')
-        ->name('MedioVerificacionResultado.descargar');
-
-      Route::get('/GestionProyectos/IndicadorActividad/MetaEjecutada/DescargarMedioVerificacion/{codMedio}', 'IndicadorActividadController@descargarMedioVerificacion')
-        ->name('MetaEjecutada.DescargarMedioVerificacion');
 
 
       /* -------- PROYECTOS-> Archivos del proyecto */
@@ -730,97 +561,7 @@ Route::group(['middleware' => "Mantenimiento"], function () {
     });
 
 
-    Route::group(['middleware' => "ValidarSesionUGE"], function () {
-      Route::get('/GestionProyectos/descargarMML/{codProyecto}', 'ProyectoController@descargarMML')->name('GestionProyectos.descargarMML');
-      Route::get('/GestiónProyectos/AdminSistema/listar', 'ProyectoController@index')->name('GestiónProyectos.AdminSistema.Listar');
 
-      /* UGE */
-      Route::get('/GestiónProyectos/UGE/editar/{id}', 'ProyectoController@editar')->name('GestiónProyectos.editar');
-      Route::post('/GestiónProyectos/update', 'ProyectoController@update')->name('GestiónProyectos.update');
-      Route::get('/GestiónProyectos/UGE/crear', 'ProyectoController@crear')->name('GestiónProyectos.crear');
-      Route::post('/GestiónProyectos/store', 'ProyectoController@store')->name('GestiónProyectos.store');
-
-
-      Route::get('/GestiónProyectos/UGE/Listar', 'ProyectoController@listarProyectosParaUGE')->name('GestiónProyectos.UGE.Listar');
-      Route::get('/GestiónProyectos/UGE/Exportar/', 'ProyectoController@ExportarProyectosParaUGE')->name('GestiónProyectos.UGE.Exportar');
-
-      Route::get('/GestionProyectos/UGE/Metas/VerEjecuciones/{codProyecto}', 'ProyectoController@registrarMetasEjecutadas')->name('GestionProyectos.UGE.RegistrarMetasEjecutadas');
-
-      Route::post('GestionProyectos/{codProy}/actualizarContacto/', 'ProyectoController@actualizarContacto')->name('GestiónProyectos.UGE.ActualizarContacto');
-
-
-
-      /* ------- PROYECTOS -> LUGARES DE EJECUCION  */
-      Route::post('/GestionProyectos/agregarLugarEjecucion/', 'ProyectoController@agregarLugarEjecucion')->name('GestionProyectos.agregarLugarEjecucion');
-      Route::get('/GestionProyectos/eliminarLugarEjecucion/{id}', 'ProyectoController@eliminarLugarEjecucion')->name('GestionProyectos.eliminarLugarEjecucion');
-
-      /* ------- PROYECTOS -> POBLACION BENEFICIARIA  */
-      Route::post('/GestionProyectos/agregarPoblacionBeneficiaria/', 'ProyectoController@agregarPoblacionBeneficiaria')->name('GestionProyectos.agregarPoblacionBeneficiaria');
-      Route::get('/GestionProyectos/eliminarPoblacionBeneficiaria/{id}', 'ProyectoController@eliminarPoblacionBeneficiaria')->name('GestionProyectos.eliminarPoblacionBeneficiaria');
-
-
-
-
-
-      /* ------- PROYECTOS -> PLAN ESTRATEGICO*/
-      Route::post('/GestionProyectos/actualizarPEI/', 'ProyectoController@actualizarPEI')->name('GestionProyectos.actualizarPEI');
-      Route::post('/GestionProyectos/actualizarPorcentajesObjetivos/', 'ProyectoController@actualizarPorcentajesObjetivos')->name('GestionProyectos.actualizarPorcentajesObjetivos');
-
-      /* ------- PROYECTOS -> OBJETIVOS DEL MILENIO */
-      Route::post('/GestionProyectos/actualizarPorcentajesMilenio', 'ProyectoController@actualizarPorcentajesMilenio')->name('GestionProyectos.actualizarPorcentajesMilenio');
-
-      /* ------- PROYECTOS -> OBJETIVO ESPECIFICOS  */
-      Route::post('/GestionProyectos/agregarEditarObjetivoEspecifico/', 'ProyectoController@agregarEditarObjetivoEspecifico')->name('GestionProyectos.agregarEditarObjetivoEspecifico');
-      Route::get('/GestionProyectos/eliminarObjetivoEspecifico/{id}', 'ProyectoController@eliminarObjetivoEspecifico')->name('GestionProyectos.eliminarObjetivoEspecifico');
-
-      Route::post('/GestionProyectos/agregarEditarIndicador', 'ProyectoController@agregarEditarIndicadorObjEsp')->name('GestionProyectos.agregarEditarIndicador');
-      Route::get('/GestionProyectos/eliminarIndicador/{id}', 'ProyectoController@eliminarIndicador')->name('GestionProyectos.eliminarIndicador');
-
-
-
-
-      /* ------- PROYECTOS -> RESULTADOS ESPERADOS Y SUS INDICADORES Y SUS MEDIOS DE VERIFICACION*/
-      Route::post('/GestionProyectos/agregarEditarResultadoEsperado/', 'ProyectoController@agregarEditarResultadoEsperado')->name('GestionProyectos.agregarEditarResultadoEsperado');
-      Route::get('/GestionProyectos/eliminarResultadoEsperado/{id}', 'ProyectoController@eliminarResultadoEsperado')->name('GestionProyectos.eliminarResultadoEsperado');
-
-
-      Route::get('/GestionProyectos/eliminarIndicadorResultadoEsperado/{id}', 'ProyectoController@eliminarIndicadorResultado')->name('GestionProyectos.eliminarIndicadorResultado');
-
-      Route::post('/GestionProyectos/agregarEditarIndicadorResultado', 'ProyectoController@agregarEditarIndicadorResultado')->name('GestionProyectos.agregarEditarIndicadorResultado');
-
-      Route::post('/GestionProyectos/agregarMedioVerificacion', 'MedioVerificacionResultadoController@store')->name('GestionProyectos.agregarMedioVerificacion');
-
-      Route::get('/GestionProyectos/MedioVerificacionResultado/{codMedio}/eliminar', 'MedioVerificacionResultadoController@eliminar')
-        ->name('MedioVerificacionResultado.eliminar');
-
-
-
-      /* ------- PROYECTOS -> Actividades y sus indicadores */
-      Route::post('/GestionProyectos/agregarEditarActividad', 'ProyectoController@agregarEditarActividad')->name('GestionProyectos.agregarEditarActividad');
-      Route::get('/GestionProyectos/eliminarActividad/{id}', 'ProyectoController@eliminarActividad')->name('GestionProyectos.eliminarActividad');
-
-      Route::post('/GestionProyectos/agregarEditarIndicadorActividad', 'ProyectoController@agregarEditarIndicadorActividad')->name('GestionProyectos.agregarEditarIndicadorActividad');
-      Route::get('/GestionProyectos/IndicadorActividad/{codIndicador}/Ver', 'IndicadorActividadController@verSeguimientoGrafico')->name('IndicadorActividad.Ver');
-      Route::get('/GestionProyectos/EliminarIndicadorActividad/{codIndicador}', 'ProyectoController@EliminarIndicadorActividad')->name('GestionProyectos.EliminarIndicadorActividad');
-
-
-      Route::get('/GestionProyectos/IndicadorActividad/{id}/eliminar', 'IndicadorActividadController@eliminar')->name('IndicadorActividad.EliminarValor');
-
-      Route::get('/GestionProyectos/IndicadorActividad/{codIndicador}/RegistrarMetas', 'IndicadorActividadController@RegistrarMetas')->name('IndicadorActividad.RegistrarMetas');
-      Route::get('/GestionProyectos/IndicadorActividad/registrarMetaProgramada', 'IndicadorActividadController@registrarMetaProgramada')->name('IndicadorActividad.registrarMetaProgramada');
-      Route::get('/GestionProyectos/IndicadorActividad/editarMeta/{id}', 'IndicadorActividadController@editarMeta')->name('IndicadorActividad.editarMeta');
-      Route::get('/GestionProyectos/IndicadorActividad/eliminarMeta/{codMeta}', 'IndicadorActividadController@eliminarMeta')->name('IndicadorActividad.EliminarMeta');
-
-
-      /**GERENTES-CONTADORES */
-      Route::get('/GestiónProyectos/{id}/asignarGerente', 'ProyectoController@actualizarProyectosYGerentesContadores');
-      Route::get('/GestiónProyectos/{id}/asignarContador', 'ProyectoController@listarContadores')->name('GestiónProyectos.ListarContadores');
-      Route::post('/GestiónProyectos/asignarContadores/save', 'ProyectoController@agregarContador')->name('GestiónProyectos.agregarContador'); //usa la ruta no el name
-      Route::get('/GestiónProyectos/{id}/eliminarContador', 'ProyectoController@eliminarContador')->name('GestiónProyectos.eliminarContador');
-
-      Route::get('/RellenarProyectoContador', 'ProyectoController@RellenarProyectoContador')
-        ->name('GestionProyectos.setearTodosLosContadoresATodosLosProyectos');
-    });
 
 
 
@@ -830,35 +571,6 @@ Route::group(['middleware' => "Mantenimiento"], function () {
       /* GERENTE */
       Route::get('/GestiónProyectos/Gerente/listar', 'ProyectoController@listarGerente')->name('GestiónProyectos.Gerente.Listar');
       Route::get('/GestionProyectos/Gerente/verProyecto/{id}', 'ProyectoController@editar')->name('GestionProyectos.Gerente.Ver');
-
-      Route::get('/GestionProyectos/Gerente/Metas/RegistrarEjecuciones/{codProyecto}', 'ProyectoController@registrarMetasEjecutadas')
-        ->name('GestionProyectos.Gerente.RegistrarMetasEjecutadas');
-
-
-
-      Route::get('/GestionProyectos/Gerente/verMetas', 'ProyectoController@verMetas')->name('GestionProyectos.gerente.verMetas');
-      Route::get('/GestionProyectos/Gerente/eliminarMedioVerificacion/{codMedio}', 'IndicadorActividadController@eliminarMedioVerificacion')->name('GestionProyectos.gerente.eliminarMedioVerificacion');
-
-      Route::post('/GestionProyectos/MetaEjecutada/Actualizar', 'IndicadorActividadController@updateMeta')->name('Metas.Actualizar');
-
-      //submit registrar ejecucion de meta
-      Route::post('/GestionProyectos/IndicadorActividad/registrarCantidadEjecutada', 'IndicadorActividadController@registrarCantidadEjecutada')->name('IndicadorActividad.registrarCantidadEjecutada'); //cambie de get a post
-
-
-      /* -------- PROYECTOS -> Personas NATURALES Y JURIDICAS */
-
-      Route::post('/GestionProyectos/PoblacionBeneficiaria/agregarEditarPersonaNatural', 'PersonaPoblacionController@agregarEditarPersonaNatural')->name('GestionProyectos.agregarEditarPersonaNatural');
-
-      Route::post('/GestionProyectos/PoblacionBeneficiaria/agregarNaturalExistenteAPoblacion', 'PersonaPoblacionController@agregarNaturalExistenteAPoblacion')->name('GestionProyectos.agregarNaturalExistenteAPoblacion');
-      Route::get('/GestionProyectos/PoblacionBeneficiaria/quitarNaturalDeLaPoblacion/{cadena}', 'PersonaPoblacionController@quitarNaturalDeLaPoblacion');
-      Route::get('/GestionProyectos/PoblacionBeneficiaria/quitarJuridicaDeLaPoblacion/{cadena}', 'PersonaPoblacionController@quitarJuridicaDeLaPoblacion');
-
-      Route::post('/GestionProyectos/PoblacionBeneficiaria/agregarJuridicaExistenteAPoblacion', 'PersonaPoblacionController@agregarJuridicaExistenteAPoblacion')->name('GestionProyectos.agregarJuridicaExistenteAPoblacion');
-
-      Route::post('/GestionProyectos/PoblacionBeneficiaria/agregarEditarPersonaJuridica', 'PersonaPoblacionController@agregarEditarPersonaJuridica')->name('GestionProyectos.agregarEditarPersonaJuridica');
-      Route::get('/GestionProyectos/PersonasRegistradas/', 'ProyectoController@listarPersonasRegistradas')->name('GestiónProyectos.AdminSistema.listarPersonasRegistradas');
-
-      Route::post('/GestionProyectos/PoblacionBeneficiaria/guardarActividadesDePersona', 'PersonaPoblacionController@guardarActividadesDePersona')->name('GestionProyectos.guardarActividadesDePersona');
     });
 
 
