@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use App\ArchivoOrdenCompra;
 use App\Banco;
-use App\Configuracion;
+use App\Utils\Configuracion;
 use App\ConstanciaDepositoCTS;
 use App\Debug;
 use App\DetalleOrdenCompra;
@@ -45,8 +45,8 @@ class ConstanciaDepositoCTSController extends Controller
     $query_constancias = UIFiltros::buildQuery($query_constancias, $request->getQueryString());
     $filtros_usados = UIFiltros::getQueryValues($query_constancias, $request->getQueryString());
 
-    $listaConstancias = $query_constancias->orderBy('codConstancia','DESC')->paginate($this::PAGINATION);
- 
+    $listaConstancias = $query_constancias->orderBy('codConstancia', 'DESC')->paginate($this::PAGINATION);
+
 
     $listaEmpleados = Empleado::getListaEmpleadosPorApellido();
 
@@ -68,14 +68,14 @@ class ConstanciaDepositoCTSController extends Controller
     $constancia->fechaHoraCreacion = Carbon::now();
 
     $constancia->fecha_deposito = Carbon::now();
-    $constancia->fecha_emision = "15-05-".date("Y");
-    
+    $constancia->fecha_emision = "15-05-" . date("Y");
+
 
     $title = "Registrar constancia depósito CTS";
     $action = route('ConstanciaDepositoCTS.Guardar');
     $listaBancos = Banco::All();
 
-    return view('ConstanciaDeposito.CrearEditarConstancia', compact('constancia','listaBancos','title','action'));
+    return view('ConstanciaDeposito.CrearEditarConstancia', compact('constancia', 'listaBancos', 'title', 'action'));
   }
 
   public function Guardar(Request $request)
@@ -94,7 +94,7 @@ class ConstanciaDepositoCTSController extends Controller
       Numeracion::aumentarNumeracionCTS();
 
       $constancia->save();
- 
+
       db::commit();
       return redirect()->route('ConstanciaDepositoCTS.Editar', $constancia->getId())->with('datos_ok', "Constancia " . $constancia->codigo_unico . " generada exitosamente.");
     } catch (\Throwable $th) {
@@ -114,10 +114,10 @@ class ConstanciaDepositoCTSController extends Controller
     $constancia = ConstanciaDepositoCTS::findOrFail($id);
     $listaBancos = Banco::all();
 
-    $title = "Editar Constancia deposito ".$constancia->codigo_unico;
+    $title = "Editar Constancia deposito " . $constancia->codigo_unico;
     $action = route('ConstanciaDepositoCTS.Actualizar');
 
-    return view('ConstanciaDeposito.CrearEditarConstancia', compact('constancia', 'listaBancos','title','action'));
+    return view('ConstanciaDeposito.CrearEditarConstancia', compact('constancia', 'listaBancos', 'title', 'action'));
   }
 
   public function Ver($id)
@@ -133,7 +133,7 @@ class ConstanciaDepositoCTSController extends Controller
 
       db::beginTransaction();
       $constancia = ConstanciaDepositoCTS::findOrFail($request->codConstancia);
-      /* 
+      /*
       if ($constancia->codEmpleadoCreador != Empleado::getEmpleadoLogeado()->codEmpleado)
         return redirect()->route('ConstanciaDepositoCTS.Listar')->with('datos_error', 'Error: La constancia no puede ser actualizado por un empleado distinto al que la creó.');
       */
@@ -156,8 +156,8 @@ class ConstanciaDepositoCTSController extends Controller
     }
   }
 
-  
-  
+
+
   public function DescargarPdf($codConstancia)
   {
     $constancia = ConstanciaDepositoCTS::findOrFail($codConstancia);
@@ -170,6 +170,4 @@ class ConstanciaDepositoCTSController extends Controller
     $constancia = ConstanciaDepositoCTS::findOrFail($codConstancia);
     return $constancia->getPdf(false);
   }
-
-
 }

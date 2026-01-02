@@ -85,7 +85,7 @@
       <thead>
         <tr>
           <th class="logo_container">
-            <img class="logo_img" src="{{ App\Configuracion::getRutaImagenCedepasPNG() }}">
+            <img class="logo_img" src="{{ App\Utils\Configuracion::getRutaImagenCedepasPNG() }}">
           </th>
           <th style="text-align: center">N° {{ $reposicion->codigoCedepas }}</th>
         </tr>

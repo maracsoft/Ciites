@@ -1,7 +1,8 @@
 <?php
+
 namespace App\Collections;
 
-use App\Configuracion;
+use App\Utils\Configuracion;
 use Illuminate\Database\Eloquent\Collection;
 use InvalidArgumentException;
 

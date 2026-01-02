@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Configuracion;
+use App\Utils\Configuracion;
 use App\ErrorHistorial;
 use App\Http\Controllers\Controller;
 use App\ParametroSistema;
@@ -14,95 +14,91 @@ use Illuminate\Support\Facades\DB;
 
 class ParametroSistemaController extends Controller
 {
-    //
+  //
 
-    public function listar(){
-        $listaTipoParametro = TipoParametroSistema::All();
-        $lista = ParametroSistema::All();
-        $modulos = ParametroSistema::getModulosConParametros();
+  public function listar()
+  {
+    $listaTipoParametro = TipoParametroSistema::All();
+    $lista = ParametroSistema::All();
+    $modulos = ParametroSistema::getModulosConParametros();
 
-        return view('ParametroSistema.ListarParametros',compact('modulos','listaTipoParametro'));
+    return view('ParametroSistema.ListarParametros', compact('modulos', 'listaTipoParametro'));
+  }
 
+  public function inv_listado()
+  {
+
+    $modulos = ParametroSistema::getModulosConParametros();
+
+
+    return view('ParametroSistema.inv_ListarParametros', compact('modulos'));
+  }
+
+  public function JSON_GetParametros()
+  {
+    return json_encode(ParametroSistema::All());
+  }
+
+  public function guardarYActualizar(Request $request)
+  {
+
+    try {
+      DB::beginTransaction();
+
+
+      if ($request->codParametro == "0") { // NUEVO
+
+        $parametro = new ParametroSistema();
+        $parametro->fechaHoraCreacion = Carbon::now();
+        $msj = "creado";
+      } else { //EXISTENTE
+        $parametro = ParametroSistema::findOrFail($request->codParametro);
+        $parametro->fechaHoraActualizacion = Carbon::now();
+        $msj = "actualizado";
+      }
+      $parametro->nombre = $request->nombre;
+      $parametro->valor = $request->valor;
+      $parametro->descripcion = $request->descripcion;
+      $parametro->modulo = $request->modulo;
+
+      $parametro->codTipoParametro = $request->codTipoParametro;
+
+
+      $parametro->save();
+
+      db::commit();
+      return RespuestaAPI::respuestaOk("Se ha $msj el parámetro " . $parametro->nombre . " exitosamente");
+    } catch (\Throwable $th) {
+      DB::rollBack();
+      $codErrorHistorial = ErrorHistorial::registrarError(
+        $th,
+        app('request')->route()->getAction(),
+        json_encode($request->toArray())
+      );
+      return RespuestaAPI::respuestaError(Configuracion::getMensajeError($codErrorHistorial));
     }
+  }
 
-    public function inv_listado(){
+  public function darDeBaja($codParametro)
+  {
+    try {
+      DB::beginTransaction();
 
-      $modulos = ParametroSistema::getModulosConParametros();
+      $parametro = ParametroSistema::findOrFail($codParametro);
+      $parametro->fechaHoraBaja = Carbon::now();
 
+      $parametro->save();
 
-      return view('ParametroSistema.inv_ListarParametros',compact('modulos'));
-
+      db::commit();
+      return RespuestaAPI::respuestaOk("Se ha dado de baja el parámetro " . $parametro->nombre . " exitosamente");
+    } catch (\Throwable $th) {
+      DB::rollBack();
+      $codErrorHistorial = ErrorHistorial::registrarError(
+        $th,
+        app('request')->route()->getAction(),
+        $codParametro
+      );
+      return RespuestaAPI::respuestaError(Configuracion::getMensajeError($codErrorHistorial));
     }
-
-    public function JSON_GetParametros(){
-        return json_encode(ParametroSistema::All());
-
-
-    }
-
-    public function guardarYActualizar(Request $request){
-
-        try{
-            DB::beginTransaction();
-
-
-            if($request->codParametro=="0"){ // NUEVO
-
-                $parametro = new ParametroSistema();
-                $parametro->fechaHoraCreacion = Carbon::now();
-                $msj = "creado";
-
-            }else{ //EXISTENTE
-                $parametro = ParametroSistema::findOrFail($request->codParametro);
-                $parametro->fechaHoraActualizacion = Carbon::now();
-                $msj = "actualizado";
-            }
-            $parametro->nombre = $request->nombre;
-            $parametro->valor = $request->valor;
-            $parametro->descripcion = $request->descripcion;
-            $parametro->modulo = $request->modulo;
-
-            $parametro->codTipoParametro = $request->codTipoParametro;
-
-
-            $parametro->save();
-
-            db::commit();
-            return RespuestaAPI::respuestaOk("Se ha $msj el parámetro ".$parametro->nombre." exitosamente");
-
-        }catch(\Throwable $th){
-            DB::rollBack();
-            $codErrorHistorial=ErrorHistorial::registrarError($th,
-                                                             app('request')->route()->getAction(),
-                                                             json_encode($request->toArray())
-                                                            );
-            return RespuestaAPI::respuestaError(Configuracion::getMensajeError($codErrorHistorial));
-
-        }
-
-    }
-
-    public function darDeBaja($codParametro){
-        try{
-            DB::beginTransaction();
-
-            $parametro = ParametroSistema::findOrFail($codParametro);
-            $parametro->fechaHoraBaja = Carbon::now();
-
-            $parametro->save();
-
-            db::commit();
-            return RespuestaAPI::respuestaOk("Se ha dado de baja el parámetro ".$parametro->nombre." exitosamente");
-        }catch(\Throwable $th){
-            DB::rollBack();
-            $codErrorHistorial=ErrorHistorial::registrarError($th,
-                                                            app('request')->route()->getAction(),
-                                                            $codParametro
-                                                            );
-            return RespuestaAPI::respuestaError(Configuracion::getMensajeError($codErrorHistorial));
-
-        }
-    }
-
-
+  }
 }

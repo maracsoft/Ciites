@@ -78,7 +78,7 @@
 
   <div id="Header">
     <div>
-      <img src="{{ App\Configuracion::getRutaImagenCedepasPNG() }}" width="100px">
+      <img src="{{ App\Utils\Configuracion::getRutaImagenCedepasPNG() }}" width="100px">
     </div>
     @if ($contrato->esBorrador())
       <div class="borrador">

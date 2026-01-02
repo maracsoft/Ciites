@@ -106,7 +106,7 @@
       </table>
     </div>
     {{-- Esto en teoría ya no se usa --}}
-    <input type="{{ App\Configuracion::getInputTextOHidden() }}" id="listaContabilizados" name = "listaContabilizados" value="">
+    <input type="{{ App\Utils\Configuracion::getInputTextOHidden() }}" id="listaContabilizados" name = "listaContabilizados" value="">
 
     <div class="row" id="divTotal" name="divTotal">
       <div class="col-12 col-md-6">
@@ -300,11 +300,11 @@
 
 
     $(document).ready(function() {
-      contadorCaracteres('observacion', 'contador2', '{{ App\Configuracion::tamañoMaximoObservacion }}');
+      contadorCaracteres('observacion', 'contador2', '{{ App\Utils\Configuracion::tamañoMaximoObservacion }}');
 
     });
 
-    @if (App\Configuracion::enProduccion())
+    @if (App\Utils\Configuracion::enProduccion())
       document.getElementById('listaContabilizados').type = "hidden";
     @endif
 
@@ -424,7 +424,7 @@
         return false;
       }
       tamañoActualObs = textoObs.length;
-      tamañoMaximoObservacion = {{ App\Configuracion::tamañoMaximoObservacion }};
+      tamañoMaximoObservacion = {{ App\Utils\Configuracion::tamañoMaximoObservacion }};
       if (tamañoActualObs > tamañoMaximoObservacion) {
         alerta('La observación puede tener máximo hasta ' + tamañoMaximoObservacion +
           " caracteres. (El tamaño actual es " + tamañoActualObs + ")");

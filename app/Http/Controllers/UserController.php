@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
-use App\Configuracion;
+use App\Utils\Configuracion;
 use App\Empleado;
 use App\LogeoHistorial;
 use App\RespuestaAPI;

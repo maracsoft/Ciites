@@ -60,7 +60,7 @@
         <tr>
           <th style="height: 70px; float: left" colspan="2">
 
-            <img src="{{ App\Configuracion::getRutaImagenCedepasPNG() }}" height="100%">
+            <img src="{{ App\Utils\Configuracion::getRutaImagenCedepasPNG() }}" height="100%">
           </th>
           <th style="text-align: center" colspan="2">{{ $requerimiento->codigoCedepas }}</th>
         </tr>

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\AvanceEntregable;
-use App\Configuracion;
+use App\Utils\Configuracion;
 use App\ContratoLocacion;
 use App\ContratoPlazo;
 use App\Debug;
@@ -48,9 +48,17 @@ class ContratoLocacionController extends Controller
 
     $listaMonedas = Moneda::All();
 
-    return view('Contratos.LocacionServicios.ListarContratosLocacion',
-      compact('listaContratos','listaEmpleadosQueGeneraronContratosLocacion','filtros_usados_paginacion','filtros_usados',
-      'listaMonedas','listaNombresDeContratados','listaRazonesSociales')
+    return view(
+      'Contratos.LocacionServicios.ListarContratosLocacion',
+      compact(
+        'listaContratos',
+        'listaEmpleadosQueGeneraronContratosLocacion',
+        'filtros_usados_paginacion',
+        'filtros_usados',
+        'listaMonedas',
+        'listaNombresDeContratados',
+        'listaRazonesSociales'
+      )
     );
   }
 
@@ -69,7 +77,7 @@ class ContratoLocacionController extends Controller
 
     $listaMonedas = Moneda::All();
     $listaSedes = Sede::All();
-    return view('Contratos.LocacionServicios.EditarContratoLocacion', compact('listaMonedas', 'listaSedes','contrato'));
+    return view('Contratos.LocacionServicios.EditarContratoLocacion', compact('listaMonedas', 'listaSedes', 'contrato'));
   }
 
   public function guardar(Request $request)
@@ -95,7 +103,7 @@ class ContratoLocacionController extends Controller
       $contrato->setDetallesFromRequest($request);
 
       DB::commit();
-      return redirect()->route('ContratosLocacion.Editar',$contrato->getId())->with('datos_ok', 'Se ha creado el contrato ' . $contrato->codigo_unico);
+      return redirect()->route('ContratosLocacion.Editar', $contrato->getId())->with('datos_ok', 'Se ha creado el contrato ' . $contrato->codigo_unico);
     } catch (\Throwable $th) {
 
       Debug::mensajeError('CONTRATO LOCACION : STORE', $th);
@@ -123,7 +131,7 @@ class ContratoLocacionController extends Controller
       $contrato->setDetallesFromRequest($request);
 
       DB::commit();
-      return redirect()->route('ContratosLocacion.Editar',$request->codContratoLocacion)->with('datos_ok', 'Se ha actualizado el contrato ' . $contrato->codigo_unico);
+      return redirect()->route('ContratosLocacion.Editar', $request->codContratoLocacion)->with('datos_ok', 'Se ha actualizado el contrato ' . $contrato->codigo_unico);
     } catch (\Throwable $th) {
       Debug::LogMessage($th);
 
@@ -196,7 +204,8 @@ class ContratoLocacionController extends Controller
 
 
   /* Retorna la url para visualizar el PDF */
-  public function GenerarBorrador(Request $request){
+  public function GenerarBorrador(Request $request)
+  {
 
     $contrato = new ContratoLocacion();
 
@@ -206,22 +215,18 @@ class ContratoLocacionController extends Controller
     $contrato->codigo_unico = ContratoLocacion::calcularCodigoCedepas(Numeracion::getNumeracionCLS());
     /* NO GUARDAMOS */
 
-    $detalles = $contrato->setDetallesFromRequest($request,false);
+    $detalles = $contrato->setDetallesFromRequest($request, false);
 
     $pdf = $contrato->getPDF($detalles);
 
 
     $fecha_actual = time();
-    $nombre_guardado = "CL_".$fecha_actual.".pdf";
+    $nombre_guardado = "CL_" . $fecha_actual . ".pdf";
 
     $generated_file = $pdf->output();
 
-    Storage::put("/borradores_pdf/$nombre_guardado",$generated_file);
+    Storage::put("/borradores_pdf/$nombre_guardado", $generated_file);
 
-    return RespuestaAPI::respuestaDatosOk("Se generó exitosamente el borrador",$nombre_guardado);
-
+    return RespuestaAPI::respuestaDatosOk("Se generó exitosamente el borrador", $nombre_guardado);
   }
-
-
-
 }

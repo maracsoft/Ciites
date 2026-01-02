@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 
-use App\Configuracion;
+use App\Utils\Configuracion;
 use App\Vehiculo;
 use App\Debug;
 use App\Empleado;

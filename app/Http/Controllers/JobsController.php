@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ActivoInventario;
 use App\BusquedaRepo;
-use App\Configuracion;
+use App\Utils\Configuracion;
 use App\ContratoLocacion;
 use App\ContratoPlazo;
 use App\Http\Controllers\Controller;

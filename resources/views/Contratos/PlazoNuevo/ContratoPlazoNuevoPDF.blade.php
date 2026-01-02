@@ -41,7 +41,7 @@
 
   {{-- esto es pos: absolute --}}
   <div class="Header">
-    <img class="logo" src="{{ App\Configuracion::getRutaImagenCedepasPNG(200) }}">
+    <img class="logo" src="{{ App\Utils\Configuracion::getRutaImagenCedepasPNG(200) }}">
     @if ($contrato->esBorrador())
       <div class="borrador">
         ESTE ES UN BORRADOR SIN VALOR

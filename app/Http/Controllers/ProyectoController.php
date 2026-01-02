@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\ActividadResultado;
 use App\ArchivoProyecto;
 use App\ArchivoReposicion;
-use App\Configuracion;
+use App\Utils\Configuracion;
 use App\Http\Controllers\Controller;
 use App\Proyecto;
 use Illuminate\Http\Request;

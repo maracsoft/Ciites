@@ -1,15 +1,15 @@
 
 <style>
-    
-    
+
+
 </style>
 
 <script>
 
 
-    
+
 var listaArchivos = '';
-    
+
     //se ejecuta cada vez que escogewmos un file
     function cambio(){
         msjError = validarPesoArchivos();
@@ -17,48 +17,48 @@ var listaArchivos = '';
             alerta(msjError);
             return;
         }
-    
+
         listaArchivos="";
         vectorNombresArchivos = [];
 
         cantidadArchivos = document.getElementById('filenames').files.length;
-    
+
         console.log('----- Cant archivos seleccionados:' + cantidadArchivos);
         for (let index = 0; index < cantidadArchivos; index++) {
             nombreAr = document.getElementById('filenames').files[index].name;
             console.log('Archivo ' + index + ': '+ nombreAr);
-            listaArchivos = listaArchivos +', '+  nombreAr; 
-            
+            listaArchivos = listaArchivos +', '+  nombreAr;
+
             vectorNombresArchivos.push(nombreAr);
         }
         listaArchivos = listaArchivos.slice(1, listaArchivos.length);
         document.getElementById("divFileImagenEnvio").innerHTML= listaArchivos;
         document.getElementById("nombresArchivos").value= JSON.stringify(vectorNombresArchivos); //input que se manda
-    
+
     }
-            
+
     function validarPesoArchivos(){
         cantidadArchivos = document.getElementById('filenames').files.length;
-        
+
         msj="";
         for (let index = 0; index < cantidadArchivos; index++) {
             var imgsize = document.getElementById('filenames').files[index].size;
             nombre = document.getElementById('filenames').files[index].name;
-            if(imgsize > {{App\Configuracion::pesoMaximoArchivoMB}}*1000*1000 ){
-                msj=('El archivo '+nombre+' supera los  {{App\Configuracion::pesoMaximoArchivoMB}}Mb, porfavor ingrese uno más liviano o comprima.');
+            if(imgsize > {{App\Utils\Configuracion::pesoMaximoArchivoMB}}*1000*1000 ){
+                msj=('El archivo '+nombre+' supera los  {{App\Utils\Configuracion::pesoMaximoArchivoMB}}Mb, porfavor ingrese uno más liviano o comprima.');
             }
         }
-        
+
         if(cantidadArchivos == 0){
             msj = "No se ha seleccionado ningún archivo.";
             document.getElementById("nombresArchivos").value = null;
             document.getElementById("divFileImagenEnvio").innerHTML = "Subir archivos comprobantes";
         }
-    
 
-    
+
+
         return msj;
-    
+
     }
 
 
@@ -77,62 +77,62 @@ var listaArchivos = '';
                 $('#fila'+index).remove();
                 //console.log('borrando index='+index);
             }
-            
+
             //insertamos en la tabla los nuevos elementos
             for (let item = 0; item < detalleSol.length; item++) {
                 element = detalleSol[item];
                 cont = item+1;
-    
+
                 total=total +parseFloat(element.importe);
                 itemMasUno = item+1;
-                
+
 
                 var fila=      /* html */
-                            `<tr class="selected" id="fila`+item+`" name="fila` +item+`">               
-                                <td style="text-align:center;">              
+                            `<tr class="selected" id="fila`+item+`" name="fila` +item+`">
+                                <td style="text-align:center;">
                                    <input type="text" class="form-control" name="colItem`+item+`" id="colItem`+item+`" value="`+itemMasUno+`" readonly>
-                                </td>             
-                                <td> 
+                                </td>
+                                <td>
                                    <input type="text" class="form-control" name="colConcepto`+item+`" id="colConcepto`+item+`" value="`+element.concepto+`" readonly>
-                                </td>               
+                                </td>
                                 <td  style="text-align:right;">
-                                   <input type="text" style="text-align:right;" class="form-control" value = "`+number_format(element.importe,2)+`" readonly> 
+                                   <input type="text" style="text-align:right;" class="form-control" value = "`+number_format(element.importe,2)+`" readonly>
                                    <input type="hidden" style="text-align:right;" class="form-control" name="colImporte`+item+`" id="colImporte`+item+`" value="`+ (element.importe)+`" readonly>
-                                </td>               
-                                <td style="text-align:center;">              
+                                </td>
+                                <td style="text-align:center;">
                                 <input type="text" class="form-control" style="text-align:center;" name="colCodigoPresupuestal`+item+`" id="colCodigoPresupuestal`+item+`" value="`+element.codigoPresupuestal+`" readonly>
-                                </td>              
-                                <td style="text-align:center;">              
+                                </td>
+                                <td style="text-align:center;">
                                     <button type="button" class="btn btn-danger btn-xs" onclick="eliminardetalle(`+item+`);">
-                                        <i class="fa fa-times" ></i>               
-                                    </button>       
+                                        <i class="fa fa-times" ></i>
+                                    </button>
                                     <button type="button" class="btn btn-xs" onclick="editarDetalle(`+item+`);">
-                                        <i class="fas fa-pen"></i>            
-                                    </button>        
-                                </td>               
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                </td>
                             </tr>         `;
-    
-    
-                $('#detalles').append(fila); 
+
+
+                $('#detalles').append(fila);
             }
-            
+
             $('#totalMostrado').val(number_format(total,2));
             $('#total').val(total);
-            
-            
+
+
             $('#cantElementos').val(cont);
             $('#item').val(cont+1);
-            
-          
+
+
             //alerta('se termino de actualizar la tabla con cont='+cont);
 }
-    
+
 var codPresupProyecto = -1;
 function actualizarCodPresupProyecto(){
     codProyecto = $('#ComboBoxProyecto').val();
-    $.get('/obtenerCodigoPresupuestalDeProyecto/'+codProyecto, 
+    $.get('/obtenerCodigoPresupuestalDeProyecto/'+codProyecto,
         function(data)
-        {   
+        {
             codPresupProyecto = data.substring(0,2); //Pa agarrarle solo los 2 digitos
             console.log('Se ha actualizado el codPresupuestal del proyecto:[' +codPresupProyecto+"]" );
             document.getElementById('codigoPresupuestal').placeholder = codPresupProyecto+"...";
@@ -145,21 +145,21 @@ function editarDetalle(index){
     $('#concepto').val( detalleSol[index].concepto );
     $('#importe').val( detalleSol[index].importe );
     $('#codigoPresupuestal').val( detalleSol[index].codigoPresupuestal );
-    
+
     indexAEliminar = index;
     ejecutarEliminacionDetalle();
 }
-        
+
 function agregarDetalle(){
     msjError="";
-    // VALIDAMOS 
+    // VALIDAMOS
     limpiarEstilos(['concepto','codigoPresupuestal','importe']);
-    msjError = validarTamañoMaximoYNulidad(msjError,'concepto',{{App\Configuracion::tamañoMaximoConcepto}},'Concepto');
-    msjError = validarTamañoMaximoYNulidad(msjError,'codigoPresupuestal',{{App\Configuracion::tamañoMaximoCodigoPresupuestal}},'Código Presupuestal');
+    msjError = validarTamañoMaximoYNulidad(msjError,'concepto',{{App\Utils\Configuracion::tamañoMaximoConcepto}},'Concepto');
+    msjError = validarTamañoMaximoYNulidad(msjError,'codigoPresupuestal',{{App\Utils\Configuracion::tamañoMaximoCodigoPresupuestal}},'Código Presupuestal');
     msjError = validarCodigoPresupuestal(msjError,'codigoPresupuestal',codPresupProyecto,'Código presupuestal');
     msjError= validarPositividadYNulidad(msjError,'importe','Importe');
     msjError= validarSelect(msjError,'ComboBoxProyecto','-1','Proyecto');
- 
+
     if(msjError!=""){
         alerta(msjError);
         return false;
@@ -168,25 +168,25 @@ function agregarDetalle(){
     concepto = document.getElementById('concepto').value;
     importe = document.getElementById('importe').value;
     codigoPresupuestal = document.getElementById('codigoPresupuestal').value;
-    
+
 
     // FIN DE VALIDACIONES
 
-        item = cont+1;   
+        item = cont+1;
         detalleSol.push({
             item:item,
             concepto:concepto,
-            importe:importe,            
+            importe:importe,
             codigoPresupuestal:codigoPresupuestal
-        });        
+        });
         cont++;
     actualizarTabla();
-    //ACTUALIZAMOS LOS VALORES MOSTRADOS TOTALES    
+    //ACTUALIZAMOS LOS VALORES MOSTRADOS TOTALES
     //$('#total').val(number_format(total,2)); //TOTAL INCLUIDO IGV
     $('#concepto').val('');
     $('#importe').val('');
     $('#codigoPresupuestal').val('');
-    
+
 }
 
 
@@ -194,12 +194,12 @@ indexAEliminar = 0;
 /* Eliminar productos */
 function eliminardetalle(index){
     indexAEliminar = index;
-    confirmarConMensaje("Confirmación","¿Desea eliminar el item N° "+(index+1)+"?",'warning',ejecutarEliminacionDetalle);    
+    confirmarConMensaje("Confirmación","¿Desea eliminar el item N° "+(index+1)+"?",'warning',ejecutarEliminacionDetalle);
 }
 
 function ejecutarEliminacionDetalle(){
     //removemos 1 elemento desde la posicion index
-    
+
     cont = cont - 1;
     $('#cantElementos').val(cont);
 

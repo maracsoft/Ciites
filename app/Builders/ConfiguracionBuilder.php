@@ -4,7 +4,7 @@ namespace App\Builders;
 
 use Illuminate\Database\Eloquent\Builder;
 use App\Collections\ConfiguracionCollection;
-use App\Configuracion;
+use App\Utils\Configuracion;
 
 /**
  * @method static ConfiguracionBuilder query()

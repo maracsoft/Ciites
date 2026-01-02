@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Configuracion;
+use App\Utils\Configuracion;
 use App\Contrato;
 use App\ContratoPlazo;
 use App\Debug;
@@ -33,10 +33,10 @@ class ContratoPlazoController extends Controller
 
     $listaContratos =  ContratoPlazo::query();
 
-    $filtros_usados_paginacion = UIFiltros::getFiltersCompleteArray($listaContratos,$request->getQueryString());
+    $filtros_usados_paginacion = UIFiltros::getFiltersCompleteArray($listaContratos, $request->getQueryString());
 
-    $listaSolicitudesFondos = UIFiltros::buildQuery($listaContratos,$request->getQueryString());
-    $filtros_usados = UIFiltros::getQueryValues($listaContratos,$request->getQueryString());
+    $listaSolicitudesFondos = UIFiltros::buildQuery($listaContratos, $request->getQueryString());
+    $filtros_usados = UIFiltros::getQueryValues($listaContratos, $request->getQueryString());
 
     $listaContratos = $listaContratos->orderBy('codContratoPlazo', 'DESC')->paginate(static::PAGINATION);
 
@@ -64,10 +64,11 @@ class ContratoPlazoController extends Controller
     $listaSedes = Sede::All();
     $listaTipoAdenda = ContratoPlazo::getTiposAdendaFinanciera();
     $tiposTiempos = ContratoPlazo::getTiempos();
-    return view('Contratos.PlazoFijo.CrearContratoPlazo', compact('listaProyectos', 'listaMonedas','tiposTiempos', 'listaSedes','listaTipoAdenda'));
+    return view('Contratos.PlazoFijo.CrearContratoPlazo', compact('listaProyectos', 'listaMonedas', 'tiposTiempos', 'listaSedes', 'listaTipoAdenda'));
   }
 
-  function Editar($codContratoPlazo){
+  function Editar($codContratoPlazo)
+  {
     $contrato = ContratoPlazo::findOrFail($codContratoPlazo);
 
     $listaProyectos = Proyecto::getProyectosActivos();
@@ -75,7 +76,7 @@ class ContratoPlazoController extends Controller
     $listaSedes = Sede::All();
     $listaTipoAdenda = ContratoPlazo::getTiposAdendaFinanciera();
     $tiposTiempos = ContratoPlazo::getTiempos();
-    return view('Contratos.PlazoFijo.EditarContratoPlazo', compact('contrato','listaProyectos', 'listaMonedas','tiposTiempos', 'listaSedes','listaTipoAdenda'));
+    return view('Contratos.PlazoFijo.EditarContratoPlazo', compact('contrato', 'listaProyectos', 'listaMonedas', 'tiposTiempos', 'listaSedes', 'listaTipoAdenda'));
   }
 
   function Guardar(Request $request)
@@ -99,7 +100,7 @@ class ContratoPlazoController extends Controller
       $contrato->save();
 
       DB::commit();
-      return redirect()->route('ContratosPlazo.Editar',$contrato->codContratoPlazo)->with('datos_ok', "Se ha creado exitosamente el contrato " . $contrato->codigo_unico);
+      return redirect()->route('ContratosPlazo.Editar', $contrato->codContratoPlazo)->with('datos_ok', "Se ha creado exitosamente el contrato " . $contrato->codigo_unico);
     } catch (\Throwable $th) {
 
       Debug::LogMessage($th);
@@ -125,7 +126,7 @@ class ContratoPlazoController extends Controller
       $contrato->save();
 
       DB::commit();
-      return redirect()->route('ContratosPlazo.Editar',$request->codContratoPlazo)->with('datos_ok', "Se ha actualizado exitosamente el contrato " . $contrato->codigo_unico);
+      return redirect()->route('ContratosPlazo.Editar', $request->codContratoPlazo)->with('datos_ok', "Se ha actualizado exitosamente el contrato " . $contrato->codigo_unico);
     } catch (\Throwable $th) {
       Debug::LogMessage($th);
       DB::rollBack();
@@ -165,7 +166,7 @@ class ContratoPlazoController extends Controller
     $listaTipoAdenda = ContratoPlazo::getTiposAdendaFinanciera();
     $tiposTiempos = ContratoPlazo::getTiempos();
 
-    return view('Contratos.PlazoFijo.VerContratoPlazo', compact('contrato','listaProyectos', 'listaMonedas','tiposTiempos', 'listaSedes','listaTipoAdenda'));
+    return view('Contratos.PlazoFijo.VerContratoPlazo', compact('contrato', 'listaProyectos', 'listaMonedas', 'tiposTiempos', 'listaSedes', 'listaTipoAdenda'));
   }
 
 
@@ -206,7 +207,8 @@ class ContratoPlazoController extends Controller
   }
 
   /* Retorna la url para visualizar el PDF */
-  public function GenerarBorrador(Request $request){
+  public function GenerarBorrador(Request $request)
+  {
 
     $contrato = new ContratoPlazo();
 
@@ -219,24 +221,25 @@ class ContratoPlazoController extends Controller
     $pdf = $contrato->getPDF();
 
     $fecha_actual = time();
-    $nombre_guardado = "CP_".$fecha_actual.".pdf";
+    $nombre_guardado = "CP_" . $fecha_actual . ".pdf";
 
     $generated_file = $pdf->output();
 
-    Storage::put("/borradores_pdf/$nombre_guardado",$generated_file);
+    Storage::put("/borradores_pdf/$nombre_guardado", $generated_file);
 
-    return RespuestaAPI::respuestaDatosOk("Se generó exitosamente el borrador",$nombre_guardado);
-
+    return RespuestaAPI::respuestaDatosOk("Se generó exitosamente el borrador", $nombre_guardado);
   }
 
 
 
-  public static function VerBorrador($filename){
+  public static function VerBorrador($filename)
+  {
     $file = Storage::get("borradores_pdf/$filename");
     return static::setPDFResponse($file);
   }
 
-  public static function setPDFResponse($data){
+  public static function setPDFResponse($data)
+  {
     return response($data, 200)->header('Content-Type', 'application/pdf');
   }
 
@@ -245,10 +248,11 @@ class ContratoPlazoController extends Controller
 
   const MinutosEliminacion = 10;
 
-  public function EliminarArchivosBorradorInnecesarios(){
+  public function EliminarArchivosBorradorInnecesarios()
+  {
 
     $proyect_folder_path = ParametroSistema::getParametroSistema('proyect_folder_path')->valor;
-    $ruta_archivos_borrador = $proyect_folder_path."/storage/app/borradores_pdf";
+    $ruta_archivos_borrador = $proyect_folder_path . "/storage/app/borradores_pdf";
     $real_path = realpath($ruta_archivos_borrador);
     $listaMigraciones_files = scandir($real_path);
 
@@ -258,31 +262,26 @@ class ContratoPlazoController extends Controller
     $archivos_eliminados = [];
 
     foreach ($listaMigraciones_files as $filename) {
-      if(str_contains($filename,".pdf")){
-        $hora_generacion = intval(substr($filename,3,10));
+      if (str_contains($filename, ".pdf")) {
+        $hora_generacion = intval(substr($filename, 3, 10));
 
-        $hora_vencimiento = $hora_generacion + static::MinutosEliminacion*60;
+        $hora_vencimiento = $hora_generacion + static::MinutosEliminacion * 60;
 
-        if($tiempo_actual > $hora_vencimiento){
+        if ($tiempo_actual > $hora_vencimiento) {
           Debug::LogMessageCronBorrador("Eliminando el archivo borrador $filename");
-          unlink($real_path."/".$filename);
+          unlink($real_path . "/" . $filename);
           $archivos_eliminados[] = $filename;
         }
-
-
       }
     }
 
-    if(count($archivos_eliminados) == 0){
+    if (count($archivos_eliminados) == 0) {
       $msj = "No se elimino ningun archivo";
-    }else{
-      $str = implode(",",$archivos_eliminados);
+    } else {
+      $str = implode(",", $archivos_eliminados);
       $msj = "Se eliminaron exitosamente los archivos $str";
     }
 
     return RespuestaAPI::respuestaOk($msj);
-
   }
-
-
 }

@@ -250,7 +250,7 @@
 
 
     $(document).ready(function() {
-      contadorCaracteres('observacion', 'contador2', '{{ App\Configuracion::tamañoMaximoObservacion }}');
+      contadorCaracteres('observacion', 'contador2', '{{ App\Utils\Configuracion::tamañoMaximoObservacion }}');
     });
 
 
@@ -290,7 +290,7 @@
       }
 
       tamañoActualObs = textoObs.length;
-      tamañoMaximoObservacion = {{ App\Configuracion::tamañoMaximoObservacion }};
+      tamañoMaximoObservacion = {{ App\Utils\Configuracion::tamañoMaximoObservacion }};
       if (tamañoActualObs > tamañoMaximoObservacion) {
         alerta('La observación puede tener máximo hasta ' + tamañoMaximoObservacion +
           " caracteres. (El tamaño actual es " + tamañoActualObs + ")");

@@ -1,6 +1,6 @@
 
 <style>
-    
+
     .hovered:hover{
         background-color:rgb(97, 170, 170);
 
@@ -16,9 +16,9 @@
 var codPresupProyecto = -1;
 function actualizarCodPresupProyecto(){
     codProyecto = $('#codProyecto').val();
-    $.get('/obtenerCodigoPresupuestalDeProyecto/'+codProyecto, 
+    $.get('/obtenerCodigoPresupuestalDeProyecto/'+codProyecto,
         function(data)
-        {   
+        {
             codPresupProyecto = data.substring(0,2); //Pa agarrarle solo los 2 digitos
             console.log('Se ha actualizado el codPresupuestal del proyecto:[' +codPresupProyecto+"]" );
 
@@ -41,7 +41,7 @@ function compararFechas(fecha, fechaIngresada){//1 si la fecha ingresada es meno
         //console.log('el año ingresado es menor');
         return 1;
     }else if(parseInt(anio,10)==parseInt(anioActual,10)){
-        
+
         if(parseInt(mes,10)>parseInt(mesActual,10)){
             //console.log('el mes ingresado es menor');
             return 1;
@@ -66,12 +66,12 @@ function agregarDetalle(){
     // VALIDAMOS
     limpiarEstilos(['fechaComprobante','ComboBoxCDP','ncbte','concepto','codProyecto','importe','codigoPresupuestal']);
 
-    if( codPresupProyecto == -1  ) msjError="Por favor seleccione un proyecto antes de añadir Items.";  
-    msjError = validarSelect(msjError,'ComboBoxCDP',-1,'Tipo de CDP');  
+    if( codPresupProyecto == -1  ) msjError="Por favor seleccione un proyecto antes de añadir Items.";
+    msjError = validarSelect(msjError,'ComboBoxCDP',-1,'Tipo de CDP');
     msjError = validarNulidad(msjError,'fechaComprobante','Fecha de Comprabante');
-    msjError = validarTamañoMaximoYNulidad(msjError,'ncbte',{{App\Configuracion::tamañoMaximoNroComprobante}},'Numero de CDP'); 
-    msjError = validarTamañoMaximoYNulidad(msjError,'concepto',{{App\Configuracion::tamañoMaximoConcepto}},'Concepto');   
-    msjError = validarTamañoMaximoYNulidad(msjError,'codigoPresupuestal',{{App\Configuracion::tamañoMaximoCodigoPresupuestal}},'Código Presupuestal');
+    msjError = validarTamañoMaximoYNulidad(msjError,'ncbte',{{App\Utils\Configuracion::tamañoMaximoNroComprobante}},'Numero de CDP');
+    msjError = validarTamañoMaximoYNulidad(msjError,'concepto',{{App\Utils\Configuracion::tamañoMaximoConcepto}},'Concepto');
+    msjError = validarTamañoMaximoYNulidad(msjError,'codigoPresupuestal',{{App\Utils\Configuracion::tamañoMaximoCodigoPresupuestal}},'Código Presupuestal');
     msjError = validarCodigoPresupuestal(msjError,'codigoPresupuestal',codPresupProyecto,'Código presupuestal');
     msjError = validarPositividadYNulidad(msjError,'importe','Importe');
 
@@ -80,14 +80,14 @@ function agregarDetalle(){
         return false;
     }
 
-    fecha = $("#fechaComprobante").val();       
-    tipo = $("#ComboBoxCDP").val(); 
-    ncbte= $("#ncbte").val();   
-    concepto=$("#concepto").val();  
-    importe=$("#importe").val();    
+    fecha = $("#fechaComprobante").val();
+    tipo = $("#ComboBoxCDP").val();
+    ncbte= $("#ncbte").val();
+    concepto=$("#concepto").val();
+    importe=$("#importe").val();
     codigoPresupuestal=$("#codigoPresupuestal").val();     //el que agregó el user
-    
-    
+
+
     // FIN DE VALIDACIONES
     if(detalleRepo.length>0){
         temp=0;
@@ -96,7 +96,7 @@ function agregarDetalle(){
         for (let item = 0; item < detalleRepo.length && band; item++) {
             element = detalleRepo[item];
             //console.log('FECHA Nº' + item + ': '+element.fecha+' se compara con '+fecha);
-            if(compararFechas(element.fecha, fecha)==1){ 
+            if(compararFechas(element.fecha, fecha)==1){
                 //console.log('mi fecha es menor');
                 temp=item;
                 band=false;
@@ -110,7 +110,7 @@ function agregarDetalle(){
             tipo:tipo,
             ncbte,ncbte,
             concepto:concepto,
-            importe:importe,            
+            importe:importe,
             codigoPresupuestal:codigoPresupuestal
         });
     }else{
@@ -119,11 +119,11 @@ function agregarDetalle(){
             tipo:tipo,
             ncbte,ncbte,
             concepto:concepto,
-            importe:importe,            
+            importe:importe,
             codigoPresupuestal:codigoPresupuestal
         });
     }
-    
+
 
 
     cont++;
@@ -151,14 +151,14 @@ function editarDetalle(index){
     ejecutarEliminacionDetalle();
 }
 
-    
+
 
 
     indexAEliminar = 0;
     /* Eliminar productos */
     function eliminardetalle(index){
         indexAEliminar = index;
-        confirmarConMensaje("Confirmación","¿Desea eliminar el item N° "+(index+1)+"?",'warning',ejecutarEliminacionDetalle);    
+        confirmarConMensaje("Confirmación","¿Desea eliminar el item N° "+(index+1)+"?",'warning',ejecutarEliminacionDetalle);
     }
 
 
@@ -186,73 +186,73 @@ function actualizarTabla(){
         $('#fila'+index).remove();
         //console.log('borrando index='+index);
     }
-    
+
     //insertamos en la tabla los nuevos elementos
     for (let item = 0; item < detalleRepo.length; item++) {
         element = detalleRepo[item];
         cont = item+1;
 
-        total=total +parseFloat(element.importe); 
+        total=total +parseFloat(element.importe);
 
         //importes.push(importe);
         //item = getUltimoIndex();
-        var fila= 
+        var fila=
             /* html */
-                `  
-                    <tr class="selected" id="fila`+item+`" name="fila` +item+`">          
-                        <td style="text-align:center;">               
+                `
+                    <tr class="selected" id="fila`+item+`" name="fila` +item+`">
+                        <td style="text-align:center;">
                             <input type="text" class="form-control" name="colFecha`+item+`" id="colFecha`+item+`" value="`+element.fecha+`" readonly>
-                        </td>             
-                    
-                        <td style="text-align:center;">            
+                        </td>
+
+                        <td style="text-align:center;">
                             <input type="text" class="form-control" name="colTipo`+item+`" id="colTipo`+item+`" value="`+element.tipo+`" readonly>
-                        </td>              
-                        <td style="text-align:center;">               
+                        </td>
+                        <td style="text-align:center;">
                             <input type="text" class="form-control" name="colComprobante`+item+`" id="colComprobante`+item+`" value="`+element.ncbte+`" readonly>
-                        </td>             
+                        </td>
                         <td>
 
                             <input type="text" class="form-control" name="colConcepto`+item+`" id="colConcepto`+item+`" value="`+element.concepto+`" readonly>
-                        </td>              
-                    
-                    
+                        </td>
 
-                        <td  style="text-align:right;">              
+
+
+                        <td  style="text-align:right;">
                             <input type="text" class="form-control" style="text-align:right" value="`+number_format(element.importe,2)+`" readonly>
                             <input type="hidden" class="form-control" name="colImporte`+item+`" id="colImporte`+item+`" value="`+(element.importe)+`" readonly>
-                        </td>              
-                        <td style="text-align:center;">              
+                        </td>
+                        <td style="text-align:center;">
                         <input type="text" class="form-control" name="colCodigoPresupuestal`+item+`" id="colCodigoPresupuestal`+item+`" value="`+element.codigoPresupuestal+`" readonly>
-                        </td>              
-                        <td style="text-align:center;">              
+                        </td>
+                        <td style="text-align:center;">
                             <button type="button" class="btn btn-danger btn-xs" onclick="eliminardetalle(`+item+`);">
-                                <i class="fa fa-times" ></i>              
-                            </button>             
+                                <i class="fa fa-times" ></i>
+                            </button>
                             <button type="button" class="btn btn-xs" onclick="editarDetalle(`+item+`);">
-                                <i class="fas fa-pen"></i>            
-                            </button> 
-                            
-                        </td>               
-                    
+                                <i class="fas fa-pen"></i>
+                            </button>
+
+                        </td>
 
 
-                    </tr>                 
-                    
+
+                    </tr>
+
                     `;
 
 
-        $('#detalles').append(fila); 
+        $('#detalles').append(fila);
     }
 
     $('#total').val(number_format(total,2));
     $('#cantElementos').val(cont);
-    
+
 }
 
 
 
 var listaArchivos = ''; //lista separada por comas que se imprimirá en el label
-    
+
 //se ejecuta cada vez que escogewmos un file
 function cambio(){
     msjError = validarPesoArchivos();
@@ -263,7 +263,7 @@ function cambio(){
 
     listaArchivos="";
     cantidadArchivos = document.getElementById('filenames').files.length;
-    
+
     vectorNombresArchivos = [];
 
     console.log('----- Cant archivos seleccionados:' + cantidadArchivos);
@@ -271,7 +271,7 @@ function cambio(){
         nombreAr = document.getElementById('filenames').files[index].name;
         console.log('Archivo ' + index + ': '+ nombreAr);
         listaArchivos = listaArchivos +', '+  nombreAr;  /* AQUI ES, mi nuevo string separador será *%/$) */
-        
+
         vectorNombresArchivos.push(nombreAr);
     }
 
@@ -279,18 +279,18 @@ function cambio(){
     document.getElementById("divFileImagenEnvio").innerHTML= listaArchivos; //label que ve el user
     document.getElementById("nombresArchivos").value= JSON.stringify(vectorNombresArchivos); //input que se manda
     //console.log(JSON.stringify(vectorNombresArchivos));
-    
+
 }
-        
+
 function validarPesoArchivos(){
     cantidadArchivos = document.getElementById('filenames').files.length;
-    
+
     msj="";
     for (let index = 0; index < cantidadArchivos; index++) {
         var imgsize = document.getElementById('filenames').files[index].size;
         nombre = document.getElementById('filenames').files[index].name;
-        if(imgsize > {{App\Configuracion::pesoMaximoArchivoMB}}*1000*1000 ){
-            msj=('El archivo '+nombre+' supera los  {{App\Configuracion::pesoMaximoArchivoMB}}Mb, porfavor ingrese uno más liviano o comprima.');
+        if(imgsize > {{App\Utils\Configuracion::pesoMaximoArchivoMB}}*1000*1000 ){
+            msj=('El archivo '+nombre+' supera los  {{App\Utils\Configuracion::pesoMaximoArchivoMB}}Mb, porfavor ingrese uno más liviano o comprima.');
         }
     }
 
@@ -299,7 +299,7 @@ function validarPesoArchivos(){
         document.getElementById("nombresArchivos").value = null;
         document.getElementById("divFileImagenEnvio").innerHTML = "Subir archivos comprobantes";
     }
-    
+
 
     return msj;
 

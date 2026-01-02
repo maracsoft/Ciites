@@ -362,7 +362,8 @@
               </div>
               <div class="w-100"></div>
               <div class="col">
-                <input type="{{ App\Configuracion::getInputTextOHidden() }}" name="nombresArchivos" id="nombresArchivos" value="">
+                <input type="{{ App\Utils\Configuracion::getInputTextOHidden() }}" name="nombresArchivos" id="nombresArchivos"
+                  value="">
                 <input type="file" multiple class="btn btn-primary" name="filenames[]" id="filenames" style="display: none"
                   onchange="cambio()">
                 <input type="hidden" name="nombreImgImagenEnvio" id="nombreImgImagenEnvio">
@@ -456,7 +457,7 @@
             cargarDetallesRendicion();
             document.getElementById('codigoPresupuestal').placeholder = codPresupProyecto + "...";
             $(".loader").fadeOut("slow");
-            contadorCaracteres('resumen','contador','{{App\Configuracion::tamañoMaximoResumen}}');
+            contadorCaracteres('resumen','contador','{{App\Utils\Configuracion::tamañoMaximoResumen}}');
         });
 
         var listaArchivos = '';

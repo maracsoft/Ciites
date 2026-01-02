@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Configuracion;
+use App\Utils\Configuracion;
 use App\ArchivoReqAdmin;
 use App\ArchivoReqEmp;
 use App\Http\Controllers\Controller;

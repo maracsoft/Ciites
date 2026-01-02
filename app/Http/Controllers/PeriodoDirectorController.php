@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Configuracion;
+use App\Utils\Configuracion;
 use App\Debug;
 use App\Empleado;
 use App\ErrorHistorial;
@@ -22,17 +22,19 @@ use Illuminate\Support\Facades\DB;
 class PeriodoDirectorController extends Controller
 {
 
-  public function ListarPeriodos(){
+  public function ListarPeriodos()
+  {
     $listaPeriodos = PeriodoDirectorGeneral::All();
 
-    return view('PeriodoDirector.ListarPeriodos',compact('listaPeriodos'));
+    return view('PeriodoDirector.ListarPeriodos', compact('listaPeriodos'));
   }
 
-  
-  public function Inv_ListarPeriodos(){
+
+  public function Inv_ListarPeriodos()
+  {
     $listaPeriodos = PeriodoDirectorGeneral::All();
-    
-    return view('PeriodoDirector.Inv_ListaPeriodos',compact('listaPeriodos'));
+
+    return view('PeriodoDirector.Inv_ListaPeriodos', compact('listaPeriodos'));
   }
 
   public function GetFormInvocable($codPeriodoDirector)
@@ -47,7 +49,7 @@ class PeriodoDirectorController extends Controller
 
       $titulo_modal = "Nuevo periodo";
     }
-    
+
 
     return view('PeriodoDirector.Inv_FormPeriodo', compact('periodo', 'titulo_modal'));
   }
@@ -63,7 +65,7 @@ class PeriodoDirectorController extends Controller
       $codPeriodoDirector = $request->codPeriodoDirector;
       $emp = Empleado::getEmpleadoLogeado();
 
-   
+
       if ($codPeriodoDirector == 0) { //nueva
         $periodo = new PeriodoDirectorGeneral();
         $periodo->fechaHoraCreacion = Carbon::now();
@@ -76,11 +78,11 @@ class PeriodoDirectorController extends Controller
       }
 
       $periodo->fecha_inicio = Fecha::formatoParaSQL($request->fecha_inicio);
-      $periodo->fecha_fin =Fecha::formatoParaSQL($request->fecha_fin);
+      $periodo->fecha_fin = Fecha::formatoParaSQL($request->fecha_fin);
       $periodo->nombres = $request->nombres;
       $periodo->apellidos = $request->apellidos;
       $periodo->dni = $request->dni;
-      $periodo->sexo = $request->sexo; 
+      $periodo->sexo = $request->sexo;
 
       $periodo->save();
 
@@ -96,8 +98,4 @@ class PeriodoDirectorController extends Controller
       return RespuestaAPI::respuestaError($msj_error);
     }
   }
-
- 
- 
-
 }

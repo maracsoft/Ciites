@@ -6,7 +6,7 @@ use Closure;
 use App\Debug;
 use App\Empleado;
 use App\ErrorHistorial;
-use App\Configuracion;
+use App\Utils\Configuracion;
 
 class ValidarSesionConductor
 {

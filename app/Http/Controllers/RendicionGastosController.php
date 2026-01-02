@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Configuracion;
+use App\Utils\Configuracion;
 use App\ArchivoRendicion;
 use App\Empleado;
 use Illuminate\Http\Request;

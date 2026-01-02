@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Area;
-use App\Configuracion;
+use App\Utils\Configuracion;
 use App\Empleado;
 use App\PeriodoEmpleado;
 use App\Puesto;

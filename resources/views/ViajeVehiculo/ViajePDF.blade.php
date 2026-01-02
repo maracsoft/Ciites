@@ -71,7 +71,7 @@
       <tbody>
         <tr>
           <th colspan="3">
-            <img src="{{ App\Configuracion::getRutaImagenCedepasPNG() }}" class="logo">
+            <img src="{{ App\Utils\Configuracion::getRutaImagenCedepasPNG() }}" class="logo">
           </th>
           <th class="text-center" colspan="3">
             VIAJE VEHICULAR N° {{ $viaje->getIdEstandar() }}

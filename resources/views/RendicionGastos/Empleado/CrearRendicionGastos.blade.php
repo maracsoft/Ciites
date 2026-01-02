@@ -317,11 +317,11 @@
       {{-- Este es para subir todos los archivos x.x  --}}
       <div class="col m-2" id="divEnteroArchivo">
 
-        <input type="{{ App\Configuracion::getInputTextOHidden() }}" name="nombresArchivos" id="nombresArchivos" value="">
+        <input type="{{ App\Utils\Configuracion::getInputTextOHidden() }}" name="nombresArchivos" id="nombresArchivos" value="">
 
 
         <input type="file" multiple class="btn btn-primary" name="filenames[]" id="filenames"
-          style="{{ App\Configuracion::getDisplayNone() }}" onchange="cambio()">
+          style="{{ App\Utils\Configuracion::getDisplayNone() }}" onchange="cambio()">
         <input type="hidden" name="nombreImgImagenEnvio" id="nombreImgImagenEnvio">
         <label class="label" for="filenames" style="font-size: 12pt;">
           <div id="divFileImagenEnvio" class="hovered">
@@ -387,7 +387,7 @@
         $(document).ready(function(){
 
             document.getElementById('codigoPresupuestal').placeholder = codPresupProyecto + "...";
-            contadorCaracteres('resumen','contador','{{App\Configuracion::tamañoMaximoResumen}}');
+            contadorCaracteres('resumen','contador','{{App\Utils\Configuracion::tamañoMaximoResumen}}');
         });
 
         function registrar(){
@@ -411,9 +411,9 @@
             limpiarEstilos(['resumen']);
 
 
-            msj = validarTamañoMaximoYNulidad(msj,'resumen',{{App\Configuracion::tamañoMaximoResumen}},'Resumen');
+            msj = validarTamañoMaximoYNulidad(msj,'resumen',{{App\Utils\Configuracion::tamañoMaximoResumen}},'Resumen');
 
-            msj = validarCantidadMaximaYNulidadDetalles(msj,'cantElementos',{{App\Configuracion::valorMaximoNroItem}});
+            msj = validarCantidadMaximaYNulidadDetalles(msj,'cantElementos',{{App\Utils\Configuracion::valorMaximoNroItem}});
 
 
             if($('#nombresArchivos').val()=="" )

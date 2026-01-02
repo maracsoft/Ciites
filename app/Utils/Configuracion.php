@@ -1,11 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Utils;
 
+use App\ParametroSistema;
 use Illuminate\Database\Eloquent\Model;
 use League\CommonMark\Util\Configuration;
 
-class Configuracion extends MaracModel
+class Configuracion
 {
   const estamosEnMantenimiento = false;
 

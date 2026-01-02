@@ -149,7 +149,7 @@
     msjError = "";
 
     msjError = validarNulidad(msjError, 'nuevaFecha', 'Fecha');
-    msjError = validarTamañoMaximoYNulidad(msjError, 'nuevaDescripcion', {{ App\Configuracion::tamañoMaximoLugar }},
+    msjError = validarTamañoMaximoYNulidad(msjError, 'nuevaDescripcion', {{ App\Utils\Configuracion::tamañoMaximoLugar }},
       'Descripción');
 
     msjError = validarPositividadYNulidad(msjError, 'nuevoMonto', 'Monto');
@@ -508,7 +508,7 @@
 
 
 
-  function consultarPorDNI_Representante(){
+  function consultarPorDNI_Representante() {
 
     msjError = "";
 
@@ -593,8 +593,6 @@
 </script>
 
 <style>
-
-
   .campo_editable {
     color: rgb(0, 62, 176);
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Configuracion;
+use App\Utils\Configuracion;
 use App\ArchivoSolicitud;
 use App\BackendValidator;
 use App\Empleado;

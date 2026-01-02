@@ -47,9 +47,9 @@
     for (let index = 0; index < cantidadArchivos; index++) {
       var imgsize = document.getElementById('filenames').files[index].size;
       nombre = document.getElementById('filenames').files[index].name;
-      if (imgsize > {{ App\Configuracion::pesoMaximoArchivoMB }} * 1000 * 1000) {
+      if (imgsize > {{ App\Utils\Configuracion::pesoMaximoArchivoMB }} * 1000 * 1000) {
         msj = ('El archivo ' + nombre +
-          ' supera los  {{ App\Configuracion::pesoMaximoArchivoMB }}Mb, porfavor ingrese uno más liviano o comprima.');
+          ' supera los  {{ App\Utils\Configuracion::pesoMaximoArchivoMB }}Mb, porfavor ingrese uno más liviano o comprima.');
       }
     }
 
@@ -71,8 +71,8 @@
 
 
     limpiarEstilos(['resumen']);
-    msj = validarTamañoMaximoYNulidad(msj, 'resumen', {{ App\Configuracion::tamañoMaximoResumen }}, 'Resumen');
-    msj = validarCantidadMaximaYNulidadDetalles(msj, 'cantElementos', {{ App\Configuracion::valorMaximoNroItem }});
+    msj = validarTamañoMaximoYNulidad(msj, 'resumen', {{ App\Utils\Configuracion::tamañoMaximoResumen }}, 'Resumen');
+    msj = validarCantidadMaximaYNulidadDetalles(msj, 'cantElementos', {{ App\Utils\Configuracion::valorMaximoNroItem }});
 
     /* if($('#nombresArchivos').val()=="" )
       msj='Debe subir los archivos comprobantes de pago.';
@@ -184,11 +184,11 @@
 
     msjError = validarNulidad(msjError, 'fechaComprobante', 'Fecha del comprobante del gasto');
     msjError = validarSelect(msjError, 'ComboBoxCDP', -1, 'Tipo de comprobante del gasto');
-    msjError = validarTamañoMaximoYNulidad(msjError, 'ncbte', {{ App\Configuracion::tamañoMaximoNroComprobante }},
+    msjError = validarTamañoMaximoYNulidad(msjError, 'ncbte', {{ App\Utils\Configuracion::tamañoMaximoNroComprobante }},
       'Número de comprobante del gasto');
-    msjError = validarTamañoMaximoYNulidad(msjError, 'concepto', {{ App\Configuracion::tamañoMaximoConcepto }}, 'Concepto');
+    msjError = validarTamañoMaximoYNulidad(msjError, 'concepto', {{ App\Utils\Configuracion::tamañoMaximoConcepto }}, 'Concepto');
     msjError = validarPositividadYNulidad(msjError, 'importe', 'Importe');
-    msjError = validarTamañoMaximoYNulidad(msjError, 'codigoPresupuestal', {{ App\Configuracion::tamañoMaximoCodigoPresupuestal }},
+    msjError = validarTamañoMaximoYNulidad(msjError, 'codigoPresupuestal', {{ App\Utils\Configuracion::tamañoMaximoCodigoPresupuestal }},
       'Código Presupuestal');
     msjError = validarCodigoPresupuestal(msjError, 'codigoPresupuestal', codPresupProyecto, 'Código presupuestal');
 

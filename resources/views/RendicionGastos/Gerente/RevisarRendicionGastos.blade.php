@@ -305,8 +305,8 @@
 
     $(document).ready(function() {
       textResum.classList.add('inputEditable');
-      contadorCaracteres('resumen', 'contador', '{{ App\Configuracion::tamañoMaximoResumen }}');
-      contadorCaracteres('observacion', 'contador2', '{{ App\Configuracion::tamañoMaximoObservacion }}');
+      contadorCaracteres('resumen', 'contador', '{{ App\Utils\Configuracion::tamañoMaximoResumen }}');
+      contadorCaracteres('observacion', 'contador2', '{{ App\Utils\Configuracion::tamañoMaximoObservacion }}');
     });
 
 
@@ -321,9 +321,9 @@
       if (textResum.value == '') {
         cambiarEstilo('resumen', 'form-control-undefined');
         msj = 'Debe ingresar la resumen';
-      } else if (textResum.value.length > {{ App\Configuracion::tamañoMaximoResumen }}) {
+      } else if (textResum.value.length > {{ App\Utils\Configuracion::tamañoMaximoResumen }}) {
         cambiarEstilo('resumen', 'form-control-undefined');
-        msj = 'La longitud de la resumen tiene que ser maximo de {{ App\Configuracion::tamañoMaximoResumen }} caracteres.';
+        msj = 'La longitud de la resumen tiene que ser maximo de {{ App\Utils\Configuracion::tamañoMaximoResumen }} caracteres.';
         msj = msj + ' El tamaño actual es de ' + textResum.value.length + ' caracteres.';
       }
 
@@ -334,9 +334,9 @@
         if (!inputt.value.startsWith(codPresupProyecto))
           msj = "El codigo presupuestal del item " + i + " no coincide con el del proyecto [" + codPresupProyecto + "] .";
 
-        if (inputt.value.length > {{ App\Configuracion::tamañoMaximoCodigoPresupuestal }}) {
+        if (inputt.value.length > {{ App\Utils\Configuracion::tamañoMaximoCodigoPresupuestal }}) {
           msj = 'La longitud del Codigo Presupuestal del item ' + i +
-            ' tiene que ser maximo de {{ App\Configuracion::tamañoMaximoCodigoPresupuestal }} caracteres.';
+            ' tiene que ser maximo de {{ App\Utils\Configuracion::tamañoMaximoCodigoPresupuestal }} caracteres.';
           msj = msj + ' El tamaño actual es de ' + inputt.value.length + ' caracteres.';
         }
         i++;
@@ -425,7 +425,7 @@
       }
 
       tamañoActualObs = textoObs.length;
-      tamañoMaximoObservacion = {{ App\Configuracion::tamañoMaximoObservacion }};
+      tamañoMaximoObservacion = {{ App\Utils\Configuracion::tamañoMaximoObservacion }};
       if (tamañoActualObs > tamañoMaximoObservacion) {
         alerta('La observación puede tener máximo hasta ' + tamañoMaximoObservacion +
           " caracteres. (El tamaño actual es " + tamañoActualObs + ")");
