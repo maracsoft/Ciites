@@ -75,7 +75,7 @@ class ProyectoController extends Controller
       return redirect()->route('GestionProyectos.Gerente.Ver', $codProyecto)->with('datos', $datos);
 
     if ($empleado->esUGE())
-      return redirect()->route('GestiónProyectos.editar', $codProyecto)->with('datos', $datos);
+      return redirect()->route('GestionProyectos.Editar', $codProyecto)->with('datos', $datos);
 
     return redirect()->route('user.home');
   }
@@ -98,40 +98,36 @@ class ProyectoController extends Controller
 
 
   //VISTA INDEX de proyectos PARA EL ADMINISTRADOR
-  function index()
+  function Listar()
   {
     $listaProyectos = Proyecto::All();
     $listaGerentes = Empleado::getListaGerentesActivos();
     $listaContadores = Empleado::getListaContadoresActivos();
     $listaEstados = EstadoProyecto::All();
 
-    return view(
-      'Proyectos.AdminSistema.ListarProyectos',
-      compact('listaProyectos', 'listaGerentes', 'listaContadores', 'listaEstados')
-    );
+    return view('Proyectos.AdminSistema.ListarProyectos', compact('listaProyectos', 'listaGerentes', 'listaContadores', 'listaEstados'));
   }
 
 
-
-
-
-
-  function crear()
+  function Crear()
   {
+    $proyecto = new Proyecto();
 
     $listaDepartamentos = Departamento::All();
     $listaFinancieras = EntidadFinanciera::All();
-    $listaPEIs = PlanEstrategicoInstitucional::All();
+
     $listaMonedas = Moneda::All();
     $listaSedes = Sede::All();
     $listaTipoFinanciamiento = TipoFinanciamiento::All();
     $listaGerentes = Empleado::getListaGerentesActivos();
     $listaProyectos = Proyecto::All();
+    $action = route('GestionProyectos.Guardar');
 
-    return view('Proyectos.Create', compact(
+    return view('Proyectos.CrearEditar', compact(
+      'proyecto',
       'listaDepartamentos',
       'listaFinancieras',
-      'listaPEIs',
+      'action',
       'listaMonedas',
       'listaSedes',
       'listaTipoFinanciamiento',
@@ -146,45 +142,37 @@ class ProyectoController extends Controller
   {
     $proyecto = Proyecto::findOrFail($codProyecto);
     $lugaresEjecucion = LugarEjecucion::where('codProyecto', '=', $codProyecto)->get();
-    $poblacionesBeneficiarias = PoblacionBeneficiaria::where('codProyecto', '=', $codProyecto)->get();
+
     $listaDepartamentos = Departamento::All();
     $listaFinancieras = EntidadFinanciera::All();
-    $listaPorcentajes = $proyecto->getPorcentajesObjEstrategicos();
-    $listaPEIs = PlanEstrategicoInstitucional::All();
-    $listaObjetivosEspecificos = ObjetivoEspecifico::where('codProyecto', '=', $codProyecto)->get();
-    $listaResultadosEsperados = ResultadoEsperado::where('codProyecto', '=', $codProyecto)->get();
+
+
     $listaMonedas = Moneda::All();
     $listaSedes = Sede::All();
     $listaTipoFinanciamiento = TipoFinanciamiento::All();
-    $listaActividades = $proyecto->getListaActividades();
-    $listaTiposArchivos = TipoArchivoProyecto::All();
-    $relacionesObjMilenio = RelacionProyectoObjMilenio::where('codProyecto', '=', $codProyecto)->get();
+
+    $listaGerentes = Empleado::getListaGerentesActivos();
+    $listaProyectos = Proyecto::All();
 
 
-    $listaIndicadoresResultados = $proyecto->getIndicadoresResultados();
+    $action = route('GestionProyectos.Actualizar');
 
-    return view('Proyectos.EditarProyecto', compact(
-      'listaSedes',
+    return view('Proyectos.CrearEditar', compact(
       'proyecto',
-      'lugaresEjecucion',
       'listaDepartamentos',
-      'poblacionesBeneficiarias',
       'listaFinancieras',
-      'listaPorcentajes',
-      'listaPEIs',
-      'listaObjetivosEspecificos',
-      'listaResultadosEsperados',
+      'action',
+
       'listaMonedas',
+      'listaSedes',
       'listaTipoFinanciamiento',
-      'listaActividades',
-      'listaIndicadoresResultados',
-      'listaTiposArchivos',
-      'relacionesObjMilenio'
+      'listaGerentes',
+      'listaProyectos'
     ));
   }
 
 
-  function store(Request $request)
+  function Guardar(Request $request)
   {
     try {
       DB::beginTransaction();
@@ -195,120 +183,63 @@ class ProyectoController extends Controller
         ->get();
       if (count($proyectosMismoCodPresup) != 0) {
 
-        return redirect()->route('GestiónProyectos.AdminSistema.Listar')
+        return redirect()->route('GestionProyectos.Listar')
           ->with('datos', 'ERROR: Ya existe un proyecto con el código presupuestal ingresado [' . $request->codigoPresupuestal . '].');
       }
 
 
       $proyecto = new Proyecto();
       $proyecto->codEstadoProyecto = Proyecto::getCodEstado('En Registro');
-
-      $fechaInicio = Fecha::formatoParaSQL($request->fechaInicio);
-      $proyecto->fechaInicio = $fechaInicio;
-      $fechaFinalizacion = Fecha::formatoParaSQL($request->fechaFinalizacion);
-      $proyecto->fechaFinalizacion = $fechaFinalizacion;
-
-      $proyecto->nombre = $request->nombre;
-      $proyecto->codPEI = $request->codPEI;
-      $proyecto->codigoPresupuestal = $request->codigoPresupuestal;
-      $proyecto->nombreLargo = $request->nombreLargo;
-      $proyecto->codEntidadFinanciera = $request->codEntidadFinanciera;
-      $proyecto->codEmpleadoDirector = $request->codGerente;
-
-      $proyecto->codMoneda = $request->codMoneda;
-
-      $proyecto->importeContrapartidaCedepas = $request->importeContrapartidaCedepas;
-      $proyecto->importeContrapartidaPoblacionBeneficiaria = $request->importeContrapartidaPoblacionBeneficiaria;
-      $proyecto->importeContrapartidaOtros = $request->importeContrapartidaOtros;
-      $proyecto->importeFinanciamiento = $request->importeFinanciamiento;
-
-
-      $proyecto->importePresupuestoTotal =
-        $proyecto->importeContrapartidaCedepas +
-        $proyecto->importeContrapartidaPoblacionBeneficiaria +
-        $proyecto->importeContrapartidaOtros +
-        $proyecto->importeFinanciamiento;
-
-
-
-      $proyecto->codTipoFinanciamiento = $request->codTipoFinanciamiento;
-      $proyecto->codSedePrincipal = $request->codSede;
-      $proyecto->objetivoGeneral = $request->objetivoGeneral;
-
-
+      $proyecto->setDataFromRequest($request);
       $proyecto->save();
-      $proyecto->inicializarObjetivosMilenio(); //inserta en cada objetivo del milenio
 
       DB::commit();
 
-      return redirect()->route('GestiónProyectos.AdminSistema.Listar')->with('datos', 'Proyecto creado exitosamente, ya puede asignar contadores y registrar información detallada del proyecto en el botón Editar.');
+      return redirect()->route('GestionProyectos.Listar')->with('datos', 'Proyecto creado exitosamente, ya puede asignar contadores y registrar información detallada del proyecto en el botón Editar.');
     } catch (\Throwable $th) {
 
-      Debug::mensajeError('PROYECTO CONTROLLER STORE', $th);
+      Debug::LogMessage($th);
       DB::rollBack();
       $codErrorHistorial = ErrorHistorial::registrarError(
         $th,
         app('request')->route()->getAction(),
         json_encode($request->toArray())
       );
-      return redirect()->route('GestiónProyectos.AdminSistema.Listar')->with('datos', Configuracion::getMensajeError($codErrorHistorial));
+      return redirect()->route('GestionProyectos.Listar')->with('datos', Configuracion::getMensajeError($codErrorHistorial));
     }
   }
 
-  function update(Request $request)
+  function Actualizar(Request $request)
   {
-    //return $request;
     try {
       DB::beginTransaction();
 
+      //validamos si ya hay otro proyecto activo con ese cod presupuestal
+      $proyectosMismoCodPresup = Proyecto::where('codigoPresupuestal', '=', $request->codigoPresupuestal)
+        ->where('codProyecto', '!=', $request->codProyecto)
+        ->get();
+
+      if (count($proyectosMismoCodPresup) != 0) {
+        return redirect()->route('GestionProyectos.Listar')
+          ->with('datos', 'ERROR: Ya existe un proyecto con el código presupuestal ingresado [' . $request->codigoPresupuestal . '].');
+      }
       $proyecto = Proyecto::findOrFail($request->codProyecto);
-      $proyecto->nombre = $request->nombre;
-
-      $fechaInicio = Fecha::formatoParaSQL($request->fechaInicio);
-      $proyecto->fechaInicio = $fechaInicio;
-      $fechaFinalizacion = Fecha::formatoParaSQL($request->fechaFinalizacion);
-      $proyecto->fechaFinalizacion = $fechaFinalizacion;
-
-      $proyecto->codigoPresupuestal = $request->codigoPresupuestal;
-      $proyecto->nombreLargo = $request->nombreLargo;
-      $proyecto->codEntidadFinanciera = $request->codEntidadFinanciera;
-
-      $proyecto->codMoneda = $request->codMoneda;
-
-      $proyecto->importeContrapartidaCedepas = $request->importeContrapartidaCedepas;
-      $proyecto->importeContrapartidaPoblacionBeneficiaria = $request->importeContrapartidaPoblacionBeneficiaria;
-      $proyecto->importeContrapartidaOtros = $request->importeContrapartidaOtros;
-      $proyecto->importeFinanciamiento = $request->importeFinanciamiento;
-
-
-      $proyecto->importePresupuestoTotal =
-        $proyecto->importeContrapartidaCedepas +
-        $proyecto->importeContrapartidaPoblacionBeneficiaria +
-        $proyecto->importeContrapartidaOtros +
-        $proyecto->importeFinanciamiento;
-
-
-
-      $proyecto->codTipoFinanciamiento = $request->codTipoFinanciamiento;
-      $proyecto->codSedePrincipal = $request->codSede;
-      $proyecto->objetivoGeneral = $request->objetivoGeneral;
-
-
+      $proyecto->setDataFromRequest($request);
       $proyecto->save();
 
       DB::commit();
 
-      return redirect()->route('GestiónProyectos.editar', $proyecto->codProyecto)->with('datos', 'Proyecto actualizado exitosamente.');
+      return redirect()->route('GestionProyectos.Listar')->with('datos', 'Proyecto creado exitosamente, ya puede asignar contadores y registrar información detallada del proyecto en el botón Editar.');
     } catch (\Throwable $th) {
 
-      Debug::mensajeError('PROYECTO CONTROLLER update', $th);
+
       DB::rollBack();
       $codErrorHistorial = ErrorHistorial::registrarError(
         $th,
         app('request')->route()->getAction(),
         json_encode($request->toArray())
       );
-      return redirect()->route('GestiónProyectos.editar', $proyecto->codProyecto)->with('datos', Configuracion::getMensajeError($codErrorHistorial));
+      return redirect()->route('GestionProyectos.Listar')->with('datos', Configuracion::getMensajeError($codErrorHistorial));
     }
   }
 
@@ -518,7 +449,7 @@ class ProyectoController extends Controller
 
   #region CRUD Contadores de un proyecto
   /* Despliega vista para ver los contadores de un proyecto */
-  function listarContadores($id)
+  function VerContadores($id)
   {
 
 
@@ -554,7 +485,7 @@ class ProyectoController extends Controller
     $detalle->codEmpleadoContador = $request->codEmpleadoConta;
     $detalle->save();
 
-    return redirect()->route('GestiónProyectos.ListarContadores', $request->codProyecto);
+    return redirect()->route('GestionProyectos.Contadores', $request->codProyecto);
   }
 
   function eliminarContador($codProyectoContador)
@@ -571,12 +502,12 @@ class ProyectoController extends Controller
       $proyectoContador->delete();
 
       db::commit();
-      return redirect()->route('GestiónProyectos.ListarContadores', $proyectoContador->codProyecto)
+      return redirect()->route('GestionProyectos.Contadores', $proyectoContador->codProyecto)
         ->with('datos', "Contador $nombre eliminado del proyecto $proyecto.");
     } catch (\Throwable $th) {
       DB::rollBack();
       $codErrorHistorial = ErrorHistorial::registrarError($th, app('request')->route()->getAction(), $codProyectoContador);
-      return redirect()->route('GestiónProyectos.ListarContadores', $proyectoContador->codProyecto)
+      return redirect()->route('GestionProyectos.Contadores', $proyectoContador->codProyecto)
         ->with('datos', Configuracion::getMensajeError($codErrorHistorial));
     }
   }
@@ -630,12 +561,12 @@ class ProyectoController extends Controller
 
       db::commit();
 
-      return redirect()->route('GestiónProyectos.AdminSistema.Listar')
+      return redirect()->route('GestionProyectos.Listar')
         ->with('datos', 'Se han asignado todos los contadores registrados a todos los proyectos registrados.');
     } catch (\Throwable $th) {
       DB::rollBack();
       $codErrorHistorial = ErrorHistorial::registrarError($th, app('request')->route()->getAction(), "");
-      return redirect()->route('GestiónProyectos.AdminSistema.Listar')
+      return redirect()->route('GestionProyectos.Listar')
         ->with('datos', Configuracion::getMensajeError($codErrorHistorial));
     }
   }

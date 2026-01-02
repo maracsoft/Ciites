@@ -27,6 +27,10 @@
         </div>
         <div class="card-body">
 
+          <a href="{{ route('GestionProyectos.Listar') }}" class="btn btn-primary">
+            Proyectos
+          </a>
+
           <a href="{{ route('HistorialErrores.Listar') }}" class="btn btn-primary">
             Historial de Errores
           </a>

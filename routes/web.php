@@ -124,12 +124,24 @@ Route::group(['middleware' => "Mantenimiento"], function () {
     /* ---------------------------------------------------------------------------------------------------------------- */
 
 
-    Route::get('/GestiónProyectos/getDashboardInfo', 'ProyectoController@getDashboardInfo')->name('GestiónProyectos.Gerente.getDashboardInfo');
+    Route::get('/GestionProyectos/getDashboardInfo', 'ProyectoController@getDashboardInfo')->name('GestionProyectos.Gerente.getDashboardInfo');
     Route::get('/GestionProyectos/Dashboard', 'ProyectoController@VerDashboard')->name('GestionProyectos.VerDashboard');
 
 
     Route::group(['middleware' => "ValidarSesionGerenteOUGE"], function () {
 
+      Route::get('/GestionProyectos/Listar', 'ProyectoController@Listar')->name('GestionProyectos.Listar');
+      Route::get('/GestionProyectos/Crear', 'ProyectoController@Crear')->name('GestionProyectos.Crear');
+      Route::get('/GestionProyectos/Contadores/{codProyecto}', 'ProyectoController@VerContadores')->name('GestionProyectos.Contadores');
+      Route::get('/GestionProyectos/Editar/{codProyecto}', 'ProyectoController@Editar')->name('GestionProyectos.Editar');
+
+      Route::post('/GestionProyectos/Guardar', 'ProyectoController@Guardar')->name('GestionProyectos.Guardar');
+      Route::post('/GestionProyectos/Actualizar', 'ProyectoController@Actualizar')->name('GestionProyectos.Actualizar');
+
+
+
+      Route::post('/GestionProyectos/agregarContador', 'ProyectoController@agregarContador')->name('GestionProyectos.agregarContador');
+      Route::get('/GestionProyectos/eliminarContador/{codRelacion}', 'ProyectoController@eliminarContador')->name('GestionProyectos.eliminarContador');
 
 
 
