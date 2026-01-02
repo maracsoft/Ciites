@@ -68,7 +68,7 @@ class F_SOF_FlujoTest extends DuskTestCase
   {
 
     $this->browse(function (Browser $browser) {
-      $proyecto = Proyecto::findOrFail(1);
+      $proyecto = Proyecto::findOrFail(64);
       $cuerpo = FakerCedepas::F_SOL_generarCuerpo($proyecto);
       $usuario = User::findOrFail(static::codUsuarioEmisor);
 
@@ -185,19 +185,18 @@ class F_SOF_FlujoTest extends DuskTestCase
         ->press('#botonActivarEdicion')
         ->pause(100)
         ->type('#justificacion', $solicitud->justificacion . " CORREGIDO") //EL TYPE LO REMPLAZA TOTALMENTE
-        //->screenshot('hola mundo XD')
+
       ;
 
       $browser = $browser
 
         ->press('#botonAprobar')
+        ->pause(3000) //esperamos a que aparezca el modal de confirmacion
         ->assertSee('¿Está seguro de Aprobar la Solicitud?')
-        ->pause(300) //esperamos a que aparezca el modal de confirmacion
-        ->screenshot('SS-ConfirmAprobacionSOL')
+
         ->press('SÍ')
-        ->pause(200) //esperamos a que nos redirija a la pagina de listar
-        ->assertSee('Aprobada')
-        ->screenshot('SS-ListarSOL-postAprob');
+        ->pause(2000) //esperamos a que nos redirija a la pagina de listar
+        ->assertSee('Aprobada');
     });
   }
 
