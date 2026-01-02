@@ -10,49 +10,48 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 //START MODEL_HELPER
-
 /**
- * @property int $codContratoPlazo int(11)
- * @property string $nombres varchar(500)
- * @property string $dni varchar(500)
- * @property string $apellidos varchar(500)
- * @property string $codigo_unico varchar(500)
- * @property string $fechaHoraGeneracion datetime
- * @property int $codMoneda int(11)
- * @property int $codEmpleadoCreador int(11)
- * @property string $domicilio varchar(500)
- * @property string $tipo_adenda_financiera varchar(500)
- * @property string $nombre_financiera varchar(500)
- * @property int $duracion_convenio_numero int(11)
- * @property string $duracion_convenio_unidad_temporal varchar(500)
- * @property string $nombre_proyecto varchar(500)
- * @property string $puesto varchar(500)
- * @property string $fecha_inicio_prueba date NULLABLE
- * @property string $fecha_fin_prueba date NULLABLE
- * @property string $fecha_inicio_contrato date
- * @property string $fecha_fin_contrato date
- * @property int $cantidad_dias_labor int(11) NULLABLE
- * @property int $cantidad_dias_descanso int(11) NULLABLE
- * @property float $remuneracion_mensual float
- * @property string $fechaHoraAnulacion date NULLABLE
- * @property int $es_borrador int(11)
- * @property string $provincia varchar(200)
- * @property string $departamento varchar(200)
- * @property string $sexo varchar(5)
- * @property string $distrito varchar(200)
- * @property string $tipo_contrato varchar(100)
- * @property int $tiene_periodo_prueba int(11)
- * @property int $codPeriodoDirector int(11) NULLABLE
+ * @property int $codContratoPlazo int(11)     
+ * @property string $nombres varchar(500)     
+ * @property string $dni varchar(500)     
+ * @property string $apellidos varchar(500)     
+ * @property string $codigo_unico varchar(500)     
+ * @property string $fechaHoraGeneracion datetime     
+ * @property int $codMoneda int(11)     
+ * @property int $codEmpleadoCreador int(11)     
+ * @property string $domicilio varchar(500)     
+ * @property string $tipo_adenda_financiera varchar(500)     
+ * @property string $nombre_financiera varchar(500)     
+ * @property int $duracion_convenio_numero int(11)     
+ * @property string $duracion_convenio_unidad_temporal varchar(500)     
+ * @property string $nombre_proyecto varchar(500)     
+ * @property string $puesto varchar(500)     
+ * @property string $fecha_inicio_prueba date NULLABLE    
+ * @property string $fecha_fin_prueba date NULLABLE    
+ * @property string $fecha_inicio_contrato date     
+ * @property string $fecha_fin_contrato date     
+ * @property int $cantidad_dias_labor int(11) NULLABLE    
+ * @property int $cantidad_dias_descanso int(11) NULLABLE    
+ * @property float $remuneracion_mensual float     
+ * @property string $fechaHoraAnulacion date NULLABLE    
+ * @property int $es_borrador int(11)     
+ * @property string $provincia varchar(200)     
+ * @property string $departamento varchar(200)     
+ * @property string $sexo varchar(5)     
+ * @property string $distrito varchar(200)     
+ * @property string $tipo_contrato varchar(100)     
+ * @property int $tiene_periodo_prueba int(11)     
+ * @property int $codPeriodoDirector int(11) NULLABLE    
  * @method static ContratoPlazoNuevo findOrFail($primary_key)
  * @method static ContratoPlazoNuevo | null find($primary_key)
  * @method static ContratoPlazoNuevoCollection all()
  * @method static \App\Builders\ContratoPlazoNuevoBuilder query()
  * @method static \App\Builders\ContratoPlazoNuevoBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\ContratoPlazoNuevoBuilder where(string $column,string $value)
- * @method static \App\Builders\ContratoPlazoNuevoBuilder whereNotNull(string $column)
- * @method static \App\Builders\ContratoPlazoNuevoBuilder whereNull(string $column)
+ * @method static \App\Builders\ContratoPlazoNuevoBuilder whereNotNull(string $column) 
+ * @method static \App\Builders\ContratoPlazoNuevoBuilder whereNull(string $column) 
  * @method static \App\Builders\ContratoPlazoNuevoBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\ContratoPlazoNuevoBuilder orderBy(string $column,array $sentido)
+ * @method static \App\Builders\ContratoPlazoNuevoBuilder orderBy(string $column,array $sentido) 
  */
 //END MODEL_HELPER
 class ContratoPlazoNuevo extends Contrato

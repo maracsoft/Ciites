@@ -5,7 +5,6 @@ namespace App;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 //START MODEL_HELPER
-
 /**
  * @method static HistorialLogeo findOrFail($primary_key)
  * @method static HistorialLogeo | null find($primary_key)
@@ -13,10 +12,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \App\Builders\HistorialLogeoBuilder query()
  * @method static \App\Builders\HistorialLogeoBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\HistorialLogeoBuilder where(string $column,string $value)
- * @method static \App\Builders\HistorialLogeoBuilder whereNotNull(string $column)
- * @method static \App\Builders\HistorialLogeoBuilder whereNull(string $column)
+ * @method static \App\Builders\HistorialLogeoBuilder whereNotNull(string $column) 
+ * @method static \App\Builders\HistorialLogeoBuilder whereNull(string $column) 
  * @method static \App\Builders\HistorialLogeoBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\HistorialLogeoBuilder orderBy(string $column,array $sentido)
+ * @method static \App\Builders\HistorialLogeoBuilder orderBy(string $column,array $sentido) 
  */
 //END MODEL_HELPER
 class HistorialLogeo extends MaracModel

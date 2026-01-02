@@ -5,22 +5,21 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 //START MODEL_HELPER
-
 /**
- * @property int $codArchivoRend int(11)
- * @property string $nombreDeGuardado varchar(100)
- * @property int $codRendicionGastos int(11)
- * @property string $nombreAparente varchar(500)
+ * @property int $codArchivoRend int(11)     
+ * @property string $nombreDeGuardado varchar(100)     
+ * @property int $codRendicionGastos int(11)     
+ * @property string $nombreAparente varchar(500)     
  * @method static ArchivoRendicion findOrFail($primary_key)
  * @method static ArchivoRendicion | null find($primary_key)
  * @method static ArchivoRendicionCollection all()
  * @method static \App\Builders\ArchivoRendicionBuilder query()
  * @method static \App\Builders\ArchivoRendicionBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\ArchivoRendicionBuilder where(string $column,string $value)
- * @method static \App\Builders\ArchivoRendicionBuilder whereNotNull(string $column)
- * @method static \App\Builders\ArchivoRendicionBuilder whereNull(string $column)
+ * @method static \App\Builders\ArchivoRendicionBuilder whereNotNull(string $column) 
+ * @method static \App\Builders\ArchivoRendicionBuilder whereNull(string $column) 
  * @method static \App\Builders\ArchivoRendicionBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\ArchivoRendicionBuilder orderBy(string $column,array $sentido)
+ * @method static \App\Builders\ArchivoRendicionBuilder orderBy(string $column,array $sentido) 
  */
 //END MODEL_HELPER
 class ArchivoRendicion extends MaracModel

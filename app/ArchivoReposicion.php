@@ -5,22 +5,21 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 //START MODEL_HELPER
-
 /**
- * @property int $codArchivoRepo int(11)
- * @property string $nombreDeGuardado varchar(100)
- * @property int $codReposicionGastos int(11)
- * @property string $nombreAparente varchar(500)
+ * @property int $codArchivoRepo int(11)     
+ * @property string $nombreDeGuardado varchar(100)     
+ * @property int $codReposicionGastos int(11)     
+ * @property string $nombreAparente varchar(500)     
  * @method static ArchivoReposicion findOrFail($primary_key)
  * @method static ArchivoReposicion | null find($primary_key)
  * @method static ArchivoReposicionCollection all()
  * @method static \App\Builders\ArchivoReposicionBuilder query()
  * @method static \App\Builders\ArchivoReposicionBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\ArchivoReposicionBuilder where(string $column,string $value)
- * @method static \App\Builders\ArchivoReposicionBuilder whereNotNull(string $column)
- * @method static \App\Builders\ArchivoReposicionBuilder whereNull(string $column)
+ * @method static \App\Builders\ArchivoReposicionBuilder whereNotNull(string $column) 
+ * @method static \App\Builders\ArchivoReposicionBuilder whereNull(string $column) 
  * @method static \App\Builders\ArchivoReposicionBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\ArchivoReposicionBuilder orderBy(string $column,array $sentido)
+ * @method static \App\Builders\ArchivoReposicionBuilder orderBy(string $column,array $sentido) 
  */
 //END MODEL_HELPER
 class ArchivoReposicion extends MaracModel

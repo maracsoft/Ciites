@@ -10,33 +10,32 @@ use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 //START MODEL_HELPER
-
 /**
- * @property int $codOrdenCompra int(11)
- * @property string $señores varchar(100)
- * @property string $ruc varchar(13)
- * @property string $direccion varchar(300)
- * @property string $atencion varchar(200)
- * @property string $referencia varchar(200)
- * @property float $total float
- * @property string $partidaPresupuestal varchar(50)
- * @property string $observacion varchar(350)
- * @property int $codProyecto int(11)
- * @property int $codMoneda int(11)
- * @property int $codEmpleadoCreador int(11)
- * @property string $fechaHoraCreacion datetime
- * @property string $codigoCedepas varchar(50)
- * @property int $codSede int(11)
+ * @property int $codOrdenCompra int(11)     
+ * @property string $señores varchar(100)     
+ * @property string $ruc varchar(13)     
+ * @property string $direccion varchar(300)     
+ * @property string $atencion varchar(200)     
+ * @property string $referencia varchar(200)     
+ * @property float $total float     
+ * @property string $partidaPresupuestal varchar(50)     
+ * @property string $observacion varchar(350)     
+ * @property int $codProyecto int(11)     
+ * @property int $codMoneda int(11)     
+ * @property int $codEmpleadoCreador int(11)     
+ * @property string $fechaHoraCreacion datetime     
+ * @property string $codigoCedepas varchar(50)     
+ * @property int $codSede int(11)     
  * @method static OrdenCompra findOrFail($primary_key)
  * @method static OrdenCompra | null find($primary_key)
  * @method static OrdenCompraCollection all()
  * @method static \App\Builders\OrdenCompraBuilder query()
  * @method static \App\Builders\OrdenCompraBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\OrdenCompraBuilder where(string $column,string $value)
- * @method static \App\Builders\OrdenCompraBuilder whereNotNull(string $column)
- * @method static \App\Builders\OrdenCompraBuilder whereNull(string $column)
+ * @method static \App\Builders\OrdenCompraBuilder whereNotNull(string $column) 
+ * @method static \App\Builders\OrdenCompraBuilder whereNull(string $column) 
  * @method static \App\Builders\OrdenCompraBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\OrdenCompraBuilder orderBy(string $column,array $sentido)
+ * @method static \App\Builders\OrdenCompraBuilder orderBy(string $column,array $sentido) 
  */
 //END MODEL_HELPER
 class OrdenCompra extends MaracModel

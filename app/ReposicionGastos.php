@@ -15,41 +15,40 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 //START MODEL_HELPER
-
 /**
- * @property int $codReposicionGastos int(11)
- * @property int $codEstadoReposicion int(11)
- * @property float $totalImporte float NULLABLE
- * @property int $codProyecto int(11)
- * @property int $codMoneda int(11)
- * @property string $codigoCedepas varchar(30)
- * @property string $girarAOrdenDe varchar(50)
- * @property string $numeroCuentaBanco varchar(100)
- * @property int $codBanco int(11)
- * @property string $resumen varchar(500)
- * @property string $fechaHoraEmision datetime(3)
- * @property int $codEmpleadoSolicitante int(11)
- * @property int $codEmpleadoEvaluador int(11) NULLABLE
- * @property int $codEmpleadoAdmin int(11) NULLABLE
- * @property int $codEmpleadoConta int(11) NULLABLE
- * @property string $fechaHoraRevisionGerente datetime NULLABLE
- * @property string $fechaHoraRevisionAdmin datetime NULLABLE
- * @property string $fechaHoraRevisionConta datetime NULLABLE
- * @property string $observacion varchar(200) NULLABLE
- * @property int $cantArchivos tinyint(4) NULLABLE
- * @property string $terminacionesArchivos varchar(100) NULLABLE
- * @property string $fechaHoraRenderizadoVistaCrear datetime(3) NULLABLE
- * @property string $codigoContrapartida varchar(200) NULLABLE
+ * @property int $codReposicionGastos int(11)     
+ * @property int $codEstadoReposicion int(11)     
+ * @property float $totalImporte float NULLABLE    
+ * @property int $codProyecto int(11)     
+ * @property int $codMoneda int(11)     
+ * @property string $codigoCedepas varchar(30)     
+ * @property string $girarAOrdenDe varchar(50)     
+ * @property string $numeroCuentaBanco varchar(100)     
+ * @property int $codBanco int(11)     
+ * @property string $resumen varchar(500)     
+ * @property string $fechaHoraEmision datetime(3)     
+ * @property int $codEmpleadoSolicitante int(11)     
+ * @property int $codEmpleadoEvaluador int(11) NULLABLE    
+ * @property int $codEmpleadoAdmin int(11) NULLABLE    
+ * @property int $codEmpleadoConta int(11) NULLABLE    
+ * @property string $fechaHoraRevisionGerente datetime NULLABLE    
+ * @property string $fechaHoraRevisionAdmin datetime NULLABLE    
+ * @property string $fechaHoraRevisionConta datetime NULLABLE    
+ * @property string $observacion varchar(200) NULLABLE    
+ * @property int $cantArchivos tinyint(4) NULLABLE    
+ * @property string $terminacionesArchivos varchar(100) NULLABLE    
+ * @property string $fechaHoraRenderizadoVistaCrear datetime(3) NULLABLE    
+ * @property string $codigoContrapartida varchar(200) NULLABLE    
  * @method static ReposicionGastos findOrFail($primary_key)
  * @method static ReposicionGastos | null find($primary_key)
  * @method static ReposicionGastosCollection all()
  * @method static \App\Builders\ReposicionGastosBuilder query()
  * @method static \App\Builders\ReposicionGastosBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\ReposicionGastosBuilder where(string $column,string $value)
- * @method static \App\Builders\ReposicionGastosBuilder whereNotNull(string $column)
- * @method static \App\Builders\ReposicionGastosBuilder whereNull(string $column)
+ * @method static \App\Builders\ReposicionGastosBuilder whereNotNull(string $column) 
+ * @method static \App\Builders\ReposicionGastosBuilder whereNull(string $column) 
  * @method static \App\Builders\ReposicionGastosBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\ReposicionGastosBuilder orderBy(string $column,array $sentido)
+ * @method static \App\Builders\ReposicionGastosBuilder orderBy(string $column,array $sentido) 
  */
 //END MODEL_HELPER
 class ReposicionGastos extends DocumentoAdministrativo

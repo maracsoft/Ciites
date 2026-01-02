@@ -5,29 +5,28 @@ namespace App;
 use App\Utils\Fecha;
 use Illuminate\Database\Eloquent\Model;
 //START MODEL_HELPER
-
 /**
- * @property int $codDetalleReposicion int(11)
- * @property int $codReposicionGastos int(11)
- * @property string $fechaComprobante date
- * @property string $nroComprobante varchar(50)
- * @property string $concepto varchar(250)
- * @property float $importe float
- * @property string $codigoPresupuestal varchar(50)
- * @property int $nroEnReposicion int(11)
- * @property int $codTipoCDP int(11)
- * @property int $contabilizado tinyint(4) NULLABLE
- * @property int $pendienteDeVer int(11)
+ * @property int $codDetalleReposicion int(11)     
+ * @property int $codReposicionGastos int(11)     
+ * @property string $fechaComprobante date     
+ * @property string $nroComprobante varchar(50)     
+ * @property string $concepto varchar(250)     
+ * @property float $importe float     
+ * @property string $codigoPresupuestal varchar(50)     
+ * @property int $nroEnReposicion int(11)     
+ * @property int $codTipoCDP int(11)     
+ * @property int $contabilizado tinyint(4) NULLABLE    
+ * @property int $pendienteDeVer int(11)     
  * @method static DetalleReposicionGastos findOrFail($primary_key)
  * @method static DetalleReposicionGastos | null find($primary_key)
  * @method static DetalleReposicionGastosCollection all()
  * @method static \App\Builders\DetalleReposicionGastosBuilder query()
  * @method static \App\Builders\DetalleReposicionGastosBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\DetalleReposicionGastosBuilder where(string $column,string $value)
- * @method static \App\Builders\DetalleReposicionGastosBuilder whereNotNull(string $column)
- * @method static \App\Builders\DetalleReposicionGastosBuilder whereNull(string $column)
+ * @method static \App\Builders\DetalleReposicionGastosBuilder whereNotNull(string $column) 
+ * @method static \App\Builders\DetalleReposicionGastosBuilder whereNull(string $column) 
  * @method static \App\Builders\DetalleReposicionGastosBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\DetalleReposicionGastosBuilder orderBy(string $column,array $sentido)
+ * @method static \App\Builders\DetalleReposicionGastosBuilder orderBy(string $column,array $sentido) 
  */
 //END MODEL_HELPER
 class DetalleReposicionGastos extends MaracModel

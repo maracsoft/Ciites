@@ -14,40 +14,39 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 //START MODEL_HELPER
-
 /**
- * @property int $codRequerimiento int(11)
- * @property string $codigoCedepas varchar(30)
- * @property string $fechaHoraEmision datetime
- * @property string $fechaHoraRevision datetime NULLABLE
- * @property string $fechaHoraAtendido datetime NULLABLE
- * @property string $fechaHoraConta datetime NULLABLE
- * @property int $codEmpleadoSolicitante int(11)
- * @property int $codEmpleadoEvaluador int(11) NULLABLE
- * @property int $codEmpleadoAdministrador int(11) NULLABLE
- * @property int $codEmpleadoContador int(11) NULLABLE
- * @property string $justificacion varchar(350)
- * @property int $codEstadoRequerimiento int(11)
- * @property int $cantArchivosEmp tinyint(4) NULLABLE
- * @property string $nombresArchivosEmp varchar(500) NULLABLE
- * @property int $cantArchivosAdmin tinyint(4) NULLABLE
- * @property string $nombresArchivosAdmin varchar(500) NULLABLE
- * @property int $codProyecto int(11)
- * @property string $observacion varchar(200) NULLABLE
- * @property string $cuentaBancariaProveedor varchar(100) NULLABLE
- * @property int $tieneFactura tinyint(4) NULLABLE
- * @property int $facturaContabilizada tinyint(4) NULLABLE
- * @property string $codigoContrapartida varchar(200) NULLABLE
+ * @property int $codRequerimiento int(11)     
+ * @property string $codigoCedepas varchar(30)     
+ * @property string $fechaHoraEmision datetime     
+ * @property string $fechaHoraRevision datetime NULLABLE    
+ * @property string $fechaHoraAtendido datetime NULLABLE    
+ * @property string $fechaHoraConta datetime NULLABLE    
+ * @property int $codEmpleadoSolicitante int(11)     
+ * @property int $codEmpleadoEvaluador int(11) NULLABLE    
+ * @property int $codEmpleadoAdministrador int(11) NULLABLE    
+ * @property int $codEmpleadoContador int(11) NULLABLE    
+ * @property string $justificacion varchar(350)     
+ * @property int $codEstadoRequerimiento int(11)     
+ * @property int $cantArchivosEmp tinyint(4) NULLABLE    
+ * @property string $nombresArchivosEmp varchar(500) NULLABLE    
+ * @property int $cantArchivosAdmin tinyint(4) NULLABLE    
+ * @property string $nombresArchivosAdmin varchar(500) NULLABLE    
+ * @property int $codProyecto int(11)     
+ * @property string $observacion varchar(200) NULLABLE    
+ * @property string $cuentaBancariaProveedor varchar(100) NULLABLE    
+ * @property int $tieneFactura tinyint(4) NULLABLE    
+ * @property int $facturaContabilizada tinyint(4) NULLABLE    
+ * @property string $codigoContrapartida varchar(200) NULLABLE    
  * @method static RequerimientoBS findOrFail($primary_key)
  * @method static RequerimientoBS | null find($primary_key)
  * @method static RequerimientoBSCollection all()
  * @method static \App\Builders\RequerimientoBSBuilder query()
  * @method static \App\Builders\RequerimientoBSBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\RequerimientoBSBuilder where(string $column,string $value)
- * @method static \App\Builders\RequerimientoBSBuilder whereNotNull(string $column)
- * @method static \App\Builders\RequerimientoBSBuilder whereNull(string $column)
+ * @method static \App\Builders\RequerimientoBSBuilder whereNotNull(string $column) 
+ * @method static \App\Builders\RequerimientoBSBuilder whereNull(string $column) 
  * @method static \App\Builders\RequerimientoBSBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\RequerimientoBSBuilder orderBy(string $column,array $sentido)
+ * @method static \App\Builders\RequerimientoBSBuilder orderBy(string $column,array $sentido) 
  */
 //END MODEL_HELPER
 class RequerimientoBS extends DocumentoAdministrativo

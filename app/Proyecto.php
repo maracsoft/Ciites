@@ -13,25 +13,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 //START MODEL_HELPER
-
 /**
- * @property int $codProyecto int(11)
- * @property string $codigoPresupuestal varchar(5)
- * @property string $nombre varchar(200)
- * @property int $codEmpleadoDirector int(11) NULLABLE
- * @property int $codSedePrincipal int(11) NULLABLE
- * @property string $nombreLargo varchar(300) NULLABLE
- * @property int $codEstadoProyecto int(11)
+ * @property int $codProyecto int(11)     
+ * @property string $codigoPresupuestal varchar(5)     
+ * @property string $nombre varchar(200)     
+ * @property int $codEmpleadoDirector int(11) NULLABLE    
+ * @property int $codSedePrincipal int(11) NULLABLE    
+ * @property string $nombreLargo varchar(300) NULLABLE    
+ * @property int $codEstadoProyecto int(11)     
  * @method static Proyecto findOrFail($primary_key)
  * @method static Proyecto | null find($primary_key)
  * @method static ProyectoCollection all()
  * @method static \App\Builders\ProyectoBuilder query()
  * @method static \App\Builders\ProyectoBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\ProyectoBuilder where(string $column,string $value)
- * @method static \App\Builders\ProyectoBuilder whereNotNull(string $column)
- * @method static \App\Builders\ProyectoBuilder whereNull(string $column)
+ * @method static \App\Builders\ProyectoBuilder whereNotNull(string $column) 
+ * @method static \App\Builders\ProyectoBuilder whereNull(string $column) 
  * @method static \App\Builders\ProyectoBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\ProyectoBuilder orderBy(string $column,array $sentido)
+ * @method static \App\Builders\ProyectoBuilder orderBy(string $column,array $sentido) 
  */
 //END MODEL_HELPER
 class Proyecto extends MaracModel

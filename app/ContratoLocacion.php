@@ -9,44 +9,43 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 //START MODEL_HELPER
-
 /**
- * @property int $codContratoLocacion int(11)
- * @property string $codigo_unico varchar(30)
- * @property string $nombres varchar(300)
- * @property string $apellidos varchar(300)
- * @property string $direccion varchar(500)
- * @property string $dni varchar(20)
- * @property string $ruc varchar(20)
- * @property string $sexo char(1) NULLABLE
- * @property string $fechaHoraGeneracion datetime
- * @property string $fecha_inicio_contrato date
- * @property string $fecha_fin_contrato date
- * @property float $retribucionTotal float
- * @property string $motivoContrato varchar(1000)
- * @property int $codEmpleadoCreador int(11)
- * @property int $codMoneda int(11)
- * @property int $codSede int(11)
- * @property int $esPersonaNatural int(11)
- * @property string $razonSocialPJ varchar(200) NULLABLE
- * @property string $nombreDelCargoPJ varchar(200) NULLABLE
- * @property string $nombreProyecto varchar(300)
- * @property string $nombreFinanciera varchar(300)
- * @property string $fechaHoraAnulacion datetime NULLABLE
- * @property string $provincia varchar(200)
- * @property string $departamento varchar(200)
- * @property int $es_borrador int(11)
- * @property string $distrito varchar(500)
+ * @property int $codContratoLocacion int(11)     
+ * @property string $codigo_unico varchar(30)     
+ * @property string $nombres varchar(300)     
+ * @property string $apellidos varchar(300)     
+ * @property string $direccion varchar(500)     
+ * @property string $dni varchar(20)     
+ * @property string $ruc varchar(20)     
+ * @property string $sexo char(1) NULLABLE    
+ * @property string $fechaHoraGeneracion datetime     
+ * @property string $fecha_inicio_contrato date     
+ * @property string $fecha_fin_contrato date     
+ * @property float $retribucionTotal float     
+ * @property string $motivoContrato varchar(1000)     
+ * @property int $codEmpleadoCreador int(11)     
+ * @property int $codMoneda int(11)     
+ * @property int $codSede int(11)     
+ * @property int $esPersonaNatural int(11)     
+ * @property string $razonSocialPJ varchar(200) NULLABLE    
+ * @property string $nombreDelCargoPJ varchar(200) NULLABLE    
+ * @property string $nombreProyecto varchar(300)     
+ * @property string $nombreFinanciera varchar(300)     
+ * @property string $fechaHoraAnulacion datetime NULLABLE    
+ * @property string $provincia varchar(200)     
+ * @property string $departamento varchar(200)     
+ * @property int $es_borrador int(11)     
+ * @property string $distrito varchar(500)     
  * @method static ContratoLocacion findOrFail($primary_key)
  * @method static ContratoLocacion | null find($primary_key)
  * @method static ContratoLocacionCollection all()
  * @method static \App\Builders\ContratoLocacionBuilder query()
  * @method static \App\Builders\ContratoLocacionBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\ContratoLocacionBuilder where(string $column,string $value)
- * @method static \App\Builders\ContratoLocacionBuilder whereNotNull(string $column)
- * @method static \App\Builders\ContratoLocacionBuilder whereNull(string $column)
+ * @method static \App\Builders\ContratoLocacionBuilder whereNotNull(string $column) 
+ * @method static \App\Builders\ContratoLocacionBuilder whereNull(string $column) 
  * @method static \App\Builders\ContratoLocacionBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\ContratoLocacionBuilder orderBy(string $column,array $sentido)
+ * @method static \App\Builders\ContratoLocacionBuilder orderBy(string $column,array $sentido) 
  */
 //END MODEL_HELPER
 class ContratoLocacion extends Contrato

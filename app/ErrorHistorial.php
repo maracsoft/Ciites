@@ -10,30 +10,29 @@ use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 //START MODEL_HELPER
-
 /**
- * @property int $codErrorHistorial int(11)
- * @property int $codEmpleado int(11)
- * @property string $controllerDondeOcurrio varchar(100)
- * @property string $funcionDondeOcurrio varchar(200)
- * @property string $fechaHora datetime
- * @property string $ipEmpleado varchar(40)
- * @property string $descripcionError varchar(25000)
- * @property int $estadoError tinyint(4)
- * @property string $razon varchar(200) NULLABLE
- * @property string $solucion varchar(500) NULLABLE
- * @property string $formulario varchar(3000)
- * @property string $fechaHoraSolucion datetime NULLABLE
+ * @property int $codErrorHistorial int(11)     
+ * @property int $codEmpleado int(11)     
+ * @property string $controllerDondeOcurrio varchar(100)     
+ * @property string $funcionDondeOcurrio varchar(200)     
+ * @property string $fechaHora datetime     
+ * @property string $ipEmpleado varchar(40)     
+ * @property string $descripcionError varchar(25000)     
+ * @property int $estadoError tinyint(4)     
+ * @property string $razon varchar(200) NULLABLE    
+ * @property string $solucion varchar(500) NULLABLE    
+ * @property string $formulario varchar(3000)     
+ * @property string $fechaHoraSolucion datetime NULLABLE    
  * @method static ErrorHistorial findOrFail($primary_key)
  * @method static ErrorHistorial | null find($primary_key)
  * @method static ErrorHistorialCollection all()
  * @method static \App\Builders\ErrorHistorialBuilder query()
  * @method static \App\Builders\ErrorHistorialBuilder where(string $column,string $operator, string $value)
  * @method static \App\Builders\ErrorHistorialBuilder where(string $column,string $value)
- * @method static \App\Builders\ErrorHistorialBuilder whereNotNull(string $column)
- * @method static \App\Builders\ErrorHistorialBuilder whereNull(string $column)
+ * @method static \App\Builders\ErrorHistorialBuilder whereNotNull(string $column) 
+ * @method static \App\Builders\ErrorHistorialBuilder whereNull(string $column) 
  * @method static \App\Builders\ErrorHistorialBuilder whereIn(string $column,array $array)
- * @method static \App\Builders\ErrorHistorialBuilder orderBy(string $column,array $sentido)
+ * @method static \App\Builders\ErrorHistorialBuilder orderBy(string $column,array $sentido) 
  */
 //END MODEL_HELPER
 class ErrorHistorial extends MaracModel
